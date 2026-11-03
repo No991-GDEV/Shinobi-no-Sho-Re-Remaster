@@ -1,0 +1,249 @@
+{{!-- D143 · Assistente de criação de PJ. Textos PT-BR diretos (sem localize
+      inexistente); painel atual via helper registrado snsIsTab; strings
+      escapadas pelo Handlebars, sem innerHTML com nome não escapado. --}}
+{{#*inline "creationCounter"}}
+<span class="creation-counter" role="group" aria-label="{{label}}">
+  <button type="button" class="creation-stepper" data-action="stepInline" data-kind="{{kind}}" data-key="{{key}}" data-delta="-1" aria-label="Diminuir {{label}}" {{#unless editable}}disabled{{/unless}} {{#unless value}}disabled{{/unless}}>−</button>
+  <input type="number" min="0" step="1" value="{{value}}" data-inline-kind="{{kind}}" data-inline-key="{{key}}" data-baseline="{{value}}" aria-label="{{label}}" {{#unless editable}}disabled{{/unless}}>
+  <button type="button" class="creation-stepper" data-action="stepInline" data-kind="{{kind}}" data-key="{{key}}" data-delta="1" aria-label="Aumentar {{label}}" {{#unless editable}}disabled{{/unless}} {{#unless canUp}}disabled{{/unless}}>+</button>
+</span>
+{{/inline}}
+<div class="creation-wizard-frame">
+  <aside class="creation-steps">
+    <header class="creation-steps-head">
+      <h2>{{title}}</h2>
+      <p class="creation-actor-name">{{actor.name}} · NC {{nc}}</p>
+      <p class="creation-phase">{{#if state.completed}}Etapa concluída{{else}}{{#if evolution}}Evolução em andamento{{else}}Criação em andamento{{/if}}{{/if}}</p>
+    </header>
+    <ol class="creation-step-list">
+      {{#each state.steps}}
+      <li>
+        <button type="button" class="creation-step-item {{#if active}}active{{/if}} status-{{status}}" data-action="chooseStep" data-step="{{id}}" {{#if disabled}}disabled{{/if}}>
+          <span class="creation-step-status" aria-hidden="true"></span>
+          <span class="creation-step-label">{{label}}</span>
+        </button>
+      </li>
+      {{/each}}
+    </ol>
+  </aside>
+
+  <section class="creation-panel" data-panel="{{state.stepId}}">
+    {{#if (snsIsTab state.stepId "points")}}
+    <header class="creation-panel-head"><h3>{{#if evolution}}NC e novos pontos{{else}}Pontos iniciais e NC{{/if}}</h3></header>
+    <div class="creation-panel-body">
+      <p class="creation-note">{{#if evolution}}Escolha o novo NC. Ao reduzir, redistribua os pontos excedentes nas etapas seguintes.{{else}}Escolha o NC inicial e comece a distribuir os pontos da tabela.{{/if}}</p>
+      <label class="creation-nc-choice">Nível de campanha<select name="guideNc" {{#unless canProgress}}disabled{{/unless}}>{{#each ncChoices}}<option value="{{nc}}" {{#if selected}}selected{{/if}}>NC {{nc}}</option>{{/each}}</select></label>
+      {{#if pointError}}<p class="creation-pending">{{pointError}}</p>{{/if}}{{#if lowering}}<p class="creation-pending">Reduza os pontos excedentes nas etapas seguintes.</p>{{/if}}
+      {{#if pointProposal.length}}<h4>{{#if lowering}}Ajuste ao reduzir o NC{{else}}Mudança no orçamento{{/if}}</h4><ul class="creation-grant-list">{{#each pointProposal}}<li><span>{{label}}</span><strong>{{signed}} · total {{after}}</strong></li>{{/each}}</ul>{{else}}<p class="creation-note">O orçamento deste NC já foi aplicado.</p>{{/if}}
+      <button type="button" class="creation-action" data-action="applyProgression" {{#unless canProgress}}disabled{{/unless}}>{{#if lowering}}Reduzir NC e revisar distribuição{{else}}{{#if pointProposal.length}}{{#if evolution}}Aplicar NC e pontos{{else}}Começar distribuição{{/if}}{{else}}Continuar distribuição{{/if}}{{/if}}</button>
+      {{#if state.grantsCount}}<h4>Distribuição atual</h4><ul class="creation-grant-list">{{#each state.budgets}}<li><span>{{label}}</span><strong>{{spent}} / {{granted}} · saldo {{balance}}</strong></li>{{/each}}</ul>{{/if}}
+      {{#if isGM}}<details><summary>Ajustes do mestre</summary><p>Concessões extras, revisão de dados antigos e alterações excepcionais.</p><button type="button" class="creation-mini" data-action="openEvolution">Abrir ajustes</button></details>{{/if}}
+      {{#if state.pending.length}}<ul class="creation-pending">{{#each state.pending}}<li>{{this}}</li>{{/each}}</ul>{{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ===== Origem / clã / hijutsu ===== --}}
+    {{#if (snsIsTab state.stepId "origin")}}
+    <header class="creation-panel-head"><h3>Origem, clã e hijutsu</h3></header>
+    <div class="creation-panel-body">
+      <p class="creation-note">Escolha sua origem, clã ou hijutsu. Esta etapa é opcional.</p>
+      <div class="creation-rows">
+        {{#each state.data.features}}
+        <div class="creation-row"><img src="{{img}}" alt=""><span class="row-name">{{name}}</span></div>
+        {{else}}
+        <p class="creation-empty">Nenhuma característica. Você pode continuar.</p>
+        {{/each}}
+      </div>
+      <button type="button" class="creation-action" data-action="openCatalog" data-category="features">Abrir catálogo</button>
+    </div>
+    {{/if}}
+
+    {{!-- ===== Atributos e sociais ===== --}}
+    {{#if (snsIsTab state.stepId "attributes")}}
+    <header class="creation-panel-head"><h3>Atributos e sociais</h3></header>
+    <div class="creation-panel-body">
+      <div class="creation-budget-summary">
+        <p>Atributos · saldo atual: <strong>{{#if state.data.attributeBudget}}{{state.data.attributeBudget.balance}}{{else}}—{{/if}}</strong></p>
+        <p>Sociais · saldo atual: <strong>{{#if state.data.socialBudget}}{{state.data.socialBudget.balance}}{{else}}—{{/if}}</strong></p>
+      </div>
+      <h4>Atributos</h4>
+      <div class="creation-attribute-grid">
+        {{#each attributeRows}}
+        <div class="creation-stat-row"><span class="creation-stat-name"><abbr title="{{label}}">{{abbr}}</abbr> {{label}}</span>{{> creationCounter kind="attribute" key=key value=value label=label editable=../editable canUp=true}}</div>
+        {{/each}}
+      </div>
+      <h4>Sociais</h4>
+      <div class="creation-attribute-grid">
+        {{#each socialRows}}
+        <div class="creation-stat-row"><span class="creation-stat-name">{{label}}</span>{{> creationCounter kind="attribute" key=key value=value label=label editable=../editable canUp=true}}</div>
+        {{/each}}
+      </div>
+      <p class="creation-derived">Vitalidade máxima <strong>{{vitalityMax}}</strong> · Chakra máximo <strong>{{chakraMax}}</strong></p>
+      <p class="creation-save-hint">Use +/− ou digite o valor. Ao sair do campo ou apertar Enter, a alteração é salva.</p>
+      {{#if attributeWarnings.length}}<ul class="creation-pending">{{#each attributeWarnings}}<li>{{this}}</li>{{/each}}</ul>{{/if}}
+      {{#if state.pending.length}}
+      <ul class="creation-pending">{{#each state.pending}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+      {{#if state.warnings.length}}
+      <ul class="creation-warnings">{{#each state.warnings}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ===== Perícias ===== --}}
+    {{#if (snsIsTab state.stepId "skills")}}
+    <header class="creation-panel-head">
+      <h3>Perícias</h3>
+      <input type="search" class="creation-search" data-creation-skill-search placeholder="Buscar perícia" aria-label="Buscar perícia">
+    </header>
+    <div class="creation-panel-body">
+      <p class="creation-budget-inline">Saldo de perícias: <strong>{{#if state.data.skillsBudget}}{{state.data.skillsBudget.balance}}{{else}}—{{/if}}</strong></p>
+      <ul class="creation-skill-list">
+        {{#each state.data.skills}}
+        <li class="creation-skill-row">
+          <span class="row-name">{{name}}</span>
+          <span class="row-detail">Total {{precision}}</span>
+          {{> creationCounter kind="skill" key=key value=bought label=name editable=../editable canUp=canIncrease}}
+        </li>
+        {{else}}
+        <li class="creation-empty">Nenhuma perícia corresponde à busca.</li>
+        {{/each}}
+      </ul>
+      <p class="creation-save-hint">Distribua os pontos comprados. Limite por perícia no NC atual: {{skillLimit}}. O total já inclui o atributo e os modificadores.</p>
+      {{#if state.pending.length}}
+      <ul class="creation-pending">{{#each state.pending}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ===== Poderes e aptidões ===== --}}
+    {{#if (snsIsTab state.stepId "powers")}}
+    <header class="creation-panel-head"><h3>Poderes e aptidões</h3></header>
+    <div class="creation-panel-body">
+      <div class="creation-budget-summary">
+        <p>PP · saldo atual: <strong>{{#if state.data.powersBudget}}{{state.data.powersBudget.balance}}{{else}}—{{/if}}</strong></p>
+        <p>Aptidões gratuitas: <strong>{{#if state.data.freeKnown}}{{state.data.freeUsed}} / {{state.data.freeLimit}}{{else}}— / —{{/if}}</strong></p>
+      </div>
+      <div class="creation-actions-row">
+        <button type="button" class="creation-action" data-action="openPowerDialog">Novo poder</button>
+        <button type="button" class="creation-action" data-action="openCatalog" data-category="powers">Catálogo de poderes</button>
+        <button type="button" class="creation-action" data-action="openCatalog" data-category="aptitudes">Catálogo de aptidões</button>
+      </div>
+      {{#if state.warnings.length}}
+      <ul class="creation-warnings">{{#each state.warnings}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+      <h4>Presentes na ficha</h4>
+      <ul class="creation-rows">
+        {{#each state.data.powers}}<li><img src="{{img}}" alt=""> <span class="row-name">{{name}}</span>{{> creationCounter kind="power" key=id value=level label=name editable=../editable canUp=true}}<button type="button" class="creation-mini" data-action="openPowerDialog" data-item-id="{{id}}" aria-label="Configurar {{name}}" title="Configurar poder"><i class="fa-solid fa-gear" aria-hidden="true"></i></button></li>
+        {{else}}<li class="creation-empty">Nenhum poder ainda.</li>{{/each}}
+      </ul>
+      <ul class="creation-rows">
+        {{#each state.data.aptitudes}}<li><span class="row-name">{{name}}</span><button type="button" class="creation-mini" data-action="editAcquisition" data-item-id="{{id}}">Aquisição</button></li>
+        {{else}}<li class="creation-empty">Nenhuma aptidão ainda.</li>{{/each}}
+      </ul>
+      {{#if state.data.investmentPending.length}}
+      <h4>Aquisições a conferir</h4>
+      <ul class="creation-pending">{{#each state.data.investmentPending}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+      <p class="creation-note">Use uma vaga gratuita ou pague 2 PP por aptidão. Altere essa escolha em Aquisição.</p>
+      {{#if state.pending.length}}
+      <ul class="creation-pending">{{#each state.pending}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ===== Jutsus ===== --}}
+    {{#if (snsIsTab state.stepId "jutsus")}}
+    <header class="creation-panel-head"><h3>Primeiros jutsus</h3></header>
+    <div class="creation-panel-body">
+      <p class="creation-note">Escolha efeitos para seus poderes e crie jutsus, ou adicione jutsus prontos do catálogo. Esta etapa é opcional.</p>
+      {{#each state.data.powers}}
+      <div class="creation-power-block">
+        <h4>{{name}}</h4>
+        <div class="creation-actions-row">
+          <button type="button" class="creation-mini" data-action="openProgression" data-item-id="{{id}}">Aprender componentes</button>
+          <button type="button" class="creation-mini" data-action="openJutsuBuilder" data-item-id="{{id}}">Construir jutsu</button>
+        </div>
+      </div>
+      {{else}}
+      <p class="creation-empty">Nenhum poder possuído ainda.</p>
+      {{/each}}
+      <h4>Técnicas presentes</h4>
+      <ul class="creation-rows">
+        {{#each state.data.techniques}}<li><img src="{{img}}" alt=""> <span class="row-name">{{name}}</span></li>
+        {{else}}<li class="creation-empty">Nenhuma técnica ainda.</li>{{/each}}
+      </ul>
+      <button type="button" class="creation-action" data-action="openCatalog" data-category="techniques">Catálogo de jutsus</button>
+    </div>
+    {{/if}}
+
+    {{!-- ===== Equipamento ===== --}}
+    {{#if (snsIsTab state.stepId "equipment")}}
+    <header class="creation-panel-head"><h3>Equipamento</h3></header>
+    <div class="creation-panel-body">
+      <p class="creation-budget-inline">Saldo de ryō atual: <strong>{{#if state.data.hasRyo}}{{state.data.ryoDisplay}}{{else}}—{{/if}}</strong></p>
+      <p class="creation-note">Adicione seus equipamentos. O custo em Ryo é ajustado na ficha. Esta etapa é opcional.</p>
+      <ul class="creation-rows">
+        {{#each state.data.equipment}}<li><img src="{{img}}" alt=""> <span class="row-name">{{name}}</span></li>
+        {{else}}<li class="creation-empty">Nenhum item ainda.</li>{{/each}}
+      </ul>
+      <button type="button" class="creation-action" data-action="openCatalog" data-category="equipment">Catálogo de equipamento</button>
+    </div>
+    {{/if}}
+
+    {{!-- ===== Revisão ===== --}}
+    {{#if (snsIsTab state.stepId "review")}}
+    <header class="creation-panel-head"><h3>Revisão</h3></header>
+    <div class="creation-panel-body">
+      {{#if state.completed}}
+      <p class="creation-note">{{#if evolution}}Evolução concluída. Os saldos disponíveis continuam na ficha.{{else}}Criação concluída. Sua ficha está pronta para jogar.{{/if}}</p>
+      <h4>Distribuição · NC {{nc}}</h4>
+      <ul class="creation-grant-list">{{#each state.budgets}}<li><span>{{label}}</span><strong>{{spent}} / {{granted}} · saldo {{balance}}</strong></li>{{/each}}</ul>
+      {{else}}
+      <p class="creation-note">Revise os pontos e requisitos antes de concluir. Origem, jutsus e equipamentos são opcionais.{{#if evolution}} Os saldos disponíveis continuam na ficha.{{/if}}</p>
+      <div class="creation-budgets">
+        <ul class="creation-grant-list">
+          {{#each state.budgets}}
+          <li><span class="grant-label">{{label}}</span><span class="grant-amount">{{spent}} / {{granted}}</span></li>
+          {{/each}}
+        </ul>
+      </div>
+      {{#if state.pending.length}}
+      <h4>Pendências</h4>
+      <ul class="creation-pending">{{#each state.pending}}<li>{{this}}</li>{{/each}}</ul>
+      {{else}}
+      <p class="creation-ok">Nenhuma pendência obrigatória.</p>
+      {{/if}}
+      {{#if state.warnings.length}}
+      <h4>Pendências</h4>
+      <ul class="creation-warnings">{{#each state.warnings}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+      {{#if state.issues.length}}
+      <h4>Alertas da ficha</h4>
+      <ul class="creation-pending">{{#each state.issues}}<li>{{this}}</li>{{/each}}</ul>
+      {{/if}}
+      {{#if state.data.requirements.length}}
+      <h4>Requisitos dos itens</h4>
+      <ul class="creation-req-list">
+        {{#each state.data.requirements}}
+        <li class="req-{{status}}"><span class="row-name">{{name}}</span>
+          {{#if problems.length}}<span class="row-detail">{{#each problems}}{{this}} {{/each}}</span>{{/if}}
+        </li>
+        {{/each}}
+      </ul>
+      {{/if}}
+      {{#if initialResources}}<label class="creation-initial-resources"><input type="checkbox" data-initial-resources checked> Começar com recursos cheios</label><p>Preenche somente os valores atuais ainda vazios: Vitalidade até {{vitalityMax}}, Chakra até {{chakraMax}}.</p>{{/if}}
+      <div class="creation-footer-actions">
+        {{#if editable}}<button type="button" class="creation-action" data-action="conclude" {{#unless state.canConclude}}disabled{{/unless}}>{{#if evolution}}Concluir evolução{{else}}Concluir criação{{/if}}</button>{{/if}}
+      </div>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ===== Navegação inferior ===== --}}
+    <footer class="creation-nav">
+      <button type="button" class="creation-action" data-action="chooseStep" data-step="{{state.prevStepId}}" {{#unless state.prevStepId}}disabled{{/unless}}>Anterior</button>
+      {{#if state.nextStepId}}<button type="button" class="creation-action" data-action="chooseStep" data-step="{{state.nextStepId}}">{{#if (snsIsTab state.nextStepId "review")}}Revisar ficha{{else}}Próximo{{/if}}</button>{{/if}}
+    </footer>
+  </section>
+</div>

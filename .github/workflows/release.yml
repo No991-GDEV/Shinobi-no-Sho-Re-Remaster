@@ -1,0 +1,44 @@
+name: Validar e publicar beta
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run check
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check
+      - name: Publicar arquivos instaláveis
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION=$(node -p 'JSON.parse(require("fs").readFileSync("release.config.json")).tag')
+          test "$GITHUB_REF_NAME" = "$VERSION"
+          gh release create "$VERSION" dist/github/*.zip dist/github/system.json dist/github/module.json dist/github/SHA256SUMS dist/github/build-report.json --verify-tag --prerelease --latest --title "Shinobi no Sho Re-Remaster $VERSION" --notes-file docs/RELEASE.md

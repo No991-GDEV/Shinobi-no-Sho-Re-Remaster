@@ -1,0 +1,11 @@
+<section class="special-resource-form">
+{{#if existing}}<h2>{{view.label}}</h2><p>Origem: <strong>{{view.sourceName}}</strong></p>{{else}}<label>Recurso<select name="kind">{{#each kinds}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label><label>Origem concedente<select name="sourceId"><option value="">Selecione um item desta ficha</option>{{#each sources}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>{{/if}}
+<p>{{view.hint}}</p><p class="resource-rule-source">{{view.source}}</p>
+<div class="special-resource-values"><label>Atual<input name="value" type="number" min="0" step="1" value="{{draft.value}}" placeholder="Desconhecido"></label><div><span>Máximo</span><strong>{{view.maxLabel}}</strong></div></div>
+<p>O máximo vem da origem. Informe o valor atual; ele não é preenchido ao registrar, evoluir ou descansar.</p>
+<label>Motivo do ajuste<input name="note" value="{{note}}" placeholder="Ex.: início do ensaio com a reserva cheia"></label>
+{{#unless existing}}<label class="resource-confirm"><input name="confirmed" type="checkbox" {{#if confirmed}}checked{{/if}}> Origem válida e requisitos atendidos</label>{{/unless}}
+{{#each view.problems}}<p class="resource-issue">{{this}}</p>{{/each}}
+{{#if history}}<details><summary>Histórico de ajustes</summary>{{#each history}}<p>{{at}} · {{from}} → {{to}} · {{note}}</p>{{/each}}</details>{{/if}}
+<footer class="form-footer"><button type="button" data-action="cancel">Cancelar</button><button type="submit">{{#if existing}}Salvar ajuste{{else}}Registrar recurso{{/if}}</button></footer>
+</section>

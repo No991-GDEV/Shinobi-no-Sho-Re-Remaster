@@ -1,0 +1,14 @@
+{
+  "name": "shinobi-no-sho-re-remaster",
+  "version": "0.4.0-beta.1",
+  "private": true,
+  "type": "module",
+  "description": "Ferramentas de distribuição do sistema comunitário SNS para Foundry VTT 14.",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/check.mjs",
+    "test": "node --test tools/*.test.mjs"
+  },
+  "engines": {"node": ">=22"},
+  "devDependencies": {"classic-level": "3.0.0"}
+}

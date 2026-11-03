@@ -1,0 +1,11 @@
+<section class="requirements-editor-content">
+<h2>{{name}}</h2>
+{{#if allowed}}
+<details><summary>Requisitos do livro</summary>{{#each bookRows}}<p>{{label}}</p>{{else}}<p>Sem requisitos cadastrados.</p>{{/each}}<small>{{bookSource}}</small></details>
+<div class="requirement-editor-settings"><label>Aplicação<select name="mode"><option value="append" {{#if append}}selected{{/if}}>Complementar os requisitos do livro</option><option value="replace" {{#if replace}}selected{{/if}}>Substituir os requisitos deste exemplar</option></select></label><button type="button" data-action="useBook">Copiar requisitos do livro para editar</button></div>
+<div class="requirement-tree">{{{nodes}}}</div>
+<div class="requirement-editor-notes"><label>Fonte<input name="source" value="{{source}}" placeholder="Livro e página ou regra da mesa"></label><label>Motivo<input name="reason" value="{{reason}}" placeholder="Obrigatório para registrar a mudança"></label></div>
+<p class="hint">“Todos” exige o grupo inteiro; “Uma das alternativas” exige uma opção. “Todos” vazio não exige nada. Em equipamentos, os requisitos limitam o uso, não a posse. Alterações valem para este item e suas novas cópias.</p>
+<footer><button type="button" data-action="restore">Restaurar regra do livro</button><button type="button" data-action="save"><i class="fa-solid fa-check"></i> Salvar requisitos</button></footer>
+{{else}}<p>Somente o mestre pode configurar requisitos.</p>{{/if}}
+</section>

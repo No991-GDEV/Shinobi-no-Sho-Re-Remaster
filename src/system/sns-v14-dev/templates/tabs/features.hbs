@@ -1,0 +1,27 @@
+<section class="tab-pane features-pane" role="tabpanel" aria-label="Características" {{#unless (snsIsTab activeTab "features")}}hidden{{/unless}}>
+  {{#each featureGroups}}
+  <section class="feature-section" aria-label="{{label}}">
+    <header class="pf-section">
+      <h2>{{label}}</h2>
+      {{#if (snsIsTab id "aptitudes")}}<button type="button" class="sns-budget-context sns-aptitude-budget" data-action="showEvolution" aria-label="Aptidões: {{../investment.freeUsed}} de {{../investment.freeLimit}} gratuitas; adicionais custam {{../investment.aptitudeSpent}} PP"><span>Gratuitas <strong>{{../investment.freeUsed}} / {{../investment.freeLimit}}</strong></span><small>Adicionais {{../investment.aptitudeSpent}} PP</small></button>{{/if}}
+      <div class="controls">
+        {{#if ../editable}}<button type="button" data-action="createEntry" data-category="{{id}}" aria-label="Adicionar em {{label}}"><i class="fa-solid fa-plus" aria-hidden="true"></i> Adicionar</button>{{/if}}
+        <button type="button" data-action="browseEntries" data-category="{{id}}" aria-label="Buscar {{label}}"><i class="fa-solid fa-search" aria-hidden="true"></i> Buscar</button>
+      </div>
+    </header>
+    <ol class="feature-list">
+      {{#each entries}}
+      <li class="feature-row">
+        <button type="button" class="feature-name" data-action="editEntry" data-item-id="{{id}}" aria-label="Consultar {{displayName}}">
+          <span class="feature-icon" aria-hidden="true"><i class="fa-solid {{../icon}}"></i></span>
+          <span>{{name}}{{#if selectionLabel}}<small class="aptitude-choice-label">{{selectionLabel}}</small>{{/if}}</span>
+        </button>
+        {{#if (snsIsTab type "aptitude")}}{{#if @root.editable}}<button type="button" class="sns-acquisition-button" data-action="acquisition" data-item-id="{{id}}" data-tooltip="Conferir aquisição e custo em PP">Aquisição</button>{{/if}}{{/if}}
+        {{#if @root.editable}}<button type="button" class="feature-remove" data-action="removeEntry" data-item-id="{{id}}" aria-label="Remover {{displayName}}" data-tooltip="Remover {{displayName}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}
+      </li>
+      {{else}}<li class="feature-empty">Nenhuma característica. Busque no compêndio{{#if @root.editable}} ou adicione à ficha{{/if}}.</li>{{/each}}
+    </ol>
+  </section>
+  {{/each}}
+  <div class="character-tools"><button type="button" data-action="showEvolution"><i class="fa-solid fa-arrow-up-right-dots" aria-hidden="true"></i> Evolução{{#if issueCount}}<span class="notification-badge" title="{{issueCount}} pendência(s) para conferir">{{issueCount}}</span>{{/if}}</button></div>
+</section>

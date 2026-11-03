@@ -1,0 +1,27 @@
+<div class="sns-sheet">
+  <div class="layout">
+    {{> "systems/sns-v14-dev/templates/partials/sidebar.hbs"}}
+    <main class="content">
+      {{> "systems/sns-v14-dev/templates/partials/header.hbs"}}
+      <nav class="navigation" aria-label="Abas da ficha" role="tablist">
+        <span class="page-name">{{activeLabel}}</span>
+        {{#each tabs}}
+        <button type="button" role="tab" class="{{#if active}}active{{/if}}" data-action="chooseTab" data-tabid="{{id}}" aria-label="{{label}}" aria-selected="{{#if active}}true{{else}}false{{/if}}" data-tooltip="{{label}}">
+          <i class="fa-solid {{icon}}" aria-hidden="true"></i><span class="tab-label">{{label}}</span>
+        </button>
+        {{/each}}
+      </nav>
+      <div class="panels">
+        {{> "systems/sns-v14-dev/templates/tabs/character.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/actions.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/inventory.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/jutsus.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/crafting.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/skills.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/features.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/effects.hbs"}}
+        {{> "systems/sns-v14-dev/templates/tabs/bio.hbs"}}
+      </div>
+    </main>
+  </div>
+</div>

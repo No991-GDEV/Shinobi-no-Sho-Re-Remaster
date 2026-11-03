@@ -1,0 +1,293 @@
+/* D103–D105: filled sheets and explicit SNS editors. */
+.sns-sheet .inventory-header,.sns-sheet .inventory-row{grid-template-columns:minmax(0,1fr) 56px 54px 62px}
+.sns-sheet .inventory-row{padding:3px 5px;min-height:32px;gap:3px}
+.sns-sheet .inventory-row .entry-name{justify-content:flex-start;align-items:center;min-width:0;width:100%;height:auto;min-height:26px;text-align:left;padding:0;line-height:1.25}
+.sns-sheet .inventory-row .entry-name>span{min-width:0;flex:1;text-align:left}
+.sns-sheet .inventory-row .entry-controls{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;justify-content:flex-end;gap:3px;min-width:0}
+.sns-sheet .inventory-row .entry-controls button{flex:0 0 16px;width:16px;padding:0;min-height:20px;height:20px;display:grid;place-content:center}
+.sns-sheet .inventory-row .entry-tags{margin:2px 0 0;gap:2px}
+.sns-sheet .inventory-row .quantity{white-space:nowrap;gap:3px}
+.sns-sheet .inventory-row .quantity button{width:13px;min-width:13px;padding:0}
+.sns-sheet .identity-records p{font:12px SnsCondensed;margin:4px 0 10px}
+.sns-training,.party-skill-badge{--badge-ink:#55504c}
+.rank-blue{--badge-ink:#171f69}.rank-purple{--badge-ink:#560782}.rank-gold{--badge-ink:#95700b}.rank-red{--badge-ink:#760900}.rank-gray{--badge-ink:#55504c}
+.sns-training{background:var(--badge-ink);color:white;border:1px solid #c9bda6;padding:3px 6px;font:700 10px SnsUI}
+.sns-stat-editor .skill-editor-heading{display:flex;align-items:center;justify-content:space-between;margin:2px 0 10px}
+.sns-stat-editor .step-controls{flex:0 0 26px;display:flex;flex-direction:column;gap:1px;align-items:center}
+.sns-stat-editor .step-controls button{border:1px solid #9d8b70;background:#f4ecd9;color:#650800;padding:0;min-height:16px;height:16px;width:23px;line-height:12px;border-radius:1px;font-size:13px}
+.sns-stat-editor .step-controls button:disabled{opacity:.3;cursor:default}
+.sns-stat-editor .dialog-row .value{width:37px;padding:0;text-align:center;appearance:textfield}
+.sns-stat-editor .dialog-row .type{flex-basis:78px}
+.sns-stat-editor .origin-field{display:flex;flex-direction:column;gap:3px;margin:10px 0;font:12px SnsUI}
+.sns-stat-editor .skill-budget{display:flex;justify-content:space-between;background:#ded6c6;padding:6px;font:12px SnsUI}
+.sns-stat-editor .budget-warning{color:#850c09;font:12px SnsUI}
+.sns-stat-editor .editor-note,.sns-power-dialog .editor-note{font:12px/1.4 SnsUI;color:#6a6257;margin:8px 0 12px}
+.sns-stat-editor .stat-editor-footer{display:flex;gap:6px;margin-top:14px}
+.sns-stat-editor .stat-editor-footer>button{flex:1;width:auto;height:30px;min-height:30px;font:700 13px SnsUI;border:1px solid #a5967a;border-radius:0}
+.sns-stat-editor .stat-editor-footer>button:first-child{background:#e1d9c8;color:#514737}
+.sns-attributes-editor .window-content{background:#191a24;border:1px solid #9c8867;color:#f3e9d4;padding:10px;border-image:none}
+.sns-attributes-editor .attribute-builder{display:grid;grid-template-columns:155px minmax(0,1fr);gap:12px}
+.sns-attributes-editor .builder-sidebar{display:flex;flex-direction:column;gap:5px;font:13px SnsUI;min-width:0}
+.sns-attributes-editor .builder-sidebar>img{width:68px;height:68px;object-fit:contain;border:0}
+.sns-attributes-editor .builder-sidebar>strong{font:700 14px SnsGelasio}
+.sns-attributes-editor .budget-block{border-top:1px solid #8b7659;margin-top:12px;padding-top:5px;display:flex;flex-direction:column;gap:3px}
+.sns-attributes-editor .budget-block h3{font:700 12px SnsUI;color:#d9c69b;margin:0;border:0}
+.sns-attributes-editor .budget-block>strong{font:700 20px SnsGelasio}
+.sns-attributes-editor .budget-block>span{font:12px SnsUI;color:#ddc9a6}
+.sns-attributes-editor .builder-main{min-width:0}
+.sns-attributes-editor .builder-columns,.sns-attributes-editor .builder-values{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:3px}
+.sns-attributes-editor .builder-columns>span{text-align:center;font:700 23px 'Modesto Condensed',SnsCondensed;color:#f3e5c7;padding:6px 0;border-bottom:1px solid #98825d}
+.sns-attributes-editor .attribute-column{display:flex;align-items:center;flex-direction:column;gap:10px;background:#ffffff09;padding:15px 0;min-width:0}
+.sns-attributes-editor .attribute-column:nth-child(odd){background:#ffffff12}
+.sns-attributes-editor .attribute-column.social,.sns-attributes-editor .builder-columns .social{background:#a4743228}
+.sns-attributes-editor .attribute-column input{width:100%;height:38px;border:0;box-shadow:none;background:none;color:#fff4dc;font:700 27px SnsGelasio;text-align:center;padding:0;appearance:textfield}
+.sns-attributes-editor .attribute-column>button{color:#eee0b9;background:#255b2e;border:1px solid #567e48;border-radius:2px;height:25px;min-height:25px;width:80%;padding:0}
+.sns-attributes-editor .attribute-column>button:nth-of-type(2){background:none;color:#e88c77;border-color:#85453c}
+.sns-attributes-editor .attribute-column small{font:9px SnsCondensed;color:#c1b091;max-width:100%;text-align:center;overflow-wrap:anywhere;min-height:24px}
+.sns-attributes-editor .builder-impact{display:flex;justify-content:space-around;font:12px SnsUI;color:#dbc6a0;padding:15px 0;border-bottom:1px solid #665941}
+.sns-attributes-editor .builder-impact strong{display:block;font:700 22px SnsGelasio;color:#fff0ce;text-align:center}
+.sns-attributes-editor .editor-note{color:#d3c4ac}
+.sns-support-sheet .party-summary{padding:10px;margin-bottom:12px}
+.sns-support-sheet .party-summary-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
+.sns-support-sheet .party-summary-tabs button{background:#d4cfca;color:#222;padding:5px 7px;font:700 12px SnsRoboto;border-radius:2px;box-shadow:0 1px 2px #0002}
+.sns-support-sheet .party-summary-tabs button.active{background:#1c246d;color:#fff;outline:1px solid #bc6f4c;outline-offset:1px}
+.sns-support-sheet .summary-badges,.sns-support-sheet .member-skill-tags{display:flex;gap:3px;flex-wrap:wrap;min-height:20px;align-items:center}
+.sns-support-sheet .party-language{background:#77624e;color:#fff;font:700 10px/16px SnsRoboto;text-transform:uppercase;border:1px solid #9e8a75;padding:0 3px}
+.sns-support-sheet .party-skill-badge{font:700 10px/16px SnsRoboto;text-transform:uppercase;border:1px solid var(--badge-ink);color:var(--badge-ink);background:#fff3;padding:0 3px}
+.sns-support-sheet .summary-empty{font:12px SnsRoboto;color:#6d6457}
+.sns-support-sheet .members-toolbar{display:flex;justify-content:space-between;align-items:center;font:11px SnsRoboto;color:#766956;margin:0 0 6px}
+.sns-support-sheet .members-toolbar button{font:700 11px SnsRoboto;border:1px solid #b4a48c;padding:2px 5px}
+.sns-support-sheet .party-overview-members .party-member{display:flex;align-items:center;gap:12px;margin:0;padding:10px 0;border-bottom:1px solid #b8af9e}
+.sns-support-sheet .party-member .member-portrait{flex:0 0 85px}
+.sns-support-sheet .party-member .member-portrait>img{width:85px;height:80px;object-fit:contain}
+.sns-support-sheet .party-health{position:relative;height:19px;width:100%;background:#69625d;color:#fff;overflow:hidden;font:700 12px/19px SnsRoboto;text-align:center}
+.sns-support-sheet .party-health .health-fill{position:absolute;inset:0 auto 0 0;background:#760b08}
+.sns-support-sheet .party-health strong{position:relative;font:inherit;z-index:1}
+.sns-support-sheet .member-data{flex:1;min-width:0}
+.sns-support-sheet .party-member .member-name{margin:0 0 5px;align-items:start}
+.sns-support-sheet .party-member .member-name small{display:block;font:10px SnsRoboto;text-transform:uppercase;margin-top:3px}
+.sns-support-sheet .party-main-stats{display:flex;align-items:stretch;gap:7px;margin-bottom:5px}
+.sns-support-sheet .party-main-stats small{font:10px SnsRoboto;display:block}
+.sns-support-sheet .member-dodge{flex:0 0 39px;text-align:center;border:1px solid #b8b0a0;border-radius:0 0 45% 45%;padding:2px}
+.sns-support-sheet .member-dodge strong{font:700 20px SnsRoboto;color:#20276c}
+.sns-support-sheet .member-combat{display:flex;gap:6px;border:1px solid #b8b0a0;padding:3px 6px;flex:none}
+.sns-support-sheet .member-combat>span{text-align:center;min-width:30px}
+.sns-support-sheet .member-combat strong{font:700 17px SnsRoboto}
+.sns-support-sheet .member-senses{flex:1;min-width:0;border:1px solid #b8b0a0;text-align:center;padding:3px;font:12px SnsRoboto;display:flex;flex-direction:column;justify-content:center}
+.sns-support-sheet .party-body.party-split{display:flex;gap:9px;overflow:hidden}
+.sns-support-sheet .party-total{background:#fff3;border:1px solid #b8ac99;box-shadow:0 1px 3px #0003;margin-bottom:8px}
+.sns-support-sheet .party-total>span{display:flex;justify-content:space-between;padding:3px 6px;font:11px SnsRoboto;gap:5px}
+.sns-support-sheet .party-total strong{font:inherit}
+.sns-support-sheet .party-mini-card,.sns-support-sheet .party-economy-card{border:1px solid #b9aea0;margin:7px 0;background:#fff4;box-shadow:0 1px 3px #0002;overflow:hidden;border-radius:2px}
+.sns-support-sheet .party-mini-card header,.sns-support-sheet .party-economy-card header{display:flex;align-items:center;gap:7px;padding:5px}
+.sns-support-sheet .party-mini-card header img,.sns-support-sheet .party-economy-card header img{width:28px;height:35px;object-fit:contain;border:0}
+.sns-support-sheet .party-mini-card header button,.sns-support-sheet .party-economy-card header button{font:700 12px SnsRoboto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
+.sns-support-sheet .mini-stats{display:flex;background:#ded5c8;font:11px SnsRoboto}
+.sns-support-sheet .mini-stats>span{flex:1;text-align:center;padding:4px;border-right:1px solid #c1b5a6}
+.sns-support-sheet .party-economy-card>span{display:block;font:11px SnsRoboto;padding:2px 7px}
+.sns-support-sheet .party-economy-card footer{font:11px SnsRoboto;background:#e0d5c8;padding:3px 7px;margin-top:4px}
+.sns-support-sheet .activity-list{display:flex;flex-direction:column;gap:8px}
+.sns-support-sheet .activity-slot{display:flex;align-items:center;gap:10px;border:1px solid #b8b0a1;border-image:url('../assets/frame-elegant.svg') 11 / 12px / 0 stretch;padding:12px 10px;min-height:80px}
+.sns-support-sheet .activity-slot>img{width:60px;height:60px;object-fit:contain;border:0}
+.sns-support-sheet .activity-description{flex:1;display:flex;align-items:start;flex-direction:column;gap:3px;min-width:0}
+.sns-support-sheet .activity-description strong{font:17px SnsGelasio;color:#670500}
+.sns-support-sheet .activity-member{font:12px SnsRoboto}
+.sns-support-sheet .activity-description small{font:11px SnsRoboto}
+.sns-support-sheet .window-content .activity-slot .activity-add{border:1px dashed #a89b86;width:32px;height:32px!important;border-radius:50%!important;flex:0 0 32px}
+.sns-support-sheet .activity-slot>img{order:0}
+.sns-support-sheet .activity-slot .activity-add{order:1}
+.sns-support-sheet .activity-slot .activity-description{order:2}
+.sns-support-sheet .activity-slot>button:not(.activity-add){order:3}
+.sns-sheet .power-block{border:1px solid #ada290;margin:10px 0 15px}
+.sns-sheet .power-heading{display:flex;align-items:center;gap:7px;background:#680500;color:#fff1dc;padding:5px 7px}
+.sns-sheet .power-heading h3{flex:1;color:inherit;border:0;font:700 16px SnsGelasio;margin:0}
+.sns-sheet .power-heading button{color:#fff1dc;background:none;border:0;padding:0 2px;width:18px;height:20px;min-height:20px;font-size:12px}
+.sns-sheet .power-summary{display:flex;align-items:center;gap:8px;padding:7px 5px;font:12px SnsGelasio;flex-wrap:wrap}
+.sns-sheet .power-summary>strong{color:#20266e}
+.sns-sheet .power-summary button{margin-left:auto;background:#1d246b;color:#fff;border:1px solid #a9a2bc;padding:3px 6px;font:700 11px SnsCondensed;height:25px}
+.sns-sheet .power-form{font:11px SnsCondensed;color:#716657;padding:0 6px 5px}
+.sns-sheet .jutsu-columns,.sns-sheet .sns-jutsu-row{display:grid;grid-template-columns:minmax(0,1fr) 54px 80px 37px;align-items:center;gap:4px}
+.sns-sheet .jutsu-columns{background:#cec9c2;border:1px solid #aaa092;padding:3px 5px;font:11px SnsCondensed;min-height:25px}
+.sns-sheet .jutsu-columns .controls{display:flex;gap:3px;justify-content:end}
+.sns-sheet .jutsu-columns button{border:0;background:none;width:15px;padding:0;height:18px;font-size:12px}
+.sns-sheet .sns-jutsu-row{padding:4px 5px;border-bottom:1px solid #b6a89560;font:12px SnsGelasio;min-height:34px}
+.sns-sheet .sns-jutsu-row .entry-name{display:flex;align-items:center;justify-content:start;gap:5px;width:100%;border:0;background:none;padding:0;height:auto;min-height:26px;text-align:left;font:13px SnsGelasio}
+.sns-sheet .sns-jutsu-row .entry-name small{display:block;font:11px SnsCondensed;color:#786d5c}
+.sns-sheet .jutsu-controls{display:flex;justify-content:end;gap:3px}
+.sns-sheet .jutsu-controls button{border:0;background:none;font-size:11px;width:16px;padding:0}
+.sns-sheet .empty-power{font:12px SnsCondensed;color:#6d6252;padding:0 8px}
+.sns-sheet .add-power{display:block;width:100%;background:#1c226b;color:#fff;border:1px solid #a59978;font:700 15px SnsCondensed;padding:5px;margin:10px 0}
+.sns-power-dialog .window-content,.sns-jutsu-manager .window-content{background:#1e1d26;color:#e7d5b3;border:1px solid #a88a5e;border-image:none}
+.sns-power-dialog fieldset{border:1px solid #a18c77;border-radius:8px;margin:3px 0 15px;padding:12px}
+.sns-power-dialog legend{font:700 14px SnsUI;color:#f0e3cd;padding:0 5px}
+.sns-power-dialog label{display:grid;grid-template-columns:145px minmax(0,1fr);gap:8px;align-items:center;margin:8px 0;color:#d6c1a0;font:700 13px SnsUI}
+.sns-power-dialog input,.sns-power-dialog select,.sns-jutsu-manager input{width:100%;background:#353039;color:#f2eadd;border:1px solid #55505b}
+.sns-power-dialog p,.sns-power-dialog .editor-note,.sns-jutsu-manager p{font:12px/1.45 SnsUI;color:#bda98c}
+.sns-jutsu-manager h2{font:700 25px 'Modesto Condensed',SnsCondensed;color:#f6ecd8;border:0;margin:0}
+.sns-jutsu-manager .jutsu-manager-search{display:flex;align-items:center;gap:6px;margin:10px 0}
+.sns-jutsu-manager .jutsu-manager-columns,.sns-jutsu-manager .jutsu-manager-row{display:grid;grid-template-columns:minmax(0,1fr) 60px 50px 75px 50px;gap:5px;align-items:center}
+.sns-jutsu-manager .jutsu-manager-columns{font:700 11px SnsUI;color:#d9c7aa;padding:6px 3px;background:#39343f}
+.sns-jutsu-manager .jutsu-manager-list{overflow:auto;max-height:310px}
+.sns-jutsu-manager .jutsu-manager-row{font:12px SnsUI;padding:5px 3px;background:#ffffff08;border-bottom:1px solid #8b7c6340}
+.sns-jutsu-manager .jutsu-manager-row:nth-child(even){background:#00000015}
+.sns-jutsu-manager .jutsu-manager-row button{background:none;border:0;color:#efe4cf;padding:0;font:inherit;text-align:left;height:auto;min-height:22px}
+.sns-jutsu-manager .jutsu-manager-row>button:first-child{display:flex;gap:6px;align-items:center;justify-content:flex-start;min-width:0;width:100%}
+.sns-jutsu-manager .jutsu-manager-row img{width:27px;height:27px;object-fit:contain;border:1px solid #bda77c}
+.sns-jutsu-manager .jutsu-manager-row .linked{color:#6cb574;text-align:center}
+
+/* D108: dedicated characteristics page; one compact consultable row per record. */
+.sns-sheet .features-pane .feature-section{margin:0 0 18px;padding:0;min-height:0}
+.sns-sheet .features-pane .pf-section{margin:0 0 4px;gap:8px}
+.sns-sheet .feature-list{list-style:none;margin:0;padding:0}
+.sns-sheet .feature-row{display:flex;align-items:center;gap:6px;min-height:34px;border-bottom:1px solid #b6a89566;padding:2px 4px}
+.sns-sheet .feature-row:nth-child(odd){background:#8b796210}
+.sns-sheet .feature-row .feature-name{display:flex;align-items:center;justify-content:flex-start;gap:8px;flex:1;min-width:0;min-height:30px;height:auto;border:0;background:none;text-align:left;padding:0;font:14px/1.3 SnsGelasio,Georgia;color:var(--ink);white-space:normal}
+.sns-sheet .feature-name>span:last-child{flex:1;min-width:0;text-align:left;overflow-wrap:anywhere}
+.sns-sheet .feature-name:hover>span:last-child{text-decoration:underline;color:var(--heading)}
+.sns-sheet .feature-icon{display:grid;place-items:center;width:25px;height:25px;flex:0 0 25px;background:#76654d;color:#f4e8c9;border:1px solid #a98d56;border-radius:2px;font-size:14px}
+.sns-sheet .feature-row .feature-remove{display:grid;place-items:center;flex:0 0 24px;width:24px;min-height:26px;height:26px;border:0;background:none;color:var(--muted);padding:0;font-size:12px}
+.sns-sheet .feature-row .feature-remove:hover{color:var(--heading);background:#74080012}
+.sns-sheet .feature-empty{margin:0;padding:8px 4px;color:var(--muted);font:12px/1.4 SnsGelasio,Georgia}
+.sns-sheet .feature-name:focus-visible,.sns-sheet .feature-remove:focus-visible{outline:2px solid #243c8b;outline-offset:1px}
+
+.sns-sheet .granted-jutsus{margin:16px 0}.sns-sheet .granted-source{margin:6px 0 12px}.sns-sheet .grant-origin{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;font:12px SnsGelasio,Georgia;color:var(--muted)}.sns-sheet .grant-origin>span{min-width:0}.sns-sheet .grant-origin>span>button{border:0;background:none;padding:0;text-align:left;text-decoration:underline;font:inherit;color:var(--heading)}.sns-sheet .grant-origin>button{flex-shrink:0;font:700 11px SnsCondensed,Arial;text-transform:uppercase;min-height:22px;height:auto}
+/* Special reserves keep their granting origin and stay separate from ordinary chakra. */
+.sns-sheet-app .special-resources,.sns-support-sheet .special-resources{margin:0 0 14px}
+.special-resource-row{display:grid;grid-template-columns:minmax(0,1fr) auto 28px;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid #b9ad97;background:#ffffff25}
+.special-resource-row small{display:block;font-size:12px;margin-top:3px}
+.special-resource-row small button{font:inherit;color:#760c0b;border:0;background:none;padding:0;text-align:left;height:auto;min-height:0}
+.special-resource-row .resource-amount{font-size:22px;color:#720808;font-weight:bold;white-space:nowrap}.special-resource-row .resource-amount span{font-size:15px;color:#64594c}
+.resource-issue{color:#8d1510;font-size:12px}.special-resource-form{padding:12px;display:grid;gap:10px}.special-resource-form p{margin:0;font-size:13px;line-height:1.4}.special-resource-form label{display:grid;gap:4px}.special-resource-form .resource-confirm{display:flex;align-items:flex-start;font-size:13px}.special-resource-values{display:grid;grid-template-columns:1fr 1fr;gap:18px}.special-resource-values>div{display:grid;gap:4px}.special-resource-values strong{font-size:24px;color:#b9ab8f}.resource-rule-source{opacity:.8}.special-resource-form .form-footer{display:flex;gap:10px;margin-top:8px}.special-resource-form details p{font-size:11px;margin:6px 0}
+.active-aptitudes{margin:12px 0}.active-aptitude-row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:8px 6px;border-bottom:1px solid #b9ad97;background:#ffffff25}.active-aptitude-row small{display:block;font-size:12px;margin-top:3px}.active-aptitude-row .entry-name{padding:0;border:0;background:transparent;text-align:left;justify-content:flex-start;color:#730b09;font-weight:bold}.activation-controls{display:flex;gap:4px;align-items:center}.activation-controls button{font-size:12px}.activation-status{font-size:12px;color:#66574b}.active-aptitude-row.is-active{border-left:3px solid #58733f;background:#d6dec655}.is-active .activation-status{color:#385326;font-weight:bold}.activation-note{font-size:11px;color:#6d6151;margin:6px 0}
+.resource-meter{width:158px;height:28px;position:relative;overflow:hidden;border:1px solid #8f7d60;border-radius:3px;background:#d9cebb;box-shadow:inset 0 1px 3px #30231730}.resource-meter-fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#a24e16,#d5983e);opacity:.85}.resource-meter>span{position:relative;display:block;text-align:center;line-height:26px;color:#2c1d10;font-weight:bold;font-size:15px;text-shadow:0 1px 2px #fff9}.resource-meter>span small{display:inline;margin:0;font-size:12px}.resource-meter.is-unknown{background:repeating-linear-gradient(135deg,#d9cebb,#d9cebb 6px,#cbbfa9 6px,#cbbfa9 12px)}.resource-meter.is-unknown>span{font-size:12px}.special-resource-row{grid-template-columns:minmax(0,1fr) 158px 28px}
+.activation-controls{flex-wrap:wrap;justify-content:flex-end;max-width:160px}.active-aptitude-row{grid-template-columns:minmax(0,1fr) auto auto}.sns-editor-dialog .dialog-content>label{display:grid;gap:4px;margin:10px 0}.sns-editor-dialog .dialog-content>label:has(input[type=checkbox]){display:flex;align-items:flex-start}.sns-editor-dialog .dialog-content p{line-height:1.4}
+.chakra-capacity-origin{display:block;text-align:center;margin:3px 0 6px}.chakra-capacity-origin button{padding:0;border:0;background:none;color:#e2c58b;font-size:11px;height:auto;min-height:0}
+
+:is(.sns-sheet,.sns-support-sheet) .aptitude-choice-label{display:inline-block;margin-left:.65em;padding:1px 6px;border:1px solid #b5aa94;border-radius:3px;font:600 11px/1.4 Arial,sans-serif;color:#514739;background:#e6e1d5;vertical-align:middle;text-decoration:none}
+
+/* D157: grants share the regular power structure; origin stays explicit. */
+.sns-sheet .granted-source.power-block .power-heading{background:#51442e}
+.sns-sheet .jutsu-controls .jutsu-consult{width:auto;min-width:52px;font-size:11px;padding:0 4px}
+
+/* NPC casting keeps the primary action and description in their own column. */
+.sns-support-sheet .jutsu-columns,.sns-support-sheet .sns-jutsu-row{grid-template-columns:minmax(0,1fr) 48px 74px 94px}
+.sns-support-sheet .jutsu-controls{align-items:center;gap:4px;min-width:0}
+.sns-support-sheet .jutsu-controls .jutsu-use{width:auto;min-width:44px;padding:2px 4px;border:1px solid #9e8e75;background:#f2ebde;color:#34291e;font:700 11px SnsCondensed}
+.sns-support-sheet .jutsu-controls .jutsu-consult{width:18px;min-width:18px;padding:0}
+
+/* NPC generator: one editable preview; no nested stat dialogs. */
+.sns-npc-generator .window-content{padding:0;background:#eee9dc;color:#302a22}
+.sns-npc-generator .npc-generator-body{display:flex;flex-direction:column;min-height:0;height:100%;gap:0;font-size:13px}
+.sns-npc-generator label{display:flex;flex-direction:column;gap:3px;min-width:0;font-weight:600}
+.sns-npc-generator input,.sns-npc-generator select{min-width:0;width:100%;height:29px;color:#24201b;background:#fffdf6;border:1px solid #a49c8e;font:inherit}
+.sns-npc-generator input[type=number]{text-align:center}
+.sns-npc-generator .npc-generator-controls{padding:12px 16px;border-bottom:1px solid #b7ab95;background:#e3ddcf}
+.sns-npc-generator .npc-generator-options{display:grid;grid-template-columns:65px 1fr 1fr 1fr;gap:9px;margin-top:10px}
+.sns-npc-generator .npc-generator-options label:nth-last-child(-n+2){grid-column:span 2}
+.sns-npc-generator .npc-generator-toggles{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.sns-npc-generator .npc-generator-toggles label,.sns-npc-generator .npc-generator-techniques label{flex-direction:row;align-items:center;font-weight:400;gap:7px}
+.sns-npc-generator input[type=checkbox]{width:16px;height:16px;flex:0 0 16px;margin:0}
+.sns-npc-generator .npc-generator-preview{min-height:0;overflow:auto;padding:10px 16px;flex:1}
+.sns-npc-generator .npc-generator-section{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #b7ab95;margin:0 0 9px;padding-bottom:4px;gap:10px}
+.sns-npc-generator h3{font:700 17px Georgia,serif;color:#751c0a;margin:0;border:0}
+.sns-npc-generator .npc-generator-section button{width:auto;flex:0 0 auto;height:26px;padding:2px 8px;font-size:12px}
+.sns-npc-generator .npc-generator-attributes{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.sns-npc-generator .npc-generator-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:10px 0}
+.sns-npc-generator .npc-generator-stats label,.sns-npc-generator .npc-generator-resources label{font-size:12px}
+.sns-npc-generator .npc-generator-resources{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.sns-npc-generator .npc-generator-summary{display:flex;gap:20px;border-block:1px solid #b7ab95;margin:12px 0;padding:6px 0}
+.sns-npc-generator .npc-generator-hint{font-size:12px;line-height:1.4;color:#514838;margin:8px 0}
+.sns-npc-generator .npc-generator-techniques{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.sns-npc-generator .npc-generator-techniques article{border:1px solid #c6bcaa;padding:6px 8px;background:#f6f1e6;border-radius:3px;min-width:0}
+.sns-npc-generator .npc-generator-techniques img{width:23px;height:23px;object-fit:contain;border:0;flex:0 0 23px}
+.sns-npc-generator .npc-generator-techniques strong{font-size:13px}
+.sns-npc-generator details{margin-top:4px;font-size:12px}.sns-npc-generator summary{cursor:pointer;color:#6b2417}
+.sns-npc-generator .npc-generator-description{line-height:1.45;padding-top:6px}.sns-npc-generator .npc-generator-description h2{color:#54271c;font-size:16px}
+.sns-npc-generator .npc-generator-footer{display:flex;align-items:center;gap:8px;border-top:1px solid #b7ab95;padding:9px 16px;background:#e3ddcf}
+.sns-npc-generator .npc-generator-footer button{width:auto;flex:0 0 auto;padding:4px 14px}
+.sns-npc-generator .npc-generator-error{color:#8b1e15;margin:0;flex:1;font-size:12px}
+.sns-npc-generator button.npc-generator-create{background:#252a61;color:white;border:1px solid #171c47}.sns-open-npc-generator{flex-basis:100%}
+@media(max-width:750px){.sns-npc-generator .npc-generator-techniques{grid-template-columns:1fr}.sns-npc-generator .npc-generator-options{grid-template-columns:65px 1fr}.sns-npc-generator .npc-generator-options label:nth-last-child(-n+2){grid-column:auto}}
+
+.sns-npc-generator input[type=checkbox]{appearance:auto;-webkit-appearance:auto;accent-color:#751c0a;padding:0;box-shadow:none;background:initial;border:initial;transform:none}
+.sns-npc-generator input[type=checkbox]::before,.sns-npc-generator input[type=checkbox]::after{display:none!important}
+/* D167: compact builder, purchases and prerequisites in the same preview. */
+.sns-npc-generator .npc-build-v2 .npc-generator-options{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px 10px}
+.sns-npc-generator .npc-build-v2 label{min-width:0}
+.sns-npc-generator .npc-build-v2 select{width:100%;min-width:0}
+.sns-npc-generator .npc-build-v2 .npc-generator-attributes{grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;margin:8px 0}
+.sns-npc-generator .npc-build-v2 .npc-generator-attributes>div{text-align:center;background:#786c5312;border:1px solid #9f927a66;padding:4px}
+.sns-npc-generator .npc-build-v2 .npc-generator-attributes small{display:block;font-size:11px}
+.sns-npc-generator .npc-build-v2 .npc-generator-attributes strong{font-size:19px;color:#29251e}
+.sns-npc-generator .npc-build-v2 .npc-generator-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));font-size:12px;gap:5px 15px}
+.sns-npc-generator .npc-build-v2 .npc-generator-stats strong{float:right}
+.sns-npc-generator .npc-build-budget{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:12px;padding:7px 0;border-bottom:1px solid #a79a86}
+.sns-npc-generator .npc-build-v2 .npc-generator-section{margin-top:12px}
+.sns-npc-generator .npc-build-v2 .npc-generator-section h3{color:#6a1305;font-size:17px;margin:0}
+.sns-npc-generator .npc-build-v2 details>summary{font-size:12px;color:#5e2a12;cursor:pointer}
+.sns-npc-generator .npc-build-purchases article{padding:7px 0;border-bottom:1px solid #a89e8f66}
+.sns-npc-generator .npc-build-purchase-line{display:flex;align-items:center;gap:8px}
+.sns-npc-generator .npc-build-purchase-line>label:first-child{flex:1;display:flex;align-items:center;gap:6px}
+.sns-npc-generator .npc-build-purchase-line>label{display:flex;align-items:center;gap:5px;font-size:12px}
+.sns-npc-generator .npc-build-purchase-line input[type=number]{width:52px}
+.sns-npc-generator .npc-build-purchase-line select{max-width:220px}
+.sns-npc-generator .npc-build-purchases small{display:block;color:#75553b;font-size:11px;margin:3px 0 0 23px}
+.sns-npc-generator .npc-build-additional>.npc-build-purchases{max-height:260px;overflow:auto}
+.sns-npc-generator .npc-build-additional,.sns-npc-generator .npc-build-encounter{border-top:1px solid #ac9e86;padding:10px 0;margin-top:10px}
+.sns-npc-generator .npc-build-event{display:flex;align-items:center;gap:5px;font-size:12px;margin-top:8px}
+.sns-npc-generator .npc-build-effects>label{display:flex;align-items:center;gap:8px;font-size:12px;margin:4px 0}
+.sns-npc-generator .npc-build-effects select{max-width:55%;margin-left:auto}
+.sns-npc-generator .npc-build-v2 .npc-generator-techniques{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px}
+.sns-npc-generator .npc-build-v2 .npc-generator-techniques article{padding:5px 0}
+.sns-npc-generator .npc-build-v2 .npc-generator-techniques img{width:24px;height:24px}
+.sns-npc-generator .npc-build-v2 .npc-generator-techniques strong{font-size:13px}
+.sns-npc-generator .npc-build-v2 .npc-generator-hint{font-size:11px;line-height:1.4;margin:7px 0}
+.sns-npc-generator .npc-build-encounter table{font-size:12px;text-align:center}
+@media(max-width:750px){.sns-npc-generator .npc-build-v2 .npc-generator-options{grid-template-columns:repeat(2,minmax(0,1fr))}.sns-npc-generator .npc-build-v2 .npc-generator-techniques{grid-template-columns:1fr}}
+.sns-npc-generator .npc-build-v2 .npc-generator-options label:nth-last-child(-n+2){grid-column:auto}
+.sns-npc-generator .npc-build-v2 .npc-build-event{flex-direction:row;justify-content:flex-start;font-weight:400}
+/* Keep the encounter reference readable inside Foundry's dark theme. */
+.sns-npc-generator .npc-build-v2 .npc-build-encounter{background:#e6dfce;border:1px solid #a39881;border-radius:4px;padding:10px 12px}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter>summary{font-size:14px;font-weight:700;color:#4c2114}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter p{font-size:13px;line-height:1.5;color:#302a22}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter table{width:100%;margin:10px 0;border-collapse:collapse;font-size:14px;color:#302a22;background:#f8f4e9;border:1px solid #a89a83}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter caption{caption-side:top;text-align:left;padding:6px 0;color:#4c3626;font-size:12px}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter thead{background:#39365b;color:#fff;border:0;text-shadow:none}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter th{color:#fff;font-weight:700;padding:8px 12px;text-align:center;background:transparent}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter td{color:#302a22;padding:7px 12px;border-bottom:1px solid #c9bfaa;background:transparent}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter tbody tr:nth-child(even){background:#e8e0ce}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter tbody tr:nth-child(odd){background:#f8f4e9}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter small{display:block;color:#5c5040;font-size:12px;line-height:1.5}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-generator-options>label{display:grid;grid-template-rows:30px 30px;align-content:start;gap:3px;font-size:13px;line-height:15px}
+.sns-npc-generator .npc-build-v2 input,.sns-npc-generator .npc-build-v2 select{color:#29251f;background:#fffdf7;border-color:#9b907c}
+.sns-npc-generator .npc-build-v2 .npc-generator-section>button{background:#e6decb;border:1px solid #a7997b;color:#493321;text-shadow:none;font-size:12px;padding:4px 9px}
+.sns-npc-generator .npc-build-v2 .npc-build-purchase-line{min-height:30px}
+.sns-npc-generator .npc-build-v2 .npc-build-purchase-line>label:first-child{flex-direction:row;line-height:1.35}
+.sns-npc-generator .npc-build-v2 .npc-build-purchase-line>label:not(:first-child){flex-direction:row;white-space:nowrap;font-weight:400}
+.sns-npc-generator .npc-build-v2 .npc-build-purchases small{font-size:12px;line-height:1.45;color:#6b412b}
+.sns-npc-generator .npc-build-v2 .npc-generator-description{font-size:13px;line-height:1.5;color:#302a22;background:#f7f2e6;padding:9px;border:1px solid #b2a58e}
+.sns-npc-generator .npc-build-v2 .npc-generator-footer{justify-content:flex-end}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-generator-options{align-items:end;gap:9px 10px}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-generator-options>label{display:flex;flex-direction:column;gap:4px;font-size:14px;line-height:17px}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter .npc-generator-options{grid-template-columns:130px 130px 1fr;align-items:end;gap:12px}
+.sns-npc-generator .npc-build-v2 .npc-build-encounter .npc-generator-options>label:last-child{flex-direction:row;align-items:center;justify-content:flex-start;gap:7px;min-height:30px;font-weight:400}
+@media(max-width:650px){.sns-npc-generator .npc-build-v2 .npc-build-encounter .npc-generator-options{grid-template-columns:1fr 1fr}.sns-npc-generator .npc-build-v2 .npc-build-encounter .npc-generator-options>label:last-child{grid-column:1 / -1}}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-build-origin{grid-column:span 2}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-build-element{grid-column:span 2}
+@media(max-width:650px){.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-build-origin{grid-column:1 / -1}.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-build-element{grid-column:auto}}
+.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-generator-options>label.npc-build-element{grid-column:span 2}
+@media(max-width:650px){.sns-npc-generator .npc-build-v2 .npc-generator-controls .npc-generator-options>label.npc-build-element{grid-column:auto}}
+/* D168: inline construction choices */
+.sns-npc-generator .npc-special-options{margin:8px 0;padding:8px;border:1px solid #83745c}.sns-npc-generator .npc-puppet-devices{display:grid;grid-template-columns:1fr 1fr;gap:4px 12px}.sns-npc-generator .npc-puppet-devices>label{display:grid;grid-template-columns:minmax(0,1fr) 104px;align-items:center;gap:6px}.sns-npc-generator .npc-puppet-summary{display:grid;gap:3px;background:#e9e0cd;color:#292116;padding:8px}
+
+/* D170 — retain readable content while reducing persistent chrome. */
+.sns-npc-generator details.npc-generator-controls{flex:0 0 auto;padding:8px 14px;max-height:42%;overflow:auto}
+.sns-npc-generator details.npc-generator-controls>summary{display:list-item;cursor:pointer;font-weight:bold;color:#5c1410;padding:3px 0 7px}
+.sns-npc-generator details.npc-generator-controls>summary small{margin-left:14px;font-weight:normal;color:#4b4339}
+.sns-npc-generator .npc-generator-preview{scroll-padding-block:12px;min-height:180px}
+.sns-npc-generator .npc-generator-section{break-inside:avoid;scroll-margin-top:12px}
+.sns-edit-description{width:auto;margin:6px 0;font-size:12px}
+.power-recipes{padding:8px;border:1px solid #a79a86;margin-bottom:12px}.power-recipes>div{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:4px 0}.power-recipes button{width:auto}
+.sns-mechanical-origin{grid-column:1/-1;margin:2px 0;display:flex;gap:12px;align-items:baseline}.sns-mechanical-origin span{font-size:13px}
+.sns-first-sheet{font:12px/1.4 sans-serif;padding:8px;border:1px solid #786955;background:#29252c;color:#eee2d0}
+.sns-library-error{padding:8px;color:#e4b9a2}.sns-library-error button{width:auto}

@@ -1,0 +1,16 @@
+.sns-requirement-editor .requirements-editor-content{display:flex;flex-direction:column;gap:12px;padding:10px;min-height:0}
+.sns-requirement-editor h2{margin:0;color:#6a120b}
+.sns-requirement-editor details{padding:7px;border:1px solid #9d8c71}
+.sns-requirement-editor details p{margin:4px 0}
+.sns-requirement-editor .requirement-editor-settings,.sns-requirement-editor .requirement-editor-notes,.sns-requirement-editor footer{display:flex;gap:10px;align-items:end}
+.sns-requirement-editor label{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.sns-requirement-editor .requirement-tree{overflow:auto;min-height:110px;max-height:360px}
+.sns-requirement-editor .requirement-node{border-left:2px solid #927852;padding:6px;margin:5px 0;background:#8070520c}
+.sns-requirement-editor .requirement-node-controls{display:flex;gap:7px;align-items:end;flex-wrap:wrap}
+.sns-requirement-editor .requirement-node-controls>select{flex:1;min-width:145px;max-width:100%}
+.sns-requirement-editor .requirement-min{flex:0 0 72px}
+.sns-requirement-editor .requirement-children{padding-left:12px}
+.sns-requirement-editor .requirement-node-controls>button{flex:0 0 30px}
+.sns-requirement-editor footer{position:sticky;bottom:0;margin-top:auto}
+.sns-requirement-editor footer button{flex:1}
+.sns-requirement-editor .hint{font-size:12px;margin:0}

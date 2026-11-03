@@ -1,0 +1,200 @@
+{
+  "id": "sns-conteudo-dev",
+  "title": "SNS · Conteúdo de desenvolvimento",
+  "description": "Regras dos livros SNS e homebrews identificados; conteúdo em consolidação.",
+  "version": "0.1.0",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14"
+  },
+  "authors": [
+    {
+      "name": "Projeto local SNS"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "sns-v14-dev",
+        "type": "system",
+        "compatibility": {
+          "minimum": "0.1.0"
+        }
+      }
+    ]
+  },
+  "packs": [
+    {
+      "name": "ryori",
+      "label": "SNS · Ryōri no Sho · Homebrew",
+      "path": "packs/ryori",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "venenos-basico-historico",
+      "label": "SNS · Venenos do Básico · Histórico",
+      "path": "packs/venenos-basico-historico",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "parceiros",
+      "label": "SNS · Parceiros e invocações",
+      "path": "packs/parceiros",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "parceiros-homebrew",
+      "label": "SNS · Parceiros · Homebrew",
+      "path": "packs/parceiros-homebrew",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "bestiario-homebrew",
+      "label": "SNS · Bestiário · Homebrew",
+      "path": "packs/bestiario-homebrew",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "marionetes",
+      "label": "SNS · Marionetes",
+      "path": "packs/marionetes",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "hijutsus-1",
+      "label": "SNS · Livro de Hijutsus",
+      "path": "packs/hijutsus-1",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "hijutsus-2",
+      "label": "SNS · Livro de Hijutsus · Volume 2",
+      "path": "packs/hijutsus-2",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "guia-avancado",
+      "label": "SNS · Guia Avançado do Shinobi",
+      "path": "packs/guia-avancado",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "enciclopedia",
+      "label": "SNS · Enciclopédia · Homebrew",
+      "path": "packs/enciclopedia",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "manual",
+      "label": "SNS · Manual de Técnicas · Homebrew",
+      "path": "packs/manual",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "bestiario-anime",
+      "label": "SNS · Bestiário · Personagens do anime",
+      "path": "packs/bestiario-anime",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "basico",
+      "label": "SNS · Livro Básico",
+      "path": "packs/basico",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    }
+  ]
+}

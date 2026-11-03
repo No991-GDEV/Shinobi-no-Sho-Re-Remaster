@@ -1,0 +1,291 @@
+
+@font-face{font-family:SnsEczar;src:url("../assets/asset-460b0cca9323.woff2")}
+@font-face{font-family:SnsGelasio;src:url("../assets/asset-cad399e73769.woff2")}
+@font-face{font-family:SnsCondensed;src:url("../assets/asset-158d1ac27ba7.woff2")}
+.sns-sheet{--paper:#eee9e0;--ink:#35312e;--red:#670805;
+--heading:#740800;--gold:#e9d7a1;--line:#b6a895;
+--field:rgba(40,30,20,.1);--nav:#201914;--white:#f7f0df;
+--muted:#655e57;--sidebar:url("../assets/asset-91e3ab8f8925.webp");
+font:14px/1.35 SnsGelasio,Georgia,serif;padding:8px 0;color:var(--ink)}
+.sns-sheet[data-theme="dark"]{--paper:#252322;--ink:#eee5d6;
+--heading:#f4cda5;--line:#756456;--field:rgba(255,240,220,.08);
+--muted:#c4b7a6}
+.sns-sheet *{box-sizing:border-box}
+.sns-sheet button,.sns-sheet input,.sns-sheet select{
+font:inherit;color:inherit;min-width:0;max-width:100%}
+.sns-sheet button{border:1px solid var(--line);
+background:var(--paper);padding:2px 6px;border-radius:1px}
+.sns-sheet button:hover{filter:brightness(1.12)}
+.sns-sheet input,.sns-sheet select{
+border:0;background:var(--field);border-radius:0;
+padding:4px 6px;width:100%;height:27px}
+.sns-sheet input[type=number]{appearance:textfield}
+.sns-sheet input::-webkit-inner-spin-button{appearance:none}
+.sns-sheet .window{background:var(--paper);
+background-image:url("../assets/asset-cf681f04f91a.webp");max-width:850px;margin:auto;
+border:1px solid #171513;box-shadow:0 4px 16px #0003}
+.sns-sheet[data-theme=dark] .window{background-image:none}
+.sns-sheet .window-bar{display:flex;gap:8px;align-items:center;
+flex-wrap:wrap;min-height:28px;padding:3px 8px;
+color:var(--white);background:#171717;
+font:700 12px/1.35 SnsCondensed,Arial,sans-serif}
+.sns-sheet .window-bar .caption{margin-right:auto}
+.sns-sheet .window-bar button{border:0;background:none;
+padding:1px 2px;color:var(--white);display:flex;gap:3px;align-items:center}
+.sns-sheet svg{width:14px;height:14px;flex-shrink:0}
+.sns-sheet .layout{display:grid;
+grid-template-columns:224px minmax(0,1fr);min-height:744px}
+.sns-sheet .sidebar{margin-left:8px;position:relative;
+background-image:var(--sidebar),url("../assets/asset-10d7b0d10925.webp");
+background-repeat:no-repeat;background-position:center -52px,center bottom;
+background-size:100% 100%,100% 52px;padding:0 12px 66px 10px;
+color:var(--gold);display:flex;flex-direction:column;gap:10px}
+.sns-sheet .brand{padding:10px 0 2px;line-height:1;
+text-align:center;color:var(--gold);font-family:SnsEczar,Georgia,serif}
+.sns-sheet .brand strong{display:block;font-size:25px}
+.sns-sheet .brand span{font:700 12px SnsCondensed,Arial;
+letter-spacing:3px}
+.sns-sheet .side-heading{display:flex;justify-content:space-between;
+border-bottom:1px solid var(--gold);align-items:center;
+font:700 13px SnsCondensed,Arial}
+.sns-sheet .side-heading button{padding:0 3px;
+font:700 11px SnsCondensed,Arial;background:var(--white);color:#650600}
+.sns-sheet .resource-grid{display:grid;grid-template-columns:1fr 1.15fr 1fr}
+.sns-sheet .resource-grid label{display:flex;flex-direction:column;
+align-items:center;gap:3px;padding:7px 2px;
+font:700 11px SnsCondensed,Arial}
+.sns-sheet .sidebar .resource-grid input{
+background:none;color:var(--white);text-align:center;
+font:400 28px/1 SnsGelasio,Georgia;height:35px;padding:0}
+.sns-sheet .resource-grid .current{
+border:1px solid var(--gold);border-top:0;border-radius:0 0 2px 2px}
+.sns-sheet .combat-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.sns-sheet .combat{border:0;background:none;padding:4px 0;
+display:flex;align-items:center;gap:6px;text-align:left;
+color:var(--gold);font:700 12px SnsCondensed,Arial}
+.sns-sheet .combat .score{background:url("../assets/asset-85bee3421aa9.webp") center/contain no-repeat;
+width:42px;min-height:49px;display:grid;place-content:center;
+font:400 23px SnsGelasio,Georgia;color:var(--white);flex-shrink:0}
+.sns-sheet .side-line{border-bottom:1px solid #e9d7a155;
+display:flex;align-items:center;gap:6px;padding:5px 0;
+font:700 12px SnsCondensed,Arial}
+.sns-sheet .side-line button{background:none;border:0;
+color:var(--gold);padding:0;display:flex;gap:4px;align-items:center}
+.sns-sheet .side-line .value{margin-left:auto;color:var(--white);
+font:400 20px SnsGelasio,Georgia}
+.sns-sheet .sidebar select{background:#670805;color:var(--white);
+border:1px solid var(--gold);font-size:12px;width:132px}
+.sns-sheet .content{min-width:0;display:flex;flex-direction:column}
+.sns-sheet .hero{min-height:76px;padding:10px 12px;
+background:#710900 url("../assets/asset-1a9e203cf6db.webp") center/cover;
+color:var(--white);display:flex;align-items:center;gap:12px}
+.sns-sheet .hero .identity{flex:1;min-width:0}
+.sns-sheet .hero input{background:#59000044;color:var(--white);
+font:700 25px SnsEczar,Georgia;padding:0 2px;height:36px}
+.sns-sheet .hero small{font:700 11px SnsCondensed,Arial;
+color:var(--gold)}
+.sns-sheet .level{background:url("../assets/asset-85bee3421aa9.webp") center/contain no-repeat;
+width:45px;min-height:54px;text-align:center;flex-shrink:0}
+.sns-sheet .level label{font:700 11px SnsCondensed,Arial}
+.sns-sheet .hero .level input{
+background:none;font:400 25px SnsGelasio,Georgia;height:30px;text-align:center}
+.sns-sheet .navigation{background:var(--nav);color:var(--white);
+display:flex;align-items:center;gap:6px;min-height:23px;padding:0 9px;
+flex-wrap:wrap}
+.sns-sheet .navigation .page-name{margin-right:auto;font-size:13px}
+.sns-sheet .navigation button{width:29px;height:29px;padding:5px;
+border:0;border-radius:50%;color:var(--gold);position:relative;
+background:url("../assets/asset-23385e78a379.webp") center/contain no-repeat;margin:-5px 0}
+.sns-sheet .navigation button.active{
+background-image:url("../assets/asset-f87d62672e1d.webp");box-shadow:0 0 8px #f8df9880}
+.sns-sheet .navigation button:disabled{opacity:.65}
+.sns-sheet .character-body{padding:15px 13px 32px;
+display:flex;flex-direction:column;gap:20px;flex:1}
+.sns-sheet .details{display:grid;grid-template-columns:120px minmax(0,1fr);
+gap:16px;align-items:start;padding-bottom:17px;border-bottom:1px solid var(--line)}
+.sns-sheet .portrait{padding:0;border:1px solid #92877b;
+box-shadow:0 0 0 2px #e1d8cf,0 0 0 3px #a98f39,0 0 7px #0007;
+background:var(--paper);aspect-ratio:1;width:120px}
+.sns-sheet .portrait img{width:100%;height:100%;
+object-fit:contain;display:block}
+.sns-sheet .details-grid{display:grid;grid-template-columns:1fr 1fr;
+gap:11px 8px;min-width:0}
+.sns-sheet .field{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sns-sheet .field-label{font:700 11px SnsCondensed,Arial;
+color:var(--heading);text-transform:uppercase}
+.sns-sheet .field-control{display:flex;align-items:center;background:var(--field)}
+.sns-sheet .field-control input{background:none}
+.sns-sheet .field-control button{border:0;background:none;padding:4px}
+.sns-sheet .demographics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sns-sheet .section-heading{display:flex;align-items:center;
+justify-content:space-between;border-bottom:1px solid var(--line);margin:0 0 8px;
+font:700 18px SnsEczar,Georgia;color:var(--heading)}
+.sns-sheet .section-heading button{display:flex;align-items:center;
+gap:3px;font:700 11px SnsCondensed,Arial;padding:1px 5px}
+.sns-sheet .speeds{display:grid;grid-template-columns:repeat(3,1fr)}
+.sns-sheet .speed{text-align:center;border-right:1px solid var(--line)}
+.sns-sheet .speed:last-child{border:0}
+.sns-sheet .speed span{display:block;font-size:12px;margin-bottom:4px}
+.sns-sheet .speed input{background:none;display:inline;
+width:60px;font-size:21px;text-align:center;padding:0}
+.sns-sheet .attributes{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+.sns-sheet .ability{text-align:center;min-width:0}
+.sns-sheet .ability .abbr{font:700 19px SnsEczar,Georgia;
+color:var(--heading)}
+.sns-sheet .ability .amount{width:100%;height:37px;display:grid;
+place-content:center;font:700 23px SnsGelasio,Georgia;
+background:var(--field) url("../assets/asset-86482d45f704.svg") center/100% 100% no-repeat;
+border:0;padding:0}
+.sns-sheet .ability small{font:700 11px SnsCondensed,Arial;
+color:var(--muted);overflow-wrap:anywhere;display:block;margin-top:4px}
+.sns-sheet .social{display:flex;gap:18px;padding-top:9px}
+.sns-sheet .social .ability{width:82px}
+.sns-sheet .nature-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sns-sheet .preview-footer{border-top:1px solid var(--line);
+font:400 11px SnsCondensed,Arial;display:flex;flex-wrap:wrap;
+align-items:center;gap:8px;padding:5px 9px;color:var(--muted)}
+.sns-sheet .preview-footer span{margin-right:auto}
+.sns-sheet .preview-footer button{font-size:12px;padding:1px 5px}
+.sns-sheet dialog{background:var(--paper);color:var(--ink);
+border:2px solid #a98f39;padding:0;width:420px;max-width:calc(100% - 24px);
+font:14px/1.4 SnsGelasio,Georgia}
+.sns-sheet dialog::backdrop{background:#0006}
+.sns-sheet dialog header{background:var(--red);color:var(--white);
+padding:5px 8px;display:flex;gap:10px;justify-content:space-between;
+align-items:center;font:700 14px SnsCondensed,Arial}
+.sns-sheet dialog header button{border:0;background:none;color:var(--white)}
+.sns-sheet .dialog-body{padding:14px;display:grid;gap:12px}
+.sns-sheet .dialog-body p{margin:0}
+.sns-sheet .dialog-body .field-label{font-size:12px}
+.sns-sheet .dialog-actions{display:flex;justify-content:flex-end;gap:8px}
+.sns-sheet .edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sns-sheet .result{font-size:28px;text-align:center}
+.sns-sheet .empty{padding:22px 0;text-align:center;color:var(--muted)}
+.sns-sheet .hidden{display:none}
+@media(max-width:650px){
+.sns-sheet .layout{grid-template-columns:190px minmax(0,1fr)}
+.sns-sheet .details{grid-template-columns:95px minmax(0,1fr);gap:12px}
+.sns-sheet .portrait{width:95px}
+.sns-sheet .attributes{grid-template-columns:repeat(4,1fr)}
+.sns-sheet .demographics{grid-template-columns:1fr 1fr}
+.sns-sheet .navigation{gap:4px;padding-top:5px;padding-bottom:5px}
+.sns-sheet .brand strong{font-size:21px}
+}
+@media(max-width:480px){
+.sns-sheet .layout{display:flex;flex-direction:column;min-height:0}
+.sns-sheet .sidebar{margin:0 8px;padding-bottom:60px}
+.sns-sheet .sidebar .brand{padding:12px 0}
+.sns-sheet .combat-grid{grid-template-columns:repeat(4,1fr)}
+.sns-sheet .combat{flex-direction:column;text-align:center}
+.sns-sheet .hero input{font-size:22px}
+.sns-sheet .navigation{gap:6px}
+.sns-sheet .details-grid{grid-template-columns:1fr}
+.sns-sheet .character-body{gap:18px}
+.sns-sheet .attributes{grid-template-columns:repeat(4,1fr)}
+}
+@media(pointer:coarse){
+.sns-sheet button,.sns-sheet input,.sns-sheet select{
+min-height:44px;font-size:16px}
+.sns-sheet .navigation button{width:44px;height:44px;margin:0}
+.sns-sheet .resource-grid input{min-height:44px}
+.sns-sheet .details{grid-template-columns:1fr}
+.sns-sheet .details-grid{grid-template-columns:1fr 1fr}
+}
+
+.sns-sheet .brand{padding:8px 0 5px;line-height:0}
+.sns-sheet .brand img{width:185px;max-width:100%;height:auto}
+.sns-sheet .chakra-resource{display:flex;align-items:center;
+justify-content:center;gap:8px;padding:6px 0 12px}
+.sns-sheet .chakra-emblem{width:100px;height:115px;
+position:relative;flex-shrink:0}
+.sns-sheet .chakra-seal{position:absolute;inset:0;
+background:var(--gold);mask:var(--combat-seal) center/contain no-repeat}
+.sns-sheet .sidebar .chakra-emblem input{
+position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+width:37px;height:34px;padding:0;border:0;border-radius:50%;
+background:#550900;color:var(--white);text-align:center;
+font:400 25px/1 SnsGelasio,Georgia}
+.sns-sheet .chakra-caption{position:absolute;bottom:-6px;
+left:0;right:0;text-align:center;font:700 11px SnsCondensed,Arial}
+.sns-sheet .chakra-divider{font:400 28px SnsGelasio,Georgia;
+color:var(--gold);opacity:.65}
+.sns-sheet .chakra-maximum{display:flex;flex-direction:column;
+text-align:center;gap:4px;font:700 11px SnsCondensed,Arial;width:56px}
+.sns-sheet .sidebar .chakra-maximum input{background:none;
+color:var(--white);font:400 28px/1 SnsGelasio,Georgia;
+text-align:center;height:35px;padding:0}
+.sns-sheet .combat .sword-score{background:none;
+position:relative;height:62px;align-content:start;padding-top:4px}
+.sns-sheet .sword-score svg{width:43px!important;height:43px!important;transform:rotate(-45deg);
+color:var(--gold);stroke-width:1.3}
+.sns-sheet .sword-score .score-number{position:absolute;
+left:8px;right:8px;bottom:0;text-align:center;
+font:400 19px/1 SnsGelasio,Georgia;background:none;
+color:var(--white);border-radius:2px}
+.sns-sheet .attributes{grid-template-columns:repeat(9,minmax(0,1fr));gap:6px}
+.sns-sheet .ability .abbr{font-size:18px}
+.sns-sheet .ability small{line-height:1.1}
+@media(max-width:720px){
+.sns-sheet .attributes{grid-template-columns:repeat(3,minmax(0,1fr));
+gap:13px 14px}
+}
+@media(pointer:coarse){
+.sns-sheet .sidebar .chakra-emblem input{width:44px;height:44px;
+font-size:25px}
+}
+
+
+.sns-sheet{--combat-seal:url("../assets/asset-426446a00453.png")}
+.sns-sheet .combat-grid{column-gap:8px;row-gap:6px}
+.sns-sheet .combat{flex-direction:column;text-align:center;gap:2px;
+padding:4px 0}
+.sns-sheet .combat>span:last-child{max-width:100%;min-width:0;
+overflow-wrap:anywhere}
+.sns-sheet .combat .score{position:relative;width:82px;min-height:93px;
+height:93px;display:block;background:none;padding:0}
+.sns-sheet .combat-seal{position:absolute;inset:0;
+background:var(--gold);mask:var(--combat-seal) center/contain no-repeat}
+.sns-sheet .combat-seal.plain{mask-size:150% 150%;
+clip-path:circle(42% at 50% 50%)}
+.sns-sheet .combat .score-number{position:absolute;left:50%;top:50%;
+transform:translate(-50%,-50%);width:34px;height:29px;
+display:grid;place-content:center;border-radius:50%;background:#580d09;
+font:400 23px/1 SnsGelasio,Georgia;color:var(--white);
+font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.4px}
+.sns-sheet .combat .score-number[data-digits="2"]{font-size:21px}
+.sns-sheet .chakra-resource{gap:10px;padding-bottom:15px}
+.sns-sheet .chakra-divider{display:none}
+.sns-sheet .chakra-maximum{position:relative;width:76px;height:115px;
+display:block;flex-shrink:0}
+.sns-sheet .chakra-maximum::before{content:"";position:absolute;
+left:0;top:14px;width:76px;height:87px;background:var(--gold);
+mask:var(--combat-seal) center/contain no-repeat}
+.sns-sheet .chakra-maximum span{position:absolute;
+bottom:-6px;left:0;right:0;font:700 11px/1 SnsCondensed,Arial}
+.sns-sheet .sidebar .chakra-maximum input{
+position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+width:32px;height:29px;padding:0;border:0;border-radius:50%;
+background:#590b08;box-shadow:none;
+font:400 21px/1 SnsGelasio,Georgia;
+font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.4px}
+.sns-sheet .hero .level{position:relative;width:50px;min-height:60px;
+height:60px;display:block}
+.sns-sheet .hero .level label{display:block;position:absolute;
+inset:0;padding:5px 0 0;font:700 10px/12px SnsCondensed,Arial}
+.sns-sheet .hero .level input{position:absolute;top:21px;left:8px;
+width:34px;height:29px;margin:0;padding:0;line-height:29px;
+font:400 25px/29px SnsGelasio,Georgia;background:none;
+letter-spacing:-.4px;font-variant-numeric:lining-nums tabular-nums}
+.sns-sheet .hero .level input[data-digits="2"]{font-size:22px}
+@media(max-width:650px){
+.sns-sheet .combat-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+.sns-sheet .combat-grid{grid-template-columns:1fr 1fr;gap:6px}
+}
+@media(pointer:coarse){
+.sns-sheet .hero .level input{min-height:29px}
+.sns-sheet .sidebar .chakra-maximum input{min-height:29px}
+}
+
+

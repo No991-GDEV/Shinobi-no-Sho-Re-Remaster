@@ -1,0 +1,9 @@
+<div class="check-modifiers-content">
+<p class="editor-note">Registre a precisão total do NPC. Deixe vazio para omitir; marque X quando não puder testar sem treinamento.</p>
+<div class="recorded-skill-header"><span>Perícia</span><span>Precisão</span><span></span><span>Sem treino</span></div>
+<div class="recorded-skill-fields">{{#each rows}}<div class="recorded-skill-field">
+<label for="{{@root.appId}}-{{key}}">{{name}}</label><input id="{{@root.appId}}-{{key}}" name="precision-{{key}}" type="number" step="1" value="{{precision}}" aria-label="Precisão de {{name}}" placeholder="—">
+<div class="step-controls"><button type="button" data-action="step" data-key="{{key}}" data-delta="1" aria-label="Aumentar {{name}}"><i class="fa-solid fa-caret-up"></i></button><button type="button" data-action="step" data-key="{{key}}" data-delta="-1" aria-label="Diminuir {{name}}"><i class="fa-solid fa-caret-down"></i></button></div>
+<label class="untrained-toggle"><input name="untrained-{{key}}" type="checkbox" {{#if untrained}}checked{{/if}} aria-label="{{name}} sem treinamento">X</label></div>{{/each}}</div>
+{{#if legacy}}<details class="legacy-skill-note"><summary>Anotação anterior preservada</summary><p>{{legacy}}</p></details>{{/if}}
+<footer class="stat-editor-footer"><button type="button" data-action="cancel">Cancelar</button><button type="submit" class="roll-submit">Salvar perícias</button></footer></div>

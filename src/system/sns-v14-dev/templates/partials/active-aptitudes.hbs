@@ -1,0 +1,24 @@
+<section class="active-aptitudes">
+<header class="pf-section"><h2>Aptidões ativas</h2><div class="controls">{{#if editable}}{{#if isGM}}<button type="button" data-action="configureActiveAptitude"><i class="fa-solid fa-plus" aria-hidden="true"></i> Configurar</button>{{/if}}{{/if}}</div></header>
+{{#each activeAptitudes}}
+<article class="active-aptitude-row {{#if active}}is-active{{/if}}">
+ {{#if eyeControl}}{{#if @root.editable}}
+ <button type="button" class="activation-eye {{#if active}}is-open{{/if}}" data-action="toggleActiveAptitude" data-activation-id="{{id}}" aria-label="{{eyeLabel}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" data-tooltip="{{eyeLabel}}" {{#unless canToggle}}disabled{{/unless}}><i class="fa-solid {{#if active}}fa-eye{{else}}fa-eye-slash{{/if}}" aria-hidden="true"></i></button>
+ {{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}{{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}
+ <div class="activation-body">
+  <div class="activation-title">{{#if hasSource}}<button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{sourceName}}</button>{{else}}<strong>{{sourceName}}</strong>{{/if}}<span class="activation-status">{{status}}</span></div>
+  <div class="activation-facts">{{#if transplanted}}<span>{{stage}}</span><span>{{upkeep}} chakra/turno</span>{{else}}<span>{{action}}</span><span>Chakra {{costLabel}}</span><span>{{duration}}</span>{{/if}}</div>
+  {{#if maintenance}}<small class="activation-maintenance">{{maintenance}}</small>{{/if}}{{#if note}}<small>{{note}}</small>{{/if}}
+  {{#each problems}}<small class="resource-issue">{{this}}</small>{{/each}}{{#if needsCollapse}}<small class="resource-issue">Chakra 0 · resolva Colapso do Olho.</small>{{/if}}
+ </div>
+ {{#if @root.editable}}<div class="activation-controls">
+  {{#if eyeControl}}
+   {{#if active}}{{#if transplanted}}<button type="button" data-action="payAptitudeUpkeep" data-activation-id="{{id}}" {{#if automaticUpkeep}}disabled{{/if}} {{#unless valid}}disabled{{/unless}}>{{#if automaticUpkeep}}No início do turno{{else}}Pagar 1 turno{{/if}}</button>{{/if}}{{/if}}
+  {{else}}
+   <button type="button" data-action="toggleActiveAptitude" data-activation-id="{{id}}" {{#unless active}}{{#unless valid}}disabled{{/unless}}{{/unless}}>{{#if active}}Desativar{{else}}Ativar{{/if}}</button>
+   {{#unless active}}<button type="button" data-action="configureActiveAptitude" data-activation-id="{{id}}" aria-label="Configurar ativação de {{sourceName}}"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button>{{/unless}}
+  {{/if}}
+ </div>{{/if}}
+</article>
+{{else}}<p class="empty-power">Nenhuma aptidão ativa.</p>{{/each}}
+</section>

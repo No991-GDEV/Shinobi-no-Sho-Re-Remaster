@@ -1,0 +1,61 @@
+/* Adaptation of D022 visuals and PF2e sheet partition; isolated SNS scope. */
+.sns-sheet-app {min-width:640px}
+.sns-sheet-app .window-content {padding:0;overflow:auto}
+.sns-sheet {min-width:0;background:var(--paper);background-image:url("../assets/asset-cf681f04f91a.webp");min-height:100%;--combat-seal:url("../assets/seal.png")}
+.sns-sheet .layout {min-height:760px}
+.sns-sheet .content {min-width:0}
+.sns-sheet .hero .level {background:url("../assets/level.webp") center/contain no-repeat}
+.sns-sheet .sidebar {gap:10px;min-width:0}
+.sns-sheet .sidebar output {font:400 28px SnsGelasio,Georgia;color:var(--white);line-height:35px}
+.sns-sheet .chakra-maximum output {position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:32px;height:29px;border-radius:50%;background:#590b08;font-size:21px;line-height:29px;text-align:center}
+.sns-sheet .combat:disabled {opacity:1;cursor:default}
+.sns-sheet .combat {height:auto;min-height:114px;line-height:1.25}
+.sns-sheet .portrait {height:125px;min-height:125px;padding:0}
+.sns-sheet .window-bar button,.sns-sheet .side-heading button,.sns-sheet .section-heading button {height:auto;min-height:18px;line-height:1.2}
+.sns-sheet .combat .score-number {font-size:21px;width:36px}
+.sns-sheet .hero .level input {font-size:22px}
+.sns-sheet .navigation {gap:5px;flex-wrap:wrap;align-items:center;min-height:32px}
+.sns-sheet .navigation button {border-radius:50%;width:29px;height:29px;display:grid;place-content:center;margin-top:-5px;position:relative}
+.sns-sheet .navigation button i {font-size:13px}
+.sns-sheet .tab-label {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.sns-sheet .panels {max-height:710px;overflow:auto;scrollbar-color:#9b4434 transparent}
+.sns-sheet .tab-pane {padding:14px}
+.sns-sheet .tab-pane[hidden] {display:none!important}
+.sns-sheet .character-body {display:flex;flex-direction:column;gap:18px}
+.sns-sheet .details {grid-template-columns:125px minmax(0,1fr);gap:16px}
+.sns-sheet .details-grid {grid-template-columns:1fr 1fr;gap:8px}
+.sns-sheet .portrait img {object-fit:cover;width:100%;height:125px}
+.sns-sheet .field-label {font-size:11px}
+.sns-sheet .attributes {grid-template-columns:repeat(9,minmax(0,1fr));gap:5px}
+.sns-sheet .ability .abbr {font-size:18px}
+.sns-sheet .ability .amount {font-size:23px}
+.sns-sheet .ability small {font-size:9px}
+.sns-sheet .quiet {font:12px/1.5 SnsCondensed,Arial;color:var(--muted);margin:8px 0}
+.sns-sheet .speeds strong {font:23px SnsGelasio,Georgia}
+.sns-sheet .budget-grid {display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sns-sheet .budget-grid>div {text-align:center;background:var(--field);padding:8px 4px}
+.sns-sheet .budget-grid strong {display:block;font:25px SnsGelasio,Georgia}
+.sns-sheet .budget-grid small {display:block;font:11px SnsCondensed,Arial}
+.sns-sheet .phase-row {display:flex;gap:14px;margin-top:10px;align-items:center}
+.sns-sheet .review {border-left:3px solid #ad6424;background:#c8994e15;padding:10px;font:12px/1.5 SnsCondensed,Arial}
+.sns-sheet .review h3 {margin:0}
+.sns-sheet .skills-grid {display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sns-sheet .skill-row {background:var(--field);padding:8px;border:1px solid var(--line)}
+.sns-sheet .skill-head {display:flex;gap:5px;align-items:center}
+.sns-sheet .skill-head strong {font-size:13px;flex:1}
+.sns-sheet .skill-head button {color:var(--heading);font-size:16px;background:transparent;border:0;font-weight:bold;white-space:nowrap}
+.sns-sheet .skill-detail {display:flex;justify-content:space-between;font:10px SnsCondensed,Arial;margin:6px 0}
+.sns-sheet .rank {background:#3b3a39;color:#fff;padding:2px 4px}
+.sns-sheet .skill-row label,.sns-sheet .action-row label {display:flex;gap:8px;align-items:center;font:12px SnsCondensed,Arial;margin:4px 0}
+.sns-sheet .skill-row label input[type=number] {width:45px;margin-left:auto}
+.sns-sheet details summary {cursor:pointer;font:11px SnsCondensed,Arial;color:var(--heading)}
+.sns-sheet .access {margin-top:14px;font:12px SnsCondensed,Arial}
+.sns-sheet .access label {display:flex;align-items:center;gap:5px}
+.sns-sheet input[type=checkbox] {width:16px;height:16px}
+.sns-sheet .action-row {padding:7px 0;border-bottom:1px solid var(--line)}
+.sns-sheet .action-row h3 {margin:0 0 4px;font:17px SnsGelasio,Georgia}
+.sns-sheet .roll-button {background:var(--nav);color:var(--white);font:700 12px SnsCondensed,Arial}
+.sns-sheet textarea {resize:vertical;width:100%;background:var(--field);border:0;padding:8px;color:var(--ink);font:14px/1.5 SnsGelasio,Georgia}
+.sns-edit-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sns-edit-grid label {display:flex;flex-direction:column;gap:5px}
+@media(max-width:750px) {.sns-sheet .attributes{grid-template-columns:repeat(3,1fr)}.sns-sheet .ability small{font-size:11px}.sns-sheet .details{grid-template-columns:90px 1fr}.sns-sheet .portrait img{height:100px}.sns-sheet .budget-grid{grid-template-columns:1fr 1fr}.sns-sheet .skills-grid{grid-template-columns:1fr}}

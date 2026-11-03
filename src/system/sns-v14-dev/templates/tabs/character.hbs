@@ -1,0 +1,43 @@
+<section class="tab-pane character-body" role="tabpanel" aria-label="Personagem" {{#unless (snsIsTab activeTab "character")}}hidden{{/unless}}>
+  {{#if creation}}{{#if editable}}<div class="sns-creation-entry"><span><i class="fa-solid fa-list-check" aria-hidden="true"></i> Criação do personagem</span><button type="button" data-action="creationGuide">{{#if creationGuideStarted}}Retomar criação{{else}}Começar criação{{/if}}</button></div>{{/if}}{{/if}}
+  {{#unless creation}}{{#if editable}}<div class="sns-creation-entry"><span><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i> Evolução do personagem</span><button type="button" data-action="creationGuide">{{#if evolutionGuideStarted}}Retomar evolução{{else}}Evoluir personagem{{/if}}</button></div>{{/if}}{{/unless}}
+  <div class="details">
+    <button type="button" class="portrait" data-action="portrait" aria-label="Escolher retrato" {{#unless editable}}disabled{{/unless}}><img src="{{actor.img}}" alt="Retrato de {{actor.name}}"></button>
+    <div class="details-grid"><p class="sns-mechanical-origin"><strong>Clã / Hijutsu</strong><span>{{#if mechanicalOrigins}}{{mechanicalOrigins}}{{else}}Nenhuma origem adquirida{{/if}}</span></p>
+      {{#each identity}}
+      <label class="field"><span class="field-label">{{label}}</span><input name="system.identity.{{key}}" value="{{value}}" {{#unless ../editable}}disabled{{/unless}}></label>
+      {{/each}}
+    </div>
+  </div>
+  <div class="character-traits"><div data-trait-picker></div></div>
+  <div class="demographics">
+    {{#each demographics}}<label class="field"><span class="field-label">{{label}}</span><input name="system.identity.{{key}}" value="{{value}}" {{#unless ../editable}}disabled{{/unless}}></label>{{/each}}
+  </div>
+  <section><h2 class="section-heading">Naturezas de chakra</h2><p>{{#if mechanicalNatures}}{{mechanicalNatures}}{{else}}Nenhum elemento adquirido{{/if}}</p><small>Os campos abaixo são anotações; os poderes e as origens são adquiridos em suas abas.</small><div class="nature-row">
+    {{#each natures}}<label class="field"><span class="field-label">{{label}}</span><input name="system.identity.{{key}}" value="{{value}}" {{#unless ../editable}}disabled{{/unless}}></label>{{/each}}
+  </div></section>
+  <section class="identity-records"><header class="pf-section"><h2>Idiomas</h2>{{#if editable}}<button type="button" data-action="editIdentityText" data-field="languages" aria-label="Editar idiomas">EDITAR</button>{{/if}}</header><p>{{#if languages}}{{languages}}{{else}}Não informados{{/if}}</p><header class="pf-section"><h2>Sentidos</h2>{{#if editable}}<button type="button" data-action="editIdentityText" data-field="senses" aria-label="Editar sentidos">EDITAR</button>{{/if}}</header><p>{{#if senses}}{{senses}}{{else}}Não informados{{/if}}</p></section>
+<section>
+    <h2 class="section-heading">Atributos
+      {{#if editable}}<button type="button" data-action="editAttributes"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> EDITAR</button>{{/if}}
+    </h2>
+    <div class="sns-attribute-budgets">{{> "systems/sns-v14-dev/templates/partials/budget-context.hbs" budget=d.budgets.attributes label="Atributos"}}{{> "systems/sns-v14-dev/templates/partials/budget-context.hbs" budget=d.budgets.social label="Sociais"}}</div>
+    <div class="attributes">
+      {{#each attributes}}<div class="ability"><div class="abbr">{{abbr}}</div>
+        <button type="button" class="amount" data-action="rollTest" data-roll="attribute:{{key}}" aria-label="Testar {{label}}">{{value}}</button>
+        <small>{{label}}</small>
+      </div>{{/each}}
+    </div>
+  </section>
+  <section>
+    <h2 class="section-heading">Deslocamento {{#if editable}}<button type="button" data-action="editAuxiliary" aria-label="Editar ajustes de deslocamento e iniciativa">AJUSTES</button>{{/if}}</h2>
+    <div class="speeds">
+      <div class="speed"><span>Andar</span><strong>{{d.movement}} m</strong></div>
+      <div class="speed"><span>Salto máximo</span><strong>{{d.jumpMax}} m</strong></div>
+      <label class="speed"><span>Disponível neste movimento</span><input name="system.movement.available" type="number" step="1" min="0" data-dtype="Number" value="{{movementAvailable}}" placeholder="—" {{#unless editable}}disabled{{/unless}}>m</label>
+    </div>
+    {{#if hasMovementAvailable}}<p class="movement-remainder">Salto disponível: {{d.jump}} m</p>{{/if}}
+  </section>
+
+  <div class="character-tools"><button type="button" data-action="showEvolution"><i class="fa-solid fa-arrow-up-right-dots" aria-hidden="true"></i> Evolução{{#if issueCount}}<span class="notification-badge" title="{{issueCount}} pendência(s) para conferir">{{issueCount}}</span>{{/if}}</button></div>
+</section>

@@ -1,0 +1,213 @@
+/* D143 · Assistente de criação de PJ.
+   Tema coerente com a ficha: pergaminho, vermelho escuro, dourado discreto.
+   Popup redimensionável (760x650), navegação lateral compacta de 8 etapas,
+   sem grandes cartões vazios e sem barra global de pontos. Os orçamentos
+   aparecem SOMENTE nas etapas Pontos e Revisão. */
+
+.sns-creation-wizard .window-content { padding: 0; overflow:hidden; }
+
+.sns-creation-wizard .creation-wizard-frame {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  height: 100%;
+  min-height: 0;
+  background: linear-gradient(180deg, #f4e7c9 0%, #e9d7ac 100%);
+  color: #2a1a12;
+  font-size: 0.95rem;
+}
+
+/* ===== Navegação lateral ===== */
+.sns-creation-wizard .creation-steps {
+  background: #4a1518;
+  border-right: 2px solid #b98a44;
+  color: #f0e2c4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.sns-creation-wizard .creation-steps-head { padding: 10px 12px 8px; border-bottom: 1px solid rgba(185, 138, 68, 0.5); }
+
+.sns-creation-wizard .creation-steps-head h2 {
+  margin: 0;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #e6c887;
+}
+
+.sns-creation-wizard .creation-actor-name {
+  margin: 4px 0 0;
+  font-weight: 600;
+  color: #fff3d6;
+  word-break: break-word;
+}
+
+.sns-creation-wizard .creation-phase { margin: 2px 0 0; font-size: 0.78rem; color: #d8b98a; }
+
+.sns-creation-wizard .creation-step-list { list-style: none; margin: 6px 0; padding: 0; flex: 1; }
+
+.sns-creation-wizard .creation-step-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  background: transparent;
+  border: 0;
+  border-left: 3px solid transparent;
+  color: #e8d7b0;
+  text-align: left;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.sns-creation-wizard .creation-step-item:hover { background: rgba(0, 0, 0, 0.25); color: #fff3d6; }
+.sns-creation-wizard .creation-step-item:disabled { opacity:.55;cursor:default; }
+.sns-creation-wizard .creation-nc-choice { display:flex;align-items:center;gap:14px;margin:10px 0;font-size:14px; }
+.sns-creation-wizard .creation-nc-choice select { width:110px;background:#fbf6e7;color:#301b13; }
+
+.sns-creation-wizard .creation-step-item.active {
+  background: rgba(0, 0, 0, 0.35);
+  border-left-color: #d9a84f;
+  color: #ffe9b8;
+}
+
+.sns-creation-wizard .creation-step-status {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex: none;
+  background: #7a5a33;
+}
+
+.sns-creation-wizard .creation-step-item.status-done .creation-step-status { background: #7fa650; }
+.sns-creation-wizard .creation-step-item.status-pending .creation-step-status { background: #c0392b; }
+.sns-creation-wizard .creation-step-item.status-attention .creation-step-status { background: #d9a84f; }
+
+/* ===== Painel atual ===== */
+.sns-creation-wizard .creation-panel { display: flex; flex-direction: column; min-width: 0; min-height:0; }
+
+.sns-creation-wizard .creation-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 14px;
+  background: rgba(74, 21, 24, 0.12);
+  border-bottom: 1px solid rgba(120, 80, 30, 0.35);
+}
+
+.sns-creation-wizard .creation-panel-head h3 { margin: 0; font-size: 1.05rem; color: #5a161a; }
+
+.sns-creation-wizard .creation-panel-body { padding: 10px 14px 16px; overflow: auto; min-height:0; flex:1; }
+.sns-creation-wizard .creation-nav { display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-top:1px solid #b98a44;margin-top:auto; }
+.sns-creation-wizard .creation-nav button { width:auto;min-width:105px; }
+.sns-creation-wizard .creation-rows .row-name { flex:1;min-width:0; }
+.sns-creation-wizard .creation-rows .creation-mini { flex:0 0 auto;width:auto; }
+.sns-creation-wizard .creation-row { display:flex;align-items:center;gap:8px; }
+
+.sns-creation-wizard .creation-note {
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  background: rgba(120, 80, 30, 0.10);
+  border-left: 3px solid #b98a44;
+  font-size: 0.85rem;
+  color: #3b2a1a;
+}
+
+/* ===== Orçamentos (só nas etapas Pontos e Revisão) ===== */
+.sns-creation-wizard .creation-grant-list { list-style: none; margin: 0 0 10px; padding: 0; }
+.sns-creation-wizard .creation-grant-list li {
+  display: flex; justify-content: space-between; gap: 10px;
+  padding: 3px 6px;
+  border-bottom: 1px dashed rgba(120, 80, 30, 0.35);
+}
+.sns-creation-wizard .grant-label { color: #3b2a1a; }
+.sns-creation-wizard .grant-amount { color: #5a161a; font-weight: 600; }
+
+.sns-creation-wizard .creation-budget-summary { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 10px; }
+.sns-creation-wizard .creation-budget-summary p { margin: 0; font-size: 0.88rem; }
+.sns-creation-wizard .creation-budget-summary strong { color: #5a161a; }
+
+.sns-creation-wizard .creation-budget-inline { margin: 0 0 8px; font-size: 0.88rem; }
+
+/* ===== Listas compactas ===== */
+.sns-creation-wizard .creation-rows { list-style: none; margin: 4px 0 10px; padding: 0; }
+.sns-creation-wizard .creation-rows li {
+  display: flex; align-items: center; gap: 8px;
+  padding: 3px 4px;
+  border-bottom: 1px solid rgba(120, 80, 30, 0.2);
+  font-size: 0.86rem;
+}
+.sns-creation-wizard .creation-rows img { width: 22px; height: 22px; flex: none; }
+.sns-creation-wizard .creation-power-block { margin: 8px 0; padding: 6px 8px; background: rgba(120, 80, 30, 0.08); border-radius: 4px; }
+.sns-creation-wizard .creation-power-block h4 { margin: 0 0 6px; color: #5a161a; }
+.sns-creation-wizard .creation-panel-body h4 { margin: 10px 0 4px; color: #5a161a; font-size: 0.92rem; }
+
+.sns-creation-wizard .creation-skill-list { list-style: none; margin: 6px 0 10px; padding: 0; }
+.sns-creation-wizard .creation-skill-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 2px 4px;
+  border-bottom: 1px solid rgba(120, 80, 30, 0.2);
+  font-size: 0.86rem;
+}
+.sns-creation-wizard .creation-skill-list .row-name { flex: 1; }
+.sns-creation-wizard .row-detail { color: #6b4a28; font-size: 0.8rem; }
+
+.sns-creation-wizard .creation-req-list { list-style: none; margin: 4px 0 10px; padding: 0; font-size: 0.85rem; }
+.sns-creation-wizard .creation-req-list li { display: flex; flex-wrap: wrap; gap: 8px; padding: 2px 4px; }
+.sns-creation-wizard .creation-req-list .req-ok .row-name::after { content: "· atendidos"; color: #4c6b2f; font-size: 0.78rem; }
+.sns-creation-wizard .creation-req-list .req-unmet .row-name::after { content: "· não atendidos"; color: #a03024; font-size: 0.78rem; }
+.sns-creation-wizard .creation-req-list .req-unknown .row-name::after { content: "· conferir manualmente"; color: #8a6a2a; font-size: 0.78rem; }
+
+/* ===== Pendências e avisos ===== */
+.sns-creation-wizard .creation-pending, .sns-creation-wizard .creation-warnings { list-style: none; margin: 6px 0; padding: 0; font-size: 0.84rem; }
+.sns-creation-wizard .creation-pending li { color: #8a2018; padding: 2px 4px; }
+.sns-creation-wizard .creation-pending li::before { content: "• "; }
+.sns-creation-wizard .creation-warnings li { color: #7a5a1a; padding: 2px 4px; }
+.sns-creation-wizard .creation-warnings li::before { content: "◦ "; }
+.sns-creation-wizard .creation-ok { color: #3f5a2a; font-size: 0.86rem; }
+.sns-creation-wizard .creation-empty { color: #7a6547; font-style: italic; font-size: 0.85rem; margin: 4px 0; }
+
+/* ===== Botões ===== */
+.sns-creation-wizard .creation-action, .sns-creation-wizard .creation-mini {
+  background: #5a161a;
+  color: #f0e2c4;
+  border: 1px solid #b98a44;
+  border-radius: 3px;
+  padding: 4px 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.sns-creation-wizard .creation-mini { padding: 2px 8px; font-size: 0.8rem; }
+.sns-creation-wizard .creation-action:hover, .sns-creation-wizard .creation-mini:hover { background: #742026; color: #ffe9b8; }
+.sns-creation-wizard .creation-action:disabled { opacity: 0.45; cursor: not-allowed; }
+.sns-creation-wizard .creation-actions-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0; }
+.sns-creation-wizard .creation-footer-actions { display: flex; gap: 10px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(120, 80, 30, 0.35); }
+
+/* ===== Busca de perícias ===== */
+.sns-creation-wizard .creation-search {
+  margin-left: auto;
+  border: 1px solid rgba(120, 80, 30, 0.45);
+  border-radius: 3px;
+  background: rgba(255, 250, 235, 0.85);
+  padding: 3px 8px;
+  font-size: 0.82rem;
+}
+
+/* Direct point allocation inside the guide. */
+.sns-creation-wizard .creation-attribute-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px 12px; }
+.sns-creation-wizard .creation-stat-row { display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:36px;border-bottom:1px solid #b7a887; }
+.sns-creation-wizard .creation-stat-name { font-size:13px; }
+.sns-creation-wizard .creation-stat-name abbr { display:block;font-size:10px;line-height:12px;color:#7a6547;text-decoration:none; }
+.sns-creation-wizard .creation-counter { display:inline-flex;align-items:center;gap:2px;flex:0 0 auto; }
+.sns-creation-wizard .creation-counter input { width:40px;height:28px;padding:1px 2px;text-align:center;font-size:15px;font-weight:600;color:#301b13;background:#fbf6e7;border:1px solid #b7a887;border-radius:2px;appearance:textfield; }
+.sns-creation-wizard .creation-counter input::-webkit-inner-spin-button { -webkit-appearance:none;margin:0; }
+.sns-creation-wizard .creation-stepper { width:25px;height:28px;min-height:0;flex:0 0 auto;padding:0;line-height:24px;font-size:17px;color:#5a161a;background:#f0e7d4;border:1px solid #b7a887; }
+.sns-creation-wizard .creation-stepper:disabled { opacity:.35;cursor:default; }
+.sns-creation-wizard .creation-skill-row { min-height:35px; }
+.sns-creation-wizard .creation-skill-row .row-name { font-size:13px; }
+.sns-creation-wizard .creation-skill-row .row-detail { width:52px;text-align:right;font-size:12px; }
+.sns-creation-wizard .creation-save-hint { color:#6b4a28;font-size:12px;line-height:1.4;margin:10px 0 6px; }
+.sns-creation-wizard .creation-derived { font-size:13px;margin:12px 0 4px; }
+.sns-creation-wizard .creation-budget-summary,.sns-creation-wizard .creation-budget-inline { position:sticky;top:-10px;z-index:1;background:#eedeBC;padding:9px 0;border-bottom:1px solid #b7a887; }
+@media (max-width:700px) { .sns-creation-wizard .creation-attribute-grid { grid-template-columns:1fr; } }

@@ -1,0 +1,37 @@
+<aside class="sidebar" aria-label="Recursos e combate">
+  <div class="brand"><img src="{{basePath}}/assets/logo.png" alt="Naruto Shinobi no Sho"></div>
+  <section>
+    <div class="side-heading">Vitalidade{{#if editable}}<button type="button" class="sns-rest-button" data-action="restActor" aria-label="Descanso completo" title="Descanso completo · 8 horas: recuperar Vitalidade e Chakra e encerrar efeitos de curta duração"><i class="fa-solid fa-bed" aria-hidden="true"></i><span>Descansar</span></button>{{/if}}</div>
+    <div class="resource-grid">
+      <label>TEMP.<input aria-label="Vitalidade temporária" name="system.resources.vitality.temp" type="number" step="1" min="0" data-dtype="Number" value="{{source.resources.vitality.temp}}" {{#unless editable}}disabled{{/unless}}></label>
+      <label class="current">ATUAL<input aria-label="Vitalidade atual" name="system.resources.vitality.value" type="number" step="1" data-dtype="Number" value="{{vitality}}" placeholder="—" {{#unless editable}}disabled{{/unless}}></label>
+      <label>MÁX.<output aria-label="Vitalidade máxima">{{d.vitalityMax}}</output></label>
+    </div>
+  </section>
+  <section>
+    <div class="side-heading">Chakra</div>
+    <div class="chakra-resource">
+      <div class="chakra-emblem"><span class="chakra-seal" aria-hidden="true"></span>
+        <input aria-label="Chakra atual" name="system.resources.chakra.value" type="number" step="1" data-dtype="Number" value="{{chakra}}" placeholder="—" {{#unless editable}}disabled{{/unless}}>
+        <span class="chakra-caption">ATUAL</span>
+      </div>
+      <div class="chakra-maximum"><span>MÁXIMO</span><output aria-label="Chakra máximo">{{d.chakraMax}}</output></div>
+    </div>
+    {{#each d.resourceEffects}}<small class="chakra-capacity-origin"><button type="button" data-action="editEntry" data-item-id="{{sourceId}}">Transplante: {{@root.d.chakraBaseMax}} → {{@root.d.chakraMax}}</button></small>{{/each}}
+  </section>
+  <div class="side-heading">Habilidades de combate
+    {{#if editable}}<button type="button" data-action="editCombat" aria-label="Editar habilidades de combate">AJUSTES</button>{{/if}}
+  </div>
+  <div class="combat-grid">
+    {{#each combat}}
+    <button type="button" class="combat" {{#unless fixed}}data-action="rollTest" data-roll="{{key}}"{{/unless}} {{#if fixed}}disabled{{/if}} aria-label="{{label}}: precisão {{precision}}" title="Normal {{normal}} · {{modifier.origin}} {{modifier.value}}">
+      <span class="score"><span class="combat-seal {{#if plain}}plain{{/if}}" aria-hidden="true"></span><span class="score-number">{{precision}}</span></span>
+      <span>{{label}}</span>
+    </button>
+    {{/each}}
+  </div>
+  <div class="side-heading">Defesas</div>
+  <div class="side-line">Reação de esquiva <span class="value">{{d.fixedDodge}}</span></div>
+  <div class="side-heading">Iniciativa</div>
+  <div class="side-line"><button type="button" data-action="rollTest" data-roll="initiative"><i class="fa-solid fa-dice" aria-hidden="true"></i> Rolar</button><span class="value">1d8 + {{d.initiative}}</span></div>
+</aside>

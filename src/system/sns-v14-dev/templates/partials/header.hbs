@@ -1,0 +1,9 @@
+<header class="hero">
+  <div class="identity">
+    <input aria-label="Nome do personagem" name="name" value="{{actor.name}}" {{#unless editable}}disabled{{/unless}}>
+    <small>FICHA NINJA · SNS</small>
+  </div>
+  <div class="level">
+    <label>NC<button type="button" class="sns-level-button" data-action="showEvolution" aria-label="Nível de campanha {{source.nc}} · abrir evolução" data-tooltip="Abrir evolução e conferir os novos pontos">{{source.nc}}</button></label>
+  </div>
+</header>

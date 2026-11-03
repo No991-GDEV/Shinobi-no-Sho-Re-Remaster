@@ -1,0 +1,316 @@
+/* PF2e8.6.0 styles/pf2e.css item sheet section, Apache2.0. Re-scoped to SNS ApplicationV2; no PF rules. */
+.sns-item-sheet {
+  --animate-delay: 1s;
+  --animate-duration: 1s;
+  --animate-repeat: 1;
+  --form-field-height: 1.5rem;
+}
+.sns-item-sheet input[type=checkbox] {
+  flex: 0 0 var(--font-size-20);
+  height: var(--font-size-20);
+  margin: var(--space-3) var(--space-5);
+  width: var(--font-size-20);
+}
+.sns-item-sheet select {
+  height: var(--form-field-height);
+}
+.sns-item-sheet h3 {
+  border-bottom: none;
+}
+.sns-item-sheet button > i {
+  margin-right: 0;
+}
+.sns-item-sheet .window-content {
+  padding: var(--space-8);
+}
+.sns-item-sheet .document-shell {
+  display: flex;
+  flex-flow: column nowrap;
+  font-family: var(--sans-serif);
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+}
+.sns-item-sheet .document-shell.locked a[data-action] {
+  color: var(--color-disabled);
+  pointer-events: none;
+}
+.sns-item-sheet .document-shell h2,
+.sns-item-sheet .document-shell h3,
+.sns-item-sheet .document-shell h4 {
+  font-weight: 500;
+}
+.sns-item-sheet .document-shell > header img {
+  border: none;
+  object-fit: contain;
+}
+.sns-item-sheet .document-shell > header .details {
+  align-items: baseline;
+  column-gap: 0.33rem;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.sns-item-sheet .document-shell > header .details input,
+.sns-item-sheet .document-shell > header .details .level {
+  font: 700 var(--font-size-36) var(--serif-condensed);
+}
+.sns-item-sheet .document-shell > header .details .tags-input {
+  height: auto;
+}
+.sns-item-sheet .document-shell > header input[type=text],
+.sns-item-sheet .document-shell > header input[type=number],
+.sns-item-sheet .document-shell > header .tags-input {
+  color: var(--color-text-dark-input);
+  border: none;
+  height: var(--font-size-34);
+}
+.sns-item-sheet .document-shell > header input[type=text]:hover, .sns-item-sheet .document-shell > header input[type=text]:focus,
+.sns-item-sheet .document-shell > header input[type=number]:hover,
+.sns-item-sheet .document-shell > header input[type=number]:focus,
+.sns-item-sheet .document-shell > header .tags-input:hover,
+.sns-item-sheet .document-shell > header .tags-input:focus {
+  box-shadow: none;
+}
+.sns-item-sheet .document-shell > header input[name=name] {
+  flex: 1;
+}
+.sns-item-sheet .document-shell > header .level {
+  flex: 0;
+  white-space: nowrap;
+  margin-left: auto;
+}
+.sns-item-sheet .document-shell > header .level i {
+  font-size: 0.6em;
+  vertical-align: middle;
+}
+.sns-item-sheet .document-shell > header .level input {
+  width: 40px;
+  text-align: center;
+}
+.sns-item-sheet .document-shell > header .action-glyph {
+  font-size: 2.125rem;
+}
+.sns-item-sheet .document-shell > header .paizo-style {
+  border: none;
+  flex-basis: 100%;
+  margin-top: 0.125rem;
+  padding: 0;
+  margin-bottom: 0;
+}
+.sns-item-sheet .document-shell > nav {
+  align-items: baseline;
+  border-bottom: 1px solid var(--secondary-background);
+  border-top: 1px solid var(--secondary-background);
+  display: flex;
+  flex: 0 0 1.75rem;
+  line-height: 1.75rem;
+  margin: var(--space-4) 0;
+}
+.sns-item-sheet .document-shell > nav a {
+  flex: 1 1 auto;
+}
+.sns-item-sheet .document-shell > nav a.active {
+  text-decoration: underline;
+}
+.sns-item-sheet .document-shell > nav .sidebar-summary {
+  flex: 0 0 13.75rem;
+  margin: 0;
+  text-align: center;
+}
+.sns-item-sheet .document-shell > nav > .tabs {
+  font-weight: 500;
+  margin: 0;
+  flex: 1;
+  align-items: baseline;
+}
+.sns-item-sheet .document-shell > nav > .tabs > a {
+  font-size: var(--font-size-12);
+  text-align: center;
+}
+.sns-item-sheet .document-shell > nav > .tabs > a:last-of-type {
+  padding-right: 0.25rem;
+}
+.sns-item-sheet .document-shell > nav > .tabs > a.active {
+  font-weight: 600;
+}
+.sns-item-sheet .document-shell .mce-panel span {
+  display: inherit;
+}
+.sns-item-sheet .document-shell.editable .rollable:hover {
+  color: var(--text-dark);
+  text-shadow: 0 0 10px #00005a;
+  cursor: pointer;
+}
+.sns-item-sheet .document-shell .tab {
+  flex: 1;
+}
+.sns-item-sheet .document-shell:has(.tab.active.rules) .sidebar-summary {
+  visibility: hidden;
+}
+.sns-item-sheet .document-shell:has(.tab.active.rules) section.sidebar {
+  display: none;
+}
+.sns-item-sheet .document-shell .tag-legacy {
+  border: 1px solid var(--color-border-light-2);
+  border-radius: 3px;
+  float: left;
+  font-size: var(--font-size-10);
+  font-weight: 500;
+  line-height: 1rem;
+  margin: 0 var(--space-2) var(--space-2) 0;
+  padding: 0 var(--space-3);
+  white-space: normal;
+}
+.sns-item-sheet .document-shell p.hint {
+  font-family: var(--font-primary);
+  font-weight: normal;
+}
+.sns-item-sheet .document-shell .item-controls {
+  align-items: baseline;
+  display: flex;
+  gap: var(--space-2);
+  margin: 0 0 0 var(--space-4);
+}
+.sns-item-sheet .document-shell i.fa-info-circle {
+  cursor: help;
+}
+.sns-item-sheet .document-shell .sheet-content {
+  display: flex;
+  flex-flow: row wrap;
+  height: calc(100% - 35px);
+  justify-content: start;
+  overflow: hidden;
+  width: 100%;
+}
+.sns-item-sheet .document-shell .sheet-content > * {
+  flex: 1;
+}
+.sns-item-sheet .document-shell .sheet-content label {
+  display: block;
+}
+.sns-item-sheet .document-shell .sheet-content input {
+  color: var(--color-text-dark-input);
+}
+.sns-item-sheet .document-shell .sheet-content input[type=number],
+.sns-item-sheet .document-shell .sheet-content input[type=text] {
+  width: calc(100% - 2px);
+}
+.sns-item-sheet .document-shell .sheet-content input[type=checkbox],
+.sns-item-sheet .document-shell .sheet-content input[type=number],
+.sns-item-sheet .document-shell .sheet-content input[type=text],
+.sns-item-sheet .document-shell .sheet-content select {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--color-border-light-2);
+}
+.sns-item-sheet .document-shell .sheet-content button:hover:not(:disabled, .inline-control), .sns-item-sheet .document-shell .sheet-content button:focus,
+.sns-item-sheet .document-shell .sheet-content input:not([type=range]):hover:not(:disabled, .inline-control),
+.sns-item-sheet .document-shell .sheet-content input:not([type=range]):focus,
+.sns-item-sheet .document-shell .sheet-content select:hover:not(:disabled, .inline-control),
+.sns-item-sheet .document-shell .sheet-content select:focus {
+  border-color: var(--color-border-dark-1);
+  box-shadow: 0 0 4px var(--color-pf-secondary);
+}
+.sns-item-sheet .document-shell .sheet-content input:read-only,
+.sns-item-sheet .document-shell .sheet-content input:disabled,
+.sns-item-sheet .document-shell .sheet-content select:disabled {
+  color: var(--color-disabled);
+  opacity: 0.8;
+}
+.sns-item-sheet .document-shell .sheet-content > section.sidebar,
+.sns-item-sheet .document-shell .sheet-content > .sheet-body {
+  height: calc(100% - var(--space-10));
+}
+.sns-item-sheet .document-shell .sheet-content button.inline-control {
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  display: flex;
+  height: var(--button-size);
+  line-height: normal;
+  margin: unset;
+  text-decoration: none;
+  transition: none;
+  width: auto;
+}
+.sns-item-sheet .document-shell .sheet-content button.inline-control:hover {
+  text-shadow: 0 0 8px var(--color-shadow-primary);
+}
+.sns-item-sheet .document-shell .sheet-content button.inline-control:disabled {
+  --button-text-color: var(--color-text-subtle);
+  text-shadow: none;
+}
+.sns-item-sheet .document-shell .sheet-content button.icon {
+  flex: 0 0 var(--button-size);
+  width: var(--button-size);
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar {
+  flex: 0 0 13.75rem;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar > * {
+  flex: 1;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .item-summary,
+.sns-item-sheet .document-shell .sheet-content section.sidebar .tags-title {
+  font-family: var(--serif-condensed);
+  font-weight: 700;
+  flex: 0 0 1.5em;
+  line-height: 1.5em;
+  text-align: center;
+  font-size: var(--font-size-18);
+  color: var(--color-text-dark-3);
+  margin: 0.5em 0 0;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .item-tags,
+.sns-item-sheet .document-shell .sheet-content section.sidebar ul.tags {
+  flex: 0;
+  list-style: none;
+  margin-top: 0;
+  padding-left: 0;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .item-tags li,
+.sns-item-sheet .document-shell .sheet-content section.sidebar ul.tags li {
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .inventory-details {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: var(--space-4);
+  overflow: hidden auto;
+  padding: var(--space-8) var(--space-4) 0 0;
+  scrollbar-gutter: stable;
+}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .inventory-details .form-group {
+  column-gap: var(--space-4);
+  flex-wrap: nowrap;
+  margin: 0;
+  padding: 0 var(--space-2) 0 0;
+}
+
+.item-requirements{margin:12px 0;padding:8px;border:1px solid #b4a68c;background:#ffffff22}
+.item-requirements h4{margin:0 0 6px}
+.requirement-row{display:flex;justify-content:space-between;gap:12px;padding:3px 0}
+.requirement-row.unmet strong{color:#860c08}
+.requirement-row.met strong{color:#315b35}
+.item-rule-binding{margin:8px 0}
+.item-rule-binding label{display:flex;align-items:center;gap:10px;padding:8px 0}
+.narrative-note{margin:10px 0}
+
+.sns-item-sheet .item-requirements h4{color:#6f110b;background:none;font:700 15px/1.4 SnsGelasio,Georgia;text-shadow:none}
+
+.book-text-preview{max-height:380px;overflow:auto;padding:8px;border:1px solid #ac9673}
+.book-text-preview h3{font-size:15px;color:inherit}
+.book-variant{margin:6px 0}
+
+.sns-document .aptitude-choice-label{display:inline-block;margin-left:.65em;padding:1px 6px;border:1px solid #b5aa94;border-radius:3px;font:600 11px var(--font-primary);color:#514739;background:#e6e1d5;vertical-align:middle}.sns-document .choice-correction{width:auto;margin:0 0 8px;font-size:11px}.sns-document .choice-precision-note{font-size:12px;color:#514739;border-left:2px solid #b5aa94;padding-left:8px}
+
+.sns-item-sheet .personal-item-notes{margin-top:12px;padding-top:8px;border-top:1px solid #b7ae9e}.sns-item-sheet .personal-item-notes textarea{display:block;width:100%;resize:vertical}.sns-item-sheet .personal-item-notes small{color:#5d5348}
+
+.applied-state{padding:8px;margin:7px 0;border:1px solid #b7ae9e;background:#ffffff24}.applied-state>header{display:flex;align-items:center;gap:10px}.applied-state>header>strong,.applied-state>header>button:first-child{flex:1;text-align:left}.applied-state p{margin:5px 0}.applied-state details{margin-top:6px}.applied-state small{display:block}.applied-states h2{font-size:16px;color:#700000}
+
+.sns-item-sheet prose-mirror table{font-size:12px;color:#29241e}.sns-item-sheet prose-mirror table th{background:#655b4e;color:#fff5de;font-weight:700}.sns-item-sheet prose-mirror table td{color:#29241e;background:#f1ede2}.sns-item-sheet prose-mirror table th,.sns-item-sheet prose-mirror table td{padding:4px;border:1px solid #a89c88}

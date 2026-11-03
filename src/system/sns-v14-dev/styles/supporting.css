@@ -1,0 +1,194 @@
+/* D102. Composition follows the local PF2e actor templates and the user's 17 screenshots.
+ * SNS fields, manual records and ApplicationV2 lifecycle remain independent. */
+.sns-support-sheet .window-content{padding:0}
+.sns-support-sheet *{box-sizing:border-box}
+.sns-support-sheet input[type=number]{appearance:textfield}
+.sns-support-sheet input::-webkit-inner-spin-button{appearance:none}
+.sns-support-sheet .actor-layout{display:flex;height:100%;min-height:0;gap:10px;overflow:hidden;padding:8px}
+.sns-support-sheet .profile-image{display:block;flex:none;width:100%;height:150px;padding:0}
+.sns-support-sheet .profile-image img{height:100%;width:100%;object-fit:contain;border:0}
+.sns-support-sheet .npc-sidebar{flex:0 0 156px;overflow:auto;overflow-x:hidden;min-height:0;scrollbar-width:thin}
+.sns-support-sheet .npc-sidebar>.profile-image{margin-bottom:8px}
+.sns-support-sheet .npc-body,.sns-support-sheet .auxiliary-body{display:flex;flex:1;flex-direction:column;min-width:0;height:100%;overflow:hidden}
+.sns-support-sheet .npc-header{flex:none;display:flex;flex-direction:column;gap:3px}
+.sns-support-sheet .name-line{display:flex;align-items:center;gap:4px}
+.sns-support-sheet .name-line input{height:34px;font:700 30px SnsCondensed,Arial;border:0;box-shadow:none;background:#00000009;width:100%;padding:0 4px}
+.sns-support-sheet .name-line span{font:700 25px SnsCondensed;flex:none}
+.sns-support-sheet .name-line input[name='system.nc']{width:40px;flex:none;text-align:center}
+.sns-support-sheet .identity-line{display:flex;gap:6px}
+.sns-support-sheet .identity-line input{height:22px;border:0;border-radius:0;background:#00000012}
+.sns-support-sheet .npc-blurb{height:22px;border:0;border-radius:0;background:#00000010}
+.sns-support-sheet .sheet-tabs{display:flex;flex:none;align-items:center;justify-content:space-around;border-top:1px solid #aea693;border-bottom:1px solid #aea693;margin:7px 0 10px;min-height:30px}
+.sns-support-sheet .sheet-tabs button{font:14px SnsCondensed,Arial;padding:5px;line-height:20px;color:#66645b}
+.sns-support-sheet .sheet-tabs button.active{color:#680500;font-weight:700;text-shadow:0 0 6px #9b201960}
+.sns-support-sheet .actor-panels{flex:1;min-height:0;overflow:auto;padding:0 6px 10px 0;scrollbar-width:thin}
+.sns-support-sheet .subsection{margin:0 0 12px}
+.sns-support-sheet .subsection header{display:flex;align-items:baseline;border-bottom:1px solid #aaa18f;padding:0 2px 3px;gap:3px;font:700 14px SnsRoboto}
+.sns-support-sheet .subsection header label{flex:1;margin:0;white-space:nowrap;font-weight:400}
+.sns-support-sheet .subsection header strong{font-size:18px}
+.sns-support-sheet .subsection>input{width:100%;height:22px;border:0;background:#00000009;border-radius:0}
+.sns-support-sheet .subsection header>input{width:35px}
+.sns-support-sheet .hit-points{display:flex;align-items:center;flex:none;gap:2px}
+.sns-support-sheet .hit-points input{width:26px;height:22px;padding:0;font:700 14px SnsRoboto;text-align:center;background:#0000000a;border:0;box-shadow:none}
+.sns-support-sheet .resource header label{font-size:13px}
+.sns-support-sheet .sidebar-speed{display:flex;align-items:center;gap:5px}
+.sns-support-sheet .sidebar-speed input{width:45px;height:22px;border:0}
+.sns-support-sheet .labeled-field{display:flex;flex-direction:column;gap:3px;font:700 12px SnsRoboto;line-height:1.4;margin:0}
+.sns-support-sheet .labeled-field input{width:100%;height:25px;border:0;border-radius:0;background:#0000000d;box-shadow:none;font-weight:400}
+.sns-support-sheet .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sns-support-sheet .section-container{padding:0;margin:0 0 8px;border:1px solid #710000;border-radius:3px;overflow:hidden}
+.sns-support-sheet .section-header{display:flex;align-items:center;justify-content:space-between;background:#690000;padding:4px 7px;min-height:28px;color:#f8f5eb;border:0}
+.sns-support-sheet .section-header h4{font:700 13px SnsRoboto,Arial;text-transform:uppercase;margin:0;border:0;color:inherit;flex:1}
+.sns-support-sheet .section-header button{font:700 12px SnsRoboto;min-width:16px;height:18px;color:inherit}
+.sns-support-sheet .section-header .entry-controls{display:flex;gap:5px;flex:none;width:35px;justify-content:end}
+.sns-support-sheet .section-body{padding:5px}
+.sns-support-sheet .entries>.section-body:empty{min-height:8px;padding:0}
+.sns-support-sheet .combat-ratings .section-body{display:flex;justify-content:space-around;gap:4px}
+.sns-support-sheet .combat-ratings label{font:700 12px SnsCondensed;text-align:center;flex:1}
+.sns-support-sheet .combat-ratings label>div{display:flex;align-items:center;justify-content:center}
+.sns-support-sheet .combat-ratings input{width:35px;text-align:center;background:#00000008;border:0;box-shadow:none;font-size:18px}
+.sns-support-sheet .npc-main-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:5px}
+.sns-support-sheet .npc-attributes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+.sns-support-sheet .npc-attributes label{display:flex;align-items:center;gap:3px;font:700 12px SnsRoboto}
+.sns-support-sheet .npc-attributes input{min-width:0;width:100%;text-align:center;height:21px;border:0;border-radius:0;background:#00000008;font:14px SnsRoboto}
+.sns-support-sheet .npc-main-grid>.section-container>.section-body>input,.sns-support-sheet .npc-body .section-body>input{width:100%;border:0;border-radius:0;background:#00000009}
+.sns-support-sheet .ability-entry{display:flex;gap:8px;border-bottom:1px solid #b4a38d70;padding:5px 0;align-items:center}
+.sns-support-sheet .ability-entry:last-child{border-bottom:0}
+.sns-support-sheet .ability-entry>img{width:32px;height:32px;object-fit:contain;border:1px solid #b8a584;border-radius:0}
+.sns-support-sheet .ability-content{flex:1;min-width:0}
+.sns-support-sheet .entry-title{font:700 15px SnsRoboto;text-align:left}
+.sns-support-sheet .ability-content .tags{margin:1px 0;min-height:0}
+.sns-support-sheet .activation-facts{font:12px/1.4 SnsRoboto;color:#62594e;margin:2px 0}
+.sns-support-sheet .inline-control{flex:none;width:18px;font-size:12px!important}
+.sns-support-sheet .attack-button{display:inline-block!important;background:#171f69!important;color:#fff!important;font:700 10px SnsRoboto!important;padding:3px 6px!important;margin:3px 0!important}
+.sns-support-sheet .notes-section h4{font:700 12px SnsRoboto;text-transform:uppercase;border:0;color:#690000;margin:0 0 8px}
+.sns-support-sheet .notes-section{margin:6px 0 18px}
+.sns-support-sheet .publication{border-color:#710000;margin-top:20px}
+.sns-support-sheet .publication legend{font:700 12px SnsRoboto;color:#690000;text-transform:uppercase}
+.sns-support-sheet .inventory-panel{display:flex;flex-direction:column;min-height:100%;gap:7px}
+.sns-support-sheet .inventory-summary{display:flex;align-items:center;gap:8px;min-height:30px;background:#686259;color:#fff5e3;padding:4px 8px;font:13px SnsRoboto;border:1px solid #8f826b;box-shadow:inset 0 0 0 1px #d9cdb080}
+.sns-support-sheet .inventory-summary input{width:80px;background:#ffffff18;color:#fff;border:0;text-align:right}
+.sns-support-sheet .inventory-summary>span:last-child{margin-left:auto}
+.sns-support-sheet .inventory-search{display:flex;gap:5px;align-items:center;border:1px solid #9e937f;padding:0 5px;box-shadow:inset 0 0 4px #0003;height:27px;background:#00000006}
+.sns-support-sheet .inventory-search input{width:100%;border:0;box-shadow:none;background:none;height:24px}
+.sns-support-sheet .inventory-entries{flex:1}
+.sns-support-sheet .inventory-entries .section-container{border:1px solid #8d8aa1;border-radius:0;margin-bottom:5px}
+.sns-support-sheet .inventory-entries .section-header{background:#454977;padding:3px 6px;min-height:26px;box-shadow:inset 0 0 0 1px #ffffff80}
+.sns-support-sheet .inventory-entries .section-header h4{font:700 14px SnsCondensed;text-transform:none}
+.sns-support-sheet .inventory-entries .section-body:empty{min-height:0}
+.sns-support-sheet .inventory-entries .section-body{padding:0 4px}
+.sns-support-sheet .column-label{font:700 10px SnsRoboto;width:40px;text-align:center;flex:none}
+.sns-support-sheet .compartments-label{width:48px}
+.sns-support-sheet .item-quantity{width:40px;text-align:center;flex:none}
+.sns-support-sheet .item-compartments{width:48px;text-align:center;flex:none}
+.sns-support-sheet .inventory-total{background:#454977;color:#fff5e3;font:700 11px SnsCondensed;padding:5px 6px;border:1px solid #9b8e79;box-shadow:inset 0 0 0 1px #ffffff80;margin-top:10px}
+.sns-support-sheet .banner-header{display:flex;align-items:center;gap:14px;padding:14px;color:#f6f2df}
+.sns-support-sheet .banner-header>.profile-image{width:68px;height:68px;border:3px double #dfcb91;padding:3px}
+.sns-support-sheet .banner-title{min-width:0;flex:1}
+.sns-support-sheet .banner-title>input{width:100%;height:38px;font:700 32px 'Modesto Condensed',SnsEczar,serif;border:0;box-shadow:none;border-radius:0;background:#0001;color:#fff8e6}
+.sns-support-sheet .banner-type{font:700 28px 'Modesto Condensed',SnsEczar;text-transform:uppercase}
+.sns-support-sheet .banner-header .tag-edit{color:#f9eccb}
+.sns-support-sheet .family-hazard{padding:0;display:grid;grid-template-columns:210px minmax(0,1fr);grid-template-rows:100px minmax(0,1fr);gap:0}
+.sns-support-sheet .hazard-header{grid-column:1/-1;background:linear-gradient(105deg,#072f2b,#12433d 70%,#072f2b)}
+.sns-support-sheet .hazard-sidebar{padding:12px 14px;border-right:1px solid #9d9e91;overflow:auto;min-height:0}
+.sns-support-sheet .hazard-sidebar .subsection header{font-weight:400;border-color:#343b32}
+.sns-support-sheet .hazard-body{padding:6px 14px}
+.sns-support-sheet .family-party{padding:0;display:flex;flex-direction:column;gap:0}
+.sns-support-sheet .party-header{background:linear-gradient(105deg,#113e21,#1b5129 65%,#10371d);height:84px;flex:none}
+.sns-support-sheet .party-header>.profile-image{width:50px;height:50px}
+.sns-support-sheet .family-party>.sheet-tabs{height:40px;background:#faf8f3c9;margin:0 0 10px;padding:0 40px;border:0;box-shadow:0 3px 4px #0002;position:relative}
+.sns-support-sheet .family-party>.sheet-tabs:before,.sns-support-sheet .family-party>.sheet-tabs:after{content:'';position:absolute;width:35px;height:20px;background:url('../assets/sub-nav-decoration.webp') center/contain no-repeat;opacity:.6;left:12px}
+.sns-support-sheet .family-party>.sheet-tabs:after{left:auto;right:12px;transform:scaleX(-1)}
+.sns-support-sheet .family-party>.sheet-tabs button{flex:1;border-right:1px solid #b9b1a4;font:14px SnsGelasio}
+.sns-support-sheet .family-party>.sheet-tabs button:last-child{border-right:0}
+.sns-support-sheet .party-body{padding:0 12px 12px}
+.sns-support-sheet .party-summary{background:#ffffff10;border:1px solid #b6ad9e;border-image:url('../assets/frame-elegant.svg') 12 / 12px / 0 stretch;padding:12px;margin:0 0 12px}
+.sns-support-sheet .party-summary .section-container{border:0;background:none;margin:0}
+.sns-support-sheet .party-summary .section-header{background:#5f5a54;color:#fff}
+.sns-support-sheet .members-heading{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #b9af9b;margin-bottom:12px}
+.sns-support-sheet .members-heading h4{margin:0;font:700 17px SnsGelasio;color:#670500;border:0}
+.sns-support-sheet .members-heading button{font:700 11px SnsRoboto;border:1px solid #a79576;padding:2px 5px}
+.sns-support-sheet .member-list{display:flex;flex-direction:column;gap:12px}
+.sns-support-sheet .member-card{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #b8af9e}
+.sns-support-sheet .member-portrait{flex:0 0 85px;display:flex;flex-direction:column}
+.sns-support-sheet .member-portrait img{height:80px;width:85px;object-fit:contain;border:0}
+.sns-support-sheet .member-portrait>span{background:#625d58;color:#fff;text-align:center;font:700 11px SnsRoboto;padding:3px}
+.sns-support-sheet .member-content{flex:1;min-width:0}
+.sns-support-sheet .member-name{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sns-support-sheet .member-name button:first-child{font:700 18px SnsGelasio;text-align:left}
+.sns-support-sheet .member-stats{display:flex;gap:5px;flex-wrap:wrap}
+.sns-support-sheet .member-stats>span{border:1px solid #b5ac9d;text-align:center;padding:3px 6px;font:11px SnsRoboto}
+.sns-support-sheet .member-stats strong{display:block;font:700 15px SnsRoboto}
+.sns-support-sheet .member-content p{font:12px SnsRoboto;margin:6px 0}
+.sns-support-sheet .party-body:has(.party-sidebar){display:flex;gap:12px;overflow:hidden}
+.sns-support-sheet .party-sidebar{flex:0 0 190px;border-right:1px solid #b4aa97;padding-right:10px;overflow:auto}
+.sns-support-sheet .party-sidebar h4{background:#625d58;color:white;font:700 13px SnsRoboto;padding:5px;margin:0}
+.sns-support-sheet .party-sidebar .member-card{padding:8px 4px;border:1px solid #baafa0;box-shadow:0 1px 3px #0002;flex-direction:column;gap:4px}
+.sns-support-sheet .party-sidebar .member-portrait{flex:auto;flex-direction:row;align-items:center}
+.sns-support-sheet .party-sidebar .member-portrait img{width:32px;height:32px}
+.sns-support-sheet .party-sidebar .member-portrait>span{flex:1}
+.sns-support-sheet .party-sidebar .member-name button:first-child{font:700 13px SnsRoboto}
+.sns-support-sheet .party-sidebar .member-content p{display:none}
+.sns-support-sheet .party-sidebar .member-stats>span{padding:2px 3px;font-size:10px}
+.sns-support-sheet .party-main{flex:1;min-width:0;overflow:auto}
+.sns-support-sheet .party-main .section-header{background:#625d58}
+.sns-support-sheet .party-body>.inventory-panel{flex:1;min-width:0;min-height:0;overflow:auto}
+.sns-support-sheet .family-party .inventory-entries .section-header,.sns-support-sheet .family-party .inventory-total{background:#776653}
+.sns-support-sheet .family-loot{gap:0;padding:0}
+.sns-support-sheet .loot-sidebar{flex:0 0 210px;padding:12px 8px;overflow:auto;border-right:1px solid #aaa28f;min-height:0}
+.sns-support-sheet .loot-sidebar>.profile-image{height:180px;margin-bottom:14px}
+.sns-support-sheet .loot-sidebar .gold-button{display:block;width:100%;background:#ead9a4;border:3px double #ab925c;padding:5px;color:#211b11;margin:4px 0;font:14px SnsCondensed}
+.sns-support-sheet .loot-sidebar h4{font:700 12px SnsRoboto;text-transform:uppercase;margin:16px 0 4px;color:#5b4f3d;border-bottom:1px solid #b6ab95}
+.sns-support-sheet .loot-sidebar p{font:13px SnsRoboto;margin:4px 0;overflow-wrap:anywhere}
+.sns-support-sheet .family-loot .auxiliary-body{padding:8px}
+.sns-support-sheet .loot-header{flex:none}
+.sns-support-sheet .family-loot .sheet-tabs{margin-bottom:8px}
+.sns-support-sheet .family-vehicle{padding:0 0 0 8px;gap:0}
+.sns-support-sheet .vehicle-sidebar{flex:0 0 210px;color:#e9d7a1;padding:6px 12px 66px 10px;background-image:url('../assets/asset-91e3ab8f8925.webp'),url('../assets/asset-10d7b0d10925.webp');background-repeat:no-repeat;background-position:center top,center bottom;background-size:100% calc(100% - 52px),100% 52px;min-height:0;overflow:hidden}
+.sns-support-sheet .vehicle-sidebar-content{overflow:auto;height:100%;scrollbar-width:thin}
+.sns-support-sheet .vehicle-sidebar h4{font:700 13px SnsCondensed;text-transform:capitalize;border:0;border-bottom:1px solid #e5cb8d;margin:8px 0 5px;padding:0 0 2px;color:#e9d7a1}
+.sns-support-sheet .vehicle-sidebar input{color:#f5e8c8;background:#2b000020;border:0;width:100%;text-align:center;box-shadow:none}
+.sns-support-sheet .vehicle-resources{display:flex}
+.sns-support-sheet .vehicle-resources label{display:flex;flex:1;flex-direction:column;text-align:center;font:700 11px SnsCondensed;padding:5px 0;border:1px solid #d4b97955}
+.sns-support-sheet .vehicle-resources label:first-child{border-color:#e9d7a1;border-top:0}
+.sns-support-sheet .vehicle-resources input{font:24px SnsGelasio;height:35px;background:none}
+.sns-support-sheet .vehicle-shields{display:flex;justify-content:space-around;margin:6px 0 18px}
+.sns-support-sheet .structure-shield{width:78px;height:90px;display:flex;align-items:center;flex-direction:column;justify-content:center;background:url('../assets/asset-85bee3421aa9.webp') center/contain no-repeat}
+.sns-support-sheet .structure-shield input{font:22px SnsGelasio;width:55px;height:30px;background:none}
+.sns-support-sheet .structure-shield span{font:700 10px SnsCondensed;text-transform:uppercase;max-width:65px}
+.sns-support-sheet .vehicle-header{display:flex;align-items:center;gap:8px;background:#720800 url('../assets/asset-1a9e203cf6db.webp') center/cover;padding:10px 12px;color:#f8ecd2;min-height:80px;flex:none}
+.sns-support-sheet .vehicle-title{flex:1;min-width:0}
+.sns-support-sheet .vehicle-title>input{width:100%;color:#fff4dc;font:700 26px SnsEczar;border:0;background:#39000020;height:33px;box-shadow:none}
+.sns-support-sheet .vehicle-header .tag-edit{color:#ead9ad}
+.sns-support-sheet .nc-shield{display:flex;flex-direction:column;align-items:center;width:49px;height:60px;flex:none;background:url('../assets/level.webp') center/contain no-repeat;padding-top:8px;color:#efda9d;font:700 10px SnsCondensed}
+.sns-support-sheet .nc-shield input{width:35px;font:21px SnsGelasio;color:#fff4dc;border:0;background:none;height:26px;text-align:center;padding:0;box-shadow:none}
+.sns-support-sheet .family-vehicle .sheet-tabs{background:#191e6b url('../assets/asset-86482d45f704.svg') center/cover;color:#e9d7a1;border:0;margin:0 0 12px;padding:0 10px;min-height:23px;gap:7px;justify-content:end}
+.sns-support-sheet .family-vehicle .panel-title{margin-right:auto;font:700 13px SnsGelasio;color:#f9f0de}
+.sns-support-sheet .family-vehicle .sheet-tabs button{width:29px;height:29px;flex:none;padding:0;border:1px solid #e9d7a1;border-radius:50%;margin:-4px 0;background:#25262b url('../assets/asset-23385e78a379.webp') center/cover;color:#e9d7a1;font:14px SnsRoboto;box-shadow:inset 0 0 0 1px #84734e}
+.sns-support-sheet .family-vehicle .sheet-tabs button.active{background-image:url('../assets/asset-f87d62672e1d.webp');box-shadow:0 0 9px #e3c677aa;color:#fff7d5}
+.sns-support-sheet .family-vehicle .actor-panels{padding:6px 12px 12px}
+.sns-support-sheet .vehicle-portrait{float:left;width:122px;height:128px;border:3px double #aa9568;padding:4px;margin:0 14px 12px 0;box-shadow:0 0 5px #0004}
+.sns-support-sheet .vehicle-portrait .profile-image{height:100%}
+.sns-support-sheet .family-vehicle .section-container{border:0;border-radius:0;overflow:visible}
+.sns-support-sheet .family-vehicle .section-header{background:none;border-bottom:1px solid #b6a48a;color:#690500;min-height:24px;padding:0 0 3px}
+.sns-support-sheet .family-vehicle .section-header h4{text-transform:none;font:700 16px SnsGelasio}
+.sns-support-sheet .family-vehicle:not(.show-inventory) .entries .entry-controls{width:auto;gap:4px}
+.sns-support-sheet .family-vehicle:not(.show-inventory) .entries .entry-controls button{border:1px solid #b5a186;padding:1px 4px;font:11px SnsCondensed}
+.sns-support-sheet .family-vehicle .field-grid{display:flex;flex-wrap:wrap}
+.sns-support-sheet .family-vehicle .labeled-field{flex:1 1 40%;min-width:120px}
+.sns-support-sheet .family-vehicle .section-body{padding:6px 0}
+.sns-support-sheet .family-vehicle .inventory-entries .section-container{border:1px solid #9b8e79;overflow:hidden}
+.sns-support-sheet .family-vehicle .inventory-entries .section-header,.sns-support-sheet .family-vehicle .inventory-total{background:#776653;color:#fff4df;padding:3px 6px}
+.sns-support-sheet .family-vehicle .inventory-entries .section-header h4{font:700 14px SnsCondensed}
+.sns-support-sheet .auxiliary-header{display:flex;gap:14px;align-items:center;padding-bottom:8px}
+.sns-support-sheet .auxiliary-header>.profile-image{width:84px;height:84px}
+.sns-support-sheet .auxiliary-title{flex:1;min-width:0}
+.sns-support-sheet .empty-state{font:13px SnsRoboto;color:#706556}
+.sns-support-sheet .family-squad .section-header{background:#344d3f}
+.sns-support-sheet .family-companion .npc-header{border-top:5px solid #6e5740;padding-top:5px}
+
+/* Compact characteristics, shared NPC/PJ information hierarchy. */
+.sns-support-sheet .compact-feature{min-height:34px;padding:3px 4px;align-items:center}
+.sns-support-sheet .compact-feature>img{width:25px;height:25px;flex:0 0 25px}
+.sns-support-sheet .compact-feature .entry-title{text-align:left;justify-content:flex-start;margin:0}
+.sns-support-sheet .compact-feature .activation-facts:empty{display:none}

@@ -1,0 +1,30 @@
+<div class="craft-editor-body">
+ <h2>{{name}}</h2><p>Defina como esta fórmula é preparada.</p>
+ {{#if hint}}<p class="craft-hint">{{hint}}</p>{{/if}}
+ {{#if recipe}}<p>Dif <strong>{{recipe.difficulty}}</strong>{{#if recipe.category}} · {{recipe.category}}{{/if}}. Etapas e ingredientes precisam ser definidos para esta receita.</p>{{#if recipe.incomplete}}<p class="craft-warning">Receita lendária: falta definir o efeito e o critério de preparo.</p>{{/if}}{{/if}}
+ {{#if poison}}<p class="craft-hint">Categoria {{poison.category}} · Venefício {{poison.minimum}}{{#if poison.dokujutsu}} · Dokujutsu {{poison.dokujutsu}}{{/if}} · {{poison.cost}} Ryo/dose · Dif {{poison.dc}}. Campo: 10 min por até 15 doses. Adverso: Dif +4.</p><input type="hidden" name="kind" value="poison"><label>Tempo do preparo ideal (min, opcional)<input name="idealMinutes" type="number" min="1" step="1" value="{{draft.poison.idealMinutes}}"></label><p>Preparo ideal exige laboratório, materiais e tempo suficiente. Deixe o tempo vazio para manter esse modo indisponível. Não consome usos de kit automaticamente.</p>{{else}}
+ <div class="craft-fields">
+  <label>Resolução<select name="kind"><option value="simple" {{#if simple}}selected{{/if}}>Sucesso em todas as etapas</option><option value="cooking" {{#if cooking}}selected{{/if}}>Qualidade culinária · Ryōri no Sho</option></select></label>
+  <label>Tempo por preparo (min)<input name="minutes" type="number" min="0" step="1" value="{{draft.minutes}}"></label>
+  <label>Custo por preparo (Ryo)<input name="cost" type="number" min="0" step="1" value="{{draft.cost}}"></label>
+  <label>Unidades por preparo<input name="yield" type="number" min="1" step="1" value="{{draft.yield}}"></label>
+ </div>{{/if}}
+ <div class="craft-fields">
+  <label>Falha ou interrupção<select name="failure"><option value="">Selecionar…</option><option value="all" {{#if failureAll}}selected{{/if}}>Consumir materiais e Ryo</option><option value="none" {{#if failureNone}}selected{{/if}}>Preservar materiais e Ryo</option></select></label>
+  {{#unless poison}}<label>Produto<select name="outputKind"><option value="formula" {{#unless reference}}selected{{/unless}}>Consumível com a descrição da fórmula</option><option value="reference" {{#if reference}}selected{{/if}}>Item de referência</option></select></label>{{/unless}}
+ </div>
+ {{#unless poison}}
+ {{#if reference}}<label>Definição do produto<select name="outputUuid">{{#each outputs}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{/if}}
+ <header><h3>Etapas e testes</h3><button type="button" data-action="add" data-group="steps">+ Etapa</button></header>
+ {{#each steps}}<div class="craft-step-edit" data-craft-step><input data-field="label" aria-label="Nome da etapa {{index}}" value="{{label}}"><select data-field="key" aria-label="Teste da etapa {{index}}">{{#each tests}}<option value="{{key}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select><label>Dif<input type="number" data-field="dc" min="1" step="1" value="{{dc}}" aria-label="Dificuldade da etapa {{index}}"></label><button type="button" data-action="remove" data-group="steps" data-index="{{index}}" aria-label="Remover etapa {{index}}"><i class="fa-solid fa-trash"></i></button></div>{{else}}<p>Sem etapas, o preparo não exige rolagem. Use quando a regra permitir.</p>{{/each}}
+ {{#if cooking}}<div class="craft-stage-presets">{{#each culinaryStages}}<button type="button" data-action="add" data-group="steps" data-stage="{{index}}">+ {{label}}</button>{{/each}}</div>{{/if}}
+ {{/unless}}
+ <header><h3>Ingredientes consumidos</h3><button type="button" data-action="add" data-group="ingredients">+ Ingrediente</button></header>
+ {{#each ingredients}}<div class="craft-material-edit" data-craft-group="ingredients" data-index="{{index}}"><select aria-label="Ingrediente {{index}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select><input type="number" min="1" step="1" value="{{quantity}}" aria-label="Quantidade do ingrediente {{index}}"><button type="button" data-action="remove" data-group="ingredients" data-index="{{index}}" aria-label="Remover ingrediente {{index}}"><i class="fa-solid fa-trash"></i></button></div>{{else}}<p>Sem itens a descontar. Inclua os materiais comuns no custo em Ryo.</p>{{/each}}
+ <header><h3>Ferramentas exigidas</h3><button type="button" data-action="add" data-group="tools">+ Ferramenta</button></header>
+ {{#each tools}}<div class="craft-material-edit" data-craft-group="tools" data-index="{{index}}"><select aria-label="Ferramenta {{index}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select><input type="number" min="1" step="1" value="{{quantity}}" aria-label="Quantidade da ferramenta {{index}}"><button type="button" data-action="remove" data-group="tools" data-index="{{index}}" aria-label="Remover ferramenta {{index}}"><i class="fa-solid fa-trash"></i></button></div>{{else}}<p>Nenhuma ferramenta adicional. Ferramentas não são consumidas.</p>{{/each}}
+ <button type="button" data-action="requirements">Editar requisitos mecânicos</button>
+ <label class="craft-checkbox"><input type="checkbox" name="requirementsReviewed" {{checked draft.requirementsReviewed}}> Requisitos de preparo definidos</label>
+ <label>Fonte<input name="source" value="{{draft.source}}"></label><label>Critério dos valores, etapas e perdas<textarea name="note" rows="2">{{draft.note}}</textarea></label>
+ <footer><button type="button" data-action="save"><i class="fa-solid fa-floppy-disk"></i> Salvar preparo</button></footer>
+</div>

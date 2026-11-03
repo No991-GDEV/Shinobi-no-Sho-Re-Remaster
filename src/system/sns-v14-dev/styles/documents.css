@@ -1,0 +1,82 @@
+@font-face{font-family:SnsRoboto;src:url('../assets/pf-roboto.woff2')}@font-face{font-family:SnsRoboto;src:url('../assets/pf-roboto-bold.woff2');font-weight:700}
+.sns-document{--sans-serif:SnsRoboto,Arial,sans-serif;--sans-serif-condensed:SnsCondensed,Arial;--serif-condensed:'Modesto Condensed',SnsEczar,serif;--color-text-dark-input:#292521;--secondary-background:#8f8573;--sub:#b8aa94;--text-dark:#292521;--text-light:#f4eddd;--color-border-light-2:#b7b4a9;--color-border-dark-1:#6d685e;--color-pf-primary:#5e0000;--color-pf-secondary:#171f69;--color-disabled:#777;--space-1:1px;--space-2:2px;--space-3:3px;--space-4:4px;--space-5:5px;--space-8:8px;--space-10:10px;--font-size-10:10px;--font-size-12:12px;--font-size-14:14px;--font-size-16:16px;--font-size-18:18px;--font-size-20:20px;--font-size-34:34px;--font-size-36:36px;--button-size:22px;color:#302d29;font:14px SnsRoboto,Arial,sans-serif}
+.sns-document .window-content{padding:8px;overflow:hidden;background:#eeede1 url('../assets/pf-parchment.webp');color:#302d29}
+.sns-document .window-content>form{height:100%;min-height:0;overflow:hidden}
+.sns-document input,.sns-document select,.sns-document textarea{color:#302d29;font:14px SnsRoboto,Arial;background:#ffffff40;border:1px solid #b7b4a9;border-radius:2px;height:24px;min-width:0;box-shadow:inset 0 0 4px #0001}
+.sns-document input:focus,.sns-document select:focus{outline:none;border-color:#6d685e;box-shadow:0 0 4px #171f6930}
+.sns-document .window-content button{color:inherit;border:0;border-radius:0;background:none;box-shadow:none;min-height:0;height:auto;padding:0;cursor:pointer;font:inherit}
+.sns-document .window-content button:hover{color:#7a0e05;text-shadow:0 0 6px #c55a3e60}
+.sns-document .window-content button:disabled{cursor:default;opacity:.65}
+.sns-document [hidden]{display:none!important}
+.sns-document .tags{display:flex;gap:3px;flex-wrap:wrap;align-items:center;min-height:22px;margin:3px 0 4px}
+.sns-tag{display:inline-block;background:#5e0000;color:#f8f2e2;border:1px solid #d4bf91;border-radius:0;font:700 10px/15px SnsRoboto,Arial;text-transform:uppercase;padding:0 4px;white-space:normal;overflow-wrap:anywhere}
+.sns-tag.kind-tag{background:#5c5952;border-color:#baae89}
+.sns-document .tag-edit{font-size:12px;width:18px;color:#4c483f}
+.sns-document .publication{border:1px solid #8f8b7d;padding:8px;margin:18px 0 6px;font:14px SnsRoboto}
+.sns-document .publication legend{font-weight:bold;padding:0 4px}
+.sns-document .publication label{display:flex;flex-direction:column;gap:3px;margin:0 0 7px}
+.sns-document .publication input{width:100%}.sns-document .publication-row{display:flex;gap:10px}.sns-document .publication-row label:first-child{flex:2}.sns-document .publication-row label:last-child{flex:1}
+.sns-document prose-mirror{display:block;min-height:220px;position:relative;color:#302d29;background:transparent;--color-text-primary:#302d29;--color-text-secondary:#514a40;--color-text-emphatic:#302d29;--color-bg-option:#eee9e0}
+.sns-document prose-mirror .editor-content{font:14px/1.5 SnsRoboto,Arial;min-height:220px;padding:3px 4px;overflow-wrap:anywhere}
+.sns-document prose-mirror .editor-content p{margin:0 0 10px}
+.sns-document prose-mirror .toggle{position:absolute;right:2px;top:2px;width:24px;height:24px;background:#e6e1d2e0;color:#5f5545;z-index:1}
+.sns-document prose-mirror menu{background:#e5e0d2;color:#302d29}
+/* Item: original PF2e heading, horizontal summary fields and details column. */
+.sns-item-sheet .document-shell{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
+.sns-item-sheet .sheet-header{display:flex;gap:8px;align-items:center;flex:none;min-height:72px;padding:0 0 4px}
+.sns-item-sheet .item-image{width:64px;height:64px;flex:0 0 64px}.sns-item-sheet .item-image img{width:100%;height:100%;object-fit:contain;border:0}
+.sns-item-sheet .document-shell>.sheet-header .details{min-width:0;align-items:center;gap:3px 5px}
+.sns-item-sheet .document-shell>.sheet-header input[name=name]{font-variant:small-caps;text-transform:uppercase;background:#0000000a;padding:0 3px;width:0;min-width:80px}
+.sns-item-sheet .document-shell>.sheet-header .level{display:flex;align-items:center;text-transform:uppercase;font:700 32px 'Modesto Condensed',SnsEczar;gap:3px}
+.sns-item-sheet .document-shell>.sheet-header .level input{font:700 34px 'Modesto Condensed',SnsEczar;background:#0000000a;width:40px}
+.sns-item-sheet .document-shell>.sheet-header .tags{flex:0 0 100%;margin:0;background:#00000008;padding:3px 4px;min-height:26px}
+.sns-item-sheet .document-shell>.sheet-tabs{min-height:30px;align-items:center;margin:0 0 6px}
+.sns-item-sheet .sheet-tabs .tabs{display:flex;align-items:center;justify-content:space-around}
+.sns-item-sheet .sheet-tabs button{font:14px SnsCondensed,Arial;text-align:center;flex:1;line-height:28px}
+.sns-item-sheet .sheet-tabs button.active{font-weight:700;text-decoration:underline;color:#680900;text-shadow:0 0 6px #a6312c60}
+.sns-item-sheet .document-shell>.sheet-tabs .sidebar-summary{font:14px SnsRoboto;flex-basis:220px}
+.sns-item-sheet .document-shell .sheet-content{height:auto;flex:1;min-height:0;flex-wrap:nowrap;overflow:hidden}
+.sns-item-sheet .document-shell .sheet-content>section.sidebar{flex:0 0 220px;height:auto;overflow:auto;border:0;padding:0 14px 0 0}
+.sns-item-sheet .document-shell .sheet-content section.sidebar .inventory-details{padding-top:4px;gap:5px}
+.sns-item-sheet .form-group{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 7px;min-height:24px;font:14px SnsRoboto}
+.sns-item-sheet .document-shell .sheet-content .form-group input,.sns-item-sheet .form-group select{width:62%;flex:0 0 62%;height:24px;max-width:100%;margin:0}
+.sns-item-sheet .document-shell .sidebar .form-group input{width:126px;flex:0 0 126px}.sns-item-sheet .document-shell .sidebar .quantity input{width:75px;flex:0 0 75px;text-align:right}
+.sns-item-sheet .document-shell .sidebar .form-group input[type=checkbox]{flex:0 0 18px;width:18px}
+.sns-item-sheet .document-shell .sheet-content>.sheet-body{min-width:0;height:auto;padding:3px 5px 8px 8px;overflow:auto}
+.sns-item-sheet .basics{padding:0;border:0;margin:0}.sns-item-sheet .basics>legend{display:none}
+.sns-item-sheet .basics .form-group{display:grid;grid-template-columns:42% 1fr;gap:8px}.sns-item-sheet .basics .form-group>input,.sns-item-sheet .basics .form-group>select{width:100%!important}
+/* NPC uses PF2e's parchment statblock, portrait sidebar and right-hand name/tabs. */
+/* Player lists retain the approved PF2e frame and SNS seals. */
+.sns-sheet .inventory-row .entry-name{display:flex;align-items:center;gap:5px;white-space:normal}.sns-sheet .entry-name img{width:26px;height:26px;object-fit:contain;border:1px solid #aa9777;flex:none}.sns-sheet .entry-tags{display:flex;gap:3px;flex-wrap:wrap;margin:2px 0 4px}.sns-sheet .inventory-row{min-height:38px;height:auto}.sns-sheet .entry-line{min-height:32px;height:auto;flex-wrap:wrap}.sns-sheet .entry-line .entry-tags{width:100%}.sns-sheet .equipped{color:#1e347e!important}
+
+.sns-item-sheet .document-shell .sheet-content label.form-group{display:grid;grid-template-columns:42% 1fr;align-items:center;gap:8px}.sns-item-sheet .document-shell .sheet-content section.sidebar label.form-group{grid-template-columns:1fr 126px}.sns-item-sheet .document-shell .sheet-content section.sidebar label.form-group.quantity{grid-template-columns:1fr 75px}.sns-item-sheet .document-shell .sheet-content label.form-group input,.sns-item-sheet .document-shell .sheet-content label.form-group select{width:100%;max-width:100%}
+
+
+.sns-item-sheet .document-shell .sheet-content section.sidebar label.form-group{grid-template-columns:minmax(0,1fr) 114px}.sns-document .window-content .sheet-tabs button{border:0;outline:0;box-shadow:none}.sns-document .window-content .sheet-tabs button:focus-visible{text-decoration:underline;text-decoration-thickness:2px}
+
+.sns-sheet .strike-icon img{width:32px;height:32px;object-fit:contain}.sns-sheet .strike-name>button{border:0;background:none;padding:0;height:auto;min-height:0;font:inherit;text-align:left}.sns-sheet .weapon-usage{font:700 10px SnsCondensed;height:20px;min-height:20px;padding:1px 4px;border:1px solid #b4a38d;background:#ddd4c780;border-radius:0;margin:4px 0}.sns-sheet .damage-record{background:#680500;color:#fff;padding:1px 4px;font:700 11px SnsCondensed}.sns-sheet .jutsu-properties{width:100%;font:12px SnsCondensed;color:#655e52;padding-bottom:3px}.sns-sheet .strike-body .entry-tags:empty{display:none}
+.sns-sheet .navigation button{border:1px solid #e9d7a1;background-color:#25262b;box-shadow:inset 0 0 0 1px #84734e}
+.sns-sheet .navigation button.active{box-shadow:inset 0 0 0 1px #c7a66b,0 0 8px #e9d7a180}
+
+/* D158: one page scrollbar when reading; native editor keeps its toolbar. */
+.sns-item-sheet prose-mirror:not([open]){height:auto;max-height:none;overflow:visible}
+.sns-item-sheet prose-mirror:not([open]) .editor-container{flex:none;height:auto;overflow:visible}
+.sns-item-sheet prose-mirror:not([open]) .editor-content{position:static;height:auto;max-height:none;overflow:visible}
+.sns-jutsu-facts{border:1px solid #b6aa91;background:#fff5;padding:8px;margin:0 0 12px}
+.sns-jutsu-facts header{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.sns-jutsu-facts h3{margin:0 0 6px}.sns-jutsu-facts header label{display:flex;align-items:center;gap:6px}
+.sns-jutsu-facts header select{width:55px}.sns-jutsu-facts dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px}
+.sns-jutsu-facts dl>div{min-width:0}.sns-jutsu-facts dt{font-weight:700;font-size:12px;color:#5d4932}
+.sns-jutsu-facts dd{margin:0;overflow-wrap:anywhere}.sns-jutsu-facts small{display:block;color:#625b4f;font-size:11px}
+.sns-related-rule{margin-top:14px;border-top:1px solid #b6aa91;padding-top:8px}.sns-related-rule>h3{font-size:17px}
+.sns-cast-preview{border:1px solid #b6aa91;padding:8px;margin-top:10px;display:grid;gap:5px}
+.sns-cast-preview[hidden]{display:none}.sns-cast-preview>div{display:flex;justify-content:space-between;gap:12px}
+
+/* D159: force ink colors against Foundry's dark theme, including dl/dd. */
+.sns-document .sns-jutsu-facts{background:#eee6d6;color:#27231d;border-color:#9b8e76;color-scheme:light}
+.sns-document .sns-jutsu-facts h3,.sns-document .sns-jutsu-facts dt,.sns-document .sns-jutsu-facts dd,.sns-document .sns-jutsu-facts label,.sns-document .sns-jutsu-facts span{color:#27231d!important;-webkit-text-fill-color:#27231d;text-shadow:none;opacity:1}
+.sns-document .sns-jutsu-facts small{color:#51493b;opacity:1}.sns-document .sns-jutsu-facts select{color:#27231d;background:#fff9ed}
+.sns-document .sns-cast-item{display:inline-flex;align-items:center;gap:5px;border:1px solid #8a7556!important;background:#eee2c8!important;padding:5px 9px!important;color:#382719!important;margin:4px 0 10px;font-weight:700!important}
+.sns-npc-jutsu-controls{display:grid;gap:5px;margin-top:8px}.sns-npc-jutsu-controls>div{display:flex;flex-wrap:wrap;gap:5px;align-items:center}.sns-npc-jutsu-controls button{min-height:28px;color:#28231b;background:#eee6d5;border:1px solid #8c8170}
+
+.sns-cast-level .sns-cast-preview{background:#eee6d6;color:#27231d;border-color:#9b8e76}.sns-cast-level .sns-cast-preview strong,.sns-cast-level .sns-cast-preview b,.sns-cast-level .sns-cast-preview span{color:#27231d}

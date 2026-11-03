@@ -1,0 +1,9 @@
+<section class="sns-jutsu-resolution-content"><h2>{{name}}</h2><p>Resultado do uso: {{attack}}</p>
+<p>Escolha uma defesa permitida pela técnica. O mestre pode inserir resultados para casos especiais. Empates precisam de desempate.</p>
+{{#each rows}}<fieldset><legend>{{target.name}} · {{condition}}</legend>
+{{#if done}}<p>{{status}}</p>{{else}}
+{{#if needsHit}}<label>Acerto<select name="hit{{index}}">{{#each hitChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>
+<div class="form-group"><select name="defense{{index}}" aria-label="Defesa de {{target.name}}"><option value="fixed">Esquiva fixa</option><option value="lm">Antecipar (LM)</option><option value="cc">Bloqueio (CC)</option></select><button type="button" data-action="defend" data-index="{{index}}">Resolver defesa</button></div>{{#if defense}}<p>Defesa: {{defense}}</p>{{/if}}{{/if}}
+{{#if needsResistance}}<label>Resistência · {{binding.resistance}} · dificuldade {{dc}}<select name="resistance{{index}}">{{#each resistanceChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label><button type="button" data-action="resist" data-index="{{index}}">Rolar resistência</button>{{#if resistance}}<p>Resistência: {{resistance}}</p>{{/if}}{{/if}}
+<small>{{binding.source}} {{binding.note}}</small>{{/if}}</fieldset>{{/each}}
+<footer><button type="submit">Aplicar resultados resolvidos</button></footer></section>

@@ -1,0 +1,2061 @@
+{
+  "schemaVersion": 1,
+  "mechanicalAccess": false,
+  "traits": [
+    {
+      "id": "vila:otogakure",
+      "label": "Otogakure",
+      "family": "vila",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:orochimaru",
+      "label": "Orochimaru",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "formacao:individual",
+      "label": "Individual",
+      "family": "formacao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:kabuto",
+      "label": "Kabuto",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:genjutsu",
+      "label": "Genjutsu",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:ninjutsu",
+      "label": "Ninjutsu",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "vila:konohagakure",
+      "label": "Konohagakure",
+      "family": "vila",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:chuunin",
+      "label": "Chuunin",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:jounin",
+      "label": "Jounin",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:sannin",
+      "label": "Sannin",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "vila:sunagakure",
+      "label": "Sunagakure",
+      "family": "vila",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:genin",
+      "label": "Genin",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:marionetes",
+      "label": "Marionetes",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:taijutsu",
+      "label": "Taijutsu",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:bukijutsu",
+      "label": "Bukijutsu",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:akatsuki",
+      "label": "Akatsuki",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:anbu",
+      "label": "ANBU",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "patente:kage",
+      "label": "Kage",
+      "family": "patente",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "formacao:dupla",
+      "label": "Dupla",
+      "family": "formacao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:alianca-shinobi",
+      "label": "Aliança Shinobi",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "vila:amegakure",
+      "label": "Amegakure",
+      "family": "vila",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:raiz",
+      "label": "Raiz",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:ninjutsu-medico",
+      "label": "Ninjutsu médico",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "formacao:grupo",
+      "label": "Grupo",
+      "family": "formacao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:taka",
+      "label": "Taka",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "vila:kirigakure",
+      "label": "Kirigakure",
+      "family": "vila",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "estilo:sensor",
+      "label": "Sensor",
+      "family": "estilo",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    },
+    {
+      "id": "faccao:hebi",
+      "label": "Hebi",
+      "family": "faccao",
+      "description": "Classificação descritiva das fichas do mangá; não concede regras nem acesso.",
+      "status": "descriptive"
+    }
+  ],
+  "profiles": {
+    "sns:npc:anime:tayuya-quarteto-do-som": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Quarteto do Som",
+      "version": "Quarteto do Som",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:madara-uchiha-reanimacao": {
+      "village": [],
+      "faction": [
+        "Kabuto"
+      ],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Edo Tensei • Quarta Guerra",
+      "version": "Reanimação",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:madara-uchiha-vivo": {
+      "village": [],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Líder Uchiha • Vale do Fim",
+      "version": "Vivo",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:iruka-umino-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Chūnin • Instrutor da Academia",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:madara-uchiha-rinnegan": {
+      "village": [],
+      "faction": [
+        "Kabuto"
+      ],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Edo Tensei • Quarta Guerra",
+      "version": "Rinnegan",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:anko-mitarashi-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Tokubetsu Jōnin — Examinadora",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:ebisu-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Tokubetsu Jōnin",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:jiraiya-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Sannin Lendário",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kankuro-exame-chuunin": {
+      "village": [
+        "Sunagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Marionetes"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:rock-lee-exame-chuunin": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Taijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time Guy",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kakashi-hatake-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Hatake"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin — Time 7",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:tenten-exame-chuunin": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Bukijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time Guy",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:deidara-criacao-da-akatsuki": {
+      "village": [],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin de Iwagakure • antes do recrutamento",
+      "version": "Criação da Akatsuki",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:tobi-akatsuki": {
+      "village": [],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Membro da Akatsuki • mascarado",
+      "version": "Akatsuki",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kushina-uzumaki-pimenta-vermelha-da-folha": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin • Especialista de Fūinjutsu",
+      "version": "Pimenta Vermelha da Folha",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:yamato-shippuden": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "ANBU/Jōnin • Capitão Yamato",
+      "version": "Shippuden",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:genma-shiranui-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Tokubetsu Jōnin / Guarda Hokage",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:naruto-uzumaki-vale-do-fim": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin",
+      "version": "Vale do Fim",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:naruto-uzumaki-resgate-ao-gaara": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Resgate ao Gaara",
+      "version": "Resgate ao Gaara",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:minato-namikaze-jonin": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin — Equipe Minato",
+      "version": "Jonin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:naruto-uzumaki-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 7",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:tobirama-senju-segundo-hokage": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Senju"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Segundo Hokage",
+      "version": "Segundo Hokage",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:fugaku-uchiha-o-olho-perverso": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Líder do Clã / Polícia Militar",
+      "version": "O Olho Perverso",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kakashi-hatake-sexto-hokage": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Sexto Hokage",
+      "version": "Sexto Hokage",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kidomaru-quarteto-do-som": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Quarteto do Som",
+      "version": "Quarteto do Som",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sakon-ukon-quarteto-do-som": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Quarteto do Som",
+      "version": "Quarteto do Som",
+      "formation": "dupla",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:jirobo-quarteto-do-som": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Quarteto do Som",
+      "version": "Quarteto do Som",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:itachi-uchiha-anbu": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Capitão ANBU — pré-massacre",
+      "version": "Anbu",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kakashi-hatake-lamina-decapitadora": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Aliança Shinobi"
+      ],
+      "clan": [
+        "Hatake"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin de elite • Quarta Guerra Ninja",
+      "version": "Lâmina Decapitadora",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:hashirama-senju-primeiro-hokage": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Senju"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Primeiro Hokage",
+      "version": "Primeiro Hokage",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kimimaro-danca-da-camelia": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [
+        "Kaguya"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Orochimaru / clã Kaguya",
+      "version": "Dança da Camélia",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sasuke-uchiha-vale-do-fim": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • nukenin em fuga",
+      "version": "Vale do Fim",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kurenai-yuuhi-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin — Time 8",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:pain-destruicao-da-folha": {
+      "village": [
+        "Amegakure"
+      ],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Líder da Akatsuki / corpo controlado",
+      "version": "Destruição da Folha",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:shikamaru-nara-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Nara"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 10",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:konan-criacao-da-akatsuki": {
+      "village": [],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Fundação da Akatsuki • Amegakure",
+      "version": "Criação da Akatsuki",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:ino-yamanaka-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Yamanaka"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 10",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:fuu-yamanaka-anbu": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Raiz"
+      ],
+      "clan": [
+        "Yamanaka"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "ANBU • Ne (Raiz)",
+      "version": "Anbu",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:hiruzen-sarutobi-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Sarutobi"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Terceiro Hokage",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:danzo-shimura-escuridao-da-folha": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Raiz"
+      ],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Conselheiro / comandante da Raiz",
+      "version": "Escuridão da Folha",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:gaara-exame-chuunin": {
+      "village": [
+        "Sunagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin de Suna • Exame Chūnin (mangá)",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:neji-hyuuga-exame-chuunin": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Hyuuga"
+      ],
+      "style": [
+        "Taijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time Guy",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sakura-haruno-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 7",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sakura-haruno-resgate-ao-gaara": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu médico"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Chūnin • Resgate ao Gaara",
+      "version": "Resgate ao Gaara",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:itachi-uchiha-akatsuki": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin Rank S • Akatsuki",
+      "version": "Akatsuki",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:hayate-gekkou-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Bukijutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Tokubetsu Jōnin • Examinador",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:izumo-kamizuki-kotetsu-hagane-dupla": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Bukijutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Chūnin experientes • Guardas",
+      "version": "Dupla",
+      "formation": "dupla",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:choji-akimichi-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Akimichi"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 10",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:exercito-de-konohamaru-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Sarutobi"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Estudantes da Academia",
+      "version": "Clássico",
+      "formation": "grupo",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:ibiki-morino-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Tokubetsu Jōnin — T&I",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:haku-prodigio-das-agulhas-de-gelo": {
+      "village": [],
+      "faction": [],
+      "clan": [
+        "Yuki"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Anbu/Nukenin",
+      "version": "Prodígio das Agulhas de Gelo",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:shino-aburame-resgate-a-sasuke": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Aburame"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time Kurenai",
+      "version": "Resgate a Sasuke",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:torune-aburame-anbu": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Raiz"
+      ],
+      "clan": [
+        "Aburame"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "ANBU • Ne (Raiz)",
+      "version": "Anbu",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kiba-inuzuka-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Inuzuka"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 8",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:asuma-sarutobi-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Sarutobi"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin — Time 10",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:neji-hyuga-jonin": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Hyuuga"
+      ],
+      "style": [
+        "Taijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin • Time Guy",
+      "version": "Jōnin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:hinata-hyuuga-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Hyuuga"
+      ],
+      "style": [
+        "Taijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 8",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:shisui-uchiha-anbu": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Genjutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin / ANBU de Konoha",
+      "version": "Anbu",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:tsunade-senju-quinta-hokage": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Senju"
+      ],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Quinta Hokage / Sannin",
+      "version": "Quinta Hokage",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:might-guy-fera-sublime-da-folha": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Taijutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Jōnin — Time Guy",
+      "version": "Fera Sublime da Folha",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kabuto-yakushi-guerra-dos-sannin": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [
+        "Orochimaru"
+      ],
+      "clan": [],
+      "style": [
+        "Ninjutsu médico"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin / médico de Orochimaru",
+      "version": "Guerra dos Sannin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sasuke-uchiha-classico": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Time 7",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:orochimaru-ninja-patife": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin / Ex-Sannin",
+      "version": "Ninja Patife",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:naruto-uzumaki-monte-myoboku": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Eremita • Monte Myōboku",
+      "version": "Monte Myōboku",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sasori-criacao-da-akatsuki": {
+      "village": [
+        "Amegakure"
+      ],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [],
+      "style": [
+        "Marionetes"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin de Suna • Fundação da Akatsuki",
+      "version": "Criação da Akatsuki",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:jugo-taka": {
+      "village": [],
+      "faction": [
+        "Taka"
+      ],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin • Taka",
+      "version": "Taka",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kisame-hoshigaki-classico": {
+      "village": [
+        "Kirigakure"
+      ],
+      "faction": [
+        "Akatsuki"
+      ],
+      "clan": [
+        "Hoshigaki"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin / Akatsuki",
+      "version": "Clássico",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:zabuza-momochi-demonio-da-nevoa-oculta": {
+      "village": [
+        "Kirigakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Bukijutsu",
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin / Espadachim da Névoa",
+      "version": "Demônio da Névoa Oculta",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:dosu-kinuta-exame-chunin": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Exame Chūnin",
+      "version": "Exame Chūnin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:kin-tsuchi-exame-chunin": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Exame Chūnin",
+      "version": "Exame Chūnin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:zaku-abumi-exame-chunin": {
+      "village": [
+        "Otogakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin • Exame Chūnin",
+      "version": "Exame Chūnin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:temari-exame-chuunin": {
+      "village": [
+        "Sunagakure"
+      ],
+      "faction": [],
+      "clan": [],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Genin de Suna • Exame Chūnin (mangá)",
+      "version": "Exame Chuunin",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:karin-uzumaki-taka": {
+      "village": [],
+      "faction": [
+        "Taka"
+      ],
+      "clan": [
+        "Uzumaki"
+      ],
+      "style": [
+        "Sensor"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin • Taka",
+      "version": "Taka",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:suigetsu-hozuki-taka": {
+      "village": [],
+      "faction": [
+        "Taka"
+      ],
+      "clan": [
+        "Hozuki"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin • Taka",
+      "version": "Taka",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    },
+    "sns:npc:anime:sasuke-uchiha-hebi": {
+      "village": [
+        "Konohagakure"
+      ],
+      "faction": [
+        "Hebi"
+      ],
+      "clan": [
+        "Uchiha"
+      ],
+      "style": [
+        "Ninjutsu"
+      ],
+      "size": "MÉDIO",
+      "species": null,
+      "rank": "Nukenin • Hebi",
+      "version": "Hebi",
+      "formation": "individual",
+      "evidence": {
+        "village": "PRINCIPAL!J7",
+        "clan": [
+          "PRINCIPAL!B7",
+          "DATABOOK!D3"
+        ],
+        "size": "PRINCIPAL!P19",
+        "style": "Itens da ficha"
+      }
+    }
+  }
+}

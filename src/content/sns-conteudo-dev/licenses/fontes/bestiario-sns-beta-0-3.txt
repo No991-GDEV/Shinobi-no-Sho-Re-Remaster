@@ -1,0 +1,290 @@
+=== PAGINA PDF 1 ===
+ 
+ 
+ H
+OMEBREW: TITULO DO HOMEBREW
+ 
+1 
+ 
+AUTOR 
+Gazu 
+ 
+ 
+COLABORAÇÃO 
+Servidor do SnS (Ajuda com Balanceamento e correção de textos) 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PUBLICAÇÃO  
+Publicado gratuitamente como Homebrew Não Oficial para o Projeto D8 
+e pode ser baixado aqui: 
+ 
+ 
+ 
+VERSÃO: 
+– Compatível com Shinobi no Sho 4.1b 
+Agradecimento especial a toda a comunidade SnS, ao Diego Fesant por 
+ter trabalhado tanto no projeto para trazer algo divertido para as 
+pessoas e a todos que contribuíram com playtestes, ideias e opiniões. 
+ 
+ 
+COMUNIDADES SnS: 
+Site Projeto d8: https://narutod8.weebly.com/ 
+Convite do nosso Discord: https://discord.gg/8vmJ7Mt 
+Servidor  “Naruto  –  New  Generation”  (Guilda  dos  Fãs  do  SnS): 
+https://discord.gg/3Zm3Dg5k8p 
+  
+ 
+ 
+
+
+=== PAGINA PDF 2 ===
+ 
+ 
+ H
+OMEBREW: TITULO DO HOMEBREW
+ 
+2 
+ 
+LICENCIAMENTO 
+Este material está licenciado de acordo as seguintes condições: 
+Atribuição-Uso Não-Comercial-Compartilhamento pela mesma 
+licença 2.5 Brasil. 
+Você pode: 
+Copiar inteiramente este livro (incluídas fotocópias), distribuir, exibir. 
+ Criar obras derivadas. 
+Sob as seguintes condições: 
+Atribuição. Você deve dar crédito ao autor original. 
+Uso Não-Comercial. Você não pode utilizar esta obra com finalidades 
+comerciais. 
+Compartilhamento pela mesma Licença. Se você alterar, transformar, ou 
+criar outra obra com base nesta, você somente poderá distribuir a obra 
+resultante sob uma licença idêntica a esta. 
+Para cada novo uso ou distribuição, você deve deixar claro para outros 
+os termos da licença desta obra. Qualquer uma destas condições pode 
+ser renunciada, desde que você obtenha permissão do autor. 
+Este licenciamento segue um padrão obra aberta e está registrado pela 
+seguinte licença da Creative Commons: 
+  
+http://creativecommons.org/licenses/by-nc-sa/2.5/br/ com validade 
+legal no Brasil e por muitos outros países. 
+OPEN GAME LICENSE 1.0a 
+The following text is the property of Wizards of the Coast, Inc. and is 
+Copyright 2000 Wizards of the Coast, Inc (“Wizards”). All Rights 
+Reserved. 
+ 
+1. Definitions: (a)”Contributors” means the copyright and/or 
+trademark owners who have contributed Open Game Content; 
+(b)”Derivative Material” means copyrighted material including 
+derivative works and translations (including into other computer 
+languages), potation, modification, correction, addition, extension, 
+upgrade, improvement, compilation, abridgment or other form in which 
+an existing work may be recast, transformed or adapted; (c) “Distribute” 
+means to reproduce, license, rent, lease, sell, broadcast, publicly display, 
+transmit or otherwise distribute; (d)”Open Game Content” means the 
+game mechanic and includes the methods, procedures, processes and 
+routines to the extent such content does not embody the Product 
+Identity and is an enhancement over the prior art and any additional 
+content clearly identified as Open Game Content by the Contributor, and 
+means any work covered by this License, including translations and 
+derivative works under copyright law, but specifically excludes Product 
+Identity. (e) “Product Identity” means product and product line names, 
+logos and identifying marks including trade dress; artifacts; creatures 
+characters; stories, storylines, plots, thematic elements, dialogue, 
+incidents, language, artwork, symbols, designs, depictions, likenesses, 
+formats, poses, concepts, themes and graphic, photographic and other 
+visual or audio representations; names and descriptions of characters, 
+spells, enchantments, personalities, teams, personas, likenesses and 
+special abilities; places, locations, environments, creatures, equipment, 
+magical or supernatural abilities or effects, logos, symbols, or graphic 
+
+
+=== PAGINA PDF 3 ===
+ 
+ 
+ H
+OMEBREW: TITULO DO HOMEBREW
+ 
+3 
+ 
+designs; and any other trademark or registered trademark clearly 
+identified as Product identity by the owner of the Product Identity, and 
+which specifically excludes the Open Game Content; (f) “Trademark” 
+means the logos, names, mark, sign, motto, designs that are used by a 
+Contributor to identify itself or its products or the associated products 
+contributed to the Open Game License by the Contributor (g) “Use”, 
+“Used” or “Using” means to use, Distribute, copy, edit, format, modify, 
+translate and otherwise create Derivative Material of Open Game 
+Content. (h) “You” or “Your” means the licensee in terms of this 
+agreement. 
+ 
+2. The License: This License applies to any Open Game Content that 
+contains a notice indicating that the Open Game Content may only be 
+Used under and in terms of this License. You must affix such a notice to 
+any Open Game Content that you Use. No terms may be added to or 
+subtracted from this License except as described by the License itself. No 
+other terms or conditions may be applied to any Open Game Content 
+distributed using this License. 
+ 
+ 3. Offer and Acceptance: By Using the Open Game Content You indicate 
+Your acceptance of the terms of this License. 
+ 
+4. Grant and Consideration: In consideration for agreeing to use this 
+License, the Contributors grant You a perpetual, worldwide, royalty-free, 
+non-exclusive license with the exact terms of this License to Use, the 
+Open Game Content. 
+ 
+5. Representation of Authority to Contribute: If You are contributing 
+original material as Open Game Content, You represent that Your 
+Contributions are Your original creation and/or You have sufficient 
+rights to grant the rights conveyed by this License. 
+ 
+6. Notice of License Copyright: You must update the COPYRIGHT 
+NOTICE portion of this License to include the exact text of the 
+COPYRIGHT NOTICE of any Open Game Content You are copying, 
+modifying or distributing, and You must add the title, the copyright date, 
+and the copyright holder’s name to the COPYRIGHT NOTICE of any 
+original Open Game Content you Distribute. 
+ 
+7. Use of Product Identity: You agree not to Use any Product Identity, 
+including as an indication as to compatibility, except as expressly 
+licensed in another, independent Agreement with the owner of each 
+element of that Product Identity. You agree not to indicate compatibility 
+or co-adaptability with any Trademark or Registered Trademark in 
+conjunction with a work containing Open Game Content except as 
+expressly licensed in another, independent Agreement with the owner 
+of such Trademark or Registered Trademark. The use of any Product 
+Identity in Open Game Content does not constitute a challenge to the 
+ownership of that Product Identity. The owner of any Product Identity 
+used in Open Game Content shall retain all rights, title and interest in and 
+to that Product Identity. 
+ 
+8. Identification: If you distribute Open Game Content You must clearly 
+indicate which portions of the work that you are distributing are Open 
+Game Content. 
+
+
+=== PAGINA PDF 4 ===
+ 
+ 
+ H
+OMEBREW: TITULO DO HOMEBREW
+ 
+4 
+ 
+9. Updating the License: Wizards or its designated Agents may publish 
+updated versions of this License. You may use any authorized version of 
+this License to copy, modify and distribute any Open Game Content 
+originally distributed under any version of this License. 
+ 
+10. Copy of this License: You MUST include a copy of this License with 
+every copy of the Open Game Content You Distribute. 
+ 
+11. Use of Contributor Credits: You may not market or advertise the 
+Open Game Content using the name of any Contributor unless You have 
+written permission from the Contributor to do so. 
+ 
+12. Inability to Comply: If it is impossible for You to comply with any 
+of the terms of this License with respect to some or all of the Open Game 
+Content due to statute, judicial order, or governmental regulation then 
+You may not Use any Open Game Material so affected. 
+ 
+13. Termination: This License will terminate automatically if You fail to 
+comply with all terms herein and fail to cure such breach within 30 days 
+of becoming aware of the breach. All sublicenses shall survive the 
+termination of this License. 
+ 
+14. Reformation: If any provision of this License is held to be 
+unenforceable, such provision shall be reformed only to the extent 
+necessary to make it enforceable. 
+  
+15. COPYRIGHT NOTICE 
+ 
+Open Game License v 1.0, Copyright 2000, Wizards of the Coast, Inc. 
+ 
+System Reference Document, Copyright 2000, Wizards of the Coast, Inc. 
+Autores Jonathan Tweet, Monte Cook e Skip Willians, baseado em 
+material original de E. Gary Gygax e Dave Arneson. 
+Tormenta D20: Edição Revisada, Copyright 2013, Jambô Editora. 
+Autores Marcelo Cassaro, Rogerio Saladino e J.M. Trevisan. 
+Mutantes & Malfeitores, Copyright 2008-2011, Jambô Editora. Autor 
+Steve Kenson, tradutor Leonel Caldela. 
+ 
+NARUTO, Copyright 1999, SHUEISHA Inc. Autor Masashi Kishimoto. 
+ 
+O material a seguir é considerado Identidade do Produto: todos os 
+termos e textos referentes ao Projeto Shinobi no Sho, ao Sistema D8 e ao 
+logotipo do Sistema D8. 
+ 
+O material a seguir é considerado Conteúdo Open Game: todo o texto 
+do livro, exceto por material previamente declarado Identidade do 
+Produto. 
+
+
+=== PAGINA PDF 5 ===
+ 
+ 
+ H
+OMEBREW: TITULO DO HOMEBREW
+ 
+5 
+ 
+LIVRO DE HIJUTSUS MULTIVERSAL 
+Bom dia, boa tarde ou boa noite — depende de quando você estiver 
+abrindo estas páginas. 
+Aqui é o Gazu, e o que você tem em mãos não é apenas mais uma 
+coletânea, mas um bestiário. Uma reunião de criaturas, entidades e 
+forças que não necessariamente são do universo de Naruto, porém acho 
+que seriam legais de se ter dentro do sistema. 
+Este material nasceu da ideia de expandir os limites do cenário, trazendo 
+seres inspirados em diferentes mídias, mitologias e conceitos — alguns 
+familiares, outros completamente inéditos. Aqui, você encontrará não 
+apenas criaturas, mas também suas naturezas, comportamentos, perigos 
+e, em alguns casos, os Hijutsus que as definem ou que nasceram a partir 
+delas. 
+Este bestiário pode servir tanto como fonte de inspiração para mestres 
+quanto como um desafio inesperado para jogadores. Afinal, nem tudo 
+pode ser derrotado apenas com força… e nem tudo que parece um 
+inimigo realmente é. 
+Talvez esta seja uma pequena coletânea… ou talvez algo muito maior do 
+que o esperado. Honestamente, nem eu sei ainda, já que eu estou criando 
+esse bestiário mais como um Hobbie kkkk. 
+De qualquer forma, espero que aproveite a leitura! 
+ 
+ 
+COMO USAR ESTA HOMEBREW 
+Shinobi no Sho é um sistema incrível e muito bem-feito, porém seu 
+cenário pode ser um pouco limitante. Se você for um mestre você tem a 
+liberdade de criar seu próprio mundo: vilas ocultas esquecidas, 
+territórios dominados por clãs antigos, dimensões paralelas… Mas o 
+cenário não se expande tanto em criaturas, animais e “monstros”. 
+É exatamente aqui que este bestiário entra. 
+Este material foi criado para auxiliar mestres a povoarem suas 
+campanhas com criaturas de diferentes origens — desde bestas 
+selvagens até entidades espirituais, invocações antigas e horrores 
+desconhecidos que desafiam a própria lógica do mundo shinobi. Muitas 
+dessas criaturas carregam consigo habilidades únicas, incluindo 
+habilidades próprias ou variações incomuns de técnicas já conhecidas. 
+Assim como qualquer ferramenta, este bestiário não é uma limitação, 
+mas um ponto de partida. Use-o como base para criar encontros, adaptar 
+desafios, modificar criaturas ou até mesmo desenvolver as suas 
+próprias. Cada criatura aqui pode ser mais do que um inimigo — pode 
+ser um obstáculo, um aliado inesperado ou o centro de uma narrativa 
+inteira. 
+O QUE É UMA CRIATURA 
+Dentro deste bestiário, uma “criatura” é qualquer ser com o qual se possa 
+interagir — e, potencialmente, enfrentar. 
+Isso inclui desde animais comuns até entidades colossais, passando por 
+invocações, espíritos, experimentos proibidos e até mesmo outros 
+

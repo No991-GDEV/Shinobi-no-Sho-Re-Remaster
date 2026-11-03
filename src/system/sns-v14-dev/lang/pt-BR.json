@@ -1,0 +1,46 @@
+{
+  "TYPES": {
+    "Actor": {
+      "shinobi": "Shinobi",
+      "npc": "NPC",
+      "companion": "Companheiro / invocação",
+      "hazard": "Perigo / armadilha",
+      "loot": "Depósito / comerciante",
+      "party": "Equipe",
+      "vehicle": "Veículo",
+      "squad": "Unidade / tropa"
+    },
+    "Item": {
+      "reference": "Referência",
+      "weapon": "Arma",
+      "armor": "Armadura",
+      "shield": "Proteção",
+      "equipment": "Equipamento",
+      "consumable": "Consumível",
+      "ammunition": "Munição",
+      "container": "Recipiente",
+      "treasure": "Objeto especial",
+      "kit": "Kit",
+      "document": "Livro / pergaminho",
+      "action": "Ação",
+      "attack": "Ataque",
+      "aptitude": "Aptidão",
+      "power": "Poder",
+      "jutsu": "Técnica / jutsu",
+      "effect": "Efeito",
+      "condition": "Condição",
+      "affliction": "Veneno / aflição",
+      "clan": "Clã / linhagem",
+      "hijutsu": "Hijutsu",
+      "background": "Origem / antecedente",
+      "feature": "Característica",
+      "formula": "Fórmula",
+      "effectDefinition": "Componente de jutsu",
+      "service": "Serviço"
+    }
+  },
+  "SNS": {
+    "Sheet": "Ficha SNS",
+    "Content": "Conteúdo SNS"
+  }
+}

@@ -1,0 +1,14 @@
+<section class="sns-defense-editor-body"><h2>{{label}}</h2>
+<div class="sns-defense-fields">
+{{#each rows}}<fieldset class="sns-defense-entry"><legend>Entrada {{#if name}}{{name}}{{/if}}</legend>
+ <div class="sns-defense-entry-main"><label>Tipo<select name="type-{{index}}">{{#each types}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>
+ {{#unless @root.isImmunity}}<label>Valor<input type="number" name="value-{{index}}" value="{{value}}" min="0" step="0.5" placeholder="Opcional"></label>{{/unless}}
+ <button type="button" data-action="remove" data-index="{{index}}" aria-label="Remover entrada {{index}}" title="Remover"><i class="fa-solid fa-trash"></i></button></div>
+ <label class="sns-defense-name">Nome personalizado<input name="label-{{index}}" value="{{label}}" maxlength="500" placeholder="Para o tipo Personalizada"></label>
+ <label>Exceções<input name="exceptions-{{index}}" value="{{exceptions}}" maxlength="300" placeholder="Ex.: exceto armas de chakra"></label>
+ <label>Descrição<input name="note-{{index}}" value="{{note}}" maxlength="1000" placeholder="Condições e funcionamento"></label>
+</fieldset>{{else}}<p class="empty-state">Nenhuma entrada.</p>{{/each}}
+</div>
+<button type="button" data-action="add"><i class="fa-solid fa-plus"></i> Adicionar</button>
+<p class="notes">Valores desta lista são para consulta; não descontam dano. Poderes e efeitos mantêm seus próprios modificadores.</p>
+<footer class="form-footer"><button type="submit">Salvar</button><button type="button" data-action="cancel">Cancelar</button></footer></section>

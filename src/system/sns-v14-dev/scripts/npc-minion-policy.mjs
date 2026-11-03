@@ -1,0 +1,3 @@
+export const isGeneratedMinion=actor=>actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.npcGenerator?.version===2&&actor.flags['sns-v14-dev'].npcGenerator.role==='minion';
+export function minionTestPolicy(actor,key){const automaticFailure=isGeneratedMinion(actor)&&/^(attribute|skill):/.test(key);return {automaticFailure,...(automaticFailure?{failureReason:'Capanga · falha automática (Básico, p.281)'}:{})};}
+export function minionAttackPolicy(attacker,target){const limited=!!target&&isGeneratedMinion(attacker)&&!isGeneratedMinion(target);return {canCritical:!limited,canCoupDeGrace:!limited,canOpportunistic:!limited,maxGrade:limited?3:null,canTakeEight:!!target&&!isGeneratedMinion(attacker)&&isGeneratedMinion(target)};}
