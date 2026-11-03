@@ -1,0 +1,291 @@
+{
+  "id": "sns-v14-dev",
+  "title": "Naruto: Shinobi no Sho · Re-Remaster",
+  "description": "Sistema comunitário não oficial de Shinobi no Sho. Versão beta para Foundry VTT 14.",
+  "version": "0.4.0-beta.1",
+  "socket": true,
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.367",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "No991-GDEV",
+      "url": "https://github.com/No991-GDEV"
+    }
+  ],
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/sheet.css",
+    "styles/mf1-additions.css",
+    "styles/pf2e-panels.css",
+    "styles/pf-item-adapted.css",
+    "styles/documents.css",
+    "styles/supporting.css",
+    "styles/refinements.css",
+    "styles/advanced.css",
+    "styles/combat-ux.css"
+  ],
+  "languages": [
+    {
+      "lang": "pt-BR",
+      "name": "Português (Brasil)",
+      "path": "lang/pt-BR.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "shinobi": {
+        "gmOnlyFields": [
+          "access",
+          "finances.ryo"
+        ]
+      },
+      "npc": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      },
+      "companion": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      },
+      "hazard": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      },
+      "loot": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      },
+      "party": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.reward",
+          "details.funds"
+        ]
+      },
+      "vehicle": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      },
+      "squad": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "details.funds"
+        ]
+      }
+    },
+    "Item": {
+      "reference": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "weapon": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "armor": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "shield": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "equipment": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "consumable": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "ammunition": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "container": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "treasure": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "kit": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "document": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "action": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "attack": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "aptitude": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "power": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "jutsu": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": [
+          "jutsu.overrides"
+        ]
+      },
+      "effect": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "condition": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "affliction": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "clan": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "hijutsu": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "background": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "feature": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "formula": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      },
+      "effectDefinition": {
+        "htmlFields": [
+          "description"
+        ]
+      },
+      "service": {
+        "htmlFields": [
+          "description"
+        ],
+        "gmOnlyFields": []
+      }
+    }
+  },
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
+  "primaryTokenAttribute": "resources.vitality",
+  "secondaryTokenAttribute": "resources.chakra",
+  "packs": [],
+  "url": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster",
+  "readme": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/blob/main/README.md",
+  "bugs": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/issues",
+  "changelog": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases",
+  "manifest": "https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json",
+  "download": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/download/v0.4.0-beta.1/sns-v14-dev-0.4.0-beta.1.zip",
+  "relationships": {
+    "requires": [
+      {
+        "id": "sns-conteudo-dev",
+        "type": "module",
+        "manifest": "https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json",
+        "compatibility": {
+          "minimum": "0.4.0-beta.1",
+          "verified": "0.4.0-beta.1"
+        }
+      }
+    ]
+  }
+}

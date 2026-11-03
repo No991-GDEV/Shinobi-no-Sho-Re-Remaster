@@ -2,7 +2,7 @@ Primeira beta instalável do sistema comunitário Shinobi no Sho Re-Remaster par
 
 **Instalação:** em Game Systems → Install System, cole:
 
-https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/latest/download/system.json
+https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 
 Aceite a dependência Shinobi no Sho · Compêndios. São 13 packs e 1.390 documentos, incluindo 75 referências do anime. Não é necessário copiar pastas ou usar o launcher local de desenvolvimento.
 

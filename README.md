@@ -7,7 +7,7 @@ Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry V
 Na tela inicial, abra **Game Systems → Install System**, cole o endereço abaixo no campo **Manifest URL** e clique em **Install**:
 
 ```text
-https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/latest/download/system.json
+https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 ```
 
 Aceite a instalação da dependência **Shinobi no Sho · Compêndios** quando o Foundry oferecer. O sistema e os 13 compêndios são baixados pelo Foundry; você não precisa copiar pastas nem usar o executável de desenvolvimento.

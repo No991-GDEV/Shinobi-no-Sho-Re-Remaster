@@ -1,0 +1,207 @@
+{
+  "id": "sns-conteudo-dev",
+  "title": "Shinobi no Sho · Compêndios",
+  "description": "Regras, equipamentos, jutsus e bestiário para o sistema SNS. Livros e homebrews identificados por fonte.",
+  "version": "0.4.0-beta.1",
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.367",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "No991-GDEV",
+      "url": "https://github.com/No991-GDEV"
+    }
+  ],
+  "esmodules": [],
+  "relationships": {
+    "systems": [
+      {
+        "id": "sns-v14-dev",
+        "type": "system",
+        "compatibility": {
+          "minimum": "0.4.0-beta.1",
+          "verified": "0.4.0-beta.1"
+        }
+      }
+    ]
+  },
+  "packs": [
+    {
+      "name": "ryori",
+      "label": "SNS · Ryōri no Sho · Homebrew",
+      "path": "packs/ryori",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "venenos-basico-historico",
+      "label": "SNS · Venenos do Básico · Histórico",
+      "path": "packs/venenos-basico-historico",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "parceiros",
+      "label": "SNS · Parceiros e invocações",
+      "path": "packs/parceiros",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "parceiros-homebrew",
+      "label": "SNS · Parceiros · Homebrew",
+      "path": "packs/parceiros-homebrew",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "bestiario-homebrew",
+      "label": "SNS · Bestiário · Homebrew",
+      "path": "packs/bestiario-homebrew",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "marionetes",
+      "label": "SNS · Marionetes",
+      "path": "packs/marionetes",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "hijutsus-1",
+      "label": "SNS · Livro de Hijutsus",
+      "path": "packs/hijutsus-1",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "hijutsus-2",
+      "label": "SNS · Livro de Hijutsus · Volume 2",
+      "path": "packs/hijutsus-2",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "guia-avancado",
+      "label": "SNS · Guia Avançado do Shinobi",
+      "path": "packs/guia-avancado",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "enciclopedia",
+      "label": "SNS · Enciclopédia · Homebrew",
+      "path": "packs/enciclopedia",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "manual",
+      "label": "SNS · Manual de Técnicas · Homebrew",
+      "path": "packs/manual",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "bestiario-anime",
+      "label": "SNS · Bestiário · Personagens do anime",
+      "path": "packs/bestiario-anime",
+      "type": "Actor",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
+    },
+    {
+      "name": "basico",
+      "label": "SNS · Livro Básico",
+      "path": "packs/basico",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
+        "GAMEMASTER": "OWNER"
+      }
+    }
+  ],
+  "url": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster",
+  "readme": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/blob/main/README.md",
+  "bugs": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/issues",
+  "changelog": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases",
+  "manifest": "https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json",
+  "download": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/download/v0.4.0-beta.1/sns-conteudo-dev-0.4.0-beta.1.zip"
+}

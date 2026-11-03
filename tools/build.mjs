@@ -42,6 +42,7 @@ for(const def of definitions){
  for(const name of await fs.readdir(path.join(moduleTarget,def.path)))if(name==='LOCK'||name==='LOG'||name.startsWith('LOG.old'))await fs.unlink(path.join(moduleTarget,def.path,name));
 }
 await write(path.join(systemTarget,'system.json'),manifests.system);await write(path.join(moduleTarget,'module.json'),manifests.content);
+if(!baseUrl){await write(path.join(root,'system.json'),manifests.system);await write(path.join(root,'module.json'),manifests.content);}
 for(const [target,manifest,name]of [[systemTarget,manifests.system,'system'],[moduleTarget,manifests.content,'module']]){
  const filename=`${manifest.id}-${config.version}.zip`,temp=path.join(run,filename);
  const zip=spawnSync(process.env.SNS_PYTHON??'python3',[path.join(root,'tools/zip.py'),target,temp],{encoding:'utf8'});if(zip.status!==0)throw Error(zip.stderr||zip.stdout||'Falha de ZIP.');

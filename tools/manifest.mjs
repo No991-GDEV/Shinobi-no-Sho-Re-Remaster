@@ -2,8 +2,8 @@ export function releaseUrls(config,baseUrl){
  const root=baseUrl??`https://github.com/${config.repository}/releases/download/${config.tag}`;
  return {
   root,
-  systemManifest:baseUrl?`${root}/system.json`:`https://github.com/${config.repository}/releases/latest/download/system.json`,
-  moduleManifest:baseUrl?`${root}/module.json`:`https://github.com/${config.repository}/releases/latest/download/module.json`,
+  systemManifest:baseUrl?`${root}/system.json`:`https://raw.githubusercontent.com/${config.repository}/main/system.json`,
+  moduleManifest:baseUrl?`${root}/module.json`:`https://raw.githubusercontent.com/${config.repository}/main/module.json`,
   systemZip:`${root}/${config.systemId}-${config.version}.zip`,
   moduleZip:`${root}/${config.moduleId}-${config.version}.zip`
  };

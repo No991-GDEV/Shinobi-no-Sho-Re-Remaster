@@ -41,4 +41,4 @@ jobs:
         run: |
           VERSION=$(node -p 'JSON.parse(require("fs").readFileSync("release.config.json")).tag')
           test "$GITHUB_REF_NAME" = "$VERSION"
-          gh release create "$VERSION" dist/github/*.zip dist/github/system.json dist/github/module.json dist/github/SHA256SUMS dist/github/build-report.json --verify-tag --prerelease --latest --title "Shinobi no Sho Re-Remaster $VERSION" --notes-file docs/RELEASE.md
+          gh release create "$VERSION" dist/github/*.zip dist/github/system.json dist/github/module.json dist/github/SHA256SUMS dist/github/build-report.json --verify-tag --prerelease --title "Shinobi no Sho Re-Remaster $VERSION" --notes-file docs/RELEASE.md
