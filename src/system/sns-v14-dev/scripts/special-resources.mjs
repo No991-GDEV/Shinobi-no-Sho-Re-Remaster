@@ -1,4 +1,5 @@
 // A reserve is registered explicitly against an owned granting item, never inferred from tags.
+import {legadoHasMangekyo,legadoEternal,legadoTransplant,legadoVision} from './legado-core.mjs';
 import {originGrant} from './restricted-access.mjs';
 import {effectiveRuleItem} from './jutsu-rule-text.mjs';
 export const SPECIAL_RESOURCES={
@@ -8,10 +9,12 @@ export const SPECIAL_RESOURCES={
 };
 export const RESOURCE_GRANTS={'Chakra bijū':'bijuu','Pontos de visão · Mangekyou original':'vision'};
 export function grantedResources(actor){return Array.from(actor.items??[]).map(effectiveRuleItem).flatMap(source=>{
- const kind=source.system?.contentId==='sns:power:kujaku-myoho'?'health':source.system?.contentId==='sns:power:hb-f05-jinchuuriki-falso'?'bijuu':RESOURCE_GRANTS[source.system?.details?.resourceRule];
+ const isLegadoVision=source.system?.contentId==='sns:legado:apt:mangekyo-sharingan';
+ if(isLegadoVision&&(legadoEternal(actor)||legadoTransplant(actor))||!isLegadoVision&&source.system?.details?.resourceRule==='Pontos de visão · Mangekyou original'&&legadoHasMangekyo(actor))return [];
+ const kind=isLegadoVision?'vision':source.system?.contentId==='sns:power:kujaku-myoho'?'health':source.system?.contentId==='sns:power:hb-f05-jinchuuriki-falso'?'bijuu':RESOURCE_GRANTS[source.system?.details?.resourceRule];
  if(source.system?.contentId==='sns:power:jinchuuriki'&&originGrant(source)!=='jinchuuriki')return [];
  if(!kind||!['power','aptitude','feature'].includes(source.type))return [];
- return [{id:'grant-'+source.id+'-'+kind,sourceId:source.id,kind,value:null,history:[]}];
+ return [{id:'grant-'+source.id+'-'+kind,sourceId:source.id,kind,value:isLegadoVision?legadoVision(actor).value:null,history:[]}];
 });}
 const rows=actor=>Array.from(actor.system.specialResources??[]);
 export function resolveSpecialResource(actor,row){
@@ -22,10 +25,11 @@ export function resolveSpecialResource(actor,row){
  if(row.kind==='vision'&&(!Number.isInteger(actor.system.attributes?.per)||actor.system.attributes.per<16))problems.push('Mangekyou exige Percepção16, Sandan e evento traumático; confira os requisitos.');
  const common=actor.system.resources?.chakra?.max;
  let max=['health','vision'].includes(row.kind)?10:Number.isInteger(common)&&common>=0?Math.ceil(common/2):null;
+ if(row.kind==='vision'&&source?.system.contentId==='sns:legado:apt:mangekyo-sharingan')max=actor.system.attributes?.per??null;
  if(max===null)problems.push('Informe o máximo de chakra comum para calcular esta reserva.');
  if(row.value!==null&&row.value!==undefined&&(!Number.isInteger(row.value)||row.value<0||max!==null&&row.value>max))problems.push('O valor atual precisa estar entre 0 e o máximo do recurso.');
  const known=Number.isInteger(row.value);
- return {...row,label:rule.label,sourceName:source?.name??'Origem indisponível',hasSource:!!source,source:rule.source,hint:rule.hint,max,valueLabel:known?row.value:'Não informado',maxLabel:max??'—',known,percent:known&&max>0?Math.max(0,Math.min(100,100*row.value/max)):0,valid:!problems.length,problems};
+ return {...row,label:rule.label+(source?.system.contentId==='sns:legado:apt:mangekyo-sharingan'?' · Legado':''),sourceName:source?.name??'Origem indisponível',hasSource:!!source,source:source?.system.contentId==='sns:legado:apt:mangekyo-sharingan'?'Legado do Ódio · PDF6–9':rule.source,hint:source?.system.contentId==='sns:legado:apt:mangekyo-sharingan'?'Máximo igual à Percepção. Cada ponto gasto causa2deVitalidade. Recuperação somente por Descanso Sharingan; cegueira permanente conforme o Preço do Ódio.':rule.hint,max,valueLabel:known?row.value:'Não informado',maxLabel:max??'—',known,percent:known&&max>0?Math.max(0,Math.min(100,100*row.value/max)):0,valid:!problems.length,problems};
 }
 export const specialResourceView=actor=>grantedResources(actor).map(g=>resolveSpecialResource(actor,rows(actor).find(r=>r.sourceId===g.sourceId&&r.kind===g.kind)??g));
 export function specialResourceChange(actor,row,value,note,{user='',at=''}={}){

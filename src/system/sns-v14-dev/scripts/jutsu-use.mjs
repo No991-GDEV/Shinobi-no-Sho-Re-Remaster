@@ -1,3 +1,5 @@
+import {rollWithLegado} from './legado-fortune.mjs';
+import {isLegado} from './legado-core.mjs';
 import {jutsuAreas} from './area-core.mjs';
 import {chooseCastLevel} from './jutsu-level.mjs';
 import {declareJutsuDefenses} from './pre-defense.mjs';
@@ -14,7 +16,7 @@ import {illusionActionBlock} from './magen-core.mjs';
 import {techniqueCard} from './technique-card.mjs';
 const pending=new WeakSet();
 export async function useJutsu(actor,item){
- if(actor.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe)return (await import('./npc-jutsu-service.mjs')).useNpcJutsu(actor,item);
+ if(isLegado(item)||actor.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe)return (await import('./npc-jutsu-service.mjs')).useNpcJutsu(actor,item);
  if(!actor.isOwner||item?.actor!==actor||pending.has(actor))return;
  const actionBlock=illusionActionBlock(actor);if(actionBlock)return ui.notifications.warn(actionBlock);
  const restricted=techniqueRestriction(actor,item);if(restricted)return ui.notifications.warn(restricted);
@@ -70,7 +72,7 @@ export async function useJutsu(actor,item){
   const latest=actor.system.resources.chakra.value,verified=project();
   if(!verified?.valid||definition(verified)!==initialDefinition||verified.cost!==cost||initialBindings!==JSON.stringify(item.system.targetEffects??[])||JSON.stringify(verified.data)!==JSON.stringify(projection.data)||!Number.isInteger(latest)||!paidEarly&&latest<cost)return ui.notifications.warn('A técnica ou os recursos mudaram durante a declaração. Reabra o uso.');
   if(!paidEarly)await actor.update({'system.resources.chakra.value':latest-cost});
-  const roll=await new foundry.dice.Roll(dialog.spec.formula).evaluate();
+  const roll=await rollWithLegado(actor,dialog.spec,{kind:'attack'});
   const facts=projection.data;
   if(damageUse)damageUse.attack=rolledCheck(roll,dialog.spec);
   if(use)use.attack=rolledCheck(roll,dialog.spec);

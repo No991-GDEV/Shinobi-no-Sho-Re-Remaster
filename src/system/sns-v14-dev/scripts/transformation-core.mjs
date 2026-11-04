@@ -1,3 +1,5 @@
+import {effectItemModifiers,effectItemHardness} from './effect-item-rules.mjs';
+import {legadoSusanoo,legadoState,hasLegado} from './legado-core.mjs';
 import {supportHardness} from './support-core.mjs';
 import {SKILLS} from './rules.mjs';
 import {conditionHaste,conditionMovement} from './condition-effects.mjs';
@@ -51,9 +53,10 @@ export function attributeEffect(effects,key,scope='all'){
 }
 export const flatEffect=(effects,key)=>effects.filter(e=>e.kind==='flatModifier'&&e.target===key).reduce((n,e)=>n+e.value,0);
 export function effectiveAttribute(actor,key,scope='all'){
- const base=actor.system.attributes?.[key];return Number.isInteger(base)?base+attributeEffect(transformationProjection(actor).effects,key,scope):base;
+ const base=key==='for'&&legadoState(actor).active?.hachiman&&hasLegado(actor,'hachiman-hidari')?actor.system.attributes?.esp:actor.system.attributes?.[key];return Number.isInteger(base)?base+attributeEffect([...transformationProjection(actor).effects,...effectItemModifiers(actor)],key,scope):base;
 }
-export const effectiveHardness=actor=>Math.max(actor.system.damageState?.hardness??0,transformationProjection(actor).hardness,hasVaporArmor(actor,TRANSFORMATION_PROFILES.gobi)?2:0,supportHardness(actor));
+export const effectiveHardness=actor=>Math.max(effectItemHardness(actor),legadoSusanoo(actor)?.hardness??0,actor.system.damageState?.hardness??0,transformationProjection(actor).hardness,hasVaporArmor(actor,TRANSFORMATION_PROFILES.gobi)?2:0,supportHardness(actor));
+export function recordedAttributeView(value,effects,key){const effectiveValue=Number.isFinite(value)?value+attributeEffect(effects,key,'size'):value;return {value,effectiveValue,adjusted:effectiveValue!==value};}
 export function recordedTransformationRows(rows,effects,key,system={},attributeOverride=''){
  let value=0;const attr=attributeOverride||(key.startsWith('skill:')?SKILLS.find(s=>s.key===key.slice(6))?.attribute:'')||({cc:'for',cd:'des',lm:'per',esq:'agi',initiative:'agi'}[key]);
  if(attr)value=attributeEffect(effects,attr)+(key.startsWith('skill:')?attributeEffect(effects,attr,'size')-attributeEffect(effects,attr):0);
@@ -62,6 +65,7 @@ export function recordedTransformationRows(rows,effects,key,system={},attributeO
  const clean=rows.filter(r=>r.id!=='recorded-transformation');return value?[...clean,{id:'recorded-transformation',label:'Técnicas e efeitos · '+effects.filter(e=>['attributeModifier','flatModifier'].includes(e.kind)).map(e=>e.sourceName).filter((v,i,a)=>a.indexOf(v)===i).join(', '),type:'technique',value,enabled:true}]:clean;
 }
 export function techniqueRestriction(actor,item){
+ if(legadoState(actor).active?.hachiman&&!item?.system?.contentId?.startsWith('sns:legado:jutsu:hachiman'))return 'Hachiman permite apenas suas técnicas e ataques/manobras corporais durante o transe.';
  const p=transformationProjection(actor);if(!p.restricted)return '';
  if(p.active.some(a=>a.profile.def.falseBijuu&&a.mode?.restrictTechniques)&&item?.system.details?.powerId===p.active.find(a=>a.profile.def.falseBijuu&&a.mode?.restrictTechniques)?.profile.source.id)return '';
  return 'O modo bijuu ativo impede esta técnica. Somente técnicas gerais do Jinchuuriki e as exceções da bijuu estão disponíveis (Básico216).';

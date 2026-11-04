@@ -7,6 +7,8 @@ dist/
 !.env.example
 Config/
 Data/
+!src/system/sns-v14-dev/data/
+!src/system/sns-v14-dev/data/**
 Backups/
 Logs/
 foundry-test/

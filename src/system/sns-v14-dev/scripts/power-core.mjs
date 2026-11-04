@@ -11,6 +11,13 @@ export const effectDefinition=id=>EFFECT_DEFINITIONS.find(x=>x.id===id);
 export function choiceProblems(power,choices=power.system.power.choices){
  const p=powerDefinition(power.system.power.definitionId),level=power.system.level,errors=[];
  if(!p)return ['Poder manual: selecione uma definição verificada para usar escolhas assistidas.'];
+ if(power.flags?.['sns-v14-dev']?.legadoCopy||power.flags?.['sns-v14-dev']?.legadoTormenta){
+  const ids=[...new Set(choices.map(c=>c.effectId))];if(ids.length!==1)return ['A concessão da Mímica/Tormenta contém exatamente um efeito.'];
+  const e=effectDefinition(ids[0]);if(!e||!e.powers.includes(p.id.split(':').at(-1)))return ['Efeito incompatível com o poder concedido.'];
+  const stages=[e.min,...e.evolutions].filter(n=>choices.some(c=>c.stage===n));
+  if(stages.length!==choices.length||stages[0]!==e.min||stages.some((n,k)=>n!==[e.min,...e.evolutions][k])||choices.some(c=>c.slot!==c.stage||c.slot>level))return ['A evolução copiada precisa seguir as etapas do efeito.'];
+  return [];
+ }
  const sorted=[...choices].sort((a,b)=>a.slot-b.slot),seen=new Map();
  for(let slot=1;slot<=level;slot++){
   const rows=sorted.filter(c=>c.slot===slot);if(rows.length!==1){errors.push('Nível '+slot+': escolha '+(rows.length?'duplicada.':'pendente.'));continue;}

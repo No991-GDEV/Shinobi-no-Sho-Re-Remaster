@@ -1,3 +1,5 @@
+import {effectItemModifiers} from './effect-item-rules.mjs';
+import {legadoModifiers} from './legado-core.mjs';
 import {advancedEffects} from './advanced-core.mjs';
 import {environmentMovementEffects} from './environment-core.mjs';
 import {conditionEffects} from './condition-effects.mjs';
@@ -20,7 +22,7 @@ export function characteristicEffects(actor){
  const sources=transplantSources(actor);
  const chemical=Array.from(actor?.items??[]).find(i=>(i.system.ruleId||i.system.contentId)==='sns:apt:quimico');
  // Duplicate copies do not multiply the same permanent penalty.
- return [...(chemical?[{kind:'skillAccess',target:'veneficio',sourceId:chemical.id,sourceName:chemical.name}]:[]),...advancedEffects(actor),...environmentMovementEffects(actor),...conditionEffects(actor),...transformationProjection(actor).effects,...(sources.length?[{kind:'resourceMaximumRatio',target:'chakra',numerator:9,denominator:10,sourceId:sources[0].id,sourceName:sources[0].name,rule:TRANSPLANT_RULE,permanent:true}]:[])];
+ return [...effectItemModifiers(actor),...legadoModifiers(actor),...(chemical?[{kind:'skillAccess',target:'veneficio',sourceId:chemical.id,sourceName:chemical.name}]:[]),...advancedEffects(actor),...environmentMovementEffects(actor),...conditionEffects(actor),...transformationProjection(actor).effects,...(sources.length?[{kind:'resourceMaximumRatio',target:'chakra',numerator:9,denominator:10,sourceId:sources[0].id,sourceName:sources[0].name,rule:TRANSPLANT_RULE,permanent:true}]:[])];
 }
 export function applyResourceMaximum(base,effects,target='chakra'){
  if(!Number.isInteger(base)||base<0)return null;

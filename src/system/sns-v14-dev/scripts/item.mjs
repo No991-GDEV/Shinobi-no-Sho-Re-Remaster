@@ -1,3 +1,5 @@
+import {effectBinding,mayEditEffectItem,validateEffectRules} from './effect-item-rules.mjs';
+import {mayEditLegadoItem} from './legado-permissions.mjs';
 import {mayEditSharedRecipe} from './recipe-policy.mjs';
 import {craftProfile,validateCraftProfile,mayEditCraftItem,protectedCraftCreation,trustedCraftProfileCopy,mayDeleteCraftItem} from './crafting-core.mjs';
 import {kuchiyoseLink,summonItemProblems,mayEditGeneratedSummonItem} from './kuchiyose-core.mjs';
@@ -15,6 +17,9 @@ export function itemIcon(type){return 'icons/svg/'+(ICONS[type]??'item-bag')+'.s
 export class SnsItem extends foundry.documents.Item {
  async _preCreate(data,options,user){
   const allowed=await super._preCreate(data,options,user);if(allowed===false)return false;
+  try{validateEffectRules(this.system.effectRules);}catch(e){ui.notifications.warn(e.message);return false;}
+  if(!user.isGM&&(effectBinding(this)||this.system.effectRules?.length)){ui.notifications.warn('O mestre configura as alterações dos efeitos.');return false;}
+  if(!user.isGM&&['legadoCopy','legadoMemory','legadoGrant'].some(k=>this.flags?.['sns-v14-dev']?.[k])){ui.notifications.warn('Use a técnica Mímica ou a concessão do Legado para criar este registro.');return false;}
   if(!user.isGM&&generatedBookFields.some(k=>Object.hasOwn(this.flags?.['sns-v14-dev']??{},k))){ui.notifications.warn('O mestre configura as construções e concessões do gerador.');return false;}
   if(!mayEditGeneratedSummonItem({},this.toObject(),user.isGM)){ui.notifications.warn('Os itens da espécie são calculados pela construção da invocação.');return false;}
   if(craftProfile(this)){
@@ -42,6 +47,7 @@ export class SnsItem extends foundry.documents.Item {
   }
   const {overrideProblems}=await import('./override-policy.mjs');const rows=this.system.jutsu?.overrides??[];
   if(rows.length&&(!user.isGM||overrideProblems(rows).length)){ui.notifications.warn('Somente o mestre pode registrar exceções mecânicas justificadas.');return false;}
+  if(this.actor&&this.system.contentId==='sns:legado:apt:mangekyo-sharingan'&&(!this.actor.flags?.['sns-v14-dev']?.legado?.pair||!this.actor.flags?.['sns-v14-dev']?.legado?.events?.trauma))await (await import('./legado-ui.mjs')).configureLegadoActor(this.actor);
   const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(this,this.actor);
   if(this.actor&&r.configured&&!r.valid){ui.notifications.warn('Não foi possível adicionar '+this.name+': '+r.problems.join(' '));return false;}
   if(this.actor&&!user.isGM&&['aptitude','feature'].includes(this.type)&&!r.configured)ui.notifications.warn('Requisitos: ver descrição.');
@@ -63,6 +69,10 @@ export class SnsItem extends foundry.documents.Item {
   if(expanded.system?.targetEffects!==undefined){try{const {validateTargetEffects}=await import('./jutsu-outcomes.mjs');validateTargetEffects(expanded.system.targetEffects);}catch(e){ui.notifications.warn(e.message);return false;}}
   const {mayEditItemRules}=await import('./item-requirements.mjs');
   const after=foundry.utils.mergeObject(this.toObject(),expanded,{inplace:false,applyOperators:true});
+  try{validateEffectRules(after.system.effectRules);}catch(e){ui.notifications.warn(e.message);return false;}
+  if(!mayEditEffectItem(this.toObject(),after,user.isGM)){ui.notifications.warn('O mestre configura as alterações e a duração do efeito.');return false;}
+  if(effectBinding(this)&&!options.snsEffectItems&&expanded.system?.appliedCondition?.active!==undefined&&expanded.system.appliedCondition.active!==this.system.appliedCondition.active){ui.notifications.warn('Use Encerrar efeito ou a ativação na ficha de origem.');return false;}
+  if(!mayEditLegadoItem(this.toObject(),after,user.isGM)){ui.notifications.warn('As regras da cópia são controladas pela Mímica Sharingan.');return false;}
   if(!mayEditSharedRecipe(this.toObject(),after,user.isGM)){ui.notifications.warn('Esta técnica segue a receita do livro. Altere o poder de origem ou crie um jutsu personalizado.');return false;}
   if(!user.isGM&&generatedBookFields.some(k=>JSON.stringify(this.flags?.['sns-v14-dev']?.[k])!==JSON.stringify(after.flags?.['sns-v14-dev']?.[k]))){ui.notifications.warn('O mestre configura as construções e concessões do gerador.');return false;}
   if(!mayEditGeneratedSummonItem(this.toObject(),after,user.isGM)){ui.notifications.warn('Altere os valores no botão Construção da invocação.');return false;}
@@ -92,5 +102,5 @@ export class SnsItem extends foundry.documents.Item {
   }
   if(expanded.system?.choice){const {aptitudeChoiceStatus}=await import('./aptitude-choices.mjs');if(!aptitudeChoiceStatus(after).valid){ui.notifications.warn('Escolha inválida para esta aptidão.');return false;}}
  }
- async _preDelete(options,user){const allowed=await super._preDelete(options,user);if(allowed===false)return false;if(!mayEditGeneratedSummonItem(this.toObject(),{},user.isGM)){ui.notifications.warn("Os itens da espécie são mantidos pela construção.");return false;}if(!mayDeleteCraftItem(this,user.isGM)){ui.notifications.warn('Conclua ou desfaça o preparo antes de remover este registro.');return false;}if((this.flags?.['sns-v14-dev']?.advancedState||this.flags?.['sns-v14-dev']?.advancedChild||this.flags?.['sns-v14-dev']?.poisonBatch||environmentData(this)||environmentMember(this)||illusionData(this)||phantasmData(this)||supportData(this)||creationData(this)||this.flags?.['sns-v14-dev']?.supportFists)&&!user.isGM){ui.notifications.warn('Use as ações da ilusão na aba Efeitos.');return false;}}
+ async _preDelete(options,user){if(effectBinding(this)&&this.system.appliedCondition.active){ui.notifications.warn('Encerre o efeito antes de removê-lo.');return false;}if(!user.isGM&&(this.flags?.['sns-v14-dev']?.legadoCopy||this.flags?.['sns-v14-dev']?.legadoEffect)){ui.notifications.warn('Use Esquecer na Mímica Sharingan para liberar os pontos.');return false;}const allowed=await super._preDelete(options,user);if(allowed===false)return false;if(!mayEditGeneratedSummonItem(this.toObject(),{},user.isGM)){ui.notifications.warn("Os itens da espécie são mantidos pela construção.");return false;}if(!mayDeleteCraftItem(this,user.isGM)){ui.notifications.warn('Conclua ou desfaça o preparo antes de remover este registro.');return false;}if((this.flags?.['sns-v14-dev']?.advancedState||this.flags?.['sns-v14-dev']?.advancedChild||this.flags?.['sns-v14-dev']?.poisonBatch||environmentData(this)||environmentMember(this)||illusionData(this)||phantasmData(this)||supportData(this)||creationData(this)||this.flags?.['sns-v14-dev']?.supportFists)&&!user.isGM){ui.notifications.warn('Use as ações da ilusão na aba Efeitos.');return false;}}
 }

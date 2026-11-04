@@ -33,6 +33,7 @@ export async function processRest(message){
    const {endAdvancedState}=await import('./advanced-service.mjs');
    for(const item of actor.items.filter(endsAtRest))if(item.flags?.[ns]?.advancedState)await endAdvancedState(item,'Descanso completo.');
    const at=new Date().toISOString(),ordinary=actor.items.filter(endsAtRest);
+   for(const item of ordinary)if(item.flags?.[ns]?.effectBinding)await (await import('./effect-item-service.mjs')).endBoundEffect(item);
    if(ordinary.length)await actor.updateEmbeddedDocuments('Item',ordinary.map(i=>({_id:i.id,'system.appliedCondition.active':false,'system.appliedCondition.endedAt':at})));
    const result=await withEffectLock(actor,async()=>{
     // Read again after transformations end; the original resources and maxima are preserved.

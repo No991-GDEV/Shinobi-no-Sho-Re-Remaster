@@ -1,3 +1,4 @@
+import {clientSetting} from '../data/optional-sources.mjs';
 const seen=new Set();
 export function vitalityChange(before,after){
  if(!Number.isSafeInteger(before)||!Number.isSafeInteger(after)||before===after)return null;
@@ -12,7 +13,7 @@ export function captureVitalityChange(actor,changes,options){
  if(change)options.snsVitalityAnimation={...change,id:foundry.utils.randomID()};
 }
 export function animateVitality(actor,changes,options){
- const change=options.snsVitalityAnimation;if(!change||seen.has(change.id)||!canvas.ready)return;
+ const change=options.snsVitalityAnimation;if(!clientSetting('vitalityAnimation')||!change||seen.has(change.id)||!canvas.ready)return;
  seen.add(change.id);if(seen.size>500)seen.delete(seen.values().next().value);
  for(const token of actor.getActiveTokens().filter(t=>t.actor?.uuid===actor.uuid&&t.isVisible&&t.visible)){
   canvas.interface.createScrollingText({x:token.center.x,y:token.y-Math.max(30,token.h*0.4)},change.text,{duration:1600,distance:Math.max(40,token.h*0.6),fontSize:28,fontWeight:'bold',fill:change.fill,stroke:change.stroke,strokeThickness:change.strokeThickness,jitter:0}).catch(console.error);

@@ -14,6 +14,7 @@ export class SnsSpecialResourceEditor extends SnsHandlebarsApplicationMixin(Appl
   try{this.capture();if(JSON.stringify(this.actor.system.specialResources??[])!==this.baseline)throw Error('Os recursos mudaram enquanto o editor estava aberto. Reabra para continuar.');
    if(!this.existing&&!this.grant&&!this.confirmed)throw Error('Confira a origem e os requisitos antes de registrar.');
    if(!this.existing)validateSpecialResourceRegistration(this.actor,this.draft);
+   if(!game.user.isGM&&this.draft.kind==='vision'&&this.actor.items.get(this.draft.sourceId)?.system.contentId==='sns:legado:apt:mangekyo-sharingan')throw Error('Use Descanso Sharingan para recuperar a visão do Legado.');
    let row=specialResourceChange(this.actor,this.draft,this.value,this.note,{user:game.user.id,at:new Date().toISOString()});
    if(!this.existing&&!row.history.length)row={...row,history:[{from:null,to:null,note:this.note.trim()||'Registro da origem; valor atual desconhecido.',user:game.user.id,at:new Date().toISOString()}]};
    // Source deletion, level changes and permissions are checked again after the popup.

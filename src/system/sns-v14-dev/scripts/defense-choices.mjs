@@ -1,3 +1,4 @@
+import {legadoSusanoo,legadoSelected} from './legado-core.mjs';
 import {minionTestPolicy} from './npc-minion-policy.mjs';
 import {poisonContextEffects} from './advanced-core.mjs';
 import {energyFor,creationData,creationUsable} from './support-core.mjs';
@@ -46,5 +47,6 @@ export function defenseChoices(actor,profile,extra=[]){
   if(check){const spec=defenseSpec(actor,'cc',item,penalty,extra,profile);if(spec)choices.push({id:'block-'+item.id,label:'Bloquear · '+item.name,detail:'Reação · CC '+(spec.precision+spec.adjustment),kind:'opposed',key:'cc',itemId:item.id,penalty});}
  }
  const allowed=profile.allowedDefenses?choices.filter(c=>profile.allowedDefenses.includes(c.id==='dodge'?(c.key==='lm'?'anticipate':'dodge'):c.id==='anticipate'?'anticipate':'block')):choices;
+ if(legadoSusanoo(actor)?.stage>=3&&legadoSelected(actor).includes('yata-no-kagami')){const yata=defenseSpec(actor,'lm',null,0,[{kind:'flatModifier',target:'lm',value:2,sourceName:'Yata no Kagami'}],profile);if(yata)allowed.push({id:'block-yata',label:'Bloquear · Espelho de Yata',detail:'LM +2 · qualquer ataque',kind:'opposed',key:'lm',environmentBonus:2});}
  return allowed.length?allowed:[{id:'manual',label:'Resolver com o mestre',kind:'manual'}];
 }

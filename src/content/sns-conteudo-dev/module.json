@@ -195,6 +195,19 @@
         "ASSISTANT": "OBSERVER",
         "GAMEMASTER": "OWNER"
       }
+    },
+    {
+      "name": "legado-do-odio",
+      "label": "SNS · Legado do Ódio · Opcional",
+      "path": "packs/legado-do-odio",
+      "type": "Item",
+      "system": "sns-v14-dev",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "NONE",
+        "ASSISTANT": "NONE",
+        "GAMEMASTER": "OWNER"
+      }
     }
   ]
 }

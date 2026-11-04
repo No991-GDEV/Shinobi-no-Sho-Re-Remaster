@@ -298,3 +298,34 @@
 
 .sns-damage-chat>.damage-controls{display:flex;gap:4px;padding:4px 0}
 .sns-damage-chat>.damage-controls>button{flex:1;margin:0;min-height:28px;justify-content:center;border:1px solid #9b9381;background:#dcd8cc;color:#27231e;font:700 12px SnsCondensed,Arial;padding:4px 6px}
+/* D174 — unified editable effect documents */
+.sns-effect-item-sheet .window-content{padding:12px;background:#e9e3d2;color:#2a241d;overflow:hidden}
+.sns-effect-editor{display:flex;flex-direction:column;height:100%;min-height:0;gap:12px;font-size:13px}
+.sns-effect-editor-header{display:flex;align-items:center;gap:12px;border-bottom:2px solid #7c1e15;padding-bottom:12px}
+.sns-effect-editor-header>img{width:52px;height:52px;border:1px solid #9c8768;border-radius:4px}
+.sns-effect-editor-header>div{flex:1;min-width:0;display:grid;gap:3px}
+.sns-effect-editor-header small{text-transform:uppercase;font-size:11px;color:#713327;letter-spacing:.06em}
+.sns-effect-editor-header input{font-size:22px;font-family:var(--font-h1);height:34px;color:#381d14;background:transparent}
+.sns-effect-editor-header span{color:#665744;font-size:12px}
+.sns-effect-editor-body{overflow:auto;min-height:0;display:flex;flex-direction:column;gap:14px;padding-right:8px}
+.sns-effect-editor-body>*{flex-shrink:0}
+.sns-effect-editor-body h3{font-size:16px;color:#702015;margin:0;border:0}
+.sns-effect-editor-body p{margin:5px 0;line-height:1.45}
+.sns-effect-intrinsic{background:#f5f0e5;border:1px solid #b3a48b;border-left:3px solid #8b251b;padding:10px}
+.sns-effect-intrinsic small{display:block;color:#665744;margin-top:6px}
+.sns-effect-section-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px}
+.sns-effect-editor-body label{display:flex;flex-direction:column;gap:5px;font-weight:600;color:#47372a}
+.sns-effect-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sns-effect-editor-body .sns-effect-status{flex-direction:row;align-items:center}
+.sns-effect-editor-body fieldset{display:grid;grid-template-columns:1fr 1fr;gap:10px;border:1px solid #b3a48b;padding:10px}
+.sns-effect-editor-body fieldset small{grid-column:1/-1;color:#665744}
+.sns-effect-rule{display:grid;grid-template-columns:minmax(150px,1fr) 70px 30px;gap:8px;align-items:center;margin:6px 0}
+.sns-effect-rule input{text-align:center}
+.sns-effect-editor-body .hint{font-size:12px;color:#665744}
+.sns-effect-editor-body prose-mirror{display:block;min-height:80px;color:#29251e}
+.sns-effect-editor-body prose-mirror:not([open]){height:auto;max-height:none;overflow:visible}
+.sns-effect-editor-body prose-mirror:not([open]) .editor-container{position:absolute;flex:none;height:auto;overflow:visible}
+.sns-effect-editor-body prose-mirror:not([open]) .editor-content{position:static;height:auto;min-height:0;max-height:none;overflow:visible;color:#29251e}
+.sns-effect-editor-body prose-mirror[open]{min-height:200px}
+.sns-effect-editor footer{border-top:1px solid #b3a48b;padding-top:10px}
+.sns-effect-editor footer button{width:100%;background:#27285e;color:#fff;font-weight:600}

@@ -30,6 +30,7 @@ async function resolveCombatEvent(event,actors){
  for(const actor of actors)await withEffectLock(actor,async()=>{
   if(!isTimekeeper()||!actor.isOwner)return;
   const updates=[];
+  const {processLegadoTurn}=await import('./legado-service.mjs');await processLegadoTurn(actor,event);
   const {processEnvironmentTurn}=await import('./environment-service.mjs');await processEnvironmentTurn(actor,event);
   const {processSupportTurn}=await import('./support-service.mjs');await processSupportTurn(actor,event);
   const {processIllusionTurn}=await import('./magen-service.mjs');await processIllusionTurn(actor,event);
@@ -37,9 +38,10 @@ async function resolveCombatEvent(event,actors){
    if(item.flags?.['sns-v14-dev']?.advancedState||item.flags?.['sns-v14-dev']?.advancedChild||item.flags?.['sns-v14-dev']?.environment||item.flags?.['sns-v14-dev']?.environmentMember||item.flags?.['sns-v14-dev']?.illusion||item.flags?.['sns-v14-dev']?.support)continue;
    if(!isManagedCondition(item))continue;
    const next=advanceDuration(item.system.appliedCondition,event);if(!next)continue;
+   if(next.expired&&item.flags?.['sns-v14-dev']?.effectBinding)await (await import('./effect-item-service.mjs')).endBoundEffect(item);
    updates.push({_id:item.id,'system.appliedCondition.durationClock':next.clock,...(next.expired?{'system.appliedCondition.active':false,'system.appliedCondition.endedAt':at}:{})});
   }
-  if(updates.length)await actor.updateEmbeddedDocuments('Item',updates);
+  if(updates.length)await actor.updateEmbeddedDocuments('Item',updates,{snsEffectItems:true});
  });
  if(event.phase!=='start'||!event.actor?.isOwner)return;
  await withEffectLock(event.actor,()=>maintainTransplants(event.actor,event));
@@ -88,8 +90,10 @@ export async function endActorScene(actor){
   const {activeIllusions,sceneEpoch}=await import('./magen-core.mjs'),{endIllusion}=await import('./magen-service.mjs');for(const root of activeIllusions(actor))await endIllusion(actor,root,'Cena encerrada');
   const cooldowns=Array.from(actor.items).filter(i=>i.system.contentId==='sns:state:imunidade-fascinio'&&i.system.appliedCondition.active);if(cooldowns.length)await actor.updateEmbeddedDocuments('Item',cooldowns.map(i=>({_id:i.id,'system.appliedCondition.active':false,'system.appliedCondition.endedAt':at})));
   await actor.update({'flags.sns-v14-dev.magenScene':sceneEpoch(actor)+1});
-  if(conditions.length)await actor.updateEmbeddedDocuments('Item',conditions.map(i=>({_id:i.id,'system.appliedCondition.active':false,'system.appliedCondition.endedAt':at})));
-  const rows=activationRows(actor),ended=rows.filter(r=>r.active&&['sharingan','byakugan'].includes(r.rule));
+  for(const item of conditions)if(item.flags?.['sns-v14-dev']?.effectBinding)await (await import('./effect-item-service.mjs')).endBoundEffect(item);
+  if(conditions.length)await actor.updateEmbeddedDocuments('Item',conditions.map(i=>({_id:i.id,'system.appliedCondition.active':false,'system.appliedCondition.endedAt':at})),{snsEffectItems:true});
+  const rows=activationRows(actor),ended=rows.filter(r=>r.active&&['sharingan','byakugan','legado-sharingan'].includes(r.rule));
+  const legado=actor.flags?.['sns-v14-dev']?.legado;if(legado){const next=structuredClone(legado);next.active={};if(next.susanoo)next.susanoo={...next.susanoo,active:false,recreated:false,destroyed:false,yomi:0};await actor.update({'flags.sns-v14-dev.legado':next});const effects=Array.from(actor.items).filter(i=>i.system.appliedCondition?.active&&i.flags?.['sns-v14-dev']?.legadoEffect?.selfKey);if(effects.length)await actor.updateEmbeddedDocuments('Item',effects.map(i=>({_id:i.id,'system.appliedCondition.active':false})));}
   if(ended.length){const next=rows.map(r=>ended.includes(r)?{...r,active:false,history:[...(r.history??[]),{event:'sceneEnd',from:true,to:false,chakraCost:0,user:game.user.id,at}]}:r);await actor.update({'system.activeAptitudes':next});}
   const transformations=structuredClone(transformationState(actor));if(transformations.entries.length){transformations.entries=transformations.entries.map(r=>({...r,mode:'normal',buffs:[],arms:[],turns:0,controlPaid:false,playerLocked:false,forced:false}));await actor.update({'flags.sns-v14-dev.transformations':transformations});}
   return {conditions:conditions.length,aptitudes:ended.length};

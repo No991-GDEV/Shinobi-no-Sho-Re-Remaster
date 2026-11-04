@@ -13,6 +13,7 @@ export function restRecovery(actor,{prolongedCare=false}={}){
 }
 export function endsAtRest(item){
  const c=item.system?.appliedCondition,f=item.flags?.[ns]??{};if(!c?.managed||!c.active)return false;
+ if(f.legadoEffect?.persistVision||f.legadoEffect?.permanent||f.legadoEffect?.kind==='incendiado')return false;
  if(f.environment?.permanent||f.support?.solid||f.advancedState?.kind==='venenoso'||f.advancedChild)return false;
  if(f.advancedState)return f.advancedState.kind==='dano-continuo';
  if(['scene','turns'].includes(c.durationRule?.mode))return true;

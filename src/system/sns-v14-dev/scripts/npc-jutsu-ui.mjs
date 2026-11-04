@@ -1,3 +1,4 @@
+import {legadoMayReroll} from './legado-effects.mjs';
 import {npcSaveDifficulty} from './npc-repertoire-core.mjs';
 import {attackNpcCast,rollNpcSave,rollFreeNpcSave,placeNpcTemplate,completeNpcCast,rollNpcTechniqueCheck,reloadNpcDevice} from './npc-jutsu-service.mjs';
 const ns='sns-v14-dev';
@@ -20,7 +21,7 @@ export async function decorateNpcJutsu(message,element){
   if(cast.plan.mode==='save'){
    if(!cast.targets.length)for(const key of cast.plan.saveKeys)controls.append(button((labels[key]??key)+' · Dif '+cast.plan.dc,()=>rollFreeNpcSave(message,key)));
    for(const target of cast.targets){const a=await fromUuid(target.uuid);if(!a)continue;const result=cast.saves[target.uuid.replaceAll('.','~')],row=document.createElement('div'),label=document.createElement('strong');label.textContent=target.name;row.append(label);
-    if(result){const text=document.createElement('span');text.textContent=result.outcome==='passed'?'Resistiu':'Falhou';row.append(text);}
+    if(result){const text=document.createElement('span');text.textContent=result.outcome==='passed'?'Resistiu':'Falhou';row.append(text);if((a.isOwner||game.user.isGM)&&legadoMayReroll(cast,a))row.append(button('Mangekyo · repetir resistência',()=>rollNpcSave(message,a,cast.plan.saveKeys[0])));}
     else if(a.isOwner||game.user.isGM)for(const key of cast.plan.saveKeys)row.append(button((labels[key]??key)+' · Dif '+npcSaveDifficulty(cast,a),()=>rollNpcSave(message,a,key)));
     else{const text=document.createElement('small');text.textContent='Aguardando resistência · Dif '+npcSaveDifficulty(cast,a);row.append(text);}controls.append(row);
    }

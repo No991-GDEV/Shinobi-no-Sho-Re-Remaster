@@ -1,9 +1,10 @@
 // One book definition; actor-specific investment, choices and links remain on the owned copy.
 import {aptitudeChoiceStatus} from './aptitude-choices.mjs';
+import {OPTIONAL_SOURCES,sourceEnabled,sourceAvailable,optionalSourceId} from '../data/optional-sources.mjs';
 export const BASIC_PACK='sns-conteudo-dev.basico';
 export const LEGACY_BASIC_PACK='world.sns-basico-canonico';
 export const HISTORICAL_PACK='world.time7-referencias-d108';
-export const isAcquisitionPack=pack=>![HISTORICAL_PACK,LEGACY_BASIC_PACK,'sns-conteudo-dev.venenos-basico-historico'].includes(pack.collection);
+export const isAcquisitionPack=pack=>sourceAvailable(pack)&&![HISTORICAL_PACK,LEGACY_BASIC_PACK,'sns-conteudo-dev.venenos-basico-historico'].includes(pack.collection);
 export const isCatalogWorldItem=item=>!Object.hasOwn(item.flags?.['sns-v14-dev']??{},'d099');
 export const LIBRARY_URL='modules/sns-conteudo-dev/content/basico-canonico-v1.json';
 let libraryPromise;
@@ -13,9 +14,24 @@ const decodedQuotes=text=>String(text??'').replace(/&quot;/g,'"').replace(/&#(?:
 export const sameBookHtml=(a,b)=>decodedQuotes(a)===decodedQuotes(b);
 export function sourceQuoteEncoding(html){return String(html??'').split(/(<[^>]*>)/g).map((part,n)=>n%2?part:decodedQuotes(part).replace(/"/g,'&quot;').replace(/'/g,'&#x27;')).join('');}
 export async function hasPublishedTextEdits(item){const record=item.flags?.['sns-v14-dev']?.canonicalContent;if(!record?.bodySha256)return false;return await contentSha256(item.system.description)!==record.bodySha256&&await contentSha256(sourceQuoteEncoding(item.system.description))!==record.bodySha256;}
-export async function loadCanonicalLibrary(){
+async function loadBaseLibrary(){
  if(!libraryPromise){const task=fetch(LIBRARY_URL).then(r=>{if(!r.ok)throw Error('Biblioteca indisponível.');return r.json();}).then(value=>{if(!Array.isArray(value?.entries))throw Error('Biblioteca incompleta.');return value;}).catch(()=>{if(libraryPromise===task)libraryPromise=null;return null;});libraryPromise=task;}
  return libraryPromise;
+}
+const optionalPromises=new Map(),mergedLibraries=new WeakMap();
+export function resetCanonicalLibrary(){libraryPromise=null;optionalPromises.clear();}
+export async function loadCanonicalLibrary(){
+ const base=await loadBaseLibrary();if(!base)return null;
+ const active=OPTIONAL_SOURCES.filter(s=>sourceEnabled(s.id));if(!active.length)return base;
+ const libraries=[],errors=[];
+ for(const source of active){
+  if(!optionalPromises.has(source.id)){const task=fetch(source.file).then(r=>{if(!r.ok)throw Error(source.label);return r.json();}).then(l=>{if(!Array.isArray(l?.entries)||l.entries.some(e=>!e.id?.startsWith('sns:legado:')))throw Error(source.label);return l;}).catch(()=>{optionalPromises.delete(source.id);return null;});optionalPromises.set(source.id,task);}
+  const library=await optionalPromises.get(source.id);if(library)libraries.push(library);else errors.push(source.label);
+ }
+ if(errors.length)return {...base,optionalErrors:errors};
+ const signature=active.map(s=>s.id).join('|');let cache=mergedLibraries.get(base);if(!cache){cache=new Map();mergedLibraries.set(base,cache);}if(cache.has(signature))return cache.get(signature);
+ const entries=[...base.entries,...libraries.flatMap(l=>l.entries)];if(new Set(entries.map(e=>e.id)).size!==entries.length)throw Error('Identidades de conteúdo duplicadas.');
+ const merged={...base,entries};cache.set(signature,merged);return merged;
 }
 export function canonicalEntry(item,library){
  if(!library)return null;
@@ -28,7 +44,8 @@ export function canonicalCopy(entry,variantId='',choiceKey=''){
  const data=structuredClone(entry.document),variant=entry.variants.find(v=>v.id===variantId)??entry.variants[0];
  if(variant){data.system.ruleId=variant.ruleId;if(variant.level)data.system.level=variant.level;}
  if(choiceKey){data.system.choice={kind:entry.choiceType,key:choiceKey};if(!aptitudeChoiceStatus(data).valid)throw Error('Escolha inválida para esta aptidão.');}
- data.flags={'sns-v14-dev':{canonicalContent:{id:entry.id,revision:entry.revision,bodySha256:entry.verifiedSource.bodySha256}}};
+ const sourceFlags=optionalSourceId(data)?structuredClone(data.flags?.['sns-v14-dev']??{}):{};
+ data.flags={'sns-v14-dev':{...sourceFlags,canonicalContent:{id:entry.id,revision:entry.revision,bodySha256:entry.verifiedSource.bodySha256}}};
  return data;
 }
 const auditTags=new Set(['Time 7','Clássico','Referência D108']);

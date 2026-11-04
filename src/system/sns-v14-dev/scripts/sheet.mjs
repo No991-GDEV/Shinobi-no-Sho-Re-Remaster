@@ -1,3 +1,5 @@
+import {rollWithLegado} from './legado-fortune.mjs';
+import {configureLegado,legadoControl} from './legado-ui.mjs';
 import {SnsCrafting} from './crafting-ui.mjs';
 import {biographyMarkup,biographyFormChanges} from './biography.mjs';
 import {requestRest} from './rest-service.mjs';
@@ -50,6 +52,7 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
   static async endActorScene(){if(this.isEditable)await promptEndActorScene(this.actor);}
   static async applyCondition(){if(this.isEditable)await promptCondition(this.actor);}
   static async sustainSupport(event,target){if(this.isEditable)await (await import('./support-service.mjs')).requestSupportControl(this.actor.items.get(target.dataset.itemId),'sustain');}
+  static async createTemporaryEffect(){if(!this.isEditable||!game.user.isGM)return;const [item]=await this.actor.createEmbeddedDocuments('Item',[{name:'Novo efeito',type:'effect',system:{appliedCondition:{managed:true,active:true,origin:'Mestre',appliedAt:new Date().toISOString()}}}]);if(item)await item.sheet.render({force:true});}
   static async endCondition(event,target){if(this.isEditable)await endCondition(this.actor,target.dataset.itemId);}
   activeTab = "character";
   actionTab = "encounter";
@@ -57,8 +60,8 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["sns-sheet-app"], position: { width: 780, height: 820 },window:{resizable:true},
     form: { submitOnChange: true, closeOnSubmit: false },
-    actions: {craftEntry:ShinobiSheet.craftEntry,creationGuide:ShinobiSheet.creationGuide,acquisition:ShinobiSheet.acquisition,restActor:ShinobiSheet.restActor,environmentAction,illusionAction,transformationMode,configureTransformation,transformationTechnique,transformationDomain,transformationRest,transformationManualTurn,
-      sheetDamage:ShinobiSheet.sheetDamage,conditionDuration:ShinobiSheet.conditionDuration,endActorScene:ShinobiSheet.endActorScene,damageHistory:ShinobiSheet.damageHistory,applyCondition:ShinobiSheet.applyCondition,sustainSupport:ShinobiSheet.sustainSupport,endCondition:ShinobiSheet.endCondition,
+    actions: {configureLegado,legadoControl,craftEntry:ShinobiSheet.craftEntry,creationGuide:ShinobiSheet.creationGuide,acquisition:ShinobiSheet.acquisition,restActor:ShinobiSheet.restActor,environmentAction,illusionAction,transformationMode,configureTransformation,transformationTechnique,transformationDomain,transformationRest,transformationManualTurn,
+      sheetDamage:ShinobiSheet.sheetDamage,conditionDuration:ShinobiSheet.conditionDuration,endActorScene:ShinobiSheet.endActorScene,damageHistory:ShinobiSheet.damageHistory,createTemporaryEffect:ShinobiSheet.createTemporaryEffect,applyCondition:ShinobiSheet.applyCondition,sustainSupport:ShinobiSheet.sustainSupport,endCondition:ShinobiSheet.endCondition,
       payAptitudeUpkeep:ShinobiSheet.payAptitudeUpkeep,
       configureActiveAptitude:ShinobiSheet.configureActiveAptitude,toggleActiveAptitude:ShinobiSheet.toggleActiveAptitude,
       editSpecialResource:ShinobiSheet.editSpecialResource,
@@ -274,8 +277,7 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
       if(name)spec.name=name;
       const profile=weaponDamageProfile(this.actor,entry,key),defenseRequestUuid=await declareDefenses(this.actor,entry,profile,capturedTargets);
       if(defenseRequestUuid===null)return;
-      const roll = new foundry.dice.Roll(spec.formula);
-      await roll.evaluate();
+      const roll = await rollWithLegado(this.actor,spec,{kind:['cc','cd'].includes(key)?'attack':'test'});
       const damageUse=damageSnapshot(this.actor,entry,profile,capturedTargets,roll,spec);if(damageUse&&defenseRequestUuid)damageUse.defenseRequestUuid=defenseRequestUuid;
       const natural = roll.dice[0].results.filter(r => r.active !== false).reduce((a, r) => a + r.result, 0);
       await roll.toMessage({

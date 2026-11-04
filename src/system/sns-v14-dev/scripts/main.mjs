@@ -1,3 +1,12 @@
+import {EffectItemSheet} from './effect-item-sheet.mjs';
+import {installEffectItemHooks} from './effect-item-service.mjs';
+installEffectItemHooks();
+import {installLegadoWorkflow} from './legado-workflow.mjs';
+installLegadoWorkflow();
+import {installLegadoHooks} from './legado-service.mjs';
+installLegadoHooks();
+import {installSystemSettingsHooks} from './system-settings.mjs';
+installSystemSettingsHooks();
 import {installMessageIndex} from './message-index.mjs';
 installMessageIndex();
 import {installOwnedDamageHooks} from './damage-chat.mjs';
@@ -55,7 +64,6 @@ Hooks.once("init", () => {
   // Development servers cache the manifest. Load this stylesheet on clients even before their next server restart.
   if(!Array.from(document.querySelectorAll('link[rel="stylesheet"]')).some(link=>new URL(link.href,document.baseURI).pathname.endsWith('/styles/combat-ux.css'))){const style=document.createElement('link');style.rel='stylesheet';style.href='systems/sns-v14-dev/styles/combat-ux.css?v=d125';document.head.append(style);}
   CONFIG.Actor.documentClass = ShinobiActor;
-  game.settings.register('sns-v14-dev','gobiVaporRevision',{name:'Gobi: Aceleração-Vapor revisada',hint:'Opção de mesa: AGI +1/+2/+3 nos níveis6/7/8. Desativada: regra original do Livro de Hijutsus.',scope:'world',config:true,type:Boolean,default:false});
   CONFIG.Combat.documentClass = SnsCombat;
   configureConditionStatuses();
   CONFIG.Item.documentClass = SnsItem;
@@ -69,6 +77,7 @@ Hooks.once("init", () => {
   foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Item,"sns-v14-dev",ReferenceItemSheet,{
     types:Object.keys(ITEM_PROFILES),makeDefault:true,label:"SNS · Itens e habilidades"
   });
+  foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Item,'sns-v14-dev',EffectItemSheet,{types:['effect','condition'],makeDefault:true,label:'SNS · Efeito'});
   Handlebars.registerHelper("snsIsTab", (a, b) => a === b);
   game.sns = { calculate, testSpec, ShinobiSheet, openCatalog:()=>new SnsCatalog().render({force:true}) };
 });

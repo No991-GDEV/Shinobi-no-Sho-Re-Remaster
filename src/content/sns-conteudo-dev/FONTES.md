@@ -12,3 +12,8 @@ Os documentos do catálogo conservam título, autor quando informado, edição e
 Manual Shinobi e Ryōri no Sho: o responsável pelo projeto declarou uso livre em 03/11/2026; licença formal não localizada nos arquivos fornecidos. Retratos do bestiário provêm das fichas de referência fornecidas.
 
 Adaptações digitais: separação em itens, parâmetros tipados, requisitos, vínculos e controladores de jogo. Textos canônicos e atribuições de origem preservados; alterações de campanha identificadas na ficha. Projeto D8/Diego “Fesant” Silva e demais autores mantêm seus créditos. Naruto e personagens: Masashi Kishimoto/SHUEISHA.
+
+
+## Legado do Ódio
+
+Homebrew opcional fornecido pelo mantenedor. Sua procedência e páginas ficam registradas nas 32 entradas da biblioteca. Mantido separado das regras básicas; desativado por padrão. As adaptações digitais incluem requisitos, modalidades, custos de chakra/visão e estados. Nenhuma licença geral de terceiros é presumida por esta inclusão.

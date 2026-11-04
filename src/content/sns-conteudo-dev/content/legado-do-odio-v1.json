@@ -1,0 +1,2151 @@
+{
+  "schemaVersion": 1,
+  "revision": "D173-v1",
+  "source": {
+    "id": "legado-do-odio",
+    "title": "Legado do Ódio",
+    "authors": [
+      "Ciro “AverageHoloEnjoyer” Melo",
+      "William “Zeca Paugordinho” Salazar"
+    ],
+    "sha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+    "pages": 43
+  },
+  "entries": [
+    {
+      "id": "sns:legado:rule:expansao-cla-uchiha",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:rule:expansao-cla-uchiha"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Expansão Clã Uchiha",
+        "type": "reference",
+        "img": "icons/svg/book.svg",
+        "system": {
+          "contentId": "sns:legado:rule:expansao-cla-uchiha",
+          "ruleId": "sns:legado:rule:expansao-cla-uchiha",
+          "description": "<p>EXPANSÃO CLÃ UCHIHA Um dos mais famosos clãs de Konoha, o clã Uchiha é responsável pela proteção e segurança d e Konohagakure , fazendo parte integral do policiamento da mesma. A kekkei genkai do clã, o Sharingan, é conhecida e cobiçada por povos além do país do fogo, tamanho é o seu poder. Aptidões Restritas: Elemento Natural: Katon; Sharingan; Nidan Sharingan; Sandan Sharingan; Mangekyou Sharingan. Exigência de Elemento : Você é obriga do a ter o poder Katon ou ter a aptidão Elemento Natural: Katon, desde a criação de personagem. APTIDÕES RESTRITAS</p>",
+          "category": "features",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 3"
+          },
+          "details": {}
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                3,
+                3
+              ],
+              "requirements": "",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          3,
+          3
+        ],
+        "lines": [
+          65,
+          74
+        ],
+        "bodySha256": "442012dcc4dedcb1779a232465860295f4eef0631a575a84a24fa2412311d787",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:elemento-natural-katon",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:elemento-natural-katon"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Elemento Natural: Katon",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:elemento-natural-katon",
+          "ruleId": "sns:legado:apt:elemento-natural-katon",
+          "description": "<p>ELEMENTO NATURAL: KATON “Um Uchiha só é reconhecido como tal quando é capaz de utilizar o Katon: Goukakyuu no Jutsu.” Pré-requisito: Espírito 1 Benefícios: Você é capaz de utilizar o efeito Sopro Destrutivo 4 para Katon, mesmo sem possuir o poder e mesmo em nível Genin (NC 4). O dano base do efeito é igual ao atributo Espírito +2 pelo bônus de dano do elemento Katon. O custo de chakra é metade do nível de Espírito (arredondado para cima). Demais regras do efeito, como alcance e tamanho, são as mesmas do poder Katon. Caso o personagem compre o poder Katon, receberá o efeito Sopro Destrutivo no nível 4, adicionalmente ao outro efeito que pode esc olher por direito. O Sopro Destrutivo também evoluirá automaticamente nos níveis 7 e 10, sem a necessidade de ser escolhido pelo usuário nesses níveis. Nesses casos, o efeito seguirá todas as regras comuns do poder. Esta aptidão pode ser utilizada pelo Clo ne Verdadeiro e não conta para o limite da regra de afinidade elemental (pág. 89).</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 3"
+          },
+          "details": {
+            "powerCost": 2,
+            "grantRule": "Elemento Natural: Katon"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                3,
+                3
+              ],
+              "requirements": "Espírito 1",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          3,
+          3
+        ],
+        "lines": [
+          75,
+          102
+        ],
+        "bodySha256": "eabd7c96d44296288299ea068dc70940fa58ee8d371cd5e0a8bb5e092300990a",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Sharingan",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:sharingan",
+          "ruleId": "sns:legado:apt:sharingan",
+          "description": "<p>SHARINGAN Esse é um poderoso doujutsu exclusivo do clã Uchiha. O Sharingan pode se manifestar no usuário durante uma grande luta, na qual ele precise muito de sua habil idade de percepção visual. Neste nível, o Sharingan possui a aparência incompleta, com uma vírgula negra na extremidade da íris vermelha. O Sharingan concede ao Uchiha uma percepção avançada dos movimentos, semelhante a uma visão em câmera lenta, o que p ermite prever com perfeição ataques corporais ou mesmo ninjutsus. Pré-requisito: Percepção 3 Benefício: Ativar o Sharingan requer uma ação parcial e 1 ponto de chakra. O doujutsu tem duração contínua por uma cena e é possível ativá-lo durante a defesa. Enq uanto estiver com o Sharingan ativo, o personagem ganha os seguintes benefícios. Visão de Chakra: O personagem é capaz de distinguir o chakra pela cor, o que permite identificar quando um oponente utiliza um jutsu, por mais oculto que esse seja. A visão d e chakra também permite identificar se uma pessoa está presa em um genjutsu, ou se algum jutsu está afetando uma determinada área ou criatura. Você não é capaz de enxergar através de criações feitas de chakra, como o efeito Névoa (Suiton), nem coberturas ou camuflagens. Medir Poder: Ver o chakra de uma criatura possibilita ao usuário medir sua força aproximada, ou seja, o nível aproximado de sua ficha de personagem. Distinguir Chakra: O personagem passa a ser capaz de diferenciar cada criatura pela sua assinatura de chakra. Esquiva Perceptiva: O usuário pode usar a habilidade Ler Movimento para se esquivar, substituindo a habilidade Esquiva no cálculo da dificuldade de acerto do atacante. Assim, a Dif do atacante será de 9 + precisão de LM do Uchiha. Todas as regras, benefícios e penalidades de esquiva ainda se aplicam ao personagem ao se defender dessa forma. Isso significa que o Uchiha pode aplicar qualquer bônus de esquiva em sua defesa com a Visão Acelerada (como da aptidão Reflexos). Em contrapartida , não pode utilizar bônus de precisão em LM (como da aptidão Intuição).</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 4"
+          },
+          "details": {
+            "powerCost": 2
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                4,
+                4
+              ],
+              "requirements": "Percepção 3",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          4,
+          4
+        ],
+        "lines": [
+          103,
+          144
+        ],
+        "bodySha256": "2133327335c1d95dd801965e20411f9be66d456604ad51dd15c4ba5d923118d1",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:nidan-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:nidan-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Nidan Sharingan",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:nidan-sharingan",
+          "ruleId": "sns:legado:apt:nidan-sharingan",
+          "description": "<p>NIDAN SHARINGAN O Uchiha com o Nidan Sharingan já tem melhor domínio sobre as habilidades de sua kekkei genkai. Nesse estágio, a íris vermelha apresenta duas vírgulas negras. Pré-requisito: Percepção 6, Sharingan Benefício: Ao usar a aptidão Sharingan, o Uchiha recebe os seguintes benefícios adicionais. Visão Acelerada: O usuário recebe +2 de bônus em Prontidão contra a manobra Fintar. Foco Aprimorado: O Uchiha é capaz de reagir tão bem a um alvo em seu foco quanto a outro no limite de sua visão, não podendo ser flanqueado. Olhar Hipnótico: O Uchiha é capaz de utilizar genjutsus sobre seu alvo somente mantendo contato visual com os olhos do mesmo, sem a necessidade de selos de mão ou qualquer outro gesto. O alcance do olhar hipnótico é de 9m, e você não precisa realizar testes de Concentração para usá-lo em combate próximo. Fascinar: O Olhar Hipnótico permite usar a aptidão Fascinar através do contato visual, com +1 nível de dificuldade, podendo também repetir seu uso várias vezes num mesmo alvo durante a cena. O alvo terá sempre 1 turno de imunidade após se libertar da ilusão. Você ainda precisa comprar a aptidão Fascinar normalmente para usá -la com estes benefícios. Contato visual olho-a-olho: Quando um PJ ou PDM que estiver enfrentando algu ém com o Sharingan e tiver conhecimento sobre as habilidades visuais (Já tiver sofrido alguma t écnica de contato visual ou através de um teste de Ocultismo Dif 24) poderá escolher durante seu turno gastar uma ação livre para decidir lutar sem contato visual . A personagem então s ofrerá das penalidades de camuflagem parcial e ficará com defesa debilitada -1 contra o alvo. A menos que tenha a aptidão Lutar às Cegas nível 2. Resistir à Ilusão: O shar ingan também fornece proteção contra inimigos que tentem utilizar um genjutsu na personagem , que recebe o benefício da aptidão Resistência Maior para Inteligência em testes para resistir a genjutsus. Mímica Sharingan: O Uchiha ganha acesso às técnicas da M ímica Sharingan.</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 5"
+          },
+          "details": {
+            "powerCost": 2
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                5,
+                5
+              ],
+              "requirements": "Percepção 6, Sharingan",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          5,
+          5
+        ],
+        "lines": [
+          145,
+          180
+        ],
+        "bodySha256": "68033c80faaffef0cc509414b12b4550506608c1e2b2cf0cbc0f238b16af716c",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:sandan-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:sandan-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Sandan Sharingan",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:sandan-sharingan",
+          "ruleId": "sns:legado:apt:sandan-sharingan",
+          "description": "<p>SANDAN SHARINGAN Em seu estágio mais maduro, o Sharingan adquire uma terceira vírgula e atinge o estado completo. Membros do clã que alcançam esse nível de domínio tendem a se tornarem proeminentes em sua comunidade. Pré-requisitos: Percepção 9, Nidan Sharingan Benefício: Ao usar a aptidão Sharingan, o Uchiha recebe os seguintes benefícios adicionais. Genjutsu Sharingan: O Uchiha ganha acesso às técnicas de ilusão exclusivas da Hipnose Sharingan. Visão Acelerada Maior: O Uchiha se torna imune à finta acelerada (ver condição acelerado, pág. 205). Também é capaz de realizar ataque oportuno contra inimigos acelerados. Previsão Perfeita: O Uchiha torna-se capaz de utilizar as manobras de previsão em um ataque oportuno ou quando desprevenido. E pode simular 2 dados em prontidão durante o combate uma vez por cena.</p><p>Reverter Ilusão: Com uma ação parcial, o Uchiha deve utilizar Percepção no lugar de Inteligência para detectar um ataque de ilusão inimiga. Se bem -sucedido, a ilusão será retornada p ara seu conjurador através do Olhar Hipnótico, o forçando a resist í-la enquanto o Uchiha não é afetado. É necessário gastar a mesma quantidade de chakra da ilusão, além de estar a no máximo 9m de distância do seu inimigo. Você pode usar esta técnica contra qualquer tipo de ilusão que tenha você como único alvo, inclusive Hijutsus, com exceção do Tsukuyomi.</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 5–6"
+          },
+          "details": {
+            "powerCost": 2
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                5,
+                6
+              ],
+              "requirements": "Percepção 9, Nidan Sharingan",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          5,
+          6
+        ],
+        "lines": [
+          181,
+          209
+        ],
+        "bodySha256": "214de85b9834eba1d997ad2c1453b6851806de111a60e3eac2069c4f53cefa60",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:mangekyo-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:mangekyo-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Mangekyo Sharingan",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:mangekyo-sharingan",
+          "ruleId": "sns:legado:apt:mangekyo-sharingan",
+          "description": "<p>MANGEKYO SHARINGAN O último estágio do Sharingan revela sua verdadeira forma, alcançando o estado maior do selamento que existe dentro dos olhos do Uchi ha. Cada par de olhos t êm desenho de formato diferenciado em seu selo, talvez indicando a razão pela qual a técnica Susano’o possui aparência variada e alguns Sharingans despertam habilidades únicas. Esse estágio é conhecido como Mangekyo Sharingan (litera lmente, “Olho Copiador Giratório Caleidoscópicos”). Pré-requisitos: Percepção 16; Sandan Sharingan; um evento traumático. Benefício: O Uchiha adquire a capacidade de utilizar três técnicas especiais sob o custo de sua própria visão. Você precisa escolher um par de técnicas para seus olhos (uma para o direito e uma para o esquerdo), sendo o Susano ’o a terceira técnica, fixa, que você aprenderá quando atingir os requisitos das duas outras técncias. O par de técnicas disponíveis são:  Tsukuyomi e Amaterasu  Kagutsuchi e Amaterasu  Kamui (Curto e Longo alcance)  Bishamonten e Kishouten  Kotoamatsukami e Mahikami  Hachiman (Migi e Hidari)  Ame-No-Tejikara e Gyaku Sekai  Yata no Kagami e Yomotsu Ōkami (São utilizadas junto com o Susano’o, desconsidere os pré-requisitos de dominar técnicas.)</p><p>Pontos de Visão: Os olhos do Uchiha possuem uma quantidade de pontos que determinam sua integridade. Conforme estes pontos se esgotam, sua visão segue o mesmo rumo, pouco a pouco caindo em cegueira conforme o selo em seus olhos leva embora seu sentido e sanidade. O personagem possui um total de pontos de visão igual ao valor do atributo Percepção em seus olhos. Estes pontos são para ambos os olhos (e não o valor de Percepção em pontos para cada olho). O custo de visão para uso das técnicas (valor especificado em cada uma) é subtraído desta quantidade. Quando ¼ dos pontos forem gastos, o Uchiha recebe 1 nível de sangramento (o sangramento é acumulativo com o sangramento ocular), e quando ½ dos pontos forem gastos a condição Fatigado também é aplicada. Os Pontos de Visão não são recuperados se não pela característica “Descanso de Visão” ou quando você zera os Pontos de Visão, nesse caso, volte seus pontos de visão para o valor total. Caso não possua Pontos de Visão para usar uma técnica (por exemplo, estando com 1 Ponto de Visão e queira usar uma técnica que custa 3 Pontos de Visão), você ainda poderá usá -la, porém você subtrai o valor que falta dos novos Pontos de Visão que receberia. Por exemplo, no caso acima, o Uchiha gastaria 1 Ponto de Visão, chegando a 0, porém por estar com uma dívida de 2 Pontos de Visão, ele voltaria com 14 Pontos de Visão (16 – 2 = 14). Sangramento Ocular: Usar o Mangekyo Sharingan é um esforço muito grande para os olhos, causando dores e sangramento. Você perde 2 de Vitalidade (Que ignora Dureza e Absorção) para cada Ponto de Visão que gaste. Desativação Forçada: Caso seus Pontos de Visão cheguem a 0, você sente uma dor extrema em seus olhos que irradia para seu corpo, ficando Atordoado e Desprevenido por 1 turno. Além disso, a condição Fatigado evolue e você fica Exausto até que descanse ininterruptamente por um dia inteiro. Quando sofre a desativação forçada, o U chiha fica incapaz de fazer qualquer uso do sharingan por um tempo para que ele se recupere. O tempo necessário é decidido pelo Mestre. Preço do Ódio: A primeira vez que recebe seus pontos de visão, você deve gastá -los completamente . Os pontos não retornam de forma alguma. Após isso, você passa a ver o preço do Mangekyo Sharingan. Ao sofrer desativação forçada pela primeira vez , você recebe a condção Cegueira Leve. Depois da primeira desativação forçada, você recupera todos os pontos de visão e passa a pod er realizar o Descanso Sharingan . A partir desse ponto, sempre que você gastar pontos de visão iguais ao seu valor de percepção, você irá evoluir a sua condição para Cegueira Grave e então Cegueira Completa (mesmo os pontos de visão gastos entre descansos do Sharingan, independente de sofrer ou não a desativação forçada, devem ser contabilizados). Descanso Sharingan: Após sofrer sua primeira desativação forçada, o Uchiha aprende os riscos de abusar do sharingan. Tendo descansado depois da primeira desativaç ão forçada , a personagem recupera seus pontos de visão . A partir daí, sempre que tiver gasto pontos de visão , você poderá descansar para recuperá-los. V ocê deve passar de uma a duas semanas, a escolha do Mestre, descansando sem usar o sharingan para recuperar seus pontos de visão. As condições de Fatigado e Exausto permanecem em você enquanto não tiver recuperado os pontos de visão através do descanso sharingan.</p><p>Cegueira: Com o abuso do Mangekyo Sharingan, vem o preço em forma da inevi tável perda da visão . E como uma maldição , a partir desse momento, o Uchiha se torna escravo do Sharingan; incapaz de escapar dele mesmo que deseje viver sem utilizá-lo. Sempre que consumir pontos de visão iguais ao seu valor de percepção , você evoluirá a sua condição de Cegue ira. As penalidades da cegueira não podem ser removidas, mas o Uchiha passa a ignorar os efeitos dessas penalidades quando está com o Sharingan ativo. Além disso, todas as penalidades das condições de cegueira são acumulativas com qualquer outra penalidade adquirida pela personagem. Cegueira Leve: O Personagem sofre uma penalidade permanente de -1 em testes de precisão de Ataque e Defesa, além de sofrer penalidades em testes de Percepção e pericias derivadas. Cegueira Grave : Como Cegueira Leve , mas o perso nagem sofre uma penalidade de -2 nos testes. Cegueira Completa : Como Cegueira Grave mas você está permanentemente Cego, não pode fazer nenhum teste que dependa da visão e sofre -3 permanentemente em testes de precisão de Ataque e Defesa. Além disso, qualquer um recebe cobertura total contra você. Visão Prejudicada: Quanto mais cego você fica, mais o alcance da sua visão se perde , o qu e te força a se aproximar mais e mais do oponente para lutar. Quanto estiver com a condição Cegueira Leve, inimigos que estejam a mais de 18m d a personagem passam a receber camuflagem parcial, e com a condição Cegueira Grave todos recebem camuflagem parcial estando a 9m de você , enquanto que i nimigos al ém de 18m recebem camuflagem total, diferente da cegueira você sempre é afetado pela visão prejudicada mesmo quando está com o sharingan ativo.</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 6–8"
+          },
+          "details": {
+            "powerCost": 2,
+            "resourceRule": "Pontos de visão · Legado"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                6,
+                8
+              ],
+              "requirements": "Percepção 16; Sandan Sharingan; um evento traumático.",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          6,
+          8
+        ],
+        "lines": [
+          210,
+          332
+        ],
+        "bodySha256": "6e21249cde89827d3f09bce015b7485b58034559b9944a4a8f6d8a154ebdc2a1",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:apt:eien-mangekyo-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:apt:eien-mangekyo-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Eien Mangekyo Sharingan",
+        "type": "aptitude",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:apt:eien-mangekyo-sharingan",
+          "ruleId": "sns:legado:apt:eien-mangekyo-sharingan",
+          "description": "<p>EIEN MANGEKYO SHARINGAN É o Mangekyo Sharingan Eterno, ou Perfeito. Este último nível do Doujutsu é adquirido com um grande sacrifício: o Uchiha precisa transplantar em si mesmo o Mangeky o Sharingan de um parente próximo. Pré-requisitos: 18 de Percepção, Ter sofrido os efeitos do Preço do Ódio Fazer isso requer o poder Iryou Ninjutsu e um teste de Medicina (Dif 28), mas que pode ser simulado com 2 dados caso o procedimento seja feito num h ospital equipado. Falhar no teste de Medicina resulta na destruição do Sharingan e cegueira para a personagem. Após 24h de total repouso e curativos nos olhos, o Uchiha terá o Mangekyo Sharingan Eterno. O Doujutsu possui todos os benefícios da versão ante rior, porém sem as regras de “Pontos de Visão”, “Sangramento Ocular”, “Desativação Forçada” , “ Preço do Ódio”, “Descanso Sharingan”, “Cegueira” e “Visão Prejudicada”. O Uchiha se recupera de todas as penalidades adquiridas pelo Mangekyo Sharingan e perde a condição Cego se assim a possuía. A personagem não precisa mais pagar pontos de visão para usar as técnicas do Mangekyo Sharingan. Neste transplante, o Uchiha mantém as técnicas que escolheu para o seu Mangekyo Sharingan e não recebe as técnicas do Sharing an que foi transplantado.</p><p>TÉCNICAS RESTRITAS</p>",
+          "category": "aptitudes",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 8–9"
+          },
+          "details": {
+            "powerCost": 2
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                8,
+                9
+              ],
+              "requirements": "18 de Percepção, Ter sofrido os efeitos do Preço do Ódio",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          8,
+          9
+        ],
+        "lines": [
+          333,
+          363
+        ],
+        "bodySha256": "125ed84fbdcf6a47760a035db541573865f286519262fca1b606d30631ceb38c",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:mimica-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:mimica-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Mímica Sharingan",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:mimica-sharingan",
+          "ruleId": "sns:legado:jutsu:mimica-sharingan",
+          "description": "<p>MÍMICA SHARINGAN  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisitos: Nidan Sharingan  Alcance: Pessoal (ver texto)  Custo de Chakra: Zero (exceto Anular Técnica) O Uchiha é capaz de copiar, anular e memorizar técnicas que observa ao emulá-las através de sua visão sincronizada, copiando os gestos de mão e uso do chakra. Pontos de M ímica: você é capaz de copiar uma t écnica anulada ou analisada pelo sharingan. Você adquire um novo parametro chamado Pontos de Mímica (PM) que tem valor igual ao seu atributo Inteligência. Você usa seus Pontos de Mímica para poder copiar habilidades, usando eles como uma esp écie de pontos de poder temporários que são gastos para adquirir o uso de um Efeito ou Aptidão . Ao copiar um efeito, você gasta um número de PM igual ao Nível de Poder máximo que você deseja utilizar esse efeito, sendo o mínimo igual ao menor nível que esse efeito pode ser pego (Ao copiar o efeito Sopro Destrutivo de Fuuton, você pode gastar 4 Pontos de Mímica para obtê-lo, ou, caso deseje, pode gastar mais. Com o máximo sendo igual à ½ do seu NC). No caso do efeito copiado ter alguma evolução, o n úmero mínimo de P M a ser gasto p ara copiar o efeito evoluído se torna igual ao nível da evolução, mas você deverá gastar 1 PM adicional (caso queira copiar o efeito Sopro Destrutivo com sua evolução de Nível 7, você deverá gastar 7 Pontos de Mímica +1 para ter acesso a versão evoluída). Você pode copiar aptidões com o custo de 3 Pontos de Mimica , caso uma aptidão possua evoluç ões você deverá gastar 3 pontos a mais para cada nível da aptidão copiada. Restrições: a Mimica Sharingan permite copiar efeitos de um poder, aptidões de manobra ou aptidões Shinobi e poderes comuns, seguindo todas as restrições e pré -requisitos caso você tente adquirir o poder normalmente. Você não pode usar a Mímica Sharingan para copiar poderes ou aptidões exclusivas de outros clãs ou Hijutsus, podendo copiar somente c oisas que estejam no seu limite de poder , e que cumpra todos os pré - requisitos. Além disso, você não pode usar técnicas copiadas pela Mimica Sharingan para cumprir pré-requisitos. É possível utilizar a Mímica Sharingan para técnicas de uma afinidade elemental que você não possua, desde que seja um dos cinco elementos básicos (Doton, Fuuton, Katon, Raiton e Suiton). Novo Elemento: você recebe o direito a uma nova afinidade elemental, podendo escolher, comprar e evoluir mais um poder de ninjutsu elemental além daqueles que já possuir. Copiar T écnica: copiar uma técnica durante o combate é uma ação padrão. Assim que um poder ou aptidão que possa ser copiado é usado , você deve anunciar que irá estuda -lá. C opiar uma t écnica não requer testes e consome sua ação imediatamente . A lém dis so, você pode anunciar que ira estudar uma t écnica durante o turn o de qualquer personagem. Cópia Rápida: você pode copiar uma t écnica rápidamente quando for alvo da mesma. Caso seja alvo de alguma t écnica que possa ser copiada pela Mímica Sharingan, você poderá copiar essa técnica com uma ação parcial imediatamente ao c usto de 1 Ponto de Mímica adicional ao que deveria ser gasto para copiar a técnica.</p><p>Anular Técnica: ao realizar a manobra Anular Técnica, caso não tenha uma contra -técnica apropriada em seu repertório, você poderá imediatamente copiar a t écnica que foi usa da pelo seu adversario, pagando o mesmo custo de chakra. Além disso, poderá gastar 1 Ponto de Mímica adicional ao s pontos necess ários para manter essa t écnica copiada, se desejar. Duração: copiar técnicas deixa os seus PM presos a elas, precisando ser anotado ao lado do efeito copiado . V ocê poderá reutilizar a t écnica copiada como se fizesse parte da sua ficha durante uma semana, após isso esquecerá a tecnica e irá recuperar os Pontos de Mímica gastos nela. Você pode escolher esquecer uma técnica antes de u ma semana para recuperar os PM. Falta de Domínio: técnicas copiadas não são tão bem executadas , porque, mesmo com o sharingan , ainda é necessário treinar para dominar completamente uma técnica. Poderes e Efeitos copiados consomem 1 ponto de cha kra adicional para us á-los. Ao alcançar Inteligência 10 e a tiver a aptidão Sandan Sharingan, o Uchiha não sofre mais esse custo adicional. Memorizar Técnica: você pode escolher memorizar uma técnica copiada. Você recupera metade dos Pontos de Mímica usados para copiar essa técnica e ela não será esquecida após uma semana. Só é possivel memorizar uma técnica por vez, mas você sempre pode memorizar uma nova esquecendo a antiga . F azer isso irá liberar todos os pontos de mimica alocados à técnica memorizada. Opcionalmente, você pode aprender a técnica memorizada permanentemente, pagando 2 pontos de poder. A técnica deverá ser anotada na ficha como uma aptidão. Técnicas memorizadas não podem ser usados como pré-requisitos de outras técnicas, poderes e aptidões.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 9–10"
+          },
+          "details": {
+            "range": "Pessoal (ver texto)",
+            "duration": "Por modalidade",
+            "chakraCost": "0 / variável",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                9,
+                10
+              ],
+              "requirements": "Nidan Sharingan",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "mimica-sharingan"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          9,
+          10
+        ],
+        "lines": [
+          364,
+          449
+        ],
+        "bodySha256": "038200ea01e01f329a4d450efdcda5af5fc9d05d4d6808ae65fc76afef7cd72c",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:hipnose-sharingan",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:hipnose-sharingan"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Hipnose Sharingan",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:hipnose-sharingan",
+          "ruleId": "sns:legado:jutsu:hipnose-sharingan",
+          "description": "<p>HIPNOSE SHARINGAN  Genjutsu / Kekkei Genkai; Doujutsu  Pré-requisitos: Sandan Sharingan; Fascinar; Ilusão Profunda  Alcance: 9m  Alvo: 1 criatura  Custo de Chakra: 5  Selos de Mão: Não Esta técnica é uma ilusão mental e possui as mesmas regras do poder Magen, porém com o c álculo de dificuldade modificado (8 + Nível de Inteligência, já inclusa a Ilusão Profunda). Utilizando o Sharingan, você consegue hipnotizar um alvo que falhe em seu teste de Inteligência. Aplique um dos efeitos a seguir: Conseguir Informação: [ação completa / duração contínua] O alvo entra num estado de transe e lhe responde qualquer pergunta, desde que saiba a resposta. Alterar Atitude: [ação completa / duração contínua] Você pode alterar a atitude que um alvo tem em relação a você em qualquer escala (v er pág. 54). Mas, em contrapartida, no fim da cena a atitude del e se torna inamistosa e não poderá ser alterada por qualquer forma, já que ele sabe que foi alvo de um genjutsu. Exaurir: [ação padrão / duração instantânea] A vítima passa a sofrer a condição Fatigado, e caso ela já esteja sofrendo essa condição o quadro evolui e ela passa a ficar Exausto (a condição Fatigado precisa ser proveniente de outra fonte para se tornar Exausto). Alvos que sejam capangas ficam inconscientes de imediato. Paralisar: [requer Int 10 / ação padrão / duração contínua] Você cria a ilusão de que a vítima está sendo presa de alguma forma, como um uso do efeito Paralisar do poder Magen (ver pág. 238), seguindo as regras do</p><p>poder. O nível do efeito é o maior permitido pela campanha, e o custo de chakra é correspondente ao nível do efeito. Controlar Mente: [ação padrão / duração contínua] A mente da vítima cai sob seu controle, e você pode comandar todas as suas ações (somente capangas). Controlar Bijuu: [ação padrão / Mangekyo Sha ringan / duração permanente] Funciona de maneira similar ao Controlar Mente, porém você usa o Mangekyo Sharingan para controlar uma única Bijuu. A Bijuu se transforma em sua invocação pessoal, seguindo as regras do poder Kuchiyose Comum (mesmo que você nã o o tenha). A Bijuu passa a ter Vitalidade usando todos os parametros de uma Kuchiyose comum, mas quando sua vitalidade chega a 0 ela n ão é derrotada, mas se liberta do genjutsu ficando imune aos seus efeitos durante um dia. A Bijuu que foi controlada sabe exatamente quem a dominou e assim que se libertar fara de tudo que puder para se vingar de quem a escravizou. Roubar Técnica: [ação completa / duração instantânea] Você faz o alvo utilizar a sua técnica mais poderosa em sua próxima ação, desde que seja uma técnica que possa ser copiada pela Mímica Sharingan. Esse jutsu será copiado e usado imediatamente contra o alvo antes mesmo de ele completar a sua execução. O alvo ficará Desprevenido ao se defender da técnica roubada. Além do custo da hipnose, você dev e gastar o chakra necessário para executar o jutsu roubado. Falsa Morte: [ação de movimento / duração instantânea] Quando for alvo de algum ataque ou poder, você aplica um genjutsu sobre o inimigo, fazendo-o acreditar que o ataque foi bem -sucedido e que vo cê morreu. O inimigo não tem direito a resistir a esse genjutsu e tem a execução de seu ataque interrompida temporariamente, dando chance para que você escape, movendo -se pelo seu deslocamento padrão. Nenhum teste é realizado (nem pelo atacante, nem pelo d efensor). Você pode usar esta técnica somente 1 vez por cena. Sobrepor Genjutsu: [ação padrão / duração instantânea] Você pode libertar alguém vítima de genjutsu, sobrepondo outra ilusão. Fazer isso requer contato visual olho-a-olho.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 10–11"
+          },
+          "details": {
+            "range": "9m",
+            "target": "1 criatura",
+            "chakraCost": "5",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                10,
+                11
+              ],
+              "requirements": "Sandan Sharingan; Fascinar; Ilusão Profunda",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "hipnose-sharingan"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          10,
+          11
+        ],
+        "lines": [
+          450,
+          516
+        ],
+        "bodySha256": "ce8d6ca7fa30152a07f90676037836667728ccba13b7acd7ac4e0719742bbb31",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:amaterasu",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:amaterasu"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Amaterasu",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:amaterasu",
+          "ruleId": "sns:legado:jutsu:amaterasu",
+          "description": "<p>AMATERASU – (DEUSA DO SOL)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Katon 8  Ação: Padrão ou Completa (ver texto)  Alcance: 9m  Alvo: Único  Duração: Instantânea ou Concentração (ver texto)  Dano: 2x Nv do Poder Katon  Custo de Chakra: ½ Percepção  Custo de Visão: 3 + 2 (ver texto)  Selos de Mão: Não O Amaterasu é uma técnica que permite ao usuário produzir chamas negras no ponto focal de sua visão, o que a torna quase sempre impossível de ser esquivada. Tais chamas continuarão a queimar até que o alvo se transforme em cinzas e não podem ser apagadas por métodos comuns, nem mesmo por água. Uso: utilizar o Amaterasu é uma Ação Padrão com o ataque sendo um teste de LM contra a ação defensiva do alvo, que não poderá bloquear essa técnica, e custa 3 pontos de v isão. Mesmo que seja um teste de LM, é possível aplicar aptidões que afetam o bônus de precisão do poder Katon (exemplo: Maestria) no teste de ataque do Amaterasu. Entretanto, bonificações de qualquer tipo que afetem a precisão de LM não devem ser consideradas.</p><p>Alcance e Alvo: você pode usar o Amaterasu em qualquer alvo visível que esteja no seu campo de visão, a no máximo 9m de distância. Técnica Invisível: o primeiro uso do Amaterasu contra alvos que nunca viram a técnica impõe a condição Desprevenido de forma automática. Usos subsequentes fazem com que o alvo realize um teste de Prontidão oposto a um teste de Espírito do Uchiha, e se ele falhar ficará desprevenido, em caso de sucesso, o alvo faz a sua defesa normalmente com -1 na precisão de defesa . Ele ainda poderá usar técnicas como o Kawarimi e outras habilidades normalmente. Aqueles que possuem Kagura Shingan ou Visão de Chakra são automaticamente bem-sucedidos nos testes, enquanto que aqueles que já viram ou possuem conhecimento sobre o Amaterasu não sofrem a condição desprevenido automaticamente. Conhecer o Amaterasu requer Ocultismo 16 ou Cultura 18 para shinobis de Konohagakure ou relacionados ao clã Uchiha. Shinobis de fora precisam realizar u m teste de Ocultismo Dif 26 ou Cultura Dif 28 que pode ser feito durante o combate como uma reação imediata (Ação Livre). Vantagem Elemental: Amaterasu tem vantagem elemental contra todos os elementos, seja básico ou kekkei genkai (hijutsu). Barreiras: criar uma cobertura é a defesa mais eficiente contra o Amaterasu. Caso o alvo se defenda com sucesso usando uma barreira (Efeito Barreira, Rashoumon, etc), a mesma é imediatamente destruída, independente da Dureza, porém, nenhum dano remanescente afeta o alvo protegido pela mesma.</p><p>Ação Completa: caso utilize o Amaterasu como uma ação completa, você poderá, caso falhe na jogada de Ataque original, fazer um novo ataque (sem custo adicional de chakra ou visão) contra algum alvo dentro do alcance da técnica e que você possa ver. O alvo terá direito a sua defesa normalmente, mesmo que já tenha se defendido uma primeira vez. Concentração: você poderá, após utilizar o Amaterasu, manter ele concentrado, sem interrompê -lo. Usar desta forma permite que você utilize essa técnica novamente toda vez que gastar ação para concentrar a técnica em seu turno. Os custos são de 2 Pontos de Visão por Turno de Concentração e metade do custo de chakra original d o Amaterasu. Manter essa técnica por Concentração lhe deixa desprevenido até que saia da concentração. Dano: o alvo atingido pelo Amaterasu receberá um dano base igual a 2x o nível do poder Katon ( sem bônus elemental) e passará a sofrer a condição Incendiado. A condição Incendiado funciona de forma semelhante ao Sangramento, acrescentando em um o nível por cada turno que o alvo se mantiver incendiado. O alvo inicialmente recebe níveis de incendiado igual ao grau de dano do ataque do Amaterasu (que não causa Sangramento em caso de acerto crítico). No início de cada turno do alvo, ele imediatamente receberá uma quantidade de Dano F ixo correspondente ao nível de Incendiado (que ignora dureza de corpo de qualquer tipo, exceto a proveniente do poder Jinchuuriki) e no final do seu turno, caso ele não retire a condição, ela aumenta em um o seu nível (Exemplo: O Uchiha realizou o ataque e acertou um Grau de dano 3 no alvo, assim causando a condição Incendiado Nv 3. No começo do turno do oponente, ele recebe 6 de dano fixo e, se não conseguir retirar a condição, no final do seu turno ela evolui e se torna Incendiado Nv 4 que passa a causar 8 de dano fixo e assim por diante). Realizar outro ataque utilizando o Amaterasu não aumenta o nível da condição, independente de qual for o grau de dano. Para remover a condição Incendiado, será necessário fazer uma dessas opções: Selar Chamas: Alguém com Fuuinjutsu poderá gastar uma Ação Padrão (que pode ser acelerada) para fazer um Teste de Inteligência ou Espírito, Dif 9 + 2x Nível de Katon, para selar as chamas do Amaterasu. O alvo das chamas precisa estar a até 10m do usuário d e Fuuinjutsu. Fazer iss o custa chakra igual a quantidade de Dano Fixo que está sendo selado. Remover Equipamento: Caso o Amaterasu tenha causado Grau de dano 1 ou 2, você pode despender de uma ação Completa para remover todo o seu equipamento (que será destruído) , e assim se liv rar da condição incendiado. Amputação: Caso o Amaterasu tenha causado um Grau de dano 3 ou 4, ele acertou um membro d o seu corpo (escolhido pelo Mestre) e você poderá amputar esse membro para remover a condição incendiado. Fazer isso é uma Ação Completa. Devido à adrenalina do momento, você não recebe danos ou Sangramento de imediato , porém ao final do combate, seu corpo esfria e você recebe imediatamente dano igual a 2x o seu NC e 5 graus de Sangramento. Esfolamento: É possível remover a camada da pele que está em chamas, para isso é necessário um objeto cortante e 10 minutos. Uma vez iniciado o processo, o Dano Fixo é interrompido (ele retornará se você não terminar o procedimento) e se o esfolamento for bem -sucedido, você</p><p>remove a condição Incendiado, porém receberá dano igual a 2x o seu NC (que não poderá levá-lo a menos de 1 de Vitalidade) e ficará com grandes cicatrizes no seu corpo que não poderão ser removidas. Duração: embora a execução do Amaterasu seja instantânea, as chamas negras ficam no ambien te de forma permanente, até que sejam seladas ou até que o objeto ou criatura alvo seja totalmente consumida pelas chamas.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 11–14"
+          },
+          "details": {
+            "action": "Padrão ou Completa (ver texto)",
+            "range": "9m",
+            "target": "Único",
+            "duration": "Instantânea ou Concentração (ver texto)",
+            "damage": "2x Nv do Poder Katon",
+            "chakraCost": "½ Percepção",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                11,
+                14
+              ],
+              "requirements": "Mangekyo Sharingan; Katon 8",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "amaterasu"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          11,
+          14
+        ],
+        "lines": [
+          517,
+          644
+        ],
+        "bodySha256": "cbf2adb6112dca5d3a8163c7a67def78a10438467891476ab12f11b4cd813fff",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kagutsuchi",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kagutsuchi"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kagutsuchi",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kagutsuchi",
+          "ruleId": "sns:legado:jutsu:kagutsuchi",
+          "description": "<p>KAGUTSUCHI – (DEUS DO FOGO)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Katon 8  Ação: Ver texto  Alcance: Ver texto  Duração: Instantânea ou Sustentada (ver texto)  Dano: Ver texto  Custo de Chakra: Ver texto  Custo de Visão: 1 Kagutsuchi é uma técnica que aplica a transformação da forma às chamas negras do Amaterasu, permitindo o Uchiha manipulá-las à vontade. Uso: Para usar essa técnica, é necessário que já exista chamas do Amaterasu no ambiente. Você pode usar essas chamas como material, moldando o Amaterasu em qualquer Efeito que tenha no seu poder Katon, com exceção dos efeitos exclusivos (como Meteoros) e Da no Contínuo. Essa modificação do Katon é chamada de Enton (Elemento Inferno). Cada uso do Enton custa 1 ponto de visão Amaterasu Imediato: Caso não possua chamas do Amaterasu no ambiente no momento de uso do Kagutsuchi, você pode, como ação livre e 1 Ponto de Visão (Totalizando 2 Pontos de Visão pelo uso) , criar chamas num ponto vazio e irrelevante do ambiente para imediatamente usar no Enton. Uma vez utilizado dessa forma, você já terá as chamas necessárias no ambiente para realizar outros usos de Enton, n ão precisando utilizar “Amaterasu Imediato” novamente. Dano: os efeitos do Enton mantêm as regras de dano que teriam o poder Katon (inclusive o bônus de dano do elemento). Se atingido pelo Enton, o alvo também sofrerá a condição Incendiado. Usar ataques d ivididos, como o efeito Flechas, não faz aplicar a condição mais de uma vez.</p><p>Estilo Inferno (Modo Meta-Aptidão): Gastando sua ação de movimento, 2 pontos de visão e o custo padrão do efeito em chakra, você pode usar um Efeito de Katon imbuído com as chama s do Amaterasu, que passa a se r considerada uma técnica de Enton. O efeito recebe um bônus de +2 de dano base (acumulativo com o bônus de elemento do Katon) e sempre causará , no mínimo, Grau 2 de dano . Além disso, a técnica aplicará a condição incendiado do Amaterasu nos alvos que forem atingidos e possui vantagem elemental contra todos os elementos básicos e de Kekkei Genkais. Você não pode aplicar esse uso do Kagutsuchi em efeitos exclusivos, e o efeito passa a ter um custo adicional em chakra de mais 2. Regras e Parâmetros: As demais regras e parâmetros dos Efeitos, como testes, alcance, dureza, tamanho e custo de chakra, são mantidos. A precisão dos testes do Enton também é a mesma do seu Katon. Katon Evoluído: Para efeito de qualquer outra regra, Ento n é considerado o elemento Katon (portanto , pode receber o benefício de Maestria: Katon e Domínio do Fogo, por exemplo). Novos Efeitos: Adicionalmente, você ainda pode utilizar os seguintes efeitos:  Arma de Chamas: Você passa a poder utilizar o Efeito Energizar com os seguintes benefícios:  Armas Infernais: Todos os seus ataques corporais (armados ou desarmados) são considerados do elemento Enton com o efeito Energizar ou causam dano comum do poder (à sua escolha). Atacar desta forma, entretanto, custa chakra igual a ½ do atributo Espírito, e sempre que acertar um ataque a condição incendiado será aplicada pelas regras do Amaterasu.  Chamas Vorazes: Se um alvo tentar Bloquear um ataque energizado com o elemento Enton ele sofrerá 1 nível de Incendiado, mesmo que tenha sucesso em sua defesa. Deve ser considerado que a arma do oponente começou a pegar fogo , assim o possibilitando de usar a regra de remover equipamento para perder a condição de Incendiado.  Extinguir Chamas: Você tem a habilidade de extinguir por completo as chamas do Amaterasu que tenham atingido algum alvo, ou uma área de 2m de raio. Fazer isso requer uma ação padrão. Esse uso não custa Pontos de Visão ou Chakra.  Proteção de Susano’o: Você pode usar o Amaterasu diretamente no Susano’o, independen te do estágio que ele estiver, para que as chamas atinjam qualquer um que o ataque corporalmente. Nesse caso, aplica -se a condição Incendiado a quem tocá -lo (apenas uma única vez por ação, mesmo que ele use Ataque Múltiplo ou similar). Fazer isso é uma Açã o Parcial que custa ¼ da Percepção em Chakra (além de 1 Ponto de Visão) e pode ser feita como parte da ação defensiva, não o impedindo de realizar suas defesas normalmente. A aplicação do Incendiado dessa forma apenas afeta o equipamento do alvo (que pode remover a condição pela ação “Remover Equipamento”).  Muralha Infernal: Você ganha o efeito Barreira Nv 3, movendo as chamas negras já existentes para a sua frente no intuito de interceptar um ataque.  Investida Negra: Você ganha o efeito Repelir Nv 2, mov endo as chamas negras já existentes para interceptar um ataque destinado a você ou um aliado. Caso seja um ataque corporal, você aplica a condição Incendiado do Amaterasu no atacante se você tiver sucesso</p><p>na defesa. Similar ao “Proteção de Susano’o”, a condição apenas afeta o equipamento do alvo (que pode remov ê-la com a ação “Remover Equipamento”).</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 14–16"
+          },
+          "details": {
+            "action": "Por modalidade",
+            "range": "Por modalidade",
+            "duration": "Instantânea ou Sustentada (ver texto)",
+            "damage": "Por modalidade",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                14,
+                16
+              ],
+              "requirements": "Mangekyo Sharingan; Katon 8",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kagutsuchi"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          14,
+          16
+        ],
+        "lines": [
+          645,
+          749
+        ],
+        "bodySha256": "36916071c3fd23041ae92ef2250659c586d6705f5213c4529a12c03cf0747f4f",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:tsukuyomi",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:tsukuyomi"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Tsukuyomi",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:tsukuyomi",
+          "ruleId": "sns:legado:jutsu:tsukuyomi",
+          "description": "<p>TSUKUYOMI – (DEUS(A) DA LUA)  Genjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Fascinar; Ilusão Profunda; Inteligência 16  Ação: Padrão (Ver Texto)  Alcance: 9m  Duração: Instantânea  Dano: Ver texto  Custo de Chakra: ½ Inteligência  Custo de Visão: Ver texto  Selos de Mão: Não O Tsukuyomi é uma ilusão que prende o alvo dentro de um mundo fictício completamente sob o controle do usuário, execu tada através do Olhar Hipnótico. Ele é capaz de alterar a percepção do tempo com facilidade dentro do genjutsu para fazer alguns segundos de tortura parecerem vários dias de sofrimento, o que resulta em um forte trauma mental no alvo. Essa técnica pode ser utilizada para duas finalidades.</p><p>Modo Mensageiro: o Uchiha pode conversar livremente com o alvo por 1 ponto de visão e uma Ação Padrão, usando a alteração da percepção de tempo para fazer um ínfimo segundo durar vários dias de conversa. Pode também repr oduzir qualquer tipo de imagem e sensação. O modo Mensageiro não causa penalidades ao alvo. Modo Torturador: ao custo de 3 pontos de visão e uma ação padrão (Que Não Pode Ser Acelerada), o Uchiha transporta a mente do alvo para um mundo dentro da sua mente, onde ele vive um período de sofrimento intenso e cruel que se repete por vários dias até que a sua mente seja quebrada. Esses dias de tortura duram apenas alguns poucos segundos na vida real, mas o dano causado durante a tortura se reflete na mente de vitima. A vítima deve fazer um teste de resistência Inteligência, que se falhar sofrerá dano em sua vitalidade igual ao nível de inteligência do usuário e uma penalidade em testes de inteligência de -1 para cada 4 pontos de dano sofrido pela técnica. Além disso, o alvo ficará Exausto. Caso tenha sucesso, a vítima sofre apenas a condição Fatigado até o fim de seu próximo turno. Técnica Repetível: essa técnica poderá ser usada mais de uma vez contra o mesmo alvo na mesma cena, porém, alvos que tenham falhado no teste do Tsukuyomi ficam imunes ao seu efeito até o final da cena. Teste de Resistência: é um teste de Inteligência, com dificuldade igual a 10 + atributo Inteligência do usuário (já inclusa a Ilusão Profunda). Resistência Sharingan: se possuir o Sandan Sharingan, o alvo não recebe qualquer penalidade do Tsukuyomi caso seja bem -sucedido no teste de resistência, que tem a dificuldade reduzida em 2 níveis. Se possuir o Mangekyo Sharingan, a dificuldade é reduzida em 1 nível adicional. Coma: um alvo que já estivesse com a condição Exausto e falhou no teste do Modo Torturador, que tenha chegado a 0 Pontos de vitalidade pelo dano ou que tenha acumulado penalidades em Inteligência igual a metade do seu valor de inteligência máxima entrará em coma, ficando inconsciente permanentemente até ser tratado (veja mais em “Recuperando-se do Coma” a seguir). Em casos raros em que a penalidade de inteligência seja igual ou superior ao valor de inteligência da vítima, ela morrerá por trauma cerebral intenso; com o seu cérebro inchando mais do que o espaço do crânio e parando de funcionar.</p><p>Recuperando-se do Coma: um Personagem que tenha sofrido os efeitos do Tsukuyomi não poderá se recuperar facilmente, não podendo perder a condição Exausto até que seja tratado por um ninja com Iryou Ninjutsu 8 ou maior por um tempo mínimo de 4 horas. Fazendo isso, a pessoa em coma acordará 8 horas após a finalização do tratamento, permanecendo Exausto até que seja tratado novamente (mesmo processo). Passando-se 24 horas, a condição poderá ser diminuída para Fatigado e após outro tratamento e mais 8 horas de repouso a pessoa ficará livre das condições. As penalidades de inteligência são reduzidas apenas com um tratamento, reduzindo -1 de penalidade para cada semana de tratamento até que a personagem esteja em plena forma novamente. Alguém que não receba esse tratamento acordará somente após um período de 1 mês, ficando Exausto até que receba um tratamento psicológico e psiquiátrico por pelo menos 6 meses contínuos. Caso a pessoa pare o tratamento, esse tempo é reiniciado. Apesar dos tratamentos, lidar com esse trauma pode ser algo que dure uma vida inteira. Principalmente se o usuário d o Tsukuyomi tenha utilizado dos seus maiores traumas e medos durante a tortura. Programar Amaterasu: Pelo custo de 1 Pontos de Visão e ½ de Inteligência em chakra, você pode programar seu outro olho que possui o Amaterasu com um Genjutsu de duração infinita. Escolha uma pessoa que você conheça a aparência, e assim que o olho do Amaterasu v er aquela pessoa, o portador do olho será obrigado a gastar todas as ações e recursos necessári os para utilizar o Amaterasu naquele alvo, que estará automaticamente Desprevenido contra esse ataque. Se não possuir os recursos no momento, deverá fazer no próximo momento que os tiver e ver o alvo. Essa técnica é particularmente útil caso você planeje criar uma armadilha contra quem tomar os seus olhos. Como programar a pessoa amada daquele que tomou seus olhos para que o mesmo não possa vê-la novamente (ou a mate).</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 16–18"
+          },
+          "details": {
+            "action": "Padrão (Ver Texto)",
+            "range": "9m",
+            "duration": "Instantânea",
+            "damage": "Por modalidade",
+            "chakraCost": "½ Inteligência",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                16,
+                18
+              ],
+              "requirements": "Mangekyo Sharingan; Fascinar; Ilusão Profunda; Inteligência 16",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "tsukuyomi"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          16,
+          18
+        ],
+        "lines": [
+          750,
+          849
+        ],
+        "bodySha256": "749dd60e583f8ac8c3b65635d2cfe0d677a2b2fb9f93de3312f19fa08e2db421",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kamui",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kamui"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kamui",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kamui",
+          "ruleId": "sns:legado:jutsu:kamui",
+          "description": "<p>KAMUI – (PODER DOS KAMI)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan  Custo de Chakra: Ver texto  Custo de Visão: Ver texto  Selos de Mão: Não Kamui é uma técnica de espaço-tempo que permite ao usuário transferir objetos para outra dimensão. Essas tr ansferências são muitas vezes caracterizadas por buraco em espiral que se abre no meio do espaço, que é o lugar por onde os objetos ou pessoas viajam entre as dimensões. O Teletransporte e o acesso à dimensão especial são compartilhados por ambos os olhos. As demais habilidades do Kamui são divididas entre</p><p>curto e longo alcance, sendo que uma fica no olho esquerdo e a outra no direito, à escolha do jogador. Dimensão Especial Kamui: é uma dimensão única e que somente pode ser acessada por quem possui o Kamu i. Todos os usos dessa habilidade usam a dimensão especial como meio de ligação. Qualquer pessoa ou objeto que esteja preso na dimensão especial é indetectável por qualquer tipo de sensor. Ativação: [Ação Livre / Duração: Contínua / ½ Percepção de chakra] Antes de usar qualquer técnica do Kamui, você precisa ativá-lo, pagando seu custo de chakra. Não são necessários selos de mão para nenhuma das técnicas do Kamui e elas não sofrem penalidade de combate próximo. Teletransporte: [Ação Movimento / Duração: Instantânea / 2 de chakra / 1 de Visão] Você usa o Kamui em si mesmo para sugar seu próprio corpo para a dimensão especial, podendo ficar nela por quanto tempo desejar, e reaparecer depois em outro ponto qualquer do mundo. Entrar ou sair da dimensão especial é uma ação de movimento e custa 1 de chakra (uma única vez, não 2 Pontos por entrar e sair). Somente é possível reaparecer em lugares já conhecidos pelo personagem. Você pode levar consigo qualquer coisa que esteja tocando. Tocar um alvo e arrastá -lo pa ra outra dimensão, ou enviá -lo sozinho sem viajar com ele, é uma ação completa e somente pode ser feit o em quem deseja ir voluntariamente (alvos que não desejam devem ser levados pela técnica “Abdução de Curto Alcance”). Fazer isso dobra o custo de chakra.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 18–19"
+          },
+          "details": {
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                18,
+                19
+              ],
+              "requirements": "Mangekyo Sharingan",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kamui"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          18,
+          19
+        ],
+        "lines": [
+          850,
+          895
+        ],
+        "bodySha256": "cd50faf4bf8d7527ae5be21e47d10aad274591c9e937f826c792b4d56baba645",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kamui-curto-alcance",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kamui-curto-alcance"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kamui Curto Alcance",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kamui-curto-alcance",
+          "ruleId": "sns:legado:jutsu:kamui-curto-alcance",
+          "description": "<p>KAMUI CURTO ALCANCE Normalmente usado sobre si mesmo como forma de defesa ou em objetos próximos, possui as seguintes formas: Abdução de Objetos: [Ação de Movimento / 1 de chakra por compartimento / 1 de visão] Você pode transferir para a dimensão especi al qualquer objeto de tamanho grande ou inferior. É possível armazenar o quanto quiser dentro da dimensão especial Kamui, porém apenas poderá transportar até ½ Percepção em Compartimentos por vez. Expelir Objetos: [Ação Padrão / 2 de chakra por compartimento / 1 de visão] Você pode expelir com força os objetos armazenados, jogando -os na direção de um alvo como um ataque à distância de 18m de alcance. Você pode atingir um alvo para cada compartimento expelido. O limite de compartimentos expelidos é igual a ¼ da Percepção. Se os objetos expelidos forem Armas de Arremesso ou projéteis, esse ataque se torna uma manobra de “Lançar Projétil” com dano base igual à Percepção do usuário. Caso atire pelo menos 4 compartimentos de objetos e foque em apenas um único a lvo, o ataque recebe +0,5 de Grau de Dano e não pode ser bloqueado pela quantidade massiva de projéteis.</p><p>Portanto, caso use “Expelir Objetos” e atire 4 compartimentos de shurikens, poderá realizar um ataque de “Lançar Projétil” contra até 4 alvos ou 1 ataque contra 1 alvo que terá +0,5 no grau de Dano. Não é possível utilizar aptidões de combate ou manobra com “Expelir Objetos” além de Especialista. Se você expelir objetos que não sejam essas armas ou projéteis, o dano é cortado na metade. Os outros funcionamentos seguem os mesmos. Intangibilidade: [Ação Padrão e Parcial (Ver Texto) / duração contínua / 5 de chakra / 2 de visão] Você pode usar o Kamui para transferir temporariamente todas as partes de seu corpo para a dimensão especial, deixando somente u ma imagem oca no mundo real, incapaz de ser atingida ou de sofrer dano e interações de qualquer tipo. Ativar a intangibilidade é uma ação padrão (que não pode ser acelerada), e ativá -la durante uma defesa não requer testes, sendo sempre um Sucesso Automát ico, a menos que o ataque seja um Acerto Crítico. É possível usar a intangibilidade mesmo paralisado (ou indefeso) e contra golpes de misericórdia, porém não caso esteja Desprevenido. Enquanto intangível, você pode atravessar livremente qualquer tipo de barreira ou obstáculo, assim como viajar no subsolo. Desativar a intangibilidade é uma ação parcial e não custa Pontos de Visão. A intangibilidade tem duração contínua, mas somente é possível mantê- la sem interrupção por no máximo 5 minutos. Ficar intangíve l impede o usuário de utilizar o Teletransporte, assim como também o impede de interagir com o mundo real por qualquer outra forma, mesmo através de técnicas à distância. Antes de ativar a intangibilidade, ou logo após desativá -la, se houver algum inimigo Super Acelerado adjacente ao usuário, ou se o usuário estiver marcado pelo Jutsu-Shiki do Hiraishin, este inimigo terá direito a um ataque oportuno contra o usuário, que estará desprevenido. Se for atingido, a intangibilidade é interrompida. Intangibilidade Instantânea: [Ação Parcial / duração instantânea / 4 de chakra / 1 de visão] Uma versão menor da Intangibilidade acima citada, você é capaz de desaparecer por um breve momento antes de voltar para a realidade normal. É usada para se defender de um ataque. Você é capaz de desaparecer, deixando uma imagem oca por um breve momento antes de reaparecer. Fazer isso é uma manobra de “Defender com Técnica” que custa uma Ação Parcial. Faça uma jogada de LM+3 contra o Ataque Inimigo, caso tenha sucesso, você não é afetado pelo ataque em questão, mesmo por efeitos desencadeados por uma falha no ataque. Caso outra pessoa lhe ataque no turno imediatamente após o do ataque que foi defendido com “Intangibilidade Instantânea – Uso Defensivo”, essa defesa deixa de ser LM+3 para ser LM+1.</p><p>Liberdade de Movimentos: [Ação Livre / duração do movimento / 3 de chakra / 0 ou 1 de visão] Você é capaz de ligar a intangibilidade apenas para se mover. Use apenas em conjunto de um movimento. Você pode atravessar qualquer superfície sólida ou líquida, ignorando qualquer Terreno Difícil e ficando imune a qualquer Ataque Oportuno. Também é possív .el usar isso para sair de Agarramentos (Incluindo Efeito Algemar), nesse caso custa 1 Ponto de Visão e você precisará se mover da posição atual (com a mesma ação de movimento). Abdução de Curto Alcance: [Ação Completa / duração Instantânea / ½ Percepção de chakra / 3 de visão] Somente é possível utilizar essa técnica em alvos Impedidos ou Indefesos (e Paralisados) a até 18m de ti. Caso o alvo esteja apenas Impedido, faça uma jogada de LM contra a ação defensiva d ele, porém ele estará com Defesa Debilitada -3. Em caso de Indefeso (ou Paralisado), essa técnica é um acerto automático. Você abduz o alvo para dentro da Dimensão Especial, que somente poderá sair com o auxílio de um usuário de Kamui. É possível utilizar essa técnica mesmo que esteja mantendo um Agarrar. Caso você tenha mantido alguém agarrado por uma rodada inteira, poderá utilizar essa técnica como parte da ação para manter o agarrar.</p><p>Nesse caso você pode tanto ir junto do alvo como apenas abduzir ele. Você apenas gasta a Ação Padrão. Não é possível fazer isso caso tenha atrasado a Iniciativa.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 19–22"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                19,
+                22
+              ],
+              "requirements": "",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kamui-curto-alcance"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          19,
+          22
+        ],
+        "lines": [
+          896,
+          1006
+        ],
+        "bodySha256": "782482e4a62e3fd1b6cf0a698e401b00ae20e3e9a1a631654667255eb0e20522",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kamui-longo-alcance",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kamui-longo-alcance"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kamui Longo Alcance",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kamui-longo-alcance",
+          "ruleId": "sns:legado:jutsu:kamui-longo-alcance",
+          "description": "<p>KAMUI LONGO ALCANCE Uso mais ofensivo do Kamui, que pode transportar os alvos para outra dimensão, mesmo que estejam distantes. Abdução Ofensiva: [Ação Padrão / Concentração / ½ Percepção de chakra / 3 de visão] O usuário olha para um alvo e cria uma barreira de espaço -tempo ao redor dele, usando uma ação padrão e mantendo concentração. No final de cada um de seus turnos, o usuário faz um teste de Ler Movimento contra a defesa do alvo, para testar o acerto do Kamui. Não é possível bloquear esse “ataque”. O Kamui acerta o alvo quando você conseguir pelo menos 2 acertos (consecutivos ou não) ou um acerto crítico. O alcance é virtualmente infinito, uma vez que você apenas precisa estar vendo o alvo para conseguir usar essa técnica. Apesar disso, você somente poderá usar essa técnica se o alvo estiver inicialmente a mais de 10m de ti. Caso o alvo consiga qualquer Camuflagem Total, Cobertura Total, saia do campo de visão ou você tenha uma falha crítica, os acertos são descartados e você precisa conseguir novos acertos. Ao final do turno, se você possuir acertos o bastante para alguma das ações a seguir, poderá executá-la. Caso utilize com 2 acertos, parte do alvo é puxado para dentro da barreira e enviado para outra dimensão. Você causa dano igual ao nível de Espírito (use o maior resultado entre os seus acertos para ser o Grau de Dano da técnica) e ampu ta um membro da vítima a sua escolha. A vítima também recebe a condição Sangrando x5. Caso essa técnica seja um crítico, apenas aplique o maior dos Sangramentos (5x ou 4 por Dano Base pelo crítico). Um personagem com braço amputado não pode utilizar armas que necessitem de ambas as mãos e não pode realizar selos de mão, a menos que possua a aptidão Mestre dos Selos e Prestidigitação 14 (ver mais na aptidão). Um personagem com perna amputada fica Lento e com Defesa e CC Debilitado -2. Caso utilize com 3 acertos, você pode enviar o alvo completamente para a Dimensão Especial Kamui, onde o mesmo somente poderá sair caso você ou outro usuário de Kamui o retire de lá. Se você perder a Concentração em qualquer momento da técnica, ela falha e é necessário reiniciar todo seu uso, incluindo pagar os custos de Ação, Chakra e Visão. Não é possível utilizar “Abdução Ofensiva” se você tiver Atrasado a Iniciativa. Abdução Defensiva: [Ação de Movimento ou Parcial / duração instantânea / 5 de chakra / 2 de visão] Você pode transferir para a dimensão especial qualquer ataque à distância realizado contra você ou contra um aliado (mesmo ataques em área). É necessário poder enxergar o ataque. Fazer isso como ação de</p><p>movimento é uma ação defensiva que não requer teste. Fazer como Ação Parcial requer um teste de LM+3 como ação de “Defender com Técnica”, em caso de sucesso o ataque é enviado para a Dimensão Especial Kamui, evitando qualquer efeito dele. Teleportar Ataque: [Ação de Movimento / duração Instantânea / 5 de chakra / 1 de visão] Você pode teleportar um ataque à distância ou um atacante corpo -a- corpo durante a realização de um ataque. Você pode realizar essa ação para um ataque seu ou de um aliado. É necessário declarar o uso dessa técnica antes das rolagens serem feitas. Caso o ataque seja uma falha, você pode imediatamente teleportar o ataque para que ele vá de encontro ao alvo por outro ângulo (ou mesmo um outro alvo). Faça uma jogada de LM (sua) contra uma nova jogada defensiva do alvo. Caso você vença essa rolagem dis putada, o ataque conecta como se tivesse acertado originalmente. Use o seu teste de LM para definir o grau de dano, todos os outros parâmetros são os do ataque original. Ataques em Área terão toda sua área redirecionada. Para efeitos de regra, esse é consi derado um novo ataque contra uma nova defesa. Efeitos de falha no acerto do ataque original não são desencadeados. Redirecionar Ataque: [Ação Padrão / Duração Instantânea / ½ Percepção de chakra / 3 de visão] Similar à “Abdução Defensiva”, você pode telepo rtar um ataque à distância realizado contra você ou contra um aliado (mesmo ataques em área). É necessário poder enxergar o ataque. Fazer isso é um “Defender com Técnica” usando Ação Padrão. Faça uma jogada de LM contra o ataque original, em caso de sucess o, você pode, ao invés de mandar o ataque para a Dimensão Especial Kamui, mudar seu ângulo para atingir outro(s) alvo(s) (em caso de ataques em área, redirecione toda a área). Use a sua jogada de LM prévia como acerto desse novo ataque. Todos os alvos terão direito à jogada defensiva normalmente.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 22–23"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                22,
+                23
+              ],
+              "requirements": "",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kamui-longo-alcance"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          22,
+          23
+        ],
+        "lines": [
+          1007,
+          1093
+        ],
+        "bodySha256": "4863ec20e779722078d80f8ff9ac1137fa4ef8c19f0e165e4f4faf2bdec1bcbd",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:bishamonten",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:bishamonten"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Bishamonten",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:bishamonten",
+          "ruleId": "sns:legado:jutsu:bishamonten",
+          "description": "<p>BISHAMONTEN – (DEUS DA SORTE NA GUERRA)</p><p> Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan  Custo de Visão: Ver Texto Bishamonten é uma técnica de manipulação da sorte em batalha, permitindo ao usuário ter a vantagem em tudo que for fazer, fazendo parecer que os próprios deuses estão desejando sua vitória. Ativação: [Ação Livre / Duração: Contínua / ½ Percepção de chakra] Antes de usar qualquer técnica do Bishamonten, você precisa ativá -lo, pagando seu custo de chakra. Selos de mãos são necessários para ativar o Bishamonten, mas não são necessários para usar suas técnicas depois que for ativado. [Ação Livre / Duração: 1 Ataque / 2 de Chakra / 1 de Visão] Você manipula a sorte de seu próximo ataqu e, fazendo com que tudo ocorra a seu favor, seja um raio de Sol acertando o olho de seu inimigo no instante da defesa ou um acerto no ponto aberto da armadura dele, por exemplo. Quando realizar um ataque, jogue 3d8 ao invés dos normais 2d8 e escolha quais 2 dados serão aqueles que efetivamente serão o seu resultado final na jogada. Os 2 dados escolhidos definirão o grau de dano do ataque, porém, à escolha do usuário, poderá escolher um grau de dano menor, ou se será um golpe não letal (sem penalidade), se a ssim desejar. Defesa Perfeita:</p><p>[Ação Livre (Reação) / Duração: 1 Reação Defensiva / 2 de Chakra / 1 de Visão] A proteção do deus da sorte em combate o auxilia em sua defesa, impedindo que você se fira pelos golpes do inimigo, seja porque seu arco arrebentou durante a tensão ou o golpe acertou um ponto mais protegido de sua armadura, por exemplo. Quando for realizar uma reação defensiva que role dados, poderá anunciar o uso dessa técnica como ação livre. Jogue 3d8 ao invés dos normais 2d8 e escolha quais 2 dados serão aqueles que efetivamente serão o seu resultado final na jogada. Espiral Perfeita: [Ação Parcial / Duração: 1 Rodada / 5 de Chakra / 3 de Visão] Tudo conspira para a sua vitória, os mares se abrem, as rochas se partem, as chuvas de flechas não o acertam e suas investidas são precisas. Quando for realizar qualquer rolagem até o início de seu próximo turno, jogue 3d8 ao invés dos normais 2d8 e escolha quais 2 dados serão aqueles que efetivamente serão o seu resultado final na jogada</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 23–25"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                23,
+                25
+              ],
+              "requirements": "Mangekyo Sharingan",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "bishamonten"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          23,
+          25
+        ],
+        "lines": [
+          1094,
+          1152
+        ],
+        "bodySha256": "ed569a1328d496ce2ec5a0a8fe6164f6b69e477ce67ec1b36cd430f6d5d7a299",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kisshouten",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kisshouten"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kisshouten",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kisshouten",
+          "ruleId": "sns:legado:jutsu:kisshouten",
+          "description": "<p>KISSHOUTEN – (DEUSA DA SORTE NA BELEZA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan  Custo de Visão: Ver Texto</p><p>Kisshouten é uma técnica de manipulação da sorte na vida, permitindo ao usuário possuir carisma sobrenatural, sorte nas atividades diárias e a misericórdia do mundo contra a morte. Não são necessários selos de mão ou preparação prévia para utilizar as técnicas de Kisshouten. Carisma Sobrenatural: [Passiva / Duração: Permanente / 0 de Chakra / 0 de Visão] Você possui carisma sobrenatur al, todos estão sempre mais dispostos a ouvi-lo e a recepcioná-lo. Seu valor de Carisma sempre é igual a ½ do seu Nível de Campanha +2. Você não precisa fazer nada para que essa habilidade esteja ativa, porém seu Mangekyo Sharingan se manifestará sempre qu e estiver usando de seu carisma sobrenatural. Aqueles envolvidos diretamente, como os ouvintes de um discurso ou os interlocutores de uma conversa, são incapazes de perceber o seu Sharingan ativo, vendo seu olho normal. Aqueles não envolvidos diretamente a inda podem fazer um teste de Prontidão Dif 9 + Percepção para conseguir ver o seu Mangekyo Sharingan. Aqueles com Sharingan ativo sempre têm sucesso automático nesse teste.</p><p>Ventos do Destino: [Duração: Instantânea (Ver Texto) / 10 de Chakra / 5 de Visão] Os eventos que se seguem conspiram para o seu bem e seu sucesso. Uma vez usada essa técnica, nessa cena algo completamente improvável ocorrerá que o levará em direção ao sucesso. Se estiver procurando alguém, essa mesma pessoa, ou talvez alguém extremamente próximo a ela trombará contigo. Se precisar de dinheiro, o bilhete correto da loteria voará em sua direção. Se busca o amor, sua alma gêmea surgirá em sua vida. Não é a personagem ou o jogador que decidirá o que ocorrerá, mas sim o Mestre, porém essa oportunidade do destino não deve ser subjetiva, o jogador deverá ser informado pelo Mestre que tal fenômeno é decorrente da técnica “Ventos do Destino”. Porém nada impede dos jogadores da mesa darem sugestões, pois ter uma virada na história de tal forma demanda um certo grau de improvisação dos envolvidos. Essa habilidade não deve ser usada para anular completamente as dificuldades de uma missão, mas sim dar uma ajuda improvável que levará a personagem no caminho certo se a mesma estiver perdida. Não é possível utilizar essa técnica em combate de nenhuma maneira. Misericórdia Divina: [Ação: Movimento / Duração: Instantânea / 5 de Chakra / 4 de Visão] Uma técnica de sobrevivência perfeita, usada naturalmente pelo espírito e vontade de viver do Uchiha que muito pode ser confundida com uma habilidade de cura, na verdade se assemelha mais com uma misericórdia do ceifeiro que veio buscar sua alma. Uma vez que esteja com 0 de vitalidade ou menos e chegar sua vez, você poderá despertar imediatamente, retornando à Vitalidade igual seu nível de Vigor e recebendo todas as ações que teria nesse turno menos a de movimento, pois a mesma foi “despendida” no uso dessa técnica.</p><p>Você pode usar essa técnica imediatamente como reação contra um ataque que seja destinado a ti enqua nto possuir 0 de Vitalidade ou menos, podendo se defender normalmente. Essa técnica só pode ser usada 1 vez por dia. Vida Fácil: [Duração: 1 Teste / 5 de Chakra / 1 de Visão] A sorte de Kisshouten faz com que o mundo conspire ao seu favor, mesmo nas atividades que você naturalmente teria dificuldade. Quando for realizar um teste de Atributo ou Perícia, você pode escolher ter um Sucesso Automático. Seu Mangekyo Sharingan aparecerá enquanto estiver executando a atividade ou ação que esta habilidade foi usada. Não é possível utilizar essa técnica em combate ou cenas e ação de nenhuma maneira.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 25–27"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                25,
+                27
+              ],
+              "requirements": "Mangekyo Sharingan",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kisshouten"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          25,
+          27
+        ],
+        "lines": [
+          1153,
+          1236
+        ],
+        "bodySha256": "a019dee70a0bc7ea2c8e0f35efc2bc10444d135193e86cc1b16e09679280d8fc",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:kotoamatsukami",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:kotoamatsukami"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Kotoamatsukami",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:kotoamatsukami",
+          "ruleId": "sns:legado:jutsu:kotoamatsukami",
+          "description": "<p>KOTOAMATSUKAMI – (ILUSTRES DEUSES CELESTIAIS)  Genjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Fascinar ; Ilusão Profunda; Inteligência 16  Ação: Padrão (Que Não Pode Ser Acelerada)  Alcance: 9m  Duração: Concentração  Custo de Chakra: ½ Inteligência  Custo de Visão: 6  Selos de Mão: Não Como um genjutsu de altíssimo nível, você tem a capacidade de manipular o ego da pessoa sem que ela perceba, deixando -a completamente sob o seu controle, podendo até mesmo vencer uma batalha sem iniciá-la. Controle Mental: Caso a vítima falhe no teste de resistência, a mente dela cai sob seu controle e você pode comandar uma de suas ações e o que ela fala. Você deve escolher entre a ação padrão ou de movimento do alvo e tem o direito de ver sua ficha para decidir como ele agirá.</p><p>Teste de Resistência: É um teste de Inteligência, com dificuldade igual a 10 + atributo Inteligência do usuário (já incluso o bônus de Ilusão Profunda). Uma vez que a vítima falhe no teste de resistência, ela terá direito a novos testes de resistência para sair do seu controle. C ontudo, ela só poderá ser liberta da do genjutsu se for bem sucedida em três testes, sejam eles consecutivos ou não, ou por meios externos (exceto por danos causados contra ela). Resistência Sharingan: Se possuir o Sandan Sharingan, o alvo só poderá ter a ação de movimento controlada, mas ainda terá suas falas restringidas. Se possuir o Mangekyo Sharingan, a dificuldade do teste de resistência é reduzida em -2 (tornando-se 8 + atributo Inteligência).</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 27–28"
+          },
+          "details": {
+            "action": "Padrão (Que Não Pode Ser Acelerada)",
+            "range": "9m",
+            "duration": "Concentração",
+            "chakraCost": "½ Inteligência",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                27,
+                28
+              ],
+              "requirements": "Mangekyo Sharingan; Fascinar ; Ilusão Profunda; Inteligência 16",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "kotoamatsukami"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          27,
+          28
+        ],
+        "lines": [
+          1237,
+          1274
+        ],
+        "bodySha256": "dbcb988d7f3f695a7268e813b448a58d27e250033f6a010dca65c6cbd0b71dff",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:mahikami",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:mahikami"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Mahikami",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:mahikami",
+          "ruleId": "sns:legado:jutsu:mahikami",
+          "description": "<p>MAHIKAMI – (DEUS DA PARALISIA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Espírito 16  Ação: Padrão  Alcance: Curto (5m + 2m por nível de Espírito)  Área de Efeito: Cilindro de 1m de diâmetro por nível de Inteligência  Duração: Instantânea ou Sustentada  Custo de Chakra: ½ Percepção  Custo de Visão: 3 + 1 (ver Texto)  Selos de Mão: Não Esse poderoso ninjutsu lhe permite suspender a experiência subjetiva do temp o de todos os indivíduos dentro da esfera de influência; deixando todos na área de efeito efetivamente atordoados. Uso: utilizar o Mahikami custa 3 pontos de visão, e caso a vítima falhe no teste de resistência, ela sofrerá as penalidades da Relatividade. Técnica Secreta do Clã: Alguém que nunca tenha visto essa técnica antes ou não possua o conhecimento prévio dela, pode fazer, como reação imediata (Ação Livre), um Teste de Ocultismo Dif 26 para reconhecê-la. Aqueles que não conhecerem a técnica recebem um a penalidade de -3 no teste de resistência contra ela. Uma vez usada, todos em combate já compreendem seu funcionamento e ficam imunes a essa característica. Teste de Resistência: Uma vez que o uso da técnica tenha sido anunciado, os alvos terão direito a um teste de resistência de Agilidade ou Prontidão, com dificuldade igual a 10 + atributo Espírito do usuário para não sofrerem do efeito da Relatividade. Contudo, mesmo que tenham sido bem sucedidos no teste , se os indivíduos agirem e no final do seu turno permanecerem na área de efeito da técnica, eles serão afetados pela condição de Relatividade. As vítimas não terão direito a nenhum outro teste de resistência subsequente, e só poderão se libertar através dos testes de Vigor ou se escaparem da área de efeito por meios externos. Se for o caso, a condição é anulada de imediato. Relatividade: Aqueles afetados por essa técnica (por terem falhado no teste de resistência ou permanecido na área ) ficarão atordoados. No início do turno de cada vítima, ela poderá, como ação livre, fazer um teste de Vigor (Dif 7 + Inteligência do usuário) para ignorar a condição e poder usar todas as suas ações no turno em questão . Caso a vítima termine o seu turno dentro da área de efeito da técnica, ela voltará a ficar atordoada. Resistência Sharingan: Se possuir o Sandan Sharingan, o alvo terá a dificuldade do Teste de Resistência reduzida em -2. Se possuir o</p><p>Mangekyo Sharingan, ele poderá rolar o teste uma segunda vez, mesmo que o resultado do primeiro tenha sido uma falha crítica. Sustentabilidade: Você poderá, após usar o Mahikami, manter ele sustentado, sem interrompê-lo. Ao custo de 1 Ponto de Visão por turno. Sustentar essa técnica lhe deixa exausto até que a cancele.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 28–29"
+          },
+          "details": {
+            "action": "Padrão",
+            "range": "Curto (5m + 2m por nível de Espírito)",
+            "duration": "Instantânea ou Sustentada",
+            "chakraCost": "½ Percepção",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                28,
+                29
+              ],
+              "requirements": "Mangekyo Sharingan; Espírito 16",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "mahikami"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          28,
+          29
+        ],
+        "lines": [
+          1275,
+          1328
+        ],
+        "bodySha256": "9325a1898e301aa26b654d6ad272a5060d128f488b495e5fda29a51172329588",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:hachiman",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:hachiman"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Hachiman",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:hachiman",
+          "ruleId": "sns:legado:jutsu:hachiman",
+          "description": "<p>HACHIMAN – (DEUS DA GUERRA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Destreza 16; Espírito 16 ; Lutador ou Guerreiro  Ação: Parcial  Duração: Contínua  Custo de Chakra: Ver Texto  Custo de Visão: 4 + 1 (ver Texto)  Selos de Mão: Não Uma das técnicas mais poderosas do Mangekyo Sharingan, tend o sido vista apenas uma vez nas mãos de um lendário prodígio do clã Uchiha durante o período dos reinos combatentes, dando a cada olho uma habilidade de colocar o mesmo em um transe de batalha avançado , libertando um poder latente ao liberar grandes quanti dades de cha kra no seu corpo ao custo de causar grande exaustão e impedir o Uchiha de usar outras técnicas durante esse transe. Uso: Com uma ação Parcial e pagando o custo de chakra e visão, o Uchiha entra no transe de batalha , abandonando completamente táticas e estratégias complexas, desde que gaste a sua ação padrão para fazer alguma ação ofensiva contra um oponente, mas se você passar um turno sem fazer alguma ação ofensiva, você perde seu transe de batalha. Enquanto estiver em transe , você não pode usa r outras técnicas ou poderes além das técnicas permitidas pelo Hachiman , al ém disso qualquer técnica que estivesse usando deve ser desativada incluindo técnicas do próprio S haringan exceto O Sharingan . A mente e o corpo dedicam todas as suas funções para exterminar o inimigo na sua frente, permitindo você usar apenas as técnicas ”Hachiman – Migi” e ”Hachiman – Hidari”. Ativação: [Ação Parcial / Duração: Contínua / ½ Espirito de chakra e ¼ por turno subsequente] Antes de usar qualquer técnica de Hachiman, você precisa ativá -lo, pagando o seu custo de chakra na ativação e um valor mínimo para mantê-lo ativo, bem como 4 pontos de visão e 1 ponto por turno que permanecer ativo. Não são necessários selos de mão para nenhuma das técnicas de Hachiman e elas não sofrem penalidade de combate próximo.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 29"
+          },
+          "details": {
+            "action": "Parcial",
+            "duration": "Contínua",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                29,
+                29
+              ],
+              "requirements": "Mangekyo Sharingan; Destreza 16; Espírito 16 ; Lutador ou Guerreiro",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "hachiman"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          29,
+          29
+        ],
+        "lines": [
+          1329,
+          1365
+        ],
+        "bodySha256": "ffa34575af1c0f07fceb622294f19fbb65b45362bb06021cfd4697b3690f5cfe",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:hachiman-migi",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:hachiman-migi"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Hachiman – Migi",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:hachiman-migi",
+          "ruleId": "sns:legado:jutsu:hachiman-migi",
+          "description": "<p>HACHIMAN – MIGI (OLHO DIREITO DO DEUS DA GUERRA)  Pré-requisito: Shunjutsu Nv 3 Rápido Como um Rio: Enquanto estiver em transe de batalha , você sempre está recebendo os benefícios da aptidão Shunjutsu e é sempre considerado como Acelerado, bem como também se torna imune a condição desprevenido. Além disso, com uma ação livre, você pode gastar 3 de chakra para ganhar um bônus em seu deslocamento igual a metade do valor de Espirito.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 29"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                29,
+                29
+              ],
+              "requirements": "Shunjutsu Nv 3 Rápido Como um Rio: Enquanto estiver em transe de batalha , você sempre está recebendo os benefícios da aptidão Shunjutsu e é sempre considerado como Acelerado, bem como também se torna imune a",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "hachiman-migi"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          29,
+          29
+        ],
+        "lines": [
+          1366,
+          1374
+        ],
+        "bodySha256": "3eea16729f01de9fa4519fed1f9999f8282d5a28c5129e44315f1ad05e0534ca",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:hachiman-hidari",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:hachiman-hidari"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Hachiman – Hidari",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:hachiman-hidari",
+          "ruleId": "sns:legado:jutsu:hachiman-hidari",
+          "description": "<p>HACHIMAN – HIDARI (OLHO ESQUERDO DO DEUS DA GUERRA)</p><p> Pré-requisito: Punho de Ferro ou Usar Arma; Dano Extra CC ; Energizar Força de um Tufão: Quando ativa o transe de batalha, você considera o seu Espírito para calcular qualquer parâmetro que use o atributo Força (como dano de ataques corporais e dificuldade de testes) no lugar. Além disso, você pode bloquear armas (incluindo armas energizadas ) e técnicas do tipo projetil com as mãos ou com suas armas, como se elas estivessem energizadas. Ao custo de ¼ do seu Espírito em chakra, você recebe um bônus de dano em ataque corporal igual a metade do valor de esp írito. Você pode apenas utilizar manobras e aptidões de manobra.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 29–30"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                29,
+                30
+              ],
+              "requirements": "Punho de Ferro ou Usar Arma; Dano Extra CC ; Energizar Força de um Tufão: Quando ativa o transe de batalha, você considera o seu Espírito para calcular qualquer parâmetro que use o atributo Força",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "hachiman-hidari"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          29,
+          30
+        ],
+        "lines": [
+          1375,
+          1393
+        ],
+        "bodySha256": "fc8de04b65152d9315097cded6d3c9340d4be34898625c01738675811b590b66",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:hachiman-ketsuyoko",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:hachiman-ketsuyoko"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Hachiman – Ketsuyoko",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:hachiman-ketsuyoko",
+          "ruleId": "sns:legado:jutsu:hachiman-ketsuyoko",
+          "description": "<p>HACHIMAN – KETSUYOKO (SEDE DE SANGUE DO DEUS DA GUERRA)  Pré-requisito: Espírito 18; Trespassar Nv 2 [Ação Parcial / Duração: Contínua / 2 de Visão por turno] Enquanto estiver no transe de batalha , você pode aumentar o custo de visão do Hachiman para 2 pontos de v isão por turno e recebe os benefícios dessa técnica. Na Alma, Uma Chama Acesa: o Uchiha passa a causar 0,5 de grau de dano adicional em seus ataques desarmados e eles ignoram dureza de corpo (com exceção da dureza ganha pelo poder Jinchuuriki).</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 30"
+          },
+          "details": {
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                30,
+                30
+              ],
+              "requirements": "Espírito 18; Trespassar Nv 2 [Ação Parcial / Duração: Contínua / 2 de Visão por turno] Enquanto estiver no transe de batalha , você pode aumentar o custo de visão do Hachiman para 2 pontos de v isão por turno e recebe os",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "hachiman-ketsuyoko"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          30,
+          30
+        ],
+        "lines": [
+          1394,
+          1403
+        ],
+        "bodySha256": "bb94d489c19c0b2110d49ad65d3cde96bd38b1e9a5de7dda9974edf079e59578",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:ame-no-tejikara",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:ame-no-tejikara"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Ame-no-Tejikara",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:ame-no-tejikara",
+          "ruleId": "sns:legado:jutsu:ame-no-tejikara",
+          "description": "<p>AME-NO-TEJIKARA – (PODER DA MÃO DIVINA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Percepção 16; Espírito 16  Ação: Ver Texto  Alcance: Indefinido  Duração: Instantânea  Custo de Chakra: Ver Texto  Custo de Visão: Ver Texto Também conhecido como a técnica do mundo invertido, essa é uma técnica poderosa que distorce o espaço tempo de forma instantânea; trocando objetos e pessoas de lugar, atravessando el as pelo mundo invertido. Permitindo que troque tanto você com um objeto ou pessoa quanto outros indivíduos e outros objetos, movimentando-se imediatamente apenas tendo visibilidade de seus alvos. Campo de Visão: Para usar essa técnica, você deve ser capaz de enxergar seu alvo e ter tempo de reação para us á-la, e v ocê não pode forçar a substituição c ontra um alvo que esteja sob cobertura total ou fora do seu campo de visão . Considere qualquer alvo a até 30m de você dentro do seu campo de visão para utilizar essa técnica. Caso você esteja com a condição Cegueira Leve, considere apenas 18m como o máximo para o seu campo de visão, e se estiver com a condição Cegueira Grave considere apenas 9m. Caso esteja desprevenido, você não poderá usar as habilidades dessa técnica. Transporte Dimensional: Você pode usar essa técnica para abrir portais temporariamente para qualquer lugar do mundo ou para qualquer dimensão que você conheça e já tenha visitado (até mesmo a Dimensão Especial Kamui). Abrir um portal é uma ação padrão e custa ½ de Percepção em ch akra e 5 Pontos de Visão, você pode manter o Portal aberto por Concentração desde que gaste 1 de chakra por turno.</p><p>Manter o portal aberto causa grande fadiga e você só pode mant ê-lo aberto por um número de turnos igual a metade do seu NC. Teletransporte: Você pode rapidamente trocar de lugar com qualquer objeto livre no ambiente, permitindo que você se mova de imediato para qualquer ponto dentro do seu campo de visão. Fazer isso custa 2 pontos de chakra e uma ação parcial ou de movimento (à sua escolha). Essa técnica pode ser usada mesmo que você ou o alvo esteja sofrendo de alguma condição que o deixe impossibilitado de se mover ou usando uma armadura pesada. O Uchiha pode trocar de lugar com qualquer objeto ou pode teletransportar qualquer aliado, trocando-o de lugar com algum objeto. Trocar a posição de objetos de t amanho grande ou maior tornam a técnica mais difícil de usar, aumentando o custo de chakra para cada objeto sendo trocado que seja de tamanho maior do que Médio . C ada objeto ou criatura de tamanho Grande que esteja sendo teletransportada aumenta o custo em +3, Tamanho Enorme +5, Tamanho Imenso +7 e Tamanho Colossal +9. Troca Rápida: Você troca de lugar no último segundo quando atacado ou troca um aliado de lugar quando o mesmo está prestes a sofrer um ataque. Essa habilidade segue as mesmas regras do Desaparecer do Hiraishin (Livro Básico pág. 246), com a diferença que você pode gastar uma ação de movimento para estender o benef ício para um aliado dentro do seu Campo de Visão. Fazer isso, além do custo de chakra, custa 3 Pontos de Visão. Troca Rápida Oportunista: Você pode usar a habilidade Troca Rápida quando for alvo de um ataque ou uma técnica de um inimigo , mas, ao invés de trocar de lugar com um objeto no ambiente, você troca de lugar com outro inimigo ou o mesmo , fazendo ele receber o próprio ataque . Fazer isso gasta uma ação padrão no lugar de uma ação Parcial ou de Movimento e você troca de lugar com um inimigo após ser alvo de algum ataque. O grau de dano é calculado usando a melhor rolagem de ataque dele, ao invés de utilizar a pior , em caso de ataques corporais voc ê não pode trocar de lugar com o inimigo que usou o ataque, apenas com outro.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 30–31"
+          },
+          "details": {
+            "action": "Por modalidade",
+            "range": "Indefinido",
+            "duration": "Instantânea",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                30,
+                31
+              ],
+              "requirements": "Mangekyo Sharingan; Percepção 16; Espírito 16",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "ame-no-tejikara"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          30,
+          31
+        ],
+        "lines": [
+          1404,
+          1472
+        ],
+        "bodySha256": "6191e2db316c9b0acd389f716cbce292302f85781fdc3f641babbfd7ec9b631c",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:gyaku-sekai-no-jutsu",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:gyaku-sekai-no-jutsu"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Gyaku Sekai no Jutsu",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:gyaku-sekai-no-jutsu",
+          "ruleId": "sns:legado:jutsu:gyaku-sekai-no-jutsu",
+          "description": "<p>GYAKU SEKAI NO JUTSU – (TÉCNICA DO MUNDO INVERTIDO)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Percepção 16; Espírito 16; Saque Rápido; Ponto Cego  Ação: Ver Texto  Alcance: Similar ao Ame-No-Tejikara  Duração: Instantânea  Custo de Chakra: Ver Texto  Custo de Visão: Ver Texto  Selos de Mão: Não Essa é a técnica de combate principal do Poder da Mão Divina, uma substituição instantânea no momento chave para fazer um ataque perfeito em um oponente ou para posicionar o ataque de um aliado no lugar perfeito, criando situações onde você pode orquestrar o ritmo de uma batalha. Surpreender: Com uma ação parcial , você pode fazer um teste de finta especial contra seu oponente (Teste de LM contra uma defesa do alvo). Se for bem-sucedido, você pode teleportar a si mesmo ou um aliado dentro do seu campo de visão, permitindo que o mesmo gaste a sua ação padrão para realizar um ataque contra o alvo, que será considerado desprevenido contra esse ataque . Usar essa técnica custa 4 Pontos de</p><p>Chakra ( você deve c onsiderar os modificadores de tamanho da habilidade teletransporte) e 2 Pontos de Visão. De Novo: Você corrige um erro ou um pequeno detalhe azarado no momento de um ataque decisivo , trocando o seu inimigo ou você de lugar. Quando você erra um ataque contra o seu inimigo, ao custo de uma ação parcial, 5 pontos de chakra e 3 Pontos de Visão, você pode refazer a jogada de ataque e ficar com a melhor rolagem entre as duas. Você não pode usar essa habilidade caso o seu oponente tenha um sucesso critico em sua defesa. Você pode estender o beneficio dessa habilidade para um aliado. Fazer isso custa uma ação de movimento ao invés de parcial.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 31–32"
+          },
+          "details": {
+            "action": "Por modalidade",
+            "range": "Similar ao Ame-No-Tejikara",
+            "duration": "Instantânea",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                31,
+                32
+              ],
+              "requirements": "Mangekyo Sharingan; Percepção 16; Espírito 16; Saque Rápido; Ponto Cego",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "gyaku-sekai-no-jutsu"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          31,
+          32
+        ],
+        "lines": [
+          1473,
+          1511
+        ],
+        "bodySha256": "3c2ce21ff899e22944d7edeaf837fbee2f9afc111aa816534c9e1e8eb7067920",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:susanoo",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:susanoo"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Susano’o",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:susanoo",
+          "ruleId": "sns:legado:jutsu:susanoo",
+          "description": "<p>SUSANO’O – (DEUS DAS TORMENTAS)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Dominar o par de Técnicas do seu Mangekyo Sharingan  Ação: Padrão ou Completa; Parcial (Ver Texto)  Alcance: Pessoal  Duração: Sustentada  Dano: Ver Texto  Custo de Chakra: ½ Espírito  Custo de Visão: 4  Selos de Mão: Não O Susano’o é uma habilidade concedida pelo Mangekyo Sharingan para aqueles que despertam os poderes de ambos os olhos. Ele cria um ser humanoide gigantesco que envolve o usuário. Como uma das técnicas mais fortes concedidos àqueles que adquiriram o Sharingan, é uma divindade guardiã do Uchiha, mas, paralelamente, consome a força vital do mesmo e sua resistência. O Susano’o é formado através da materialização do chakra do usuário e, como tal, difere na aparência, bem como de cor e habilidades entre os Uchihas. Uso: Na primeira vez em que o Uchiha usar a técnica Susano’o, ele apenas terá acesso a utilizá-la como Ação Padrão e ao 1 º Estágio. Para evoluir de estágio é necessário usar a ação “Evoluir Susano ’o”, assim liberando o seu uso com Ação Completa (ver adiante) até o estágio em que você já evoluiu alguma vez anteriormente. Caso o Mestre queira evitar abusos e realmente ter a experiência da personagem ir evoluindo o seu Susano’o ao longo dos combates, ele pode proibir que a personagem use “Evoluir Susano’o” fora de uma cena de ação ou combate (como em casa descansando). Isso e vita que a personagem libere imediatamente o estágio mais forte assim que obtiver os pré-requisitos necessários sem esforço.</p><p> Ação Padrão: Você pode usar uma Ação Padrão para criar o 1º Estágio do Susano’o, recebendo todos os seus benefícios. Para subir de estágio é necessário usar “Evoluir Susano’o”.  Ação Completa: Você pode usar uma Ação Completa para criar o Susano’o em qualquer estágio que você já tiver obtido anteriormente pela ação “Evoluir Susano’o”. Recebendo todos os seus benefícios. Custo: Você precisa pagar 4 Pontos de Visão e Chakra igual à ½ do seu Espírito para ativar o Susano ’o, independente de qual ação você despenda. Uma vez ativo, você não precisará gastar Pontos de Visão ou Chakra adicional por turno subsequente que ele estiver sustentado. Evoluir Susano’o: Com uma Ação Parcial você pode evoluir o Susano ’o para o próximo estágio. Você pode fazer isso no mesmo turno em que ativou a técnica Susano ’o, porém essa ação apenas pode ser feita uma única vez por turno. O Susano’o modifica sua Absorção Total para o do novo estágio e recebe Absorção Atual segundo a tabela “Evolução de Absorção”. A Absorção Atual nunca pode ser maior que a Absorção Total do Estágio usado, qualquer valor excedente é imediatamente perdido. Regredir Susano’o: Você pode, co m uma ação livre (porém apenas no seu turno), regredir o estágio do Susano’o para qualquer estágio menor que o atual. Fazer isso faz ele perder Absorção Total, porém apenas perde Absorção Atual se ela fosse se tornar maior que a Absorção Total do estágio q ue foi regredido. Caso você regrida o Susano’o, não poderá evoluí-lo no mesmo turno. Recuperar Susano’o: Caso o seu Susano’o tenha perdido absorção e você deseje recuperá-la, você pode, com uma Ação Padrão (que não pode ser acelerada) e pagando 2 Ponto de Visão, recuperar toda a sua Absorção até a Absorção Total do estágio em que você estiver. Susano’o Destruído: Caso o seu Susano’o tenha toda a sua absorção destruída, ele some e você perde todos os seus benefícios. Entretanto, você poderá recriá-lo na mesma cena uma única vez pagando novamente o custo de chakra, porém dessa vez você deverá gastar apenas 2 Pontos de Visão. Os custos de Ação permanecem os mesmos. Benefícios do Susano’o: Os Benefícios do Susano’o são definidos pelo estágio que você estiver d ele, segundo a tabela “Estágios do Susano’o” abaixo. A menos que seja dito algo contra, um benefício de um estágio inferior se mantém para um estágio superior: Absorção Total: O valor de absorção que o Susano’o possui quando é criado e o máximo que ele pode ter. Dureza de Chakra: Se trata do valor de dureza de corpo que o Susano’o possui quando é criado ou evoluído de estágio e o máximo que ele pode ter. Evolução de Absorção: O quanto de absorção que o Susano’o ganha quando você evolui ele de Estágio. Tamanho: O tamanho que a personagem passa a ser considerada quando está com o Susano’o nesse estágio. Você recebe apenas os modificadores de tamanho segundo as características (Ver Livro Básico pág. 271) “Ataque”, “Alcance CC”, “Furtividade”, “Intimidar” e “Alt ura e Peso”. Susano’o tem valor de força igual o atributo espirito do Uchiha e recebe os bônus de força por tamanho normalmente.</p><p>Defesa Rápi da Susano’o: Você pode utilizar o efeito Barreira Nv 6 através do seu Susano’o, criando uma parte do seu Susano’o rapidamente e reforçando ela com chakra para cobrir você ou um aliado próximo. Fazer isso requer um teste de Defender com Técnica como o efeito Barreira. Essa barreira possui Dureza igual ao seu Espírito + 2. Você não pode usar essa técnica caso já esteja com o Susano’o ativo. Técnicas das Tormentas: Escolha dois efeitos dentre todos do poder Ninpou para você utilizar com o Susano’o ativado. Ess es efeitos não podem ter o tempo de execução como Ação Completa ou maior, mas você poderá utilizá-los no Nível mais alto possível pelo seu Limite de Nível de Poder (½ NC), utilizando o custo de chakra normal. Os efeitos não recebem bônus elemental, mas rec ebem +2 de Dano, +1 de Dificuldade de Técnica e +2 de Dureza e se possuírem Alcance Comum do Poder, ele será de 10m +2m por Nível de Espírito ; se possu írem Tamanho Comum do Poder, ele será de 2m por Nível de Espírito. E caso você possua o Enton, você poderá utilizar esses efeitos como se fossem do poder Enton, os efeitos consideram seu n ível de poder igual metade de seu NC caso seja necessário. Armamento Susano’o: Todo Susano’o possui duas armas únicas, sendo uma de combate corporal e outra de combate à distancia. As armas são especificas de cada Susano’o e são utilizáveis a partir do 3º Estágio, não podendo ser materializadas em estágios menores. Além disso, as armas têm a aparência que você desejar; bem como o tipo de dano da Arma CC. Durante o cálculo de dano com as armas, você deve substituir o atributo Força por Espírito e incluir o bônus por Tamanho. Você pode criar as suas armas escolhendo até 4 propriedades únicas (repetição de propriedade incluso) da lista para Armas CC e Armas CD. Tipo de Arma Dano Alcance Crítico Tipo Arma CC +2 --- 15-16 --- Arma CD +1 1m x Espírito 15-16 Perfuração Lista de Propriedades para Armas CC Dano Adicional: Você aumenta o dano da sua Arma em +1 . Você pode escolher essa propriedade até 3 vezes , a umentando em +3 o Dano de Arma. Carregada: Você pode gastar uma Ação de Movimento para aumentar em +1 o dano de arma do seu proximo ataque. Guerreira: Você passa a poder realizar Manobras com essa arma se possuir a aptidão Guerreiro. Considere sua arma como uma Arma Pesada para propósitos da Aptidão. Longa: Sua arma se torna Longa. Letal: A Margem de Critico da sua Arma passa a ser 14-15-16. Mortal: Quando causa um acerto crítico com a sua arma, ela causará 1 nível de sangramento para cada 3 de dano base. Devastadora: Sempre que acertar um ataque com essa arma , o alvo deve fazer um teste de Vigor (dif 7 + Espí rito) ou Acrobacia (dif 9 + Espirito) para não ficar caido. Ambidestra: Você possui um par ou sua arma é dupla, você pode se beneficiar de Ambidestria com a arma do Susano’o. Mas se pegar esse beneficio, você só poderá escolher o beneficio Dano Adicional uma única vez.</p><p>Lista de Propriedades para Armas CD Dano Adicional: Você aumenta o dano da sua Arma em +1, Você pode escolher essa propriedade até 3 vezes , aumentando em +3 o Dano de Arma. Alcance: Você aumenta o alcance da sua arma, passando a calcular o seu alcance com 2m x Es pírito. Você pode escolher essa propriedade até 2 vezes, aumentando o alcance para 3m x Espírito. Letal: A margem de crítico da sua arma passa a ser de 14-15-16. Mortal: Quando causa um acerto crítico com a sua arma, ela causará 1 nível de sangramento para cada 3 de dano base. Devastadora: Sempre que acertar um ataque com essa arma, o alvo deve fazer um teste de Vigor (dif 7 + Espírito) ou Acrobacia (dif 9 + Espirito) para não ficar caido. Flechas: Você pode fazer um teste de Prestidigitação contra um teste de Prontidão do alvo quando fizer um ataque com essa arma , e caso o alvo falhe no teste, ele ficará fintado. Fazer isso não gasta ação. Implacável: Sempre que acertar um ataque com essa arma , o alvo deverá fazer um teste de Vigor (dif 7 + Espirito) ou Acrobacia (dif 9 + Espirito) para não ser empurrado 10m em alguma direção da sua escolha. Estágios de Susano’o:  1º Estágio: Costelas  Dureza de Chakra: 1 Ponto de Dureza de Corpo  Absorção Total: Precisão de Espírito  Evolução de Absorção: 0  Tamanho: Médio Nesse estágio, o Susano’o não passa de apenas algumas costelas em volta da personagem, podendo possuir no máximo um braço. Proteção Parcial: O Susano’o oferece ao personagem uma Absorção que deve ser destruída antes de poder voltar a ferir a personagem. Apesar disso, essa forma não protege a personagem de todos os ângulos. Uma personagem atacante pode escolher receber uma penalidade de -3 em sua jogada de ataque para mirar um ponto não protegido das costelas e acertar o usuário d o Susano’o ignorando a absorção (que não é destruída). Braço do Susano’o: Você pode materializar um único braço de chakra do Susano’o para fazer qualquer coisa que um braço poderia, exceto usar técnicas e usar aptidões de manobra (porém , você pode usar outras manobras como Agarrar ou Derrubar). Esse braço realiza manobras com o CC ou CD da personagem, porém usando o atributo Espírito no lugar de Força ou Destreza e testes de Atributo ou Perícia com o nível de Espírito. Ele é considerado uma Arma Pesada com Dano de Arma 3 e utiliza Espírito no seu cálculo de dano. O Alcance do Braço nesse estágio é de 2m. O Braço compartilha a absorção com o Susano’o da personagem.</p><p> 2º Estágio: Esqueleto  Dureza de Chakra: 2 Pontos de Dureza de Corpo  Absorção Total: Espírito + 5  Evolução de Absorção: +10  Tamanho: Grande Evoluindo um estágio, o Susano’o aumenta de tamanho e já obtém o esqueleto completo do tórax para cima, contendo dois braços e envolvendo o Uchiha pelas costelas, protegendo-o por completo. Proteção Completa: Nesse est ágio a Proteção da forma anterior se torna completa, não permitindo os atacantes escolherem receber a penalidade para acertar pontos não protegidos (pois esses não existem). Essa característica substitui “Proteção Parcial” da versão anterior. Contato Impossível: A partir desse estágio, você fica impossibilitado de realizar técnicas de Toque, pois o Susano’o lhe separa do mundo externo.</p><p>Apesar disso, você ainda pode criar pequenas aberturas para que utilize de técnicas à distância que partam de você. Essas a berturas são imediatas e se fecham imediatamente após o uso da técnica.  3º Estágio: Armadura  Pré-requisito: Espírito 17  Dureza de Chakra: 3 Pontos de Dureza de Corpo  Absorção Total: Espírito + 10  Evolução de Absorção: +15  Tamanho: Grande O 3º Estágio não g era crescimento para o Susano’o, mas dá a ele uma Armadura, aumentando sua resistência e o escopo de ataques que ele pode realizar. Armamento Susano’o: Quando alcançar esse estágio pela 1ª vez, você deve então criar 2 armas não especiais para serem os ar mamentos permanentes do seu Susano ’o (seguindo as regras de criação citadas anteriormente), que recebe os benefícios de “Usar Arma” para essas duas armas. Essa criação é permanente e não pode ser substituída. Materializar o armamento requer uma ação parcial e poder trocar entre a sua arma de combate corporal e a de combate à distância também gasta uma ação parcial, além de poder dissolver suas armas para ficar com as mãos livres tambem. O dano causado com as armas é ½ Espírito + Dano da Arma, e ambas as armas recebem o bônus de Espírito igual ao bônus de “Força e Vigor” da sua categoria de tamanho, como fo i dito anteriormente na regra de Tamanho do Susano’o. O Susano’o usa as suas aptidões de combate e manobra para suas armas. É possível, se você tiver, utilizar o Enton para incendiar os Armamentos Susano’o através do Armas Infernais.  4º Estágio: Corpo Completo  Pré-requisito: Espírito 18; Eien Mangekyo Sharingan  Dureza de Chakra: 3 Pontos de Dureza de Corpo  Absorção Total: 2x Espírito  Evolução de Absorção: +20  Tamanho: Enorme A forma quase perfeita do Deus das Tormentas, nesse estágio você pode se mover com muito mais velocidade por obter um corpo inteiro, além de muito mais tamanho e resistência. Pernas do Susano ’o: Você passa a receber os benefícios de “Deslocamento” por tamanho maior.</p><p> 5º Estágio: Forma Perfeita</p><p> Pré-requisito: Espírito 20; Eien Mangekyo Sharingan  Dureza de Chakra: 3 Pontos de Dureza de Corpo  Absorção Total: 3x Espírito  Evolução de Absorção: Valor do Atributo Espírito  Tamanho: Colossal A forma perfeita do Susano’o, específica para cada usuário, nesse estágio você adquire o máximo de tamanho, além de asas que lhe permitem ficar Alado. Asas do Susano’o: Você recebe a Perícia Voo igual ao valor de Espírito da personagem e pode ficar Alado. Caso o Susano’o esteja Alado e seja destruído, a personagem poderá realizar um teste de “Amortecer Queda” (Ver Livro Básico pág. 275) para evitar o Dano de Queda.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 32–38"
+          },
+          "details": {
+            "action": "Padrão ou Completa; Parcial (Ver Texto)",
+            "range": "Pessoal",
+            "duration": "Sustentada",
+            "damage": "Por modalidade",
+            "chakraCost": "½ Espírito",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                32,
+                38
+              ],
+              "requirements": "Mangekyo Sharingan; Dominar o par de Técnicas do seu Mangekyo Sharingan",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "susanoo"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          32,
+          38
+        ],
+        "lines": [
+          1512,
+          1801
+        ],
+        "bodySha256": "3c0f3e1abdd6dd1b23380e7cb8efd10ee6236abf9f61444c61be72435ee3ef25",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:takemikazuchi-no-kami",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:takemikazuchi-no-kami"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Takemikazuchi-no-Kami",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:takemikazuchi-no-kami",
+          "ruleId": "sns:legado:jutsu:takemikazuchi-no-kami",
+          "description": "<p>TAKEMIKAZUCHI-NO-KAMI – (INVENCÍVEL DEUS DA ESPADA E TROVÃO)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Eien no Mangekyou Sharingan; Lâmina de Raios Nv 9; Raiton 9; Conseguir utilizar o Susano’o no 5º estágio  Ação: Padrão ou Completa (Ver Texto)  Alcance: Toque  Duração: Sustentada (Um Ataque)  Dano: Ver Texto  Custo de Chakra: ½ Espírito Você usa o corpo do seu Susano’o Perfeito para canalizar uma enorme quantidade de chakra do elemento Raiton e assim realizar o efeito Lâmina de Raios, usando a força e concentração de chakra do Susano’o para fortalecer a técnica. Esta técnica segue as mesmas r egras do efeito Lâmina de Raios (ver Livro Básico, pág. 109), mas você só pode utilizá-la enquanto estiver com o Susan o’o Perfeito ativo. Você executa o efeito normalmente , com o diferencial de que passa a receber os bônus de dano sem precisar realizar a manobra Investida. Honoikazuchi: Caso possua o poder Kagutsuchi, você pode rá utilizar o modo meta-aptidão nessa técnica.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 38"
+          },
+          "details": {
+            "action": "Padrão ou Completa (Ver Texto)",
+            "range": "Toque",
+            "duration": "Sustentada (Um Ataque)",
+            "damage": "Por modalidade",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                38,
+                38
+              ],
+              "requirements": "Eien no Mangekyou Sharingan; Lâmina de Raios Nv 9; Raiton 9; Conseguir utilizar o Susano’o no 5º estágio",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "takemikazuchi-no-kami"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          38,
+          38
+        ],
+        "lines": [
+          1802,
+          1829
+        ],
+        "bodySha256": "93be8fc4c0dd0e0075394544c55e3f89ef8ed6aa1ad7c752f73a48df244a8425",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:indra-no-vajra",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:indra-no-vajra"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Indra-no-Vajra",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:indra-no-vajra",
+          "ruleId": "sns:legado:jutsu:indra-no-vajra",
+          "description": "<p>INDRA-NO-VAJRA – (LANÇA DIVINA DE INDRA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Eien Mangekyo Sharingan; Técnica Poderosa; Elemento Nível 10; Espírito 20; Conseguir utilizar o Susano’o no 5º estágio.  Ação: Completa  Alcance: Comum do poder utilizado na técnica  Área de Efeito: Ver Texto  Duração: Instantânea  Dano: Ver Texto  Custo de Chakra: 5 + Nível do Poder utilizado A técnica suprema do Susano’o, capaz de ser usada por um usuário do Mangekyo Sharingan que se tornou imune ao preço do ódio. Comprimindo grandes quantidades de chakra de um elemento , você cria uma grande lança de puro chakra elemental e lança ela através do Susano’o perfeito. A Lança viaja até entrar em contato com um alvo ou um ponto de impacto, causando uma poderosa devastação. Preparação: Concentrar o chakra e moldá-lo é extremamente complexo e difícil, você precisa de pelo menos 5m de distância de qualquer criatura para usá -la. Caso você tente fazer isso estando a essa dist ância de qualquer pessoa, elas t êm o direito de fazer um ataque oportuno em reação a sua técnica. E ao sofrer dano, você perde a concentração mesmo que afete apenas a absorção do seu Susano’o (a ação e os custos de chakra necessários não são recuperados). Técnica Susano’o: Essa técnica só pode ser utilizada enquanto estiver com o 5º estágio do susanoo ativo. Dano: Essa técnica causa dano igual ao Nível do Poder + Esp írito. Além disso, o bônus de dano do elemento escolhido para a execução da técnica deve ser aplicado no cálculo. A técnica recebe os benefícios da aptidão técnica poderosa.</p><p>Zona de Explosão: A Lança é um projetil que viaja até um ponto ou um alvo e explode numa Esfera de tamanho comum do poder. Todos aqueles que estejam dentro da área de explosão deverão fazer uma defesa contra a técnica, que não pode ser bloqueada sob nenhuma circunstancia. Alvos que se defendam usando Esquiva ou a manobra Antecipar, devem realizar um teste de Agi lidade (dif 7 + Esp írito) ou Prontidão (dif 9 + Espírito). Ao falhar, sofrem o dano d a técnica em grau 1 ,5 (já considerando a meta -aptidão Técnica Poderosa) como dano remanescente. Inimigos que sejam considerados como Acelerado têm sucesso automático nesse teste. Técnica Custosa: Usar essa técnica exige muito do Uchiha, e após usar a técnica ele imediatamente desativa o seu Susano’o e fica com a condição Fatigado por 3 turnos . Durante esse tempo , ele não pode reativar o Susano’o até que a condição se encerre. O Uchiha não sofre essas penalidades caso a técnica seja impedida pela regra de Preparação ou caso não consiga executá-la completamente.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 39–40"
+          },
+          "details": {
+            "action": "Completa",
+            "range": "Comum do poder utilizado na técnica",
+            "duration": "Instantânea",
+            "damage": "Por modalidade",
+            "chakraCost": "Por modalidade",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                39,
+                40
+              ],
+              "requirements": "Eien Mangekyo Sharingan; Técnica Poderosa; Elemento Nível 10; Espírito 20; Conseguir utilizar o Susano’o no 5º estágio.",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "indra-no-vajra"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          39,
+          40
+        ],
+        "lines": [
+          1830,
+          1885
+        ],
+        "bodySha256": "2eb94a249697b7ea452037e5fa4d3320954040021862f19f4cd1ad9dd1c77710",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:yata-no-kagami",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:yata-no-kagami"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Yata no Kagami",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:yata-no-kagami",
+          "ruleId": "sns:legado:jutsu:yata-no-kagami",
+          "description": "<p>YATA NO KAGAMI – (ESPELHO DE YATA)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Espírito 17; Susano’o 3º estágio; Deve ser escolhido com Habilidades do par de olhos  Ação: Movimento (Ver Texto)  Alcance: Pessoal  Duração: Sustentado (Ver Texto)  Custo de Visão: Ver Texto  Custo de Chakra: ½ Percepção  Selos de Mão: Não O Espelho de Yata é uma arma espiritual condensada na forma de um escudo etéreo que é empunhado pelo Susano’o. Ele é dotado de todas as</p><p>cinco Mudanças da Natureza, e como tal, ele muda suas características de acordo com os do ataque que recebe, fazendo com que o ataque seja inteiramente ineficaz. O poder divino do Espelho de Yata é capaz de repelir qualquer forma de ataque, seja de um corpo material ou astral, ninjutsu ou ataque físico. Uso: gastando a sua ação de movimento, você pode escolher um dos cinco elementos para que o Espelh o passe a se beneficiar de suas características. Você deve anunciar qual elemento será sempre que for escolher. Você também pode escolher trocar o elemento durante o combate, mas apenas em seu turno e gastando a sua ação de movimento outra vez. Interações com elementos Kekkei Genkai ou similares ficam a cargo do Mestre decidir se o elemento escolhido pelo o usuário recebe vantagem elemental ou não. Adicionalmente, o Espelho de Yata é considerado uma arma especial e lhe permite usar a reação de defesa Bloq ueio para qualquer ataque (até mesmo aqueles que dizem não poderem ser bloqueados , como o Kyodo Kyouka por exemplo), mas utilizando do seu bônus de precisão em Ler Movimentos e com um bônus de +2 na precisão do teste. Sustentabilidade: o Yata no Kagami tem duração Sustentada e, como tal, ele deve e pode ser sustentado junto com o Susano’o, gastando apenas uma ação parcial para ambos. Ele surge junto com o Susano’o a partir do 3º estágio, que adiciona 1 ponto no custo, que passa a custar 5 Pontos de Visão para ativá-lo nos estágios superiores. Assim, ativar o 1º ou 2º estágio ainda custa 4 Pontos de Visão, mas o 3º em diante custa 5 Pontos de Visão. Habilidade Assinatura: o Espelho de Yata é uma relíquia tão poderosa, que requer grande controle de chakra, e consequentemente você deve abrir mão das outras técnicas utilizáveis pelo Susano’o. Sendo o Yomotsu Ōkami a única exceção.</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 40–41"
+          },
+          "details": {
+            "action": "Movimento (Ver Texto)",
+            "range": "Pessoal",
+            "duration": "Sustentado (Ver Texto)",
+            "chakraCost": "½ Percepção",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                40,
+                41
+              ],
+              "requirements": "Mangekyo Sharingan; Espírito 17; Susano’o 3º estágio; Deve ser escolhido com Habilidades do par de olhos",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "yata-no-kagami"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          40,
+          41
+        ],
+        "lines": [
+          1886,
+          1935
+        ],
+        "bodySha256": "a183eb8df393d1f9aada841fdc1461e137c31183890fd1d59d7dbd62f8d83153",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:jutsu:yomotsu-okami",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:jutsu:yomotsu-okami"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Yomotsu Ōkami",
+        "type": "jutsu",
+        "img": "icons/svg/eye.svg",
+        "system": {
+          "contentId": "sns:legado:jutsu:yomotsu-okami",
+          "ruleId": "sns:legado:jutsu:yomotsu-okami",
+          "description": "<p>YOMOTSU ŌKAMI – (A GRANDE DEIDADE DE YOMI)  Ninjutsu / Kekkei Genkai; Doujutsu  Pré-requisito: Mangekyo Sharingan; Inteligência 16; Susa no’o 1º estágio; Deve ser escolhido com Habilidades do par de olhos  Ação: Ver Texto  Alcance: Pessoal  Custo de Visão: 0  Selos de Mão: Não</p><p>Abençoado pela divindade do mundo dos mortos, o Susano’o do Uchiha possui habilidades únicas e é dito como sendo invencível contra qualquer coisa, ganhando vantagem aos poucos enquanto se adapta ao inimigo. Sua principal característica é o lento esgotamento do oponente através da sua capacidade de absorver chakra. Em contrapartida, a alma daquele que foi abençoado pela Grande Deidade de Yomi está destinada a apodrecer junto de suas memórias no fogo de Yomi. Absorção de Chakra: Sempre que for atacado por um ataque desarmado ou técnica de toque, o inimigo perde 5 pontos de chakra, que é absorvido e adicionado na reserva de chakra do Susano’o. Essa reserva é zerada se o Susano’o for destruído. Sempre que for atacado por uma técnica que consuma chakra do usuário, adicione 3 pontos à reserva de chakra. Se o Susano’o for atacado por uma arma energizada ou por efeitos similares, ele absorve o chakra da arma, encerrando o efeito após o golpe ser realizado. Adicione 5 pontos à reserva de chakra. Adaptabilidade Pútrida: o seu Susano’o pode acumular até 20 pontos de chakra, e você pode usar uma ação livre para gastar as reservas de chakra das seguintes formas: Constituição de Yomi: [requer 2 pontos] Aumente a dureza de corpo do Susano’o em +1 por 1 rodada. Escudo de Almas Amarguradas: [requer 10 pontos] o Susano’o ganha dureza igual ao seu valor de Espírito durante um ataque (caso utili zado contra um Ataque Múltiplo, considere a dureza para todos os golpes). Revitalização Impura: [requer todos os pontos] você ganha Vitalidade igual à 2x a quantidade de Pontos de Chakra gastos (uma vez por cena). Falsas Chamas de Yomi: [requer todos os po ntos] uma vez que o seu Susano’o tenha sido destruído naquele turno, ele pode ser restabelecido logo em seguida no mesmo estágio em que foi destruído como se nada tivesse acontecido, mas com metade do valor de absorção (uma vez por cena).</p>",
+          "category": "techniques",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 41–42"
+          },
+          "details": {
+            "action": "Por modalidade",
+            "range": "Pessoal",
+            "organization": "free"
+          }
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                41,
+                42
+              ],
+              "requirements": "Mangekyo Sharingan; Inteligência 16; Susa no’o 1º estágio; Deve ser escolhido com Habilidades do par de olhos",
+              "automation": "legado-v1"
+            },
+            "legadoMechanics": {
+              "version": 1,
+              "key": "yomotsu-okami"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          41,
+          42
+        ],
+        "lines": [
+          1936,
+          1982
+        ],
+        "bodySha256": "0060820636d90aafe8f3aff74dbea9e5903cc199f5a0bd11f33c83aba017a21c",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:rule:condicoes-prejudiciais",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:rule:condicoes-prejudiciais"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Condições Prejudiciais",
+        "type": "reference",
+        "img": "icons/svg/book.svg",
+        "system": {
+          "contentId": "sns:legado:rule:condicoes-prejudiciais",
+          "ruleId": "sns:legado:rule:condicoes-prejudiciais",
+          "description": "<p>CONDIÇÕES PREJUDICIAIS Isso é um compilado de condições prejudiciais que podem afetar os personagens e que foram descritas neste homebrew . As regras para se livrar de uma condição estão escritas no que a causou. Cegueira Leve A personagem sofre uma penalidade permanente d e -1 em testes de precisão de Ataque e Defesa, além de sofrer penalidades em testes de Percepção e pericias derivadas. Condição mais grave: Cegueira Grave Cegueira Grave Idêntica a Cegueira Leve, mas o personagem sofre uma penalidade de -2 nos testes. Condição mais grave: Cegueira Completa Cegueira Completa A personagem está permanentemente Cego, não podendo realizar nenhum teste que dependa da visão e sofre penalidade de -3 em testes de precisão de Ataque e Defesa de forma permanente . Além disso, qualquer um recebe cobertura total contra ela. Visão Prejudicada Quanto mais cego você fica, mais o alcance da sua visão se perde, o que te força a se aproximar mais e mais do oponente para lutar. Quando</p><p>sofrer de Cegueira Leve , inimigos que estejam a mais de 18m da personagem passam a receber camuflagem parcial, e com Cegueira Grave todos recebem camuflagem parcial estando a 9m de você, enquanto que inimigos além de 18m recebem camuflagem total. Diferente da cegueira você sempre é afetado pela visão prejudicada mesmo quando está com o sharingan ativo. Incendiado Esta condição funciona de forma semelhante ao Sangramento, acrescentando em um o nível a cada turno que o alvo se mantiver incendiado. O alvo inicialmente recebe níveis de incendiado igual ao grau de dano do ataque do Amaterasu (que não causa Sangramento em caso de acerto crítico). No início de cada turno do alvo, ele imediatamente receberá u ma quantidade de Dano Fixo correspondente ao nível de Incendiado (que ignora dureza de corpo de qualquer tipo, exceto a proveniente do poder Jinchuuriki) e no final do seu turno, caso ele não retire a condição, ela aumenta em um o seu nível.</p>",
+          "category": "features",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 42–43"
+          },
+          "details": {}
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                42,
+                43
+              ],
+              "requirements": "",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          42,
+          43
+        ],
+        "lines": [
+          1983,
+          2027
+        ],
+        "bodySha256": "5bffd4080b52fd53941d71ca79f180e0818a5d54e48da106cec4dfa68888d1a1",
+        "fullSection": true
+      }
+    },
+    {
+      "id": "sns:legado:rule:par-de-olhos-customizavel",
+      "publicationPack": "legado-do-odio",
+      "documentName": "Item",
+      "revision": "D173-v1",
+      "ruleIds": [
+        "sns:legado:rule:par-de-olhos-customizavel"
+      ],
+      "variants": [],
+      "document": {
+        "name": "Par de Olhos Customizável",
+        "type": "reference",
+        "img": "icons/svg/book.svg",
+        "system": {
+          "contentId": "sns:legado:rule:par-de-olhos-customizavel",
+          "ruleId": "sns:legado:rule:par-de-olhos-customizavel",
+          "description": "<p>REGRA OPCIONAL: PAR DE OLHOS CUSTOMIZAVEL Para finalizar aqui fica a regra opcional de par de olhos customizavel, caso deseje o mestre pode permitir ao jogador escolher o poder de cada olho individualmente em vez de um par. AVISO! Fique ciente que permitindo essa regra alguns poderes que s ão feitos para f uncionar em pares perderão sentido ou habilidades por isso não é recomendado o uso dessa regra para mestres e jogadores iniciantes.</p>",
+          "category": "features",
+          "level": 0,
+          "tags": [
+            "OPCIONAL"
+          ],
+          "traits": [],
+          "source": {
+            "id": "Legado do Ódio",
+            "edition": "Atualizado · compatível SNS 4.1b",
+            "pages": "PDF 43"
+          },
+          "details": {}
+        },
+        "flags": {
+          "sns-v14-dev": {
+            "optionalSource": "legado-do-odio",
+            "npcReferenceOnly": false,
+            "legadoSource": {
+              "pages": [
+                43,
+                43
+              ],
+              "requirements": "",
+              "automation": "legado-v1"
+            }
+          }
+        }
+      },
+      "verifiedSource": {
+        "file": "Legado do Ódio Atualizado.pdf",
+        "pdfSha256": "a28ffc61aa3d107bb8f3379aac208bf6d633c6499c01642c9e860982e5d8a1b4",
+        "pages": [
+          43,
+          43
+        ],
+        "lines": [
+          2028,
+          2034
+        ],
+        "bodySha256": "4752481a538f80b52094c3ec385acbc9d09a74e2406ad521ba73fb4758e1bce2",
+        "fullSection": true
+      }
+    }
+  ]
+}

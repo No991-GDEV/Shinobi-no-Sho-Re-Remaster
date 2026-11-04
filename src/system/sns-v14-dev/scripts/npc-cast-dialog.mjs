@@ -1,3 +1,5 @@
+import {isLegado} from './legado-core.mjs';
+import {chooseLegadoCast} from './legado-ui.mjs';
 import {npcJutsuPlan} from './npc-jutsu-core.mjs';
 import {escapeHtml as esc} from './kernel.mjs';
 import {plainRule} from './technique-card.mjs';
@@ -21,6 +23,7 @@ export function refreshNpcCast(item,library,dialog){
  return verified;
 }
 export async function chooseNpcCast(actor,item,library){
+ if(isLegado(item))return chooseLegadoCast(actor,item,library);
  const initial=npcJutsuPlan(item,library),levels=[];for(let n=initial.min;n<=initial.max;n++)levels.push(n);
  if(levels.length===1&&!initial.missing.length&&!initial.natures.length)return {level:initial.level,custom:{}};
  const contextHtml=initial.context?'<fieldset><legend>Como usar</legend><label>Modalidade<select name="contextChoice">'+(initial.context.options.length>1?'<option value="">Escolher modalidade</option>':'')+initial.context.options.map(o=>'<option value="'+o.id+'">'+esc(o.label)+'</option>').join('')+'</select></label><label data-context-value><span>Quantidade</span><input name="contextValue" type="number" min="0" step="1"></label></fieldset>':'';

@@ -1,3 +1,4 @@
+import {legadoState,legadoSusanoo} from './legado-core.mjs';
 // SNS Básico 4.1b pp.136,257–260,274–275; temporary vitality order: D123.
 import {effectiveHardness} from './transformation-core.mjs';
 const nonnegative=(n,label)=>{if(!Number.isSafeInteger(n)||n<0)throw Error(label+' deve ser um inteiro não negativo.');return n;};
@@ -31,6 +32,6 @@ export function latestDamage(actor){
  return Object.values(log).filter(e=>e?.version===1).sort((a,b)=>b.sequence-a.sequence);
 }
 export function damageInputsSignature(actor,armorId=''){
- const state=actor.system.damageState??{},pool=Array.from(state.armorPools??[]).find(p=>p.itemId===armorId);
+ const state=actor.system.damageState??{},pool=armorId==='legado-susanoo'?{value:legadoState(actor).susanoo?.value??0,max:legadoSusanoo(actor)?.max??null}:Array.from(state.armorPools??[]).find(p=>p.itemId===armorId);
  return JSON.stringify({vitality:actor.system.resources.vitality.value,temp:actor.system.resources.vitality.temp??0,hardness:effectiveHardness(actor),externalRevision:state.externalRevision??0,head:state.head??'',armorId,absorption:armorId?pool?.value??null:0,armorMax:pool?.max??null});
 }

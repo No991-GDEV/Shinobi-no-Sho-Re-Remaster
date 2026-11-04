@@ -1,5 +1,8 @@
+import {legadoRequirement} from './legado-core.mjs';
 // Canonical requirements are code, never editable thresholds stored on an owned item.
 import {TRANSPLANT_RULE,EYE_STAGES} from './characteristic-effects.mjs';
+import {LEGADO_REQUIREMENTS} from '../data/legado-requirements.mjs';
+import {sourceAvailable} from '../data/optional-sources.mjs';
 import {aptitudeChoiceStatus,choiceFieldLabel,aptitudeChoiceOptions} from './aptitude-choices.mjs';
 import {SKILLS} from './rules.mjs';
 import {accessSources,eyeAccess,powerLevel,powerSources,ACCESS_ORIGINS,originGrant,summonPact} from './restricted-access.mjs';
@@ -52,19 +55,22 @@ const definitions={
  'sns:feature:transplante':{name:'Transplante de doujutsu · mesa',pages:'',source:'Enciclopédia2.4.0 · p.13–14 + regra da mesa D108',requirements:[attr('vig',10,'Vigor'),attr('esp',12,'Espírito')]}
 };
 const freeze=value=>{if(value&&typeof value==='object'){Object.values(value).forEach(freeze);Object.freeze(value);}return value;};
-export const ITEM_RULES=freeze(completeRequirements({...CATALOG_ACQUISITION_RULES,...RELATED_ACQUISITION_RULES,...COMMON_APTITUDE_RULES,...definitions}));
-export const RULE_GRANTS={'sns:apt:clone-kage':'Clone: Kage Bunshin','sns:apt:shunjutsu-1':'Shunjutsu · estágio 1','sns:apt:shunjutsu-2':'Shunjutsu · estágio 2','sns:apt:shunjutsu-3':'Shunjutsu · estágio 3','sns:apt:elemento-natural-katon':'Elemento Natural: Katon'};
+export const ITEM_RULES=freeze(completeRequirements({...CATALOG_ACQUISITION_RULES,...RELATED_ACQUISITION_RULES,...COMMON_APTITUDE_RULES,...definitions,...LEGADO_REQUIREMENTS}));
+export const RULE_GRANTS={'sns:legado:apt:elemento-natural-katon':'Elemento Natural: Katon','sns:apt:clone-kage':'Clone: Kage Bunshin','sns:apt:shunjutsu-1':'Shunjutsu · estágio 1','sns:apt:shunjutsu-2':'Shunjutsu · estágio 2','sns:apt:shunjutsu-3':'Shunjutsu · estágio 3','sns:apt:elemento-natural-katon':'Elemento Natural: Katon'};
 export function itemRuleId(item){return item?.system?.ruleId||(item?.system?.details?.featureRule===TRANSPLANT_RULE?'sns:feature:transplante':'')||Object.keys(RULE_GRANTS).find(id=>RULE_GRANTS[id]===item?.system?.details?.grantRule)||(ITEM_RULES[item?.system?.contentId]?item.system.contentId:'');}
 export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=false,{scope='acquisition'}={}){
+ if(scope==='acquisition'&&!sourceAvailable(item))return {configured:true,valid:false,id:item?.system?.ruleId??'',name:item.name,rows:[{label:'Legado do Ódio ativado pelo mestre',current:'Fonte desativada',met:false}],problems:['O mestre não ativou o Legado do Ódio nesta mesa.']};
  item=sourceReviewedItem(item);
+ if(Array.from(actor?.items??[]).some(i=>i.flags?.['sns-v14-dev']?.legadoCopy||i.flags?.['sns-v14-dev']?.legadoMemory))actor={type:actor.type,flags:actor.flags,id:actor.id,uuid:actor.uuid,isOwner:actor.isOwner,system:actor.system,items:Array.from(actor.items).filter(i=>!i.flags?.['sns-v14-dev']?.legadoCopy&&!i.flags?.['sns-v14-dev']?.legadoMemory)};
  if(actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.animeProfile)actor={type:actor.type,flags:actor.flags,id:actor.id,uuid:actor.uuid,isOwner:actor.isOwner,system:actor.system,items:Array.from(actor.items??[]).map(i=>sourceReviewedItem(i))};
- const id=itemRuleId(item),recursionKey=id||item?.uuid||item?.id||item;let definition=scope==='acquisition'?ITEM_RULES[id]:undefined;
+ const id=itemRuleId(item),recursionKey=id||item?.uuid||item?.id||item;let definition=['acquisition','owned'].includes(scope)?ITEM_RULES[id]:undefined;
  if(requirementProfile(item)&&(requirementProfile(item).scope??'acquisition')===scope){
   try{const profile=validateRequirementProfile(requirementProfile(item));definition={name:definition?.name??item.name??'Item',source:profile.source+' · ajuste do mestre',requirements:[...(profile.mode==='append'?definition?.requirements??[]:[]),profile.tree]};}
   catch(error){return {configured:true,valid:false,id,rows:[],problems:[error.message]};}
  }
  if(!definition)return {configured:false,valid:false,id,rows:[],problems:[id?'Regra mecânica desconhecida.':'Requisitos: ver descrição.']};
  const evaluate=req=>{
+  if(req.kind?.startsWith('legado'))return legadoRequirement(actor,req);
   if(req.kind==='selfOrigin')return {label:'Origem Jinchuuriki',current:originGrant(item)===req.key?'Registrada':'Ausente',met:originGrant(item)===req.key};
   if(req.kind==='access'){const sources=accessSources(actor,req.key);return {label:'Origem · '+(ACCESS_ORIGINS[req.key]??req.key),current:sources.length?sources.map(i=>i.name).join(', '):'Ausente',met:!!sources.length};}
   if(req.kind==='nc'){const n=actor?.system?.nc;return {label:(req.label||'Nível de campanha')+' ≥ '+req.min,current:Number.isInteger(n)?String(n):'Não informado',met:Number.isInteger(n)&&n>=req.min};}
@@ -73,7 +79,7 @@ export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=fals
   if(req.kind==='eyeAccess')return {label:'Origem Uchiha ou transplante · '+req.stage,...eyeAccess(actor,req.stage)};
   if(req.kind==='powerLevel'){
    const n=powerLevel(actor,req.id),candidates=powerSources(actor,req.id);
-   const validSource=candidates.some(i=>{const sourceId=itemRuleId(i)||req.id;return (i.system.level??0)>=req.min&&(!ITEM_RULES[sourceId]&&!requirementProfile(i)||!trail.includes(sourceId)&&requirementsFor({type:i.type,flags:i.flags,system:{...i.system,ruleId:sourceId}},actor,[...trail,recursionKey]).valid);});
+   const validSource=candidates.some(i=>{const sourceId=itemRuleId(i)||req.id;return (i.system.level??0)>=req.min&&(!ITEM_RULES[sourceId]&&!requirementProfile(i)||!trail.includes(sourceId)&&requirementsFor({type:i.type,flags:i.flags,system:{...i.system,ruleId:sourceId}},actor,[...trail,recursionKey],false,{scope}).valid);});
    return {label:req.label+' ≥ '+req.min,current:n===null?'Não informado':!validSource?'Requisitos do poder não atendidos':String(n),met:n!==null&&n>=req.min&&validSource};
   }
   if(req.kind==='attribute'){const value=actor?.system?.attributes?.[req.key];return {label:req.label+' ≥ '+req.min,current:Number.isInteger(value)?String(value):'Não informado',met:Number.isInteger(value)&&value>=req.min};}
@@ -85,7 +91,7 @@ export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=fals
   if(req.kind==='all'){const options=req.options.map(evaluate);return {label:options.length?options.map(o=>o.label).join('; '):'Sem requisito adicional',current:options.length?options.map(o=>o.current).join(' / '):'—',met:options.every(o=>o.met)};}
   if(req.kind==='pending'){
    const event=id==='sns:apt:mangekyou-sharingan'&&req.label==='um evento traumático'&&actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.npcGenerator?.version===2&&actor.flags?.['sns-v14-dev']?.prerequisiteEvents?.mangekyouTrauma===true;
-   const pair=id==='sns:jutsu:susanoo'&&actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.npcGenerator?.version===2&&['sns:jutsu:amaterasu','sns:jutsu:tsukuyomi'].every(key=>Array.from(actor.items??[]).some(i=>i.system.contentId===key&&requirementsFor(i,actor,[...trail,recursionKey]).valid));
+   const pair=id==='sns:jutsu:susanoo'&&actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.npcGenerator?.version===2&&['sns:jutsu:amaterasu','sns:jutsu:tsukuyomi'].every(key=>Array.from(actor.items??[]).some(i=>i.system.contentId===key&&requirementsFor(i,actor,[...trail,recursionKey],false,{scope}).valid));
    return {label:req.label,current:event?'Evento definido na criação do NPC':pair?'Amaterasu e Tsukuyomi':'Requisito sem verificação disponível',met:event||pair};
   }
   if(req.kind==='combatBase'){
@@ -110,7 +116,7 @@ export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=fals
   if(req.kind==='effectKnown'){
    const found=Array.from(actor?.items??[]).some(i=>{
     if((req.powerId&&i.system?.contentId!==req.powerId&&i.system?.power?.definitionId!==req.powerId)||!(i.system?.power?.choices??[]).some(c=>c.effectId===req.id&&c.stage>=req.min))return false;
-    const sourceId=itemRuleId(i),sourceKey=sourceId||i.uuid||i.id||i;return !ITEM_RULES[sourceId]&&!requirementProfile(i)||sourceKey!==recursionKey&&!trail.includes(sourceKey)&&requirementsFor(i,actor,[...trail,recursionKey]).valid;
+    const sourceId=itemRuleId(i),sourceKey=sourceId||i.uuid||i.id||i;return !ITEM_RULES[sourceId]&&!requirementProfile(i)||sourceKey!==recursionKey&&!trail.includes(sourceKey)&&requirementsFor(i,actor,[...trail,recursionKey],false,{scope}).valid;
    });
    return {label:req.label,current:found?'Aprendido':'Não aprendido',met:found};
   }
@@ -123,11 +129,11 @@ export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=fals
     const fixedLevel=req.contentId==='sns:apt:clone'?({'sns:apt:clone-kage':1,'sns:apt:clone-kage-2':2}[itemRuleId(i)]??0):0;
     return req.kind==='ownedChoice'?choice===req.choice:req.kind==='ownedWeaponFamily'?choice?.startsWith(req.prefix):req.kind==='ownedWeaponClass'?weapon?.weaponClass?.toLocaleLowerCase()===req.weaponClass:req.kind==='ownedWeaponUse'?weapon?.ranged:fixedLevel>=req.min;
    });
-   const met=!trail.includes(req.id)&&matching.some(i=>requirementsFor(i,actor,[...trail,recursionKey]).valid);
+   const met=!trail.includes(req.id)&&matching.some(i=>requirementsFor(i,actor,[...trail,recursionKey],false,{scope}).valid);
    return {label:req.label,current:met?'Possuída e válida':'Não atendido',met};
   }
-  const candidates=Array.from(actor?.items??[]).filter(i=>itemRuleId(i)===req.id);
-  const met=!trail.includes(req.id)&&candidates.some(i=>requirementsFor(i,actor,[...trail,recursionKey]).valid);
+  const candidates=Array.from(actor?.items??[]).filter(i=>!i.flags?.['sns-v14-dev']?.legadoCopy&&itemRuleId(i)===req.id);
+  const met=!trail.includes(req.id)&&candidates.some(i=>requirementsFor(i,actor,[...trail,recursionKey],false,{scope}).valid);
   return {label:req.label,current:candidates.length?(met?'Possuída':'Requisitos pendentes'):'Não possuída',met};
  };
  const rules=[...definition.requirements];

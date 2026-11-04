@@ -1,3 +1,5 @@
+import {clientSetting} from '../data/optional-sources.mjs';
+import {mayEditLegadoActor} from './legado-permissions.mjs';
 import {mayEditCraftActor} from './crafting-core.mjs';
 import {mayEditParty,isManagedParty} from './party-core.mjs';
 import {mayEditSummon,kuchiyoseLink} from './kuchiyose-core.mjs';
@@ -20,7 +22,7 @@ export class ShinobiActor extends foundry.documents.Actor {
     if(guardTransformationUpdate(this,changes,options,user)===false)return false;
     if(!damageUpdateGuard(this,changes,options,user)){ui.notifications.warn('Proteções e histórico de dano: somente o mestre pode editar.');return false;}
     const expanded=foundry.utils.expandObject(changes),system=expanded.system;
-    const after=foundry.utils.mergeObject(this.toObject(),expanded,{inplace:false,applyOperators:true});if(!mayEditEnvironment(this.toObject(),after,user.isGM)||!mayEditSupportActor(this.toObject(),after,user.isGM)||!mayEditMagenActor(this.toObject(),after,user.isGM)||!mayEditPhantasmActor(this.toObject(),after,user.isGM)){ui.notifications.warn('Use as ações do efeito para alterar seu estado.');return false;}
+    const after=foundry.utils.mergeObject(this.toObject(),expanded,{inplace:false,applyOperators:true});if(!mayEditLegadoActor(this.toObject(),after,user.isGM,{customEyes:clientSetting('legadoCustomEyes',false)})){ui.notifications.warn('Use os controles do Legado para custos, visão e estados.');return false;}if(!mayEditEnvironment(this.toObject(),after,user.isGM)||!mayEditSupportActor(this.toObject(),after,user.isGM)||!mayEditMagenActor(this.toObject(),after,user.isGM)||!mayEditPhantasmActor(this.toObject(),after,user.isGM)){ui.notifications.warn('Use as ações do efeito para alterar seu estado.');return false;}
     if(!mayEditNpcBuild(this.toObject(),after,user.isGM)){ui.notifications.warn('Somente o mestre altera a configuração do NPC.');return false;}
     if(!mayEditParty(this.toObject(),after,user.isGM)){ui.notifications.warn('Somente o mestre organiza a equipe. Edite seus personagens pelas fichas.');return false;}
     if(!mayEditSummon(this.toObject(),after,user.isGM)){ui.notifications.warn('Use Construção para ajustar os valores calculados da invocação.');return false;}

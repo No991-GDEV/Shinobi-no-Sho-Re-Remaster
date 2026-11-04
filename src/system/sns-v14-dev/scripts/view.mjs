@@ -1,3 +1,4 @@
+import {legadoView} from './legado-ui.mjs';
 import {originGrant,ACCESS_ORIGINS} from './restricted-access.mjs';
 import {weaponDamageProfile} from './damage-source.mjs';
 import {poisonRecipe} from './poison-crafting.mjs';
@@ -29,7 +30,7 @@ export function sheetView(actor, { activeTab = "character", actionTab = "encount
   const actionGroups=[["standard","Ações"],["reaction","Reações"],["free","Ações livres"]].map(([id,label])=>({id,label,entries:items.filter(x=>x.category===id)}));
   return {
     mechanicalOrigins:[...new Set(Array.from(actor.items??[]).map(originGrant).filter(Boolean))].map(id=>ACCESS_ORIGINS[id]).join(' · '),mechanicalNatures:Array.from(actor.items??[]).filter(i=>i.type==='power'&&i.system.level>0&&['katon','suiton','doton','raiton','fuuton'].some(e=>i.system.contentId==='sns:power:'+e)).map(i=>i.name.replace(/ \(.*$/, '')).join(' · '),
-    actor, source, d, basePath, investment:d.investment,investmentRows:d.investment.rows.filter(r=>['power','aptitude'].includes(r.type)).map(r=>({...r,canChoose:r.type==='aptitude',costLabel:r.pending?'Definir aquisição':r.free?'Gratuita':r.cost+' PP'})),transformations:transformationView(actor), isGM, editable, activeTab,specialResources:specialResourceView(actor),activeAptitudes:activeAptitudeView(actor),temporaryEffects:temporaryEffects(actor),appliedEffectEntries:items.filter(i=>i.category==='effects'&&!isManagedCondition(actor.items.find(s=>s.id===i.id))),
+    legado:legadoView(actor),actor, source, d, basePath, investment:d.investment,investmentRows:d.investment.rows.filter(r=>['power','aptitude'].includes(r.type)).map(r=>({...r,canChoose:r.type==='aptitude',costLabel:r.pending?'Definir aquisição':r.free?'Gratuita':r.cost+' PP'})),transformations:transformationView(actor), isGM, editable, activeTab,specialResources:specialResourceView(actor),activeAptitudes:activeAptitudeView(actor),temporaryEffects:temporaryEffects(actor),appliedEffectEntries:items.filter(i=>i.category==='effects'&&!isManagedCondition(actor.items.find(s=>s.id===i.id))),
     tabs: TABS.map(([id, label, icon]) => ({ id, label, icon, active: id === activeTab })),
     activeLabel: TABS.find(([id]) => id === activeTab)?.[1] ?? "Character",
     actionTab,jutsuTab,encounter:actionTab==="encounter",exploration:actionTab==="exploration",

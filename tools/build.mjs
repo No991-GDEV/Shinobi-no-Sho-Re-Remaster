@@ -20,7 +20,7 @@ await copy(systemSource,systemTarget);await copy(moduleSource,moduleTarget);
 const read=async file=>JSON.parse(await fs.readFile(file,'utf8')),write=async(file,data)=>fs.writeFile(file,JSON.stringify(data,null,2)+'\n');
 const manifests=releaseManifests(await read(path.join(systemSource,'system.json')),await read(path.join(moduleSource,'module.json')),config,baseUrl);
 const hash=data=>crypto.createHash('sha256').update(data).digest('hex');
-const libraries=await Promise.all(['basico-canonico-v1.json','bestiario-canonico-v1.json','bestiario-anime-v1.json'].map(n=>read(path.join(moduleSource,'content',n))));
+const libraries=await Promise.all(['basico-canonico-v1.json','bestiario-canonico-v1.json','bestiario-anime-v1.json','legado-do-odio-v1.json'].map(n=>read(path.join(moduleSource,'content',n))));
 const entries=libraries.flatMap(l=>l.entries),definitions=manifests.content.packs,packFor=e=>e.publicationPack??'basico';
 if(new Set(entries.map(e=>e.id)).size!==entries.length)throw Error('Identidades duplicadas.');
 const unknown=entries.filter(e=>!definitions.some(p=>p.name===packFor(e)));if(unknown.length)throw Error('Pack sem manifesto: '+unknown[0].id);
@@ -49,6 +49,6 @@ for(const [target,manifest,name]of [[systemTarget,manifests.system,'system'],[mo
  await fs.copyFile(temp,path.join(dist,filename));await write(path.join(dist,name+'.json'),manifest);
 }
 const archives=await Promise.all(['system','content'].map(async key=>{const filename=`${manifests[key].id}-${config.version}.zip`,bytes=await fs.readFile(path.join(dist,filename));return {filename,bytes:bytes.length,sha256:hash(bytes)};}));
-const summary={version:config.version,variant,total:entries.length,packs,archives,manifests:{system:manifests.system.manifest,content:manifests.content.manifest},sourceHashes:await Promise.all(['basico-canonico-v1.json','bestiario-canonico-v1.json','bestiario-anime-v1.json'].map(async file=>({file,sha256:hash(await fs.readFile(path.join(moduleSource,'content',file)))})))};
+const summary={version:config.version,variant,total:entries.length,packs,archives,manifests:{system:manifests.system.manifest,content:manifests.content.manifest},sourceHashes:await Promise.all(['basico-canonico-v1.json','bestiario-canonico-v1.json','bestiario-anime-v1.json','legado-do-odio-v1.json'].map(async file=>({file,sha256:hash(await fs.readFile(path.join(moduleSource,'content',file)))})))};
 await write(path.join(dist,'build-report.json'),summary);await fs.writeFile(path.join(dist,'SHA256SUMS'),archives.map(r=>`${r.sha256}  ${r.filename}`).join('\n')+'\n');
 console.log(JSON.stringify({version:config.version,variant,total:entries.length,packs:packs.map(({ids,...r})=>r),archives}));

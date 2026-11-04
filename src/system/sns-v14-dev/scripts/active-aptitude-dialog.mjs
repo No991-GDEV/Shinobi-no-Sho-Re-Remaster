@@ -28,7 +28,7 @@ export async function toggleActiveAptitude(actor,id){
  try{const before=JSON.stringify(actor.system.activeAptitudes),row=activationRows(actor).find(r=>r.id===id);if(!row)return;
   const r=resolveActiveAptitude(actor,row),active=!row.active;
   if(active&&!r.valid)return ui.notifications.warn(r.problems.join(' '));
-  const confirmed=r.transplanted||['sharingan','byakugan'].includes(r.rule)||await foundry.applications.api.DialogV2.confirm({classes:['sns-editor-dialog'],window:{title:(active?'Ativar ':'Desativar ')+r.sourceName},content:'<p>'+escapeHtml(active?r.action+' · Chakra '+r.cost+' · '+r.duration:'Encerrar a aptidão? O chakra gasto não será recuperado.')+'</p><p>'+escapeHtml(r.hint)+'</p><p>'+escapeHtml(r.note)+'</p><p>'+escapeHtml(r.source)+'</p>',yes:{label:active?'Ativar e gastar chakra':'Desativar'},no:{label:'Cancelar'}});
+  const confirmed=r.transplanted||['sharingan','byakugan','legado-sharingan'].includes(r.rule)||await foundry.applications.api.DialogV2.confirm({classes:['sns-editor-dialog'],window:{title:(active?'Ativar ':'Desativar ')+r.sourceName},content:'<p>'+escapeHtml(active?r.action+' · Chakra '+r.cost+' · '+r.duration:'Encerrar a aptidão? O chakra gasto não será recuperado.')+'</p><p>'+escapeHtml(r.hint)+'</p><p>'+escapeHtml(r.note)+'</p><p>'+escapeHtml(r.source)+'</p>',yes:{label:active?'Ativar e gastar chakra':'Desativar'},no:{label:'Cancelar'}});
   if(!confirmed||!actor.isOwner)return;
   if(JSON.stringify(actor.system.activeAptitudes)!==before)return ui.notifications.warn('A ativação mudou. Tente novamente.');
   await withEffectLock(actor,async()=>{

@@ -8,9 +8,10 @@ export function damageDice(profile){
  return {...d,min:Number(m[1]),max:Number(m[1])*Number(m[2])};
 }
 export function damagePresentation(packet,diceTotal=null){
- const grade=packet.attack?damageGrade(packet.attack.natural,{criticalAt:packet.profile.criticalAt}):(packet.requestedGrade??1);
+ let grade=packet.attack?damageGrade(packet.attack.natural,{criticalAt:packet.profile.criticalAt}):(packet.requestedGrade??1);
  if(!Number.isInteger(grade)||grade<0||grade>4)throw Error('Grau de dano inválido.');
  if(grade===0)return {version:1,miss:true,grade:0,total:0};
+ if(Number.isInteger(packet.profile.minimumGrade))grade=Math.max(grade,Math.min(4,packet.profile.minimumGrade));
  const dice=damageDice(packet.profile),spec={base:packet.profile.base,fixed:packet.profile.fixed??0,nature:packet.profile.nature??'lethal',grade};
  if(packet.profile.gradeBonus)spec.gradeBonus=packet.profile.gradeBonus;
  if(dice){if(!Number.isInteger(diceTotal)||diceTotal<dice.min||diceTotal>dice.max)throw Error('Resultado dos dados de dano inválido.');spec[dice.part]+=diceTotal;}
@@ -30,14 +31,14 @@ export function mayWriteDamagePresentation(message,expanded,userId){
  try{const packet=message.getFlag('sns-v14-dev','damageUse'),value=expanded.flags['sns-v14-dev'].damagePresentation;return JSON.stringify(damagePresentation(packet,value.diceTotal))===JSON.stringify(value);}catch{return false;}
 }
 
-export function packetTargetSpec(packet,shown,targetUuid,{hardness=0,bonus=0}={}){
+export function packetTargetSpec(packet,shown,targetUuid,{hardness=0,bonus=0,jinchuurikiHardness=0}={}){
  if(!packet.targets.some(t=>t.uuid===targetUuid))throw Error('Alvo não pertence à técnica.');
- const result={...shown};if(packet.profile.minionAttack&&!packet.targets.find(t=>t.uuid===targetUuid)?.minion&&result.grade+(result.gradeBonus??0)>3){result.grade=Math.min(result.grade,3);result.gradeBonus=Math.max(0,3-result.grade);}if(packet.profile.targetFixed){const fixed=packet.profile.targetFixed[targetUuid.replaceAll('.','~')];if(!Number.isInteger(fixed)||fixed<0)throw Error('Dano fixo por alvo inválido.');result.fixed=fixed;}
+ const result={...shown,...(packet.profile.ignoreArmor?{ignoreArmor:true}:{})};if(packet.profile.minionAttack&&!packet.targets.find(t=>t.uuid===targetUuid)?.minion&&result.grade+(result.gradeBonus??0)>3){result.grade=Math.min(result.grade,3);result.gradeBonus=Math.max(0,3-result.grade);}if(packet.profile.targetFixed){const fixed=packet.profile.targetFixed[targetUuid.replaceAll('.','~')];if(!Number.isInteger(fixed)||fixed<0)throw Error('Dano fixo por alvo inválido.');result.fixed=fixed;}
  if(packet.profile.projectiles)result.base=projectileBase(packet.profile,packet.targets,targetUuid);
  if(packet.profile.splitTargets)result.base=Math.ceil(result.base/packet.targets.length);
  if(packet.profile.ricochetBonus)result.base+=Math.min(5,packet.targets.findIndex(t=>t.uuid===targetUuid));
  result.base+=bonus;
- if(packet.profile.ignoreAllHardness)result.ignoreHardness=hardness;
+ if(packet.profile.ignoreAllHardness)result.ignoreHardness=hardness;else if(packet.profile.ignoreNonBijuuHardness)result.ignoreHardness=Math.max(0,hardness-jinchuurikiHardness);
  else if(packet.profile.ignoreHardness)result.ignoreHardness=packet.profile.ignoreHardness;
  return result;
 }

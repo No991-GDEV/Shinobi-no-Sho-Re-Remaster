@@ -1,0 +1,18 @@
+// Explicit execution rules: Básico 97–104 and Guia 2026 PDF50–56.
+// Scene geometry and object destruction are separate capabilities, never inferred.
+export const ELEMENTAL_EXECUTORS={
+ 'descarga':{damage:'common',attackKind:'area',area:'Meia-esfera / círculo',variants:[{id:'normal',name:'Meia-esfera'},{id:'circle',name:'Círculo'},{id:'projectile',name:'Projétil'}],notes:'Vigor somente após perder Vitalidade ou Vitalidade temporária; absorção integral da armadura não aciona o estado (decisão da mesa D127). Uso corporal exige Energizar e ainda não está disponível neste executor.'},
+ 'coluna':{damage:'double',area:'Cilindro',attackKind:'area',notes:'Área escolhida pelo usuário. Nv7: distribuir mini-colunas de1m dentro da área original. Nv10: Prontidão antes da defesa; falha causa defesa debilitada−2 somente contra este ataque.'},
+ 'lanca':{damage:'common',attackKind:'techniqueProjectile',notes:'Divide o DB entre os alvos. Ignora3 de dureza de objetos; Nv6 ignora coberturas preexistentes e o bônus de Caído; Nv9: Prontidão antes da defesa, Desprevenido na falha e ignora toda dureza.'},
+ 'missil':{damage:'common',area:'Linha',attackKind:'area',notes:'Ataques adicionais usam a mesma defesa. Crítico inicial mantém seu acerto; a defesa é rolada uma vez apenas para os adicionais (decisão da mesa D128). Dragão de Fogo exige kousen no mesmo turno e é resolução do mestre.'},
+ 'ricochete':{damage:'common',attackKind:'techniqueProjectile',notes:'Segue a ordem dos alvos marcados e para na primeira defesa bem-sucedida. Primeiro alvo no alcance; os demais a até10m dele. Nv9: +1DB por alvo após o primeiro, máximo+5.'},
+ 'correnteza':{damage:'common',area:'Onda',attackKind:'area',notes:'Após falha de Vigor, empurrar até o fim da distância. Colisão: +1 de concussão; Nv8 também Atordoado até fim do próximo turno. Aplique a direção, os obstáculos e a colisão na cena.'},
+ 'onda-explosiva':{damage:'common',area:'Meia-esfera / círculo',attackKind:'area',variants:[{id:'normal',name:'Meia-esfera · Padrão'},{id:'circle',name:'Círculo · Padrão'},{id:'movimento',name:'Meia-esfera · Padrão + movimento'},{id:'circle-movimento',name:'Círculo · Padrão + movimento'}],notes:'Não permite Potencializar. Ao gastar movimento adicional, ignora a penalidade CD−3 por inimigo próximo e não recebe aptidões de técnica. Aplique esses benefícios na ação usada.'},
+ 'projetar':{damage:'common',attackKind:'techniqueProjectile',notes:'Escolha a direção e mova o token, respeitando os obstáculos.'},
+ 'tremor':{damage:'none',area:'Círculo',attackKind:'area',notes:'Após falhar na defesa, a vítima pode gastar movimento para testar Acrobacia e evitar Caído.'},
+ 'algemar':{damage:'none',attackKind:'techniqueProjectile',duration:'concentracao',notes:'Destruir algemas ou escapar exige ação padrão, FOR ou Escapar contra a dificuldade. Dureza comum do poder. Nv10: até3 alvos a5m entre si. Aplique a distância e o dano nas algemas na cena.'},
+ 'cegante':{damage:'common',attackKind:'techniqueProjectile',notes:'Limpar o rosto: ação padrão sem teste ou movimento e FOR/DES contra a dificuldade comum. O botão Encerrar em Efeitos registra a limpeza; não confundir camuflagem visual com a condição Cego.'}
+};
+export function elementalExecutionDefinitions(book){
+ return book.filter(e=>ELEMENTAL_EXECUTORS[e.id.split(':').at(-1)]).map(e=>({...e,...ELEMENTAL_EXECUTORS[e.id.split(':').at(-1)],execution:'typed',action:'padrao',duration:ELEMENTAL_EXECUTORS[e.id.split(':').at(-1)].duration??'instantanea',range:'common',target:e.fields?.target??'Criaturas na área',test:'cd',seals:true,cost:'level',traits:[...e.traits,'custo:chakra'],variants:ELEMENTAL_EXECUTORS[e.id.split(':').at(-1)].variants??[{id:'normal',name:'Normal'}]}));
+}

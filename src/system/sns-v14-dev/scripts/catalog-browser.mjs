@@ -1,4 +1,5 @@
 import {carryRequirementProfile} from './requirement-policy.mjs';
+import {sourceAvailable} from '../data/optional-sources.mjs';
 import {itemArt,assignedItemArt,isPlaceholderArt} from './item-art.mjs';
 import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
 import {loadCanonicalLibrary,preferCanonicalRows,isAcquisitionPack,isCatalogWorldItem} from './canonical-content.mjs';
@@ -43,7 +44,7 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
  async _prepareContext(){
   if(!this.rows)await this.load();
   const allowed=catalogTabs(game.user.isGM);if(!allowed.some(t=>t.id===this.activeCategory))this.activeCategory='equipment';
-  const tab=allowed.find(t=>t.id===this.activeCategory),visible=this.rows.filter(r=>mayBrowseCatalogRow(r,game.user.isGM)),inCategory=visible.filter(r=>catalogTabFor(r)===tab.id&&(this.filters.includeWorld||r.origin!=='Mundo'));
+  const tab=allowed.find(t=>t.id===this.activeCategory),visible=this.rows.filter(r=>sourceAvailable(r)&&mayBrowseCatalogRow(r,game.user.isGM)),inCategory=visible.filter(r=>catalogTabFor(r)===tab.id&&(this.filters.includeWorld||r.origin!=='Mundo'));
   const onlyMet=this.filters.onlyMet&&!!this.actor;
   const rows=filterCatalog(visible,{...this.filters,onlyMet:false,tab:tab.id,isGM:game.user.isGM}).map(row=>{
    const gate=requirementGate(row,this.actor,{isGM:game.user.isGM});
@@ -65,7 +66,7 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
    onlyMet,onlyMetChecked:!!(this.filters.onlyMet&&this.actor),
    hiddenUnknown,hiddenUnknownText:hiddenUnknown?hiddenUnknown+' entrada(s) ocultas: requisitos sem verificação disponível.':'',
    canAdd:!!this.actor?.isOwner,
-   libraryError:!this.library,emptyText:this.filters.traits.length||this.filters.excludedTraits.length||this.filters.query||this.filters.type||this.filters.category||this.filters.ranks.length||this.filters.min!==''||this.filters.max!==''||this.filters.sources.length||(this.filters.onlyMet&&this.actor)?'Nenhuma entrada corresponde aos filtros.':'Ainda não há entradas publicadas nesta categoria.'};
+   libraryError:!this.library||!!this.library.optionalErrors?.length,emptyText:this.filters.traits.length||this.filters.excludedTraits.length||this.filters.query||this.filters.type||this.filters.category||this.filters.ranks.length||this.filters.min!==''||this.filters.max!==''||this.filters.sources.length||(this.filters.onlyMet&&this.actor)?'Nenhuma entrada corresponde aos filtros.':'Ainda não há entradas publicadas nesta categoria.'};
  }
  async _onRender(context,options){
   await super._onRender(context,options);this.disposeTraits?.();
@@ -94,13 +95,13 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
  static async toggleTrait(event,target){const id=target.dataset.traitId,key=this.filters.excludedTraits.includes(id)?'traits':'excludedTraits',other=key==='traits'?'excludedTraits':'traits';this.filters[other]=this.filters[other].filter(t=>t!==id);this.filters[key]=[...new Set([...this.filters[key],id])];await this.render({force:true});}
  static async reverseSort(){this.filters.direction=this.filters.direction==='asc'?'desc':'asc';await this.render({force:true});}
  static async open(event,target){
-  const row=this.rows.find(r=>r.id===target.dataset.id);if(!row||!mayBrowseCatalogRow(row,game.user.isGM))return;
+  const row=this.rows.find(r=>r.id===target.dataset.id);if(!row||!sourceAvailable(row)||!mayBrowseCatalogRow(row,game.user.isGM))return;
   if(row.uuid){const item=await fromUuid(row.uuid);if(item?.testUserPermission(game.user,'OBSERVER'))await item.sheet.render({force:true});return;}
   const def=POWER_DEFINITIONS.find(d=>d.id===row.id)??EFFECT_DEFINITIONS.find(d=>d.id===row.id);if(!def)return;
   await DialogV2.wait({window:{title:row.name},content:'<h2>'+escapeHtml(row.name)+'</h2><p>'+escapeHtml(row.source)+'</p><p>'+escapeHtml(def.notes??def.access??'Escolha este componente no poder do personagem.')+'</p><p>Componente para criar jutsus. As condições aplicadas aparecem em Efeitos.</p>',buttons:[{action:'close',label:'Fechar',default:true}]});
  }
  static async add(event,target){
-  if(!this.actor?.isOwner)return;const row=this.rows.find(r=>r.id===target.dataset.id);if(!row?.canAdd||row.documentName==='Actor'||!mayBrowseCatalogRow(row,game.user.isGM))return;
+  if(!this.actor?.isOwner)return;const row=this.rows.find(r=>r.id===target.dataset.id);if(!row?.canAdd||!sourceAvailable(row)||row.documentName==='Actor'||!mayBrowseCatalogRow(row,game.user.isGM))return;
   const builtin=POWER_DEFINITIONS.find(d=>d.id===row.id);if(builtin){await this.actor.createEmbeddedDocuments('Item',[{name:builtin.name,type:'power',system:{level:0,category:'powers',power:{definitionId:builtin.id},details:{organization:'effects',powerOrigin:'common',keyAttribute:builtin.attribute},source:{id:builtin.source.id,edition:'Básico4.1b',pages:builtin.source.pages}}}]);return ui.notifications.info('Registro criado em nível0. Confira a aquisição na ficha.');}
   const item=await fromUuid(row.uuid);if(!item?.testUserPermission(game.user,'OBSERVER'))return;let data=carryRequirementProfile(item,item.toObject(),item.uuid);delete data._id;data=await chooseCanonicalCopy(data,this.library);if(!data)return;
   if(data.type==='power'&&data.system.power)data.system.power.choices=[];if(data.type==='jutsu'&&this.actor.items.has(this.powerId))data.system.details.powerId=this.powerId;

@@ -1,6 +1,6 @@
 # Shinobi no Sho Re-Remaster
 
-Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.4.0-beta.1**.
+Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.4.0-beta.2**.
 
 ## Instalação no Foundry
 
@@ -10,7 +10,7 @@ Na tela inicial, abra **Game Systems → Install System**, cole o endereço abai
 https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 ```
 
-Aceite a instalação da dependência **Shinobi no Sho · Compêndios** quando o Foundry oferecer. O sistema e os 13 compêndios são baixados pelo Foundry; você não precisa copiar pastas nem usar o executável de desenvolvimento.
+Aceite a instalação da dependência **Shinobi no Sho · Compêndios** quando o Foundry oferecer. O sistema e os 14 compêndios são baixados pelo Foundry; você não precisa copiar pastas nem usar o executável de desenvolvimento.
 
 Crie um mundo escolhendo **Naruto: Shinobi no Sho · Re-Remaster**. Se o módulo de conteúdo não estiver ativo, abra **Manage Modules**, marque **Shinobi no Sho · Compêndios**, salve e recarregue. A relação obrigatória do sistema identifica esse módulo.
 
@@ -23,6 +23,12 @@ O mestre cria um ator do tipo **Shinobi** e concede ao jogador a permissão **Do
 As lupas da ficha abrem o catálogo já filtrado. Em **Jutsus → Gerenciar jutsus**, adicione as técnicas sugeridas para um poder adquirido. Ao usar uma técnica, escolha o nível quando solicitado; o custo é cobrado uma vez. Cartões de chat oferecem ataque, defesa/resistência, dano e área quando a técnica tem esses parâmetros.
 
 O mestre encontra **Gerar NPC / capanga** no diretório de atores e o bestiário nos compêndios. Efeitos temporários ficam em **Efeitos**; o descanso fica junto à Vitalidade. O dono pode aplicar dano na própria ficha pelo cartão; o mestre pode desfazer.
+
+## Efeitos e fontes opcionais
+
+Na aba **Efeitos**, clique no nome de um estado para abrir seu item: descrição, notas, origem, duração e alterações adicionais. O mestre configura os modificadores; o dono consulta o efeito e pode encerrá-lo pelos controles permitidos. Ativações e transformações antigas recebem um item vinculado automaticamente, sem novo pagamento. Benefícios e custos próprios continuam ligados à técnica de origem.
+
+Em **Game Settings → Naruto → Abrir configurações**, o mestre pode ativar **Legado do Ódio**. A opção vem desativada em mundos novos. Desativar a fonte oculta suas entradas do catálogo e bloqueia novas aquisições; cópias já existentes nas fichas são conservadas. A configuração do Gobi permanece independente.
 
 ## Estado da beta
 
@@ -43,6 +49,6 @@ Shinobi no Sho: Projeto D8 e autores identificados em cada fonte. Regras oficiai
 
 ## Compilar
 
-Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.4.0-beta.1`.
+Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.4.0-beta.2`.
 
 O build compila novos bancos de compêndio a partir dos JSONs de autoria. Não lê bancos de mundos ou packs abertos. Não distribua uma instalação do Foundry, dados de campanha, licenças de ativação, senhas, chaves de API ou backups.

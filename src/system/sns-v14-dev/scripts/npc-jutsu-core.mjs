@@ -1,3 +1,5 @@
+import {isLegado} from './legado-core.mjs';
+import {legadoPlan} from './legado-plan.mjs';
 import {puppetUsePlan} from './npc-puppet-core.mjs';
 import {sourceRepertoirePlan} from './npc-repertoire-core.mjs';
 import {resolveBookCanhao} from './book-power-grants.mjs';
@@ -28,6 +30,7 @@ export function ruleCost(text,level,actor){
  return null;
 }
 export function npcJutsuPlan(item,library,level,custom={}){
+ if(isLegado(item))return legadoPlan(item,custom,library);
  item=effectiveRuleItem(item);
  if(!(item.actor?.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe)&&item.type==='jutsu'||item.type!=='jutsu')throw Error('A origem precisa ser um jutsu de NPC.');
  const sourceId=item.system.jutsu?.effectId||item.system.contentId||(item.flags?.['sns-v14-dev']?.canonicalTextSource?.textOnly?'':item.flags?.['sns-v14-dev']?.canonicalTextSource?.id);

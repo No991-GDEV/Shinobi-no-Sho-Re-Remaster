@@ -7,7 +7,7 @@ export const acquisitionOf=item=>item?.flags?.['sns-v14-dev']?.acquisition??null
 const sys=item=>item?.system?.toObject?.()??item?.system??{};
 export function freeEligible(item){const s=sys(item);return item?.type==='aptitude'&&FREE_APTITUDES.has(s.ruleId||s.contentId);}
 export function investmentBudget(system,items=[]){
- const list=Array.from(items??[]).map(i=>({id:i.id??i._id,name:i.name,type:i.type,system:sys(i),flags:i.flags}));
+ const list=Array.from(items??[]).filter(i=>!i.flags?.['sns-v14-dev']?.legadoCopy).map(i=>({id:i.id??i._id,name:i.name,type:i.type,system:sys(i),flags:i.flags}));
  const result=powerInvestment(list,{legacySpent:system?.budgets?.powersSpent??0,isFreeEligible:item=>freeEligible(item)||acquisitionOf(item)?.freeAuthorization===true&&!!acquisitionOf(item)?.authorizedBy&&!!acquisitionOf(item)?.reason?.trim()});
  for(const row of result.rows){const item=list.find(i=>i.id===row.id),discount=row.known&&row.mode==='paid'?Math.min(row.cost,bookPowerDiscount(item,list)):0;if(discount){row.cost-=discount;result.spent-=discount;result.powerSpent-=discount;row.notes.push('1 nível concedido pelo poder de origem.');}}
  // Exceções individuais só valem após registro do mestre. A existência da origem

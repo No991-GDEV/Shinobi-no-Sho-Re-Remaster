@@ -1,3 +1,4 @@
+import {legadoMeleeProfile} from './legado-core.mjs';
 import {isGeneratedMinion} from './npc-minion-policy.mjs';
 import {fogContexts} from './environment-core.mjs';
 import {WEAPON_CLASSES} from '../data/weapon-defense-profiles.mjs';
@@ -30,7 +31,7 @@ export function recordedDamageProfile(item){
  return {base:Number(item.system.details.damage),fixed:0,nature:'lethal',criticalAt:15,formula:'Dano base do ataque',source:'Ficha do personagem'};
 }
 export function damageSnapshot(actor,item,profile,targets,roll=null,spec=null){
- if(!profile)return null;
+ if(!profile)return null;profile=legadoMeleeProfile(actor,profile);
  const vision=visualPenaltySnapshot(actor);
  return {version:1,environmentVision:fogContexts(actor,targets),actorUuid:actor.uuid,itemUuid:item?.uuid??'',name:item?.name??'Ataque',profile:{...profile,...(isGeneratedMinion(actor)?{minionAttack:true}:{})},targets:damageTargets(targets),attack:roll&&spec?rolledCheck(roll,spec):null,...(vision?{visualPenalty:vision}:{})};
 }

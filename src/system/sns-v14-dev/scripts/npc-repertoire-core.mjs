@@ -1,3 +1,4 @@
+import {legadoSaveDifficulty} from './legado-effects.mjs';
 import {NPC_REPERTOIRES} from '../data/npc-repertoires.mjs';
 import {EFFECT_DEFINITIONS} from '../data/power-definitions.mjs';
 import {isGeneratedMinion} from './npc-minion-policy.mjs';
@@ -79,4 +80,4 @@ export function sourceRepertoirePlan(item,level,values){
 }
 export function jionguCapacity(level){return [1,2,4,6,8].filter(n=>n<=level).length;}
 export function jionguHearts(power){return (power?.flags?.[ns]?.jionguHearts??[]).slice(0,jionguCapacity(power?.system.level??0)).filter(v=>['katon','suiton','doton','raiton','fuuton'].includes(v));}
-export function npcSaveDifficulty(cast,target){return cast.plan.dc+(cast.plan.theatre?(isGeneratedMinion(target)?3:0)-(cast.targets.length>1?cast.targets.length:0):0);}
+export function npcSaveDifficulty(cast,target){if(cast.plan.legado)return legadoSaveDifficulty(cast,target);return cast.plan.dc+(cast.plan.theatre?(isGeneratedMinion(target)?3:0)-(cast.targets.length>1?cast.targets.length:0):0);}

@@ -1,3 +1,4 @@
+import {rollWithLegado} from './legado-fortune.mjs';
 import {isProcessor} from './processor-authority.mjs';
 import {isGeneratedMinion} from './npc-minion-policy.mjs';
 import {environmentDefenses,prepareEnvironmentDefense,resolveEnvironmentDefense} from './environment-protection.mjs';
@@ -89,7 +90,7 @@ export async function performDefenses(message){
   const extra=await extraDefenseEffects(request,actor),choice=declared.supportRootUuid?{id:declared.choice,label:'Pele de Pedra',kind:'opposed',key:'lm'}:declared.choiceSnapshot??supportDefenseChoices(actor,packet.profile,extra).find(c=>c.id===declared.choice);if(!choice)continue;
   if(choice.kind==='manual'&&visual!=='miss')return ui.notifications.warn('Defesa de '+actor.name+': resolução pelo mestre.');
   let roll=null,spec=null;
-  if(visual!=='miss'&&(choice.kind==='resistance'||choice.kind==='opposed'&&packet.attack?.natural>3&&(packet.attack.natural<packet.profile.criticalAt||packet.profile.minionAttack&&!isGeneratedMinion(actor)||packet.profile.followups))){spec=defenseSpec(actor,choice.key,choice.itemId?actor.items.get(choice.itemId):null,choice.penalty??0,[...extra,...(choice.environmentBonus?[{kind:'flatModifier',target:'lm',value:choice.environmentBonus,sourceId:'environment-defense',sourceName:choice.label}]:[])],packet.profile);if(!spec)return;roll=await new foundry.dice.Roll(spec.formula).evaluate();}
+  if(visual!=='miss'&&(choice.kind==='resistance'||choice.kind==='opposed'&&packet.attack?.natural>3&&(packet.attack.natural<packet.profile.criticalAt||packet.profile.minionAttack&&!isGeneratedMinion(actor)||packet.profile.followups))){spec=defenseSpec(actor,choice.key,choice.itemId?actor.items.get(choice.itemId):null,choice.penalty??0,[...extra,...(choice.environmentBonus?[{kind:'flatModifier',target:'lm',value:choice.environmentBonus,sourceId:'environment-defense',sourceName:choice.label}]:[])],packet.profile);if(!spec)return;roll=await rollWithLegado(actor,spec,{kind:'defense'});}
   const response={attackUuid:message.uuid,targetUuid:actor.uuid,choice:choice.id};
   if(roll)await roll.toMessage({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),flavor:checkFlavor({...spec,name:choice.label})+'<p class="sns-roll-context">'+esc(r.name)+(packet.profile.resistance?(packet.profile.edgeContestRoll?' · contra Espírito ':' · Dif ')+packet.profile.resistance.difficulty:'')+'</p>',whisper:[game.users.activeGM.id,game.user.id],flags:{[ns]:{defenseResult:response,check:{actorImg:actor.img,key:choice.key}}}});
   else await foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),whisper:[game.users.activeGM.id],content:'<p>'+esc(actor.name)+' · '+esc(choice.label)+'</p>',flags:{[ns]:{defenseResult:response}}});
