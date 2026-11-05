@@ -18,7 +18,7 @@ export function supportingItems(items,tab,stats={},system=null){
  if(tab==='inventory')return physical.map(id=>group(id,CATEGORIES[id],rows.filter(i=>i.category===id&&!i.temporaryFists)));
  if(tab==='effects'){const visible=rows.filter(r=>!isManagedCondition(items.find(i=>i.id===r.id)));return [group('effects','Condições',visible.filter(i=>i.type==='condition'),'condition'),group('effects','Efeitos',visible.filter(i=>i.category==='effects'&&i.type!=='condition'))];}
  if(tab==='features')return [group('features','Clãs e características',rows.filter(i=>i.category==='features'),'feature'),group('aptitudes','Aptidões',rows.filter(i=>i.category==='aptitudes'&&!isAptitudePower(items.find(s=>s.id===i.id))))];
- if(tab==='details')return [group('standard','Ataques',rows.filter(i=>i.type==='attack'||i.weapon),'attack'),group('standard','Ações',rows.filter(i=>i.category==='standard'&&i.type!=='attack'))];
+ if(tab==='details')return [group('standard','Ataques',rows.filter(i=>i.type==='attack'||i.weapon),'attack'),group('standard','Ações',rows.filter(i=>i.category==='standard'&&i.type!=='attack')),group('reaction','Reações',rows.filter(i=>i.category==='reaction')),group('free','Ações livres',rows.filter(i=>i.category==='free'))];
  const ids=tab==='jutsus'?['powers','techniques']:['standard','reaction','free','aptitudes'];
  return ids.map(id=>group(id,CATEGORIES[id],rows.filter(i=>i.category===id)));
 }

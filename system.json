@@ -2,7 +2,7 @@
   "id": "sns-v14-dev",
   "title": "Naruto: Shinobi no Sho · Re-Remaster",
   "description": "Sistema comunitário não oficial de Shinobi no Sho. Versão beta para Foundry VTT 14.",
-  "version": "0.4.0-beta.4",
+  "version": "0.4.0-beta.5",
   "socket": true,
   "compatibility": {
     "minimum": "14",
@@ -274,7 +274,7 @@
   "bugs": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/issues",
   "changelog": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases",
   "manifest": "https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json",
-  "download": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/download/v0.4.0-beta.4/sns-v14-dev-0.4.0-beta.4.zip",
+  "download": "https://github.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/releases/download/v0.4.0-beta.5/sns-v14-dev-0.4.0-beta.5.zip",
   "relationships": {
     "requires": [
       {
@@ -282,8 +282,8 @@
         "type": "module",
         "manifest": "https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json",
         "compatibility": {
-          "minimum": "0.4.0-beta.4",
-          "verified": "0.4.0-beta.4"
+          "minimum": "0.4.0-beta.5",
+          "verified": "0.4.0-beta.5"
         }
       }
     ]

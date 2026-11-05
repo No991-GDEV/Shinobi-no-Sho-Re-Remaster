@@ -1,3 +1,4 @@
+import {useSheetBlock} from './sheet-block.mjs';
 import {rollWithLegado} from './legado-fortune.mjs';
 import {configureLegado,legadoControl} from './legado-ui.mjs';
 import {SnsCrafting} from './crafting-ui.mjs';
@@ -41,11 +42,12 @@ import {damageSnapshot,weaponDamageProfile} from './damage-source.mjs';
 const ROOT = "systems/sns-v14-dev";
 const { ActorSheetV2 } = foundry.applications.sheets;
 const { HandlebarsApplicationMixin, DialogV2 } = foundry.applications.api;
-const partials = ["partials/budget-context", "partials/transformations", "partials/sidebar", "partials/header", "partials/active-aptitudes", "partials/applied-states", "partials/received-effects", ...["character", "actions", "inventory", "jutsus", "crafting", "skills", "features", "effects", "bio"].map(t => "tabs/" + t)].map(p => ROOT + "/templates/" + p + ".hbs");
+const partials = ["partials/budget-context", "partials/transformations", "partials/sidebar", "partials/header", "partials/active-aptitudes", "partials/basic-reactions", "partials/applied-states", "partials/received-effects", ...["character", "actions", "inventory", "jutsus", "crafting", "skills", "features", "effects", "bio"].map(t => "tabs/" + t)].map(p => ROOT + "/templates/" + p + ".hbs");
 export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
  _getHeaderControls(){const controls=super._getHeaderControls();if(this.isEditable&&game.user.isGM)controls.push({action:'damageHistory',icon:'fa-solid fa-clock-rotate-left',label:'Ferramentas de dano'});return controls;}
  get isEditable(){return super.isEditable&&canControlTransformation(this.actor);}
   static async restActor(event,target){if(!this.isEditable||this.restPending)return;this.restPending=true;if(target)target.disabled=true;try{await this.submit();await requestRest(this.actor);}catch(e){ui.notifications.warn(e.message);}finally{this.restPending=false;if(target?.isConnected)target.disabled=false;}}
+  static async blockReaction(){if(!this.isEditable)return;try{await this.submit();await useSheetBlock(this.actor);}catch(e){ui.notifications.warn(e.message);}}
   static async sheetDamage(event,target){if(this.isEditable){await this.submit();await postSheetDamage(this.actor,this.actor.items.get(target.dataset.itemId),target.dataset.roll,Number(target.dataset.grade));}}
   static async damageHistory(){if(this.isEditable&&game.user.isGM)try{await new SnsDamageDialog({actor:this.actor}).render({force:true});}catch(error){ui.notifications.warn(error.message);}}
   static async conditionDuration(event,target){if(this.isEditable)try{await configureConditionDuration(this.actor,target.dataset.itemId);}catch(e){ui.notifications.warn(e.message);}}
@@ -60,7 +62,7 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
   static DEFAULT_OPTIONS = {
     classes: ["sns-sheet-app"], position: { width: 780, height: 820 },window:{resizable:true},
     form: { submitOnChange: true, closeOnSubmit: false },
-    actions: {configureLegado,legadoControl,craftEntry:ShinobiSheet.craftEntry,creationGuide:ShinobiSheet.creationGuide,acquisition:ShinobiSheet.acquisition,restActor:ShinobiSheet.restActor,environmentAction,illusionAction,transformationMode,configureTransformation,transformationTechnique,transformationDomain,transformationRest,transformationManualTurn,
+    actions: {blockReaction:ShinobiSheet.blockReaction,configureLegado,legadoControl,craftEntry:ShinobiSheet.craftEntry,creationGuide:ShinobiSheet.creationGuide,acquisition:ShinobiSheet.acquisition,restActor:ShinobiSheet.restActor,environmentAction,illusionAction,transformationMode,configureTransformation,transformationTechnique,transformationDomain,transformationRest,transformationManualTurn,
       sheetDamage:ShinobiSheet.sheetDamage,conditionDuration:ShinobiSheet.conditionDuration,endActorScene:ShinobiSheet.endActorScene,damageHistory:ShinobiSheet.damageHistory,createTemporaryEffect:ShinobiSheet.createTemporaryEffect,applyCondition:ShinobiSheet.applyCondition,sustainSupport:ShinobiSheet.sustainSupport,endCondition:ShinobiSheet.endCondition,
       payAptitudeUpkeep:ShinobiSheet.payAptitudeUpkeep,
       configureActiveAptitude:ShinobiSheet.configureActiveAptitude,toggleActiveAptitude:ShinobiSheet.toggleActiveAptitude,

@@ -5,7 +5,7 @@ import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
 import {loadCanonicalLibrary,preferCanonicalRows,isAcquisitionPack,isCatalogWorldItem} from './canonical-content.mjs';
 import {chooseCanonicalCopy} from './canonical-dialog.mjs';
 import {requirementsFor} from './item-requirements.mjs';
-import {originGrant,packageAcquisitionProblems} from './restricted-access.mjs';
+import {packageAcquisitionProblems} from './restricted-access.mjs';
 import {catalogTabs,catalogTabFor,initialCatalogTab,mayBrowseCatalogRow,filterCatalog,catalogTraitLabel,catalogRating,CATALOG_RANKS} from './catalog-core.mjs';
 import {entryTypeLabel,entryFilterForCategory,applyEntryTypeFilter,entryFilterChoices} from './catalog-entry-filters.mjs';
 import {requirementGate} from './catalog-requirement-filter.mjs';
@@ -55,8 +55,9 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
    const gate=gateFor(row);
    const base={...row,shortSource:row.sourceId?.replace('Naruto: Shinobi no Sho — ','')||row.origin,levelDisplay:catalogRating(row,this.filters.allCategories?catalogTabFor(row):tab.id).display,levelTitle:catalogRating(row,this.filters.allCategories?catalogTabFor(row):tab.id).title,typeLabel:entryTypeLabel(row.type),price:catalogPrice(row,tab.id),gate};
    if(!this.actor||row.builtin||row.documentName==='Actor')return base;
-   const candidate={type:row.type,flags:row.requirementFlags,system:row.ruleSystem},r=requirementsFor(candidate,this.actor,[],true),origin=originGrant(candidate);
-   return {...base,canAdd:row.canAdd&&!packageAcquisitionProblems(candidate,this.actor).length&&(!r.configured||r.valid),requirementMessage:origin?'Origem de acesso · combinações verificadas':gate==='missing'&&EQUIPMENT_TAB_ROWS.has(tab.id)?'Requisitos de uso; posse permitida':r.configured?(r.valid?(r.rows.some(x=>x.kind==='choice')?'Escolha a opção ao adicionar':'Requisitos atendidos'):r.problems.join(' ')):['aptitude','feature'].includes(row.type)?'Requisitos: ver descrição':''};
+   const candidate={type:row.type,flags:row.requirementFlags,system:row.ruleSystem},r=requirementsFor(candidate,this.actor,[],true),problems=[...new Set([...packageAcquisitionProblems(candidate,this.actor),...(r.configured&&!r.valid?r.problems:[])])];
+   const canAdd=row.canAdd&&!packageAcquisitionProblems(candidate,this.actor).length&&(!r.configured||r.valid);
+   return {...base,canAdd,addBlocked:row.canAdd&&!canAdd,requirementTitle:problems.join(' '),requirementMessage:problems.length?problems[0]+(problems.length>1?' (+'+(problems.length-1)+')':''):gate==='missing'&&EQUIPMENT_TAB_ROWS.has(tab.id)?'Requisitos de uso; posse permitida':r.configured?(r.rows.some(x=>x.kind==='choice')?'Escolha a opção ao adicionar':'Requisitos atendidos'):['aptitude','feature'].includes(row.type)?'Requisitos na descrição':''};
   });
   const sources=[...new Set(inCategory.map(r=>r.sourceId).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
   return {showRanks:!this.filters.allCategories&&tab.id==='jutsus',showPrices:!this.filters.allCategories&&tab.id==='equipment',ratingLabel:tab.id==='jutsus'?'Nível/Rank':'Nível',priceLabel:'Preço',levelsLabel:tab.id==='jutsus'?'Níveis / Ranks':'Níveis',rankChoices:[...CATALOG_RANKS,'unknown'].map(id=>({id,label:id==='unknown'?'Sem rank informado':'Rank '+id,selected:this.filters.ranks.includes(id)})),openTypes:this.openFilters.has('types'),openSizes:this.openFilters.has('sizes'),openSources:this.openFilters.has('sources'),openLevels:this.openFilters.has('levels'),appId:this.id,rows:shown,count:eligible.length,renderedCount:shown.length,hasMore:shown.length<eligible.length,remainingCount:eligible.length-shown.length,total:inCategory.length,filters:this.filters,activeCategory:this.filters.allCategories?'Todas as categorias':tab.label,categoryId:tab.id,isGM:game.user.isGM,

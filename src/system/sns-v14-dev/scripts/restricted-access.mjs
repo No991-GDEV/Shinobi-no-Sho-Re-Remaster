@@ -16,7 +16,7 @@ export function packageAcquisitionProblems(item,actor){
  const pairs=[['tensai','hatake'],['tensai','sarutobi'],['tensai','senju'],['tensai','shimura'],['tensai','hibon-ninpou']];
  const connected=new Set([primary[0]]);let changed=true;
  while(changed){changed=false;for(const [a,b] of pairs)if(primary.includes(a)&&primary.includes(b)&&(connected.has(a)||connected.has(b))){const n=connected.size;connected.add(a);connected.add(b);changed||=connected.size>n;}}
- return primary.some(k=>!connected.has(k))?['A ficha já possui outro clã ou hijutsu. Este pacote não consta das combinações permitidas (D039).']:[];
+ return primary.some(k=>!connected.has(k))?['A ficha já possui outro clã ou hijutsu. Esta combinação não é permitida pelas regras.']:[];
 }
 export function summonPact(actor,species){
  const pacts=Array.from(actor?.items??[]).filter(i=>PACKAGE_ORIGINS[originGrant(i)]?.species);

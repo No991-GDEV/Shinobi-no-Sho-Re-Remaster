@@ -1,0 +1,97 @@
+{
+  "system": {
+    "nc": 4,
+    "phase": "creation",
+    "attributes": {
+      "des": 4,
+      "agi": 3,
+      "per": 0,
+      "int": 2,
+      "vig": 1,
+      "esp": 2,
+      "car": 2,
+      "man": 0,
+      "for": 0
+    },
+    "bases": {
+      "cc": 3,
+      "cd": 4,
+      "esq": 4,
+      "lm": 1
+    },
+    "identity": {
+      "clan": "Uchiha",
+      "rank": "Genin"
+    },
+    "resources": {
+      "vitality": {
+        "value": null
+      },
+      "chakra": {
+        "value": null
+      }
+    },
+    "skills": {
+      "acrobacia": {
+        "bought": 1
+      },
+      "cultura": {
+        "bought": 1
+      },
+      "disfarces": {
+        "bought": 1
+      },
+      "escapar": {
+        "bought": 1
+      },
+      "furtividade": {
+        "bought": 1
+      },
+      "prestidigitacao": {
+        "bought": 1
+      },
+      "prontidao": {
+        "bought": 2
+      }
+    },
+    "modifiers": {
+      "esq": {
+        "value": 1,
+        "origin": "Reflexos, manual"
+      },
+      "movement": {
+        "value": 1,
+        "origin": "Velocista, manual"
+      }
+    },
+    "budgets": {
+      "powersSpent": 4,
+      "grants": [
+        {
+          "id": "fixture-attributes",
+          "category": "attributes",
+          "amount": 12,
+          "note": "Exemplo publicado, orçamento NC4"
+        },
+        {
+          "id": "fixture-skills",
+          "category": "skills",
+          "amount": 8,
+          "note": "Exemplo publicado, orçamento NC4"
+        },
+        {
+          "id": "fixture-powers",
+          "category": "powers",
+          "amount": 4,
+          "note": "Exemplo publicado, orçamento NC4"
+        },
+        {
+          "id": "fixture-social",
+          "category": "social",
+          "amount": 2,
+          "note": "Exemplo publicado, orçamento NC4"
+        }
+      ]
+    }
+  }
+}
