@@ -1,6 +1,6 @@
 {
   "name": "shinobi-no-sho-re-remaster",
-  "version": "0.4.0-beta.3",
+  "version": "0.4.0-beta.4",
   "private": true,
   "type": "module",
   "description": "Ferramentas de distribuição do sistema comunitário SNS para Foundry VTT 14.",

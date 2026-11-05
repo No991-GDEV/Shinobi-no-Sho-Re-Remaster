@@ -5,7 +5,7 @@
 .sns-sheet .jutsu-action-row .entry-name{display:flex;justify-content:flex-start;align-items:center;gap:7px;width:100%;height:auto;min-height:26px;text-align:left;white-space:normal;font-size:14px;line-height:1.25}
 .sns-sheet .jutsu-action-row .entry-name img{width:28px;height:28px;flex:none;margin:0}
 .sns-sheet .jutsu-action-row .jutsu-action-meta{grid-column:1;padding-left:35px;font:12px/1.35 SnsCondensed,Arial;color:#655846}
-.sns-sheet .jutsu-action-row>[data-action=useJutsu]{grid-column:2;grid-row:1/3;align-self:center;padding:3px 8px;font-size:12px}
+.sns-sheet .jutsu-action-row>[data-action=useJutsu]{grid-column:2;grid-row:1/3;align-self:center;display:inline-flex;align-items:center;gap:4px;width:auto;min-height:24px;height:24px;padding:2px 5px;font-size:11px;white-space:nowrap}
 .active-aptitude-row{grid-template-columns:34px minmax(0,1fr) auto;gap:9px;padding:10px 8px;border:1px solid #b9ad97;border-left:3px solid #9b8970;margin:5px 0;background:#ffffff2b}
 .active-aptitude-row>.activation-icon{width:32px;height:32px;object-fit:contain;border:0;background:#4b171b;border-radius:50%;padding:5px}
 .active-aptitude-row .activation-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
