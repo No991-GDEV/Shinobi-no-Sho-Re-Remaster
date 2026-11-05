@@ -19,10 +19,14 @@ export const CATALOG_TABS=Object.freeze([
 export const catalogTabs=isGM=>CATALOG_TABS.filter(t=>isGM||!t.gmOnly);
 const words={Absorcao:'Absorção',Acao:'Ação',Antidoto:'Antídoto',Aquatico:'Aquático',Area:'Área',Ataque:'Ataque',Automatico:'Automático',Caido:'Caído',Condicao:'Condição',Concentracao:'Concentração',Conexao:'Conexão',Constituicao:'Constituição',Contagio:'Contágio',Criacao:'Criação',Copia:'Cópia',Coracao:'Coração',Critico:'Crítico',Cura:'Cura',Destruido:'Destruído',Dispersao:'Dispersão',Dissipacao:'Dissipação',Duracao:'Duração',Escuridao:'Escuridão',Especie:'Espécie',Especifica:'Específica',Especifico:'Específico',Esquiva:'Esquiva',Explosao:'Explosão',Floresta:'Floresta',Forca:'Força',Fumaca:'Fumaça',Ilusao:'Ilusão',Invocacao:'Invocação',Invocada:'Invocada',Lamina:'Lâmina',Maos:'Mãos',Mecanica:'Mecânica',Medico:'Médico',Medio:'Médio',Miudo:'Miúdo',Multiplos:'Múltiplos',Municao:'Munição',Nevoa:'Névoa',Ocultacao:'Ocultação',Padrao:'Padrão',Percepcao:'Percepção',Perfuracao:'Perfuração',Precisao:'Precisão',Projetil:'Projétil',Protecao:'Proteção',Reacao:'Reação',Recuperacao:'Recuperação',Regeneracao:'Regeneração',Relampago:'Relâmpago',Restricao:'Restrição',Restrito:'Restrito',Subterraneo:'Subterrâneo',Tecnica:'Técnica',Transformacao:'Transformação',Unico:'Único',Visao:'Visão'};
 export const catalogTraitLabel=trait=>String(trait?.label??trait??'').replace(/[A-Za-z]+/g,word=>words[word]??word);
+const tabByType=new Map(CATALOG_TABS.flatMap(tab=>tab.types.map(type=>[type,tab.id])));
+const collator=new Intl.Collator('pt-BR');
+const searchCache=new WeakMap();
+function searchIndex(row){const signature=[row.name,(row.tags??[]).join(' '),(row.traits??[]).join(' '),row.source].join('\n');let cached=searchCache.get(row);if(cached?.signature!==signature){cached={signature,text:fold(row.name+' '+(row.tags??[]).join(' ')+' '+(row.traits??[]).join(' ')),source:fold(row.source)};searchCache.set(row,cached);}return cached;}
 export function catalogTabFor(row){
  if(row.documentName==='Actor'||['npc','companion','hazard'].includes(row.type))return row.type==='hazard'?'hazards':'bestiary';
  if(row.type==='reference')return CATALOG_TABS.find(t=>t.categories?.includes(row.category))?.id??'abilities';
- return CATALOG_TABS.find(t=>t.types.includes(row.type))?.id??'abilities';
+ return tabByType.get(row.type)??'abilities';
 }
 export function mayBrowseCatalogRow(row,isGM=false){return isGM||!['bestiary','hazards'].includes(catalogTabFor(row));}
 export function initialCatalogTab(category=''){return CATALOG_TABS.find(t=>t.categories?.includes(category))?.id??'equipment';}
@@ -32,7 +36,7 @@ export function catalogTraitOptions(tab,query='',selected=[]){
 }
 export function filterCatalog(rows,{query='',type='',category='',source='',sources=[],min='',max='',traits=[],excludedTraits=[],sizes=[],ranks=[],match='all',tab='',isGM=false,includeWorld=true,sort='name',direction='asc'}={}){
  const q=fold(query),book=fold(source);
- const result=rows.filter(r=>mayBrowseCatalogRow(r,isGM)&&(!tab||catalogTabFor(r)===tab)&&(includeWorld||r.origin!=='Mundo')&&(!q||fold(r.name+' '+(r.tags??[]).join(' ')+' '+(r.traits??[]).join(' ')).includes(q))&&(!type||r.type===type)&&(!category||r.category===category)&&(!book||fold(r.source).includes(book))&&(!sources.length||sources.includes(r.sourceId))&&(tab!=='jutsus'||!ranks.length||r.type==='jutsu'&&ranks.includes(catalogRank(r)??'unknown'))&&(min===''||Number.isFinite(r.level)&&r.level>=Number(min))&&(max===''||Number.isFinite(r.level)&&r.level<=Number(max))&&(!sizes.length||sizes.some(t=>(r.traits??[]).includes(t)))&&!excludedTraits.some(t=>(r.traits??[]).includes(t))&&(!traits.length||(match==='any'?traits.some(t=>(r.traits??[]).includes(t)):traits.every(t=>(r.traits??[]).includes(t)))));
+ const result=rows.filter(r=>mayBrowseCatalogRow(r,isGM)&&(!tab||catalogTabFor(r)===tab)&&(includeWorld||r.origin!=='Mundo')&&(!q||searchIndex(r).text.includes(q))&&(!type||r.type===type)&&(!category||r.category===category)&&(!book||searchIndex(r).source.includes(book))&&(!sources.length||sources.includes(r.sourceId))&&(tab!=='jutsus'||!ranks.length||r.type==='jutsu'&&ranks.includes(catalogRank(r)??'unknown'))&&(min===''||Number.isFinite(r.level)&&r.level>=Number(min))&&(max===''||Number.isFinite(r.level)&&r.level<=Number(max))&&(!sizes.length||sizes.some(t=>(r.traits??[]).includes(t)))&&!excludedTraits.some(t=>(r.traits??[]).includes(t))&&(!traits.length||(match==='any'?traits.some(t=>(r.traits??[]).includes(t)):traits.every(t=>(r.traits??[]).includes(t)))));
  const sign=direction==='desc'?-1:1;
  return result.sort((a,b)=>{
   if(sort==='level'){
@@ -45,6 +49,6 @@ export function filterCatalog(rows,{query='',type='',category='',source='',sourc
    if(ak!==bk)return ak?-1:1;
    if(ak&&a.level!==b.level)return sign*(a.level-b.level);
   }
-  return sign*a.name.localeCompare(b.name,'pt-BR');
+  return sign*collator.compare(a.name,b.name);
  });
 }

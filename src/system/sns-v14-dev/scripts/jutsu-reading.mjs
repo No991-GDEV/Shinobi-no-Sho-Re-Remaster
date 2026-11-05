@@ -6,7 +6,7 @@ import {npcPowerProfile,profileValues} from './npc-power-profile.mjs';
 const ns='sns-v14-dev';
 const items=a=>Array.from(a?.items??[]);
 const plain=s=>String(s??'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
-const row=(label,value,formula='')=>({label,value:String(value),formula});
+const row=(label,value,formula='')=>({label,value:String(value),formula,long:String(value).length>120});
 export function jutsuReading(item,library=[],usedLevel){
  if(!['jutsu','effectDefinition'].includes(item.type))return null;
  item=effectiveRuleItem(item);

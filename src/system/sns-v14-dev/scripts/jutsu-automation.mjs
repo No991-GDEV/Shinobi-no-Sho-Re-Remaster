@@ -1,3 +1,4 @@
+import {castUndone} from './cast-undo-core.mjs';
 import {actorMessages} from './message-index.mjs';
 import {readJutsuUse,resolveJutsuEffects,isResolver} from './jutsu-application.mjs';
 import {effectPending,jutsuDamageStates} from './jutsu-damage-trigger.mjs';
@@ -27,7 +28,7 @@ export function resistanceGroups(use,defenses,damages={}){
  return [...groups.values()];
 }
 export async function processJutsuAutomation(message){
- if(!isResolver()||!message?.getFlag(ns,'jutsuUse'))return;
+ if(!isResolver()||castUndone(message)||!message?.getFlag(ns,'jutsuUse'))return;
  if(working.has(message.uuid)){again.add(message.uuid);return;}
  working.add(message.uuid);
  try{

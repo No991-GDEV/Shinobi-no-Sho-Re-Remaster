@@ -270,7 +270,7 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
       const show=game.user.getFlag('sns-v14-dev','showCheckDialogs')!==false;
       const source=this.actor.system.toObject(),effects=characteristicEffects(this.actor);
       const rows=entry&&itemCategory(entry)==='weapons'?weaponCheckComponents(source,key,entry,this.actor.items):checkComponents(source,key,effects);
-      const result=show||event.shiftKey||senseContext(this.actor,key).required ? await SnsCheckDialog.prompt(this.actor,key,name,rows) :
+      const result=show||event.shiftKey||senseContext(this.actor,key).required ? await SnsCheckDialog.prompt(this.actor,key,name,rows,{allowAcuity:!entry&&key==='cc'}) :
         {spec:resolveCheck(source,key,rows,effects),messageMode:game.settings.get('core','messageMode')};
       if (!result || !this.actor.isOwner) return;
       const spec = result.spec;

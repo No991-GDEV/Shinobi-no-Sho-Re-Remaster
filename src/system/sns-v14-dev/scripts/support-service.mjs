@@ -6,11 +6,12 @@ import {jutsuProjection} from './item-view.mjs';
 import {actorCombat,durationRule} from './effect-duration.mjs';
 import {illusionActionBlock} from './magen-core.mjs';
 import {techniqueCard} from './technique-card.mjs';
+import {runCastStep} from './cast-undo-service.mjs';
 const ns='sns-v14-dev',busy=new Set();
 export async function postSupportUse(actor,item,{usedLevel}={}){
  if(!['shinobi','npc','companion'].includes(actor.type)||!actor.isOwner||item.actor!==actor||!game.users.activeGM)throw Error('Um mestre ativo precisa acompanhar esta técnica.');
  const p=jutsuProjection(item,{usedLevel});if(!p?.valid||!p.support)throw Error('Revise os requisitos da técnica.');
- return foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),content:techniqueCard(item,p),flags:{[ns]:{check:{actorImg:actor.img,key:'jutsu'},supportUse:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:p.usedLevel,status:'choose'}}}});
+ return foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),content:techniqueCard(item,p),flags:{[ns]:{undoVersion:1,check:{actorImg:actor.img,key:'jutsu'},supportUse:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:p.usedLevel,status:'choose'}}}});
 }
 export async function requestSupportChoice(message,selection){
  const r=message.getFlag(ns,'supportUse'),actor=await fromUuid(r?.actorUuid);if(!actor?.isOwner||!['choose','blocked'].includes(r.status)||!game.users.activeGM)throw Error('Este uso já foi resolvido ou está indisponível.');
@@ -63,7 +64,8 @@ async function applyUse(actor,item,selection,useUuid,{pendingDefense=false}={}){
  await root.update({'system.appliedCondition.note':supportSummary(root,actor)});
  return root;
 }
-async function acceptChoice(reply){
+async function acceptChoice(reply){const ref=reply.getFlag(ns,'supportChoice'),use=ref&&await fromUuid(ref.useUuid),actor=await fromUuid(use?.getFlag(ns,'supportUse')?.actorUuid);if(!use)return;return runCastStep(use,[actor],'Técnica sustentada',()=>applyChoice(reply));}
+async function applyChoice(reply){
  const choice=reply.getFlag(ns,'supportChoice');if(!choice)return;
  const use=await fromUuid(choice.useUuid),r=use?.getFlag(ns,'supportUse'),actor=await fromUuid(r?.actorUuid),item=await fromUuid(r?.itemUuid);
  if(!actor||item?.actor!==actor||!actor.testUserPermission(reply.author,'OWNER')||!actor.testUserPermission(use.author,'OWNER'))throw Error('A origem não está disponível ou você não tem permissão.');

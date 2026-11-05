@@ -12,13 +12,14 @@ import {supportUnable} from './support-core.mjs';
 import {applyCondition} from './condition-application.mjs';
 import {techniqueCard} from './technique-card.mjs';
 import {escapeHtml as esc} from './kernel.mjs';
+import {runCastStep} from './cast-undo-service.mjs';
 const ns='sns-v14-dev',busy=new Set(),again=new Set(),key=u=>u.replaceAll('.','~');
 const advancedContext=()=>({applyMember,clearMember,endEnvironment,environmentAttack,stamp});
 const stamp=actor=>{const c=actorCombat(actor);return c?.started?{combatId:c.id,round:c.round,combatantId:c.combatant?.id,actorUuid:c.combatant?.actor?.uuid}:null;};
 export async function postEnvironmentUse(actor,item,{usedLevel}={}){
  if(!actor.isOwner||item?.actor!==actor||!game.users.activeGM)throw Error('Um mestre ativo precisa acompanhar esta técnica.');
  const p=jutsuProjection(item,{usedLevel});if(!p?.valid||!p.environment)throw Error('Revise os requisitos da técnica.');
- return ChatMessage.create({speaker:ChatMessage.getSpeaker({actor}),content:techniqueCard(item,p),flags:{[ns]:{areaUse:jutsuAreas(item,p),check:{actorImg:actor.img,key:'jutsu'},environmentUse:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:p.usedLevel,targets:damageTargets(game.user.targets??[]),status:'choose'}}}});
+ return ChatMessage.create({speaker:ChatMessage.getSpeaker({actor}),content:techniqueCard(item,p),flags:{[ns]:{undoVersion:1,areaUse:jutsuAreas(item,p),check:{actorImg:actor.img,key:'jutsu'},environmentUse:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:p.usedLevel,targets:damageTargets(game.user.targets??[]),status:'choose'}}}});
 }
 export async function requestEnvironmentCast(message,selection){
  const r=message.getFlag(ns,'environmentUse'),actor=await fromUuid(r?.actorUuid);if(!actor?.isOwner||!['choose','blocked'].includes(r.status)||!game.users.activeGM)throw Error('Uso indisponível.');
@@ -73,7 +74,8 @@ export async function endEnvironment(root,reason='Encerrado'){
  for(const actor of clockActors())for(const item of actor.items)if(environmentMember(item)?.rootUuid===root.uuid&&item.system.appliedCondition.active)await item.update({'system.appliedCondition.active':false,'system.appliedCondition.endedAt':new Date().toISOString(),'system.appliedCondition.note':reason});
  for(const member of Object.values(environmentData(root).members))if(member.inside){const actor=await fromUuid(member.uuid);if(actor)await clearMember(root,actor,{leave:true,note:reason});}
 }
-async function acceptCast(reply){
+async function acceptCast(reply){const ref=reply.getFlag(ns,'environmentCast'),message=ref&&await fromUuid(ref.useUuid),use=message?.getFlag(ns,'environmentUse');if(!message)return;const actors=await Promise.all([use?.actorUuid,...(use?.targets??[]).map(t=>t.uuid)].filter(Boolean).map(uuid=>fromUuid(uuid)));return runCastStep(message,actors,'Área e efeitos',()=>applyCast(reply));}
+async function applyCast(reply){
  const r=reply.getFlag(ns,'environmentCast');if(!r)return;const message=await fromUuid(r.useUuid),use=message?.getFlag(ns,'environmentUse'),actor=await fromUuid(use?.actorUuid),item=await fromUuid(use?.itemUuid);
  if(item?.actor!==actor||!actor.testUserPermission(reply.author,'OWNER')||!actor.testUserPermission(message.author,'OWNER'))throw Error('A origem não está disponível ou você não tem permissão.');
  return withEffectLock(message,async()=>{
@@ -110,7 +112,7 @@ async function applyAttackMembers(message){
   if(environmentData(root).members[key(actor.uuid)])await root.update({['flags.'+ns+'.environment.members.'+key(actor.uuid)+'.attackUuid']:message.uuid});
  }
 }
-async function rollTest(actor,testKey,dc,name){const spec=defenseSpec(actor,testKey);if(!spec)throw Error('Informe a precisão de '+testKey+'.');const roll=await new foundry.dice.Roll(spec.formula).evaluate(),r=rolledCheck(roll,spec);const message=await roll.toMessage({speaker:ChatMessage.getSpeaker({actor}),flavor:'<section class="sns-technique-card"><header class="sns-technique-title"><strong>'+esc(name)+'</strong></header><p>Dif '+dc+'</p></section>',flags:{[ns]:{check:{actorImg:actor.img,key:testKey},environmentTest:{dc,result:versusDifficulty(r,dc)}}}});return {passed:versusDifficulty(r,dc)==='passed',roll:r,message};}
+async function rollTest(actor,testKey,dc,name){const spec=defenseSpec(actor,testKey);if(!spec)throw Error('Informe a precisão de '+testKey+'.');const roll=await new foundry.dice.Roll(spec.formula).evaluate(),r=rolledCheck(roll,spec);const message=await roll.toMessage({speaker:ChatMessage.getSpeaker({actor}),flavor:'<section class="sns-technique-card"><header class="sns-technique-title"><strong>'+esc(name)+'</strong></header><p>Dif '+dc+'</p></section>',flags:{[ns]:{undoVersion:1,check:{actorImg:actor.img,key:testKey},environmentTest:{dc,result:versusDifficulty(r,dc)}}}});return {passed:versusDifficulty(r,dc)==='passed',roll:r,message};}
 async function purify(root,uuid){const source=await fromUuid(uuid),m=environmentData(root),s=environmentData(source);if(!s||!['nuvem','nevoa','restringente'].includes(s.kind)||source.parent?.documentName!=='Actor')throw Error('Escolha uma substância ambiental conhecida. Objetos/prisões não são substâncias para Purificar.');const plan=purificationPlan(m.usedLevel,s);if(!plan.allowed)throw Error('Nível insuficiente para purificar esta substância.');if(plan.automatic||(await rollTest(root.actor,'attribute:esp',s.dc,'Purificar')).passed)await endEnvironment(source,'Ambiente purificado.');await endEnvironment(root,'Purificação resolvida.');}
 async function acceptControl(reply){
  const r=reply.getFlag(ns,'environmentControl');if(!r)return;r.requestUuid=reply.uuid.replaceAll('.','~');const root=await fromUuid(r.rootUuid),m=environmentData(root);if(!m)return;const target=r.targetUuid&&await fromUuid(r.targetUuid),owner=root.actor.testUserPermission(reply.author,'OWNER'),member=target&&m.members[key(target.uuid)];

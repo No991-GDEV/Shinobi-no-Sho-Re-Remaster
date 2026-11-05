@@ -1,4 +1,5 @@
 import {isProcessor} from './processor-authority.mjs';
+import {attackDefenseRows} from './defense-summary.mjs';
 import {effectRows,needsResistance,needsHit,validateTargetEffects} from './jutsu-outcomes.mjs';
 import {effectLabel} from './technique-card.mjs';
 import {defenseController,defenseChoices} from './defense-choices.mjs';
@@ -7,7 +8,7 @@ const ns='sns-v14-dev',node=(tag,text='',cls='')=>{const e=document.createElemen
 const activeGM=()=>isProcessor();
 function button(label,fn){const b=node('button',label);b.type='button';b.addEventListener('click',async()=>{b.disabled=true;try{await fn();}catch(e){ui.notifications.warn(e.message);}finally{if(b.isConnected)b.disabled=false;}});return b;}
 export async function appendResistanceButtons(request,actor,container){
- const r=request.getFlag(ns,'defenseRequest'),response=r.responses[actor.uuid.replaceAll('.','~')],controller=defenseController(actor,game.users),mine=controller?.id===game.user.id;
+ const r=request.getFlag(ns,'defenseRequest'),response=r.responses[actor.uuid.replaceAll('.','~')],controller=defenseController(actor,game.users),mine=game.user.isGM||controller?.id===game.user.id;
  if(response&&r.profile.edgeContestRoll){const result=request.getFlag(ns,'edgeResults')?.[actor.uuid.replaceAll('.','~')];container.append(node('small',result?.hit==='hit'?'Lâmina estendida · −1 nas reações deste ataque':result?.hit==='miss'?'Lâmina percebida · defesa sem penalidade':'Prontidão declarada · aguardando resultado','sns-save-state'));return;}
  if(response){const outcome=request.getFlag(ns,'phantasmNoticeResult');container.append(node('small',outcome?(outcome.noticed?'Ilusão reconhecida':'Não reconheceu a ilusão'):'Resistência declarada · aguardando resultado','sns-save-state'));return;}
  if(r.status==='cancelled'){container.append(node('small','Solicitação cancelada','sns-save-state'));return;}
@@ -42,9 +43,11 @@ export async function decorateJutsuTargets(message,element){
  if(activeGM()&&!effectRows(use).every(r=>use.results[r.key])){const details=node('details','','sns-resolution-adjust'),open=button('Ajustar resolução',async()=>{const {SnsJutsuResolution}=await import('./jutsu-resolution.mjs');await new SnsJutsuResolution(message).render({force:true});});details.append(node('summary','Opções do mestre'),open);box.append(details);}
 }
 export function decorateCombatInternals(message,element){
+ const packet=message.getFlag(ns,'damageUse');if(packet?.defenseRequestUuid&&!element.querySelector('.sns-attack-defense')){const rows=attackDefenseRows(packet,message.getFlag(ns,'defenseResults')),box=node('section','','sns-attack-defense');for(const r of rows){const line=node('div','','sns-defense-line');line.append(node('strong',r.name),node('span',r.choice),node('small',r.test),node('b',r.verdict,r.pending?'pending':r.hit?'hit':'miss'));box.append(line);}const roll=element.querySelector('.dice-roll');if(roll)roll.insertAdjacentElement('afterend',box);else (element.querySelector('.message-content')??element).append(box);}
  element.querySelectorAll('.sns-jutsu-use').forEach(e=>e.remove());
  const r=message.getFlag(ns,'defenseRequest'),reply=message.getFlag(ns,'defenseReply'),result=message.getFlag(ns,'defenseResult');
- const technical=message.getFlag(ns,'preDefenseBatch')||reply||message.getFlag(ns,'jutsuSecondary')||message.getFlag(ns,'illusionReply')||message.getFlag(ns,'damageUse')?.profile?.resistance&&!message.getFlag(ns,'jutsuUse')&&!message.getFlag(ns,'environmentPulse')||result&&!message.rolls.length||r&&(r.profile?.environmentPulse||message.getFlag(ns,'jutsuResistanceRequest')||r.status==='pending'&&Array.isArray(r.targets)&&r.targets.every(t=>r.responses?.[t.uuid.replaceAll('.','~')]));
+ const resultParent=result&&game.messages.get(result.attackUuid?.split('.').at(-1)),ordinaryDefense=resultParent?.getFlag(ns,'damageUse')&&!resultParent.getFlag(ns,'damageUse').profile?.resistance;
+ const technical=message.getFlag(ns,'defenseCancel')||message.getFlag(ns,'preDefenseBatch')||reply||message.getFlag(ns,'jutsuSecondary')||message.getFlag(ns,'illusionReply')||message.getFlag(ns,'damageUse')?.profile?.resistance&&!message.getFlag(ns,'jutsuUse')&&!message.getFlag(ns,'environmentPulse')||result&&(!message.rolls.length||ordinaryDefense)||r&&(r.profile?.environmentPulse||message.getFlag(ns,'jutsuResistanceRequest')||r.status==='pending'&&Array.isArray(r.targets)&&r.targets.every(t=>r.responses?.[t.uuid.replaceAll('.','~')]));
  if(technical){element.classList.add('sns-internal-message');return;}
  const outcome=message.getFlag(ns,'defenseOutcome');if(outcome?.resistance&&!element.querySelector('.sns-save-verdict')){const verdict=node('p',outcome.hit==='miss'?'Sucesso · resistiu':outcome.hit==='hit'?'Falha na resistência':'Resultado pendente','sns-save-verdict '+(outcome.hit==='miss'?'is-resisted':'is-affected'));(element.querySelector('.message-content')??element).append(verdict);}
 }

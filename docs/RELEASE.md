@@ -1,15 +1,20 @@
-Beta 0.4.0-beta.2 para Foundry VTT 14.367.
+Beta **0.4.0-beta.3** para Foundry VTT **14.367**.
 
-**Distribuição corrigida:** inclui a pasta completa de dados de regras, antes ignorada pelo Git no Windows. Uma checagem no build verifica que todos os imports do sistema têm seus arquivos correspondentes.
+Esta atualização reúne correções de combate, criação de personagens e navegação.
 
-**Efeitos como itens:** condições, ativações e transformações agora abrem uma ficha própria com descrição, notas, origem e duração. O mestre pode adicionar modificadores de atributos, precisões, perícias, deslocamento e dureza. Encerrar um efeito vinculado também encerra seu controlador; migrar uma ativação existente não cobra chakra novamente nem duplica seus benefícios.
+- **Combate no chat:** ataque, resultado da defesa e dano ficam no mesmo cartão, com apresentação mais compacta. O autor pode mostrar dano e cancelar seu ataque. O mestre que controla o token de um jogador também recebe a escolha de defesa; a primeira resposta encerra o pedido nos demais clientes.
+- **Desfazer um jutsu:** o mestre pode reverter os custos do usuário e as alterações de dano, efeitos e área vinculadas àquele uso. Reações do alvo continuam separadas. Alterações posteriores incompatíveis impedem uma reversão insegura; cartões antigos não recebem reembolsos inventados.
+- **Catálogo:** busca em todas as categorias, filtros editáveis e resultados em lotes de 60. Corrigida a leitura dos packs Enciclopédia, Manual e Ryōri por jogadores, incluindo **Kuchiyose: Escorpião**. Bestiário permanece reservado ao mestre; Legado do Ódio continua opcional e desativado por padrão em mundos novos.
+- **Fichas:** ações alinhadas à esquerda, técnicas avulsas com botão Usar para PJ e NPC, resumos mais curtos e controles de jutsus com espaço adequado. Técnicas sem controlador publicam o cartão com a descrição e indicam que custos e efeitos são manuais.
+- **NPC:** atributos clicáveis, editor de defesa fixa e cálculo de defesa do Sharingan básico/transplantado. Acuidade usa Destreza nos ataques permitidos sem trocar o atributo de dano.
+- **Criação:** remover aptidões e características pelo assistente, criar genjutsus de Magen e escolher a progressão de Kikai Ninpou na ficha.
 
-**Legado do Ódio opcional:** 32 entradas com textos, requisitos e modalidades próprias, custos de chakra/visão, estados, Susano’o e controles de Mímica e Bishamonten. Ative a fonte nas configurações do sistema; ela começa desativada em mundos novos. Algumas consequências narrativas e construções ainda são resolvidas pela mesa.
+Mantidos **14 compêndios e 1.422 documentos**, os identificadores históricos e os textos dos livros. O erro intermitente relatado no primeiro arraste de um NPC não foi reproduzido; não é anunciado como corrigido.
 
-São **14 packs e 1.422 documentos**, incluindo 75 referências do anime. Instale/atualize pelo manifesto:
+Instale ou atualize pelo manifesto:
 
 https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 
-Aceite a dependência Shinobi no Sho · Compêndios e mantenha os dois pacotes na mesma versão. Faça backup do mundo antes de atualizar. Os IDs históricos e os textos dos livros foram preservados; a versão beta.1 continua disponível.
+Atualize também a dependência **Shinobi no Sho · Compêndios** para a mesma versão. Faça backup do mundo antes da atualização. A beta não automatiza todas as consequências narrativas das regras.
 
-Créditos e condições de código, textos e arte em LICENCIAMENTO.md, docs/FONTES.md e nos avisos dos pacotes. Beta comunitária não oficial. Relate problemas em Issues com os passos para reproduzir.
+Créditos e condições de código, textos e arte em LICENCIAMENTO.md, docs/FONTES.md e nos avisos dos pacotes. Projeto comunitário não oficial. Relate problemas em Issues com os passos para reproduzir.

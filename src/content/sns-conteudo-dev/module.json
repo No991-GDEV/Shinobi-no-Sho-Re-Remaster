@@ -34,9 +34,9 @@
       "type": "Item",
       "system": "sns-v14-dev",
       "ownership": {
-        "PLAYER": "NONE",
-        "TRUSTED": "NONE",
-        "ASSISTANT": "NONE",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
         "GAMEMASTER": "OWNER"
       }
     },
@@ -151,9 +151,9 @@
       "type": "Item",
       "system": "sns-v14-dev",
       "ownership": {
-        "PLAYER": "NONE",
-        "TRUSTED": "NONE",
-        "ASSISTANT": "NONE",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
         "GAMEMASTER": "OWNER"
       }
     },
@@ -164,9 +164,9 @@
       "type": "Item",
       "system": "sns-v14-dev",
       "ownership": {
-        "PLAYER": "NONE",
-        "TRUSTED": "NONE",
-        "ASSISTANT": "NONE",
+        "PLAYER": "OBSERVER",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OBSERVER",
         "GAMEMASTER": "OWNER"
       }
     },

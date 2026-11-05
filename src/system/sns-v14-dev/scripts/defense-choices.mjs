@@ -15,6 +15,8 @@ import {weaponChecks,weaponCheckComponents} from './weapon-checks.mjs';
 export function defenseController(actor,users){
  return Array.from(users).filter(u=>u.active&&!u.isGM&&actor.testUserPermission(u,'OWNER')).sort((a,b)=>Number(b.character?.uuid===actor.uuid)-Number(a.character?.uuid===actor.uuid)||a.id.localeCompare(b.id))[0]??users.activeGM;
 }
+export const mayRespondToDefense=(actor,user,users)=>!!actor&&!!user&&(user.isGM||defenseController(actor,users)?.id===user.id);
+export const shouldPromptDefense=(actor,user,users,controlled=[])=>defenseController(actor,users)?.id===user?.id||!!user?.isGM&&controlled.some(token=>token.actor?.uuid===actor?.uuid);
 export function defenseSpec(actor,key,item=null,penalty=0,extra=[],profile={}){const spec=rawDefenseSpec(actor,key,item,penalty,extra,profile);return spec?{...spec,...minionTestPolicy(actor,key)}:spec;}
 function rawDefenseSpec(actor,key,item=null,penalty=0,extra=[],profile={}){
  if(key.startsWith('attribute:')||key.startsWith('skill:')){

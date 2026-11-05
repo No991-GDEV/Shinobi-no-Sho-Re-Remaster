@@ -1,3 +1,5 @@
+import {runCastStep} from './cast-undo-service.mjs';
+import {assertCastActive} from './cast-undo-core.mjs';
 import {isProcessor} from './processor-authority.mjs';
 import {RUNTIME_STATES} from '../data/runtime-states.mjs';
 import {useDifficulty,targetResistanceBonus} from './magen-core.mjs';
@@ -12,6 +14,7 @@ import {escapeHtml as esc} from './kernel.mjs';
 const pending=new Set();
 export const isResolver=()=>isProcessor();
 export async function readJutsuUse(message){
+ assertCastActive(message);
  const use=message.getFlag('sns-v14-dev','jutsuUse');if(!use||use.version!==2)throw Error('Este uso é de uma versão anterior. Faça um novo uso da técnica.');
  if(!use.caster?.uuid||!Array.isArray(use.targets)||!use.results||Array.isArray(use.results))throw Error('Registro de uso inválido.');
  validateTargetEffects(use.bindings);
@@ -26,6 +29,11 @@ export async function readJutsuUse(message){
  return {use:structuredClone(use),item,actor,projection};
 }
 export async function resolveJutsuEffects(message,decisions){
+ if(!isResolver())throw Error('O mestre ativo precisa resolver os efeitos.');
+ const use=message.getFlag('sns-v14-dev','jutsuUse'),actors=await Promise.all([use?.caster?.uuid,...(use?.targets??[]).map(t=>t.uuid)].filter(Boolean).map(uuid=>fromUuid(uuid)));
+ return runCastStep(message,actors,'Efeitos nos alvos',()=>resolveEffects(message,decisions));
+}
+async function resolveEffects(message,decisions){
  if(!isResolver())throw Error('O mestre ativo precisa resolver os efeitos.');
  if(pending.has(message.uuid))return null;pending.add(message.uuid);
  try{

@@ -1,6 +1,6 @@
 # Shinobi no Sho Re-Remaster
 
-Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.4.0-beta.2**.
+Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.4.0-beta.3**.
 
 ## Instalação no Foundry
 
@@ -14,13 +14,13 @@ Aceite a instalação da dependência **Shinobi no Sho · Compêndios** quando o
 
 Crie um mundo escolhendo **Naruto: Shinobi no Sho · Re-Remaster**. Se o módulo de conteúdo não estiver ativo, abra **Manage Modules**, marque **Shinobi no Sho · Compêndios**, salve e recarregue. A relação obrigatória do sistema identifica esse módulo.
 
-O link fica disponível após a primeira release publicada. O código na branch principal pode conter alterações posteriores à versão instalável.
+O manifesto aponta para o pacote publicado da beta. O código na branch principal pode conter alterações posteriores à versão instalável.
 
 ## Primeiro uso
 
 O mestre cria um ator do tipo **Shinobi** e concede ao jogador a permissão **Dono** em **Configure Ownership**. O jogador abre **Criação do personagem** para escolher NC, atributos, perícias, origem, poderes e aptidões.
 
-As lupas da ficha abrem o catálogo já filtrado. Em **Jutsus → Gerenciar jutsus**, adicione as técnicas sugeridas para um poder adquirido. Ao usar uma técnica, escolha o nível quando solicitado; o custo é cobrado uma vez. Cartões de chat oferecem ataque, defesa/resistência, dano e área quando a técnica tem esses parâmetros.
+As lupas da ficha abrem o catálogo já filtrado. Os filtros podem ser alterados; marque **Buscar em todas as categorias** para pesquisar o catálogo inteiro permitido ao seu usuário. Em **Jutsus → Gerenciar jutsus**, adicione as técnicas sugeridas para um poder adquirido. Ao usar uma técnica automatizada, escolha o nível quando solicitado; o custo é cobrado uma vez. Técnicas sem controlador publicam a descrição e indicam o controle manual dos custos e efeitos. Cartões de chat oferecem ataque, defesa/resistência, dano e área quando a técnica tem esses parâmetros.
 
 O mestre encontra **Gerar NPC / capanga** no diretório de atores e o bestiário nos compêndios. Efeitos temporários ficam em **Efeitos**; o descanso fica junto à Vitalidade. O dono pode aplicar dano na própria ficha pelo cartão; o mestre pode desfazer.
 
@@ -49,6 +49,6 @@ Shinobi no Sho: Projeto D8 e autores identificados em cada fonte. Regras oficiai
 
 ## Compilar
 
-Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.4.0-beta.2`.
+Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.4.0-beta.3`.
 
 O build compila novos bancos de compêndio a partir dos JSONs de autoria. Não lê bancos de mundos ou packs abertos. Não distribua uma instalação do Foundry, dados de campanha, licenças de ativação, senhas, chaves de API ou backups.

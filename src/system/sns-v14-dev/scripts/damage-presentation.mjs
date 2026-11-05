@@ -26,7 +26,8 @@ export function readDamagePresentation(message,packet){
 }
 export function mayWriteDamagePresentation(message,expanded,userId){
  if(!message.getFlag('sns-v14-dev','damageUse')||message.author?.id!==userId)return false;
- if(Object.keys(expanded).some(k=>k!=='flags')||Object.keys(expanded.flags??{}).some(k=>k!=='sns-v14-dev')||Object.keys(expanded.flags?.['sns-v14-dev']??{}).some(k=>k!=='damagePresentation'))return false;
+ // Foundry includes the addressed document ID in every native pre-update.
+ if(expanded._id!==undefined&&expanded._id!==message.id||Object.keys(expanded).some(k=>!['flags','_id'].includes(k))||Object.keys(expanded.flags??{}).some(k=>k!=='sns-v14-dev')||Object.keys(expanded.flags?.['sns-v14-dev']??{}).some(k=>k!=='damagePresentation'))return false;
  if(message.getFlag('sns-v14-dev','damagePresentation'))return false;
  try{const packet=message.getFlag('sns-v14-dev','damageUse'),value=expanded.flags['sns-v14-dev'].damagePresentation;return JSON.stringify(damagePresentation(packet,value.diceTotal))===JSON.stringify(value);}catch{return false;}
 }

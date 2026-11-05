@@ -16,9 +16,9 @@ export function effectiveRuleItem(item){
   if(!Object.keys(details).length&&!choice&&!Object.keys(flags).length&&!patch.description)continue;
   result={type:result.type,name:result.name,id:result.id,uuid:result.uuid,img:result.img,actor:result.actor,flags:{...result.flags,'sns-v14-dev':{...f,...flags}},system:{...result.system,details:{...result.system.details,...details},...(patch.description?{description:patch.description,source:patch.source}:{}),...(choice?{choice}:{})}};
  }
- // Old generated Bunshin copies inherited two prose paragraphs as table fields.
+ // Old Bunshin copies inherited two prose paragraphs as table fields.
  // Change only those exact stale values in the presentation, never personal edits.
- if(result.actor?.flags?.['sns-v14-dev']?.npcGenerator?.version===1&&result.system?.contentId==='sns:jutsu:bunshin-no-jutsu'){
+ if(result.system?.contentId==='sns:jutsu:bunshin-no-jutsu'){
   const d={...result.system.details};let changed=false;
   for(const [key,before,after]of [['action','Os clones possuem todas as ações de combate, porém não têm iniciativa e agem no mesmo turno do usuário. Fazer isso aumenta o tempo da técnica para uma ação padrão e o custo de chakra para 4.','Movimento ou Padrão (ver texto)'],['chakraCost','Seja qual for a quantidade de clones criados, o usuário sempre gastará 1 ponto de chakra na execução da técnica.','1 ou 4 (ver texto)']])if(d[key]===before){d[key]=after;changed=true;}
   if(changed)result={type:result.type,name:result.name,id:result.id,uuid:result.uuid,img:result.img,actor:result.actor,flags:result.flags,system:{...result.system,details:d}};

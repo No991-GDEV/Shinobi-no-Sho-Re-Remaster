@@ -1,4 +1,6 @@
 import {actorMessages} from './message-index.mjs';
+import {assertCastActive} from './cast-undo-core.mjs';
+import {runCastStep} from './cast-undo-service.mjs';
 import {withEffectLock,isTimekeeper} from './effect-lifecycle.mjs';
 import {protectedDamageSpec,applyWithEnvironmentProtection,undoWithEnvironmentProtection} from './environment-protection.mjs';
 import {lightningIgnore} from './blade-workflow.mjs';
@@ -22,6 +24,7 @@ export async function postFreeDamage(message,grade){
 }
 export function packetSpecFor(message,packet,shown,actor){const hardness=effectiveHardness(actor),spec=packetTargetSpec(packet,shown,actor.uuid,{hardness,bonus:sequenceBonus(message,actor.uuid),jinchuurikiHardness:(()=>{const l=Array.from(actor.items??[]).find(i=>i.system.contentId==='sns:power:jinchuuriki')?.system.level??0;return l>=5?2:l>=2?1:0;})()}),resolved=message.getFlag(ns,'defenseResults')?.[safeTargetKey(actor.uuid)];if(resolved?.weaponBroken?.automatic)spec.grade=Math.max(spec.grade??(packet.attack?damageGrade(packet.attack.natural,{criticalAt:packet.profile.criticalAt}):1),3);if(packet.profile.hardnessPolicy==='lightning'){const elements=supportHardnessRecords(actor).filter(r=>r.hardness===hardness).map(r=>r.element);spec.ignoreHardness=lightningIgnore(hardness,elements);}return protectedDamageSpec(message,packet,actor,spec);}
 export async function readDamagePacket(message){
+ assertCastActive(message);
  const packet=message.getFlag(ns,'damageUse');if(message.getFlag(ns,'npcJutsuCast')?.status==='pending')throw Error('Conclua o uso antes de mostrar o dano.');if(!packet||packet.version!==1||!packet.profile||!Array.isArray(packet.targets)||packet.targets.length>50||new Set(packet.targets.map(t=>t.uuid)).size!==packet.targets.length)throw Error('Registro de dano indisponível.');
  if(message.getFlag(ns,'environmentPulse')?.cancelled)throw Error('Esta solicitação da Nuvem foi encerrada com a saída da área.');
  const caster=await fromUuid(packet.actorUuid);if(packet.attack&&packet.profile.blade?.kind==='lamina-de-raios'){const root=await fromUuid(packet.profile.blade.rootUuid);if(root?.flags?.[ns]?.support?.lastAttackUuid!==message.uuid)throw Error('A preparação está em andamento ou já foi usada.');}
@@ -38,6 +41,7 @@ export async function showDamage(message){
  }finally{showing.delete(message.id);}
 }
 export async function applyPacketDamage(message,actor,{spec,decision,expectedSignature}){
+ assertCastActive(message);
  if(!mayResolveDamage())throw Error('O mestre ativo precisa resolver o dano.');
  const npcCast=message.getFlag(ns,'npcJutsuCast');if(npcCast?.plan?.mode==='save'&&!npcCast.saves?.[safeTargetKey(actor.uuid)])throw Error('Aguardando a resistência deste alvo.');
  const packet=await readDamagePacket(message);
@@ -53,13 +57,15 @@ export async function applyPacketDamage(message,actor,{spec,decision,expectedSig
  if(damageDice(packet.profile)&&!shown)throw Error('Mostre e role os dados do dano antes de aplicar.');
  if(((spec.ignoreHardness??0)!==(expected.ignoreHardness??0)||spec.base!==expected.base||spec.fixed!==expected.fixed||spec.nature!==expected.nature||(spec.gradeBonus??0)!==(expected.gradeBonus??0)||grade!==null&&(expected.grade??grade)!==spec.grade)&&!decision.note?.trim())throw Error('Identifique a regra do ajuste de dano, grau ou da conversão de natureza.');
  const key='chat:'+message.id+':'+safeTargetKey(actor.uuid);
- return applyWithEnvironmentProtection(message,packet,actor,()=>applyDamage(actor,{requestKey:key,source:packet.name,sourceUuid:packet.itemUuid,spec,decision,expectedSignature}));
+ const caster=await fromUuid(packet.actorUuid);
+ return runCastStep(message,[caster,actor],'Dano',()=>applyWithEnvironmentProtection(message,packet,actor,()=>applyDamage(actor,{requestKey:key,source:packet.name,sourceUuid:packet.itemUuid,spec,decision,expectedSignature})));
 }
 export async function undoPacketDamage(message,actor,id){
  if(!mayResolveDamage())throw Error('O mestre ativo precisa desfazer o dano.');
  const packet=await readDamagePacket(message),entry=latestDamage(actor).find(e=>e.id===id);
  if(!packet.targets.some(t=>t.uuid===actor.uuid)||entry?.requestKey!=='chat:'+message.id+':'+safeTargetKey(actor.uuid))throw Error('Este dano não pertence ao cartão e alvo selecionados.');
- return undoWithEnvironmentProtection(message,packet,actor,()=>undoDamage(actor,id));
+ const caster=await fromUuid(packet.actorUuid);
+ return runCastStep(message,[caster,actor],'Desfazer dano',()=>undoWithEnvironmentProtection(message,packet,actor,()=>undoDamage(actor,id)));
 }
 const node=(tag,text='',className='')=>{const e=document.createElement(tag);e.textContent=text;if(className)e.className=className;return e;};
 const action=(label,fn,icon='')=>{const b=node('button',label);b.type='button';if(icon){const i=document.createElement('i');i.className='fa-solid '+icon;i.setAttribute('aria-hidden','true');b.prepend(i,document.createTextNode(' '));}b.addEventListener('click',async()=>{b.disabled=true;try{await fn();}catch(e){ui.notifications.warn(e.message);}finally{b.disabled=false;}});return b;};
@@ -67,18 +73,10 @@ export async function decorateDamageMessage(message,element){
  if(message.isContentVisible===false||message.getFlag(ns,'npcJutsuCast')?.status==='pending')return;
  const packet=message.getFlag(ns,'damageUse');if(!packet||packet.version!==1||!packet.profile||packet.profile.noDamage||!Array.isArray(packet.targets)||element.querySelector('[data-sns-damage]'))return;
  const box=node('section','','sns-damage-chat');box.dataset.snsDamage='';
- const title=node('header','','sns-damage-heading');title.append(node('strong','Dano · '+packet.name));box.append(title);
+ const title=node('header','','sns-damage-heading');title.append(node('strong','Dano'));box.append(title);
  let shown;try{shown=readDamagePresentation(message,packet);}catch(e){box.append(node('small',e.message,'damage-note'));}
  box.dataset.shown=String(!!shown);
  const openAdjustment=async()=>{const {SnsDamageDialog}=await import('./damage-dialog.mjs');const current=await readDamagePacket(message);await new SnsDamageDialog({message,packet:current}).render({force:true});};
- if(packet.attack&&!packet.targets.length){
-  if(packet.attack.natural<=3)box.append(node('small','Falha automática no ataque.','damage-note'));
-  if(message.isOwner||mayResolveDamage()){
-   const controls=node('div','','damage-controls');
-   controls.append(action('Dano',()=>postFreeDamage(message,Math.max(1,damageGrade(packet.attack.natural,{criticalAt:packet.profile.criticalAt})))),action('Crítico',()=>postFreeDamage(message,4)));box.append(controls);
-  }
-  (element.querySelector('.message-content')??element).append(box);return;
- }
  if(!shown){
   if(!sequenceReady(message))box.append(node('small','Aguardando ataques adicionais / sequência de defesas.','damage-note'));
   else if(message.isOwner||mayResolveDamage())box.append(action('Mostrar dano',()=>showDamage(message),'fa-burst'));
@@ -106,7 +104,7 @@ export async function decorateDamageMessage(message,element){
     try{
      const npcCast=message.getFlag(ns,'npcJutsuCast');if(npcCast?.plan?.mode==='save'&&!npcCast.saves?.[safeTargetKey(actor.uuid)]){row.append(node('p','Aguardando a resistência do alvo.'));box.append(row);continue;}
      const resolved=message.getFlag(ns,'defenseResults')?.[safeTargetKey(actor.uuid)];
-     if(resolved)row.append(node('p',resolved.stopped?'Ricochete interrompido · não atingido':resolved.choice+' · '+(resolved.defenseTechnique?(resolved.hit==='miss'?'Ataque falhou':resolved.techniqueSuccess?'Executada · dano contra a dureza':'Falhou · proteção anterior'):resolved.hit==='hit'?'Acertou':resolved.hit==='miss'?'Defendeu · sem dano':'Desempate pendente')));
+     if(resolved&&!packet.defenseRequestUuid)row.append(node('p',resolved.stopped?'Ricochete interrompido · não atingido':resolved.choice+' · '+(resolved.defenseTechnique?(resolved.hit==='miss'?'Ataque falhou':resolved.techniqueSuccess?'Executada · dano contra a dureza':'Falhou · proteção anterior'):resolved.hit==='hit'?'Acertou':resolved.hit==='miss'?'Defendeu · sem dano':'Desempate pendente')));
      if(['pending','miss'].includes(messageVisualState(message))||resolved?.hit!=='hit'&&(resolved||packet.defenseRequestUuid)){
       if(!resolved)row.append(node('p','Aguardando a defesa do alvo.'));
       box.append(row);continue;

@@ -1,5 +1,5 @@
 {{#if senseRequired}}<label>Sentido usado<select name="sense">{{#each senses}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>{{#if senseBlocked}}<p class="validation-notes">{{senseBlocked}}</p>{{/if}}{{/if}}
-<div class="check-modifiers-content">
+<div class="check-modifiers-content">{{#if canChooseAcuity}}<label>Atributo do ataque desarmado<select name="meleeAttribute"><option value="for" {{#unless usesDex}}selected{{/unless}}>Força</option><option value="des" {{#if usesDex}}selected{{/if}}>Destreza · Acuidade</option></select></label>{{/if}}
   {{#if hasConditions}}<label>Teste para se livrar de uma condição<select name="escapeCondition"><option value="" {{#if escapeNoneSelected}}selected{{/if}}>Teste normal</option>{{#each conditionOptions}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>{{/if}}
   <div class="dialog-row header"><span class="mod">Modificador</span><span class="type">Tipo</span><span class="value"></span><span class="exclude"></span></div>
   <div class="modifier-container">

@@ -1,3 +1,5 @@
+import {installCastUndo} from './cast-undo-service.mjs';
+installCastUndo();
 import {EffectItemSheet} from './effect-item-sheet.mjs';
 import {installEffectItemHooks} from './effect-item-service.mjs';
 installEffectItemHooks();

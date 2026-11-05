@@ -49,7 +49,7 @@
       <p class="creation-note">Escolha sua origem, clã ou hijutsu. Esta etapa é opcional.</p>
       <div class="creation-rows">
         {{#each state.data.features}}
-        <div class="creation-row"><img src="{{img}}" alt=""><span class="row-name">{{name}}</span></div>
+        <div class="creation-row"><img src="{{img}}" alt=""><span class="row-name">{{name}}</span>{{#if @root.editable}}<button type="button" class="creation-mini" data-action="removeChoice" data-item-id="{{id}}" aria-label="Remover {{name}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}</div>
         {{else}}
         <p class="creation-empty">Nenhuma característica. Você pode continuar.</p>
         {{/each}}
@@ -78,6 +78,10 @@
         <div class="creation-stat-row"><span class="creation-stat-name">{{label}}</span>{{> creationCounter kind="attribute" key=key value=value label=label editable=../editable canUp=true}}</div>
         {{/each}}
       </div>
+      <h4>Habilidades de combate</h4>
+      <p>Base + atributo. Distribua 12 pontos entre as quatro bases, transferindo até 2 pontos. Básico, p. 35.</p>
+      <div class="creation-attribute-grid">{{#each combatBases}}<label class="creation-stat-row"><span>{{label}}</span><input type="number" min="1" max="5" step="1" value="{{base}}" data-combat-base="{{key}}" data-baseline="{{base}}" aria-label="Base de {{label}}" {{#unless @root.canEditBases}}disabled{{/unless}}><small>Total {{total}}</small></label>{{/each}}</div>
+      {{#if canEditBases}}<button type="button" class="creation-mini" data-action="saveCombatBases">Salvar bases de combate</button>{{/if}}
       <p class="creation-derived">Vitalidade máxima <strong>{{vitalityMax}}</strong> · Chakra máximo <strong>{{chakraMax}}</strong></p>
       <p class="creation-save-hint">Use +/− ou digite o valor. Ao sair do campo ou apertar Enter, a alteração é salva.</p>
       {{#if attributeWarnings.length}}<ul class="creation-pending">{{#each attributeWarnings}}<li>{{this}}</li>{{/each}}</ul>{{/if}}
@@ -138,7 +142,7 @@
         {{else}}<li class="creation-empty">Nenhum poder ainda.</li>{{/each}}
       </ul>
       <ul class="creation-rows">
-        {{#each state.data.aptitudes}}<li><span class="row-name">{{name}}</span><button type="button" class="creation-mini" data-action="editAcquisition" data-item-id="{{id}}">Aquisição</button></li>
+        {{#each state.data.aptitudes}}<li><span class="row-name">{{name}}</span><button type="button" class="creation-mini" data-action="editAcquisition" data-item-id="{{id}}">Aquisição</button>{{#if @root.editable}}<button type="button" class="creation-mini" data-action="removeChoice" data-item-id="{{id}}" aria-label="Remover {{name}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}</li>
         {{else}}<li class="creation-empty">Nenhuma aptidão ainda.</li>{{/each}}
       </ul>
       {{#if state.data.investmentPending.length}}
@@ -154,7 +158,7 @@
 
     {{!-- ===== Jutsus ===== --}}
     {{#if (snsIsTab state.stepId "jutsus")}}
-    <header class="creation-panel-head"><h3>Primeiros jutsus</h3></header>
+    <header class="creation-panel-head"><h3>Primeiras técnicas</h3><button type="button" class="creation-mini" data-action="openJutsuBuilder">Criar técnica</button></header>
     <div class="creation-panel-body">
       <p class="creation-note">Escolha efeitos para seus poderes e crie jutsus, ou adicione jutsus prontos do catálogo. Esta etapa é opcional.</p>
       {{#each state.data.powers}}
@@ -162,7 +166,7 @@
         <h4>{{name}}</h4>
         <div class="creation-actions-row">
           <button type="button" class="creation-mini" data-action="openProgression" data-item-id="{{id}}">Aprender componentes</button>
-          <button type="button" class="creation-mini" data-action="openJutsuBuilder" data-item-id="{{id}}">Construir jutsu</button>
+          <button type="button" class="creation-mini" data-action="openJutsuBuilder" data-item-id="{{id}}">Criar técnica</button>
         </div>
       </div>
       {{else}}

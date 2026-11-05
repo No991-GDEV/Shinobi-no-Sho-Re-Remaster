@@ -11,7 +11,7 @@ import { CREATION_STEPS, creationWizardState, isCreationStepId } from "./creatio
 import { SnsEvolutionDialog } from "./evolution-dialog.mjs";
 import {ATTRIBUTES} from './kernel.mjs';
 import {characteristicEffects} from './characteristic-effects.mjs';
-import {inlineStatPatch,inlineInteger,checkInlineBaseline} from './creation-inline.mjs';
+import {inlineStatPatch,inlineInteger,checkInlineBaseline,creationCombatBases} from './creation-inline.mjs';
 import { SnsCatalog } from "./catalog.mjs";
 import { SnsPowerDialog } from "./power-dialog.mjs";
 import { SnsPowerProgression } from "./power-progression.mjs";
@@ -35,8 +35,9 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
       openEvolution: SnsCreationWizard.openEvolution,
       openCatalog: SnsCreationWizard.openCatalog,
       stepInline: SnsCreationWizard.stepInline,
+      saveCombatBases:SnsCreationWizard.saveCombatBases,
       openPowerDialog: SnsCreationWizard.openPowerDialog,
-      editAcquisition: SnsCreationWizard.editAcquisition,
+      editAcquisition: SnsCreationWizard.editAcquisition,removeChoice:SnsCreationWizard.removeChoice,
       openProgression: SnsCreationWizard.openProgression,
       openJutsuBuilder: SnsCreationWizard.openJutsuBuilder,
       conclude: SnsCreationWizard.conclude
@@ -124,6 +125,7 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
       attributeRows:attributes.filter(a=>!a.social),socialRows:attributes.filter(a=>a.social),
       vitalityMax:view.d.vitalityMax,chakraMax:view.d.chakraMax,initialResources:!evolution&&(view.source.resources.vitality.value===null||view.source.resources.chakra.value===null),
       skillLimit:view.d.evolution?.limite_poder_pericia,
+      canEditBases:this._owned()&&this._inCreation(),combatBases:[['cc','Corpo a corpo'],['cd','À distância'],['esq','Esquiva'],['lm','Ler movimento']].map(([key,label])=>({key,label,base:view.source.bases?.[key]??3,total:view.d.combat[key].precision})),
       attributeWarnings:(view.issues??[]).filter(issue=>ATTRIBUTES.some(([,abbr])=>issue.startsWith(abbr+':'))||issue.startsWith('Atributo social')),
       ryo: view.ryo ?? view.source?.finances?.ryo ?? null
     };
@@ -311,12 +313,23 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
     if(![1,-1].includes(delta))return;
     await this.saveInline({kind:target.dataset.kind,key:target.dataset.key,delta});
   }
+  static async saveCombatBases(){
+    await this._inlineQueue;if(!this._owned()||!this._inCreation())return;
+    const fields=[...this.element.querySelectorAll('[data-combat-base]')],current=this.actor.system.bases;
+    try{for(const f of fields)checkInlineBaseline(current[f.dataset.combatBase],f.dataset.baseline);const values=Object.fromEntries(fields.map(f=>[f.dataset.combatBase,f.value]));await this.actor.update(creationCombatBases(this.actor.system,values));await this.render({force:true});}catch(e){ui.notifications.warn(e.message);}
+  }
 
   static async openPowerDialog(event,target) {
     if (!this._owned()) return;
     const item=target?.dataset?.itemId?this.actor.items.get(target.dataset.itemId):null;
     if(target?.dataset?.itemId&&item?.type!=='power')return;
     new SnsPowerDialog(this.actor,item).render({ force: true });
+  }
+
+  static async removeChoice(event,target){
+    await this._inlineQueue;if(!this._owned()||!this._canAllocate()||this._removing)return;
+    const item=this.actor.items.get(target.dataset.itemId);if(!item||!['aptitudes','features'].includes(item.system.category||({aptitude:'aptitudes',feature:'features',clan:'features',hijutsu:'features',background:'features'}[item.type])))return;
+    this._removing=true;try{await item.delete();await this.render({force:true});}catch(e){ui.notifications.warn(e.message);}finally{this._removing=false;}
   }
 
   static async editAcquisition(event,target) {
@@ -334,7 +347,7 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
   static async openJutsuBuilder(event, target) {
     if (!this._owned()) return;
     const item = target.dataset.itemId ? this.actor.items.get?.(target.dataset.itemId) : null;
-    if (!item) return ui.notifications.warn("Item não encontrado na ficha.");
+    if (item&&item.type!=='power') return;
     new SnsJutsuBuilder(this.actor, item).render({ force: true });
   }
 

@@ -1,3 +1,4 @@
+import {recordedSkillLevel} from './recorded-skill-level.mjs';
 import {summonItemProblems,summonUseProblem,kuchiyoseLink} from './kuchiyose-core.mjs';
 import {elementalProjection} from './elemental-projection.mjs';
 import {phantasmProjection} from './phantasm-core.mjs';
@@ -7,13 +8,15 @@ import {magenProjection} from './magen-core.mjs';
 import {requirementsFor} from './item-requirements.mjs';
 import {POWER_DEFINITIONS,EFFECT_DEFINITIONS,ACTIONS,DURATIONS} from '../data/power-definitions.mjs';
 export const powerDefinition=id=>POWER_DEFINITIONS.find(x=>x.id===id);
+export const ownedPowerDefinition=power=>powerDefinition(power?.system?.power?.definitionId||power?.system?.contentId);
+const allows=(p,e)=>p.allowedEffects?p.allowedEffects.includes(e.id):e.powers.includes(p.id.split(':').at(-1));
 export const effectDefinition=id=>EFFECT_DEFINITIONS.find(x=>x.id===id);
 export function choiceProblems(power,choices=power.system.power.choices){
- const p=powerDefinition(power.system.power.definitionId),level=power.system.level,errors=[];
+ const p=ownedPowerDefinition(power),level=power.system.level,errors=[];
  if(!p)return ['Poder manual: selecione uma definição verificada para usar escolhas assistidas.'];
  if(power.flags?.['sns-v14-dev']?.legadoCopy||power.flags?.['sns-v14-dev']?.legadoTormenta){
   const ids=[...new Set(choices.map(c=>c.effectId))];if(ids.length!==1)return ['A concessão da Mímica/Tormenta contém exatamente um efeito.'];
-  const e=effectDefinition(ids[0]);if(!e||!e.powers.includes(p.id.split(':').at(-1)))return ['Efeito incompatível com o poder concedido.'];
+  const e=effectDefinition(ids[0]);if(!e||!allows(p,e))return ['Efeito incompatível com o poder concedido.'];
   const stages=[e.min,...e.evolutions].filter(n=>choices.some(c=>c.stage===n));
   if(stages.length!==choices.length||stages[0]!==e.min||stages.some((n,k)=>n!==[e.min,...e.evolutions][k])||choices.some(c=>c.slot!==c.stage||c.slot>level))return ['A evolução copiada precisa seguir as etapas do efeito.'];
   return [];
@@ -24,20 +27,20 @@ export function choiceProblems(power,choices=power.system.power.choices){
   const c=rows[0],e=effectDefinition(c.effectId),stage=c.stage??e?.min;
   if(!e){errors.push('Nível '+slot+': regra indisponível.');continue;}
   const stages=[e.min,...e.evolutions],previous=seen.get(e.id),next=previous===undefined?e.min:stages[stages.indexOf(previous)+1];
-  if(!e.powers.includes(p.id.split(':').at(-1))||stage!==next||stage>slot)errors.push('Nível '+slot+': '+e.name+' exige estágio '+next+' e progressão sem saltos.');
+  if(!allows(p,e)||stage!==next||stage>slot)errors.push('Nível '+slot+': '+e.name+' exige estágio '+next+' e progressão sem saltos.');
   else seen.set(e.id,stage);
  }
  if(choices.some(c=>c.slot>level))errors.push('Escolhas acima do nível comprado ficam inativas.');
  return errors;
 }
-export function availableChoices(power,slot){const p=powerDefinition(power.system.power.definitionId);if(!p)return [];const prior=power.system.power.choices.filter(c=>c.slot<slot),seen=new Map(prior.map(c=>[c.effectId,c.stage]));return EFFECT_DEFINITIONS.filter(e=>e.powers.includes(p.id.split(':').at(-1))).map(e=>{const stages=[e.min,...e.evolutions],old=seen.get(e.id),stage=old===undefined?e.min:stages[stages.indexOf(old)+1];return {...e,stage,allowed:stage!==undefined&&stage<=slot&&slot<=power.system.level,reason:stage===undefined?'Todas as evoluções selecionadas.':'Exige nível '+stage};});}
+export function availableChoices(power,slot){const p=ownedPowerDefinition(power);if(!p)return [];const prior=power.system.power.choices.filter(c=>c.slot<slot),seen=new Map(prior.map(c=>[c.effectId,c.stage]));return EFFECT_DEFINITIONS.filter(e=>allows(p,e)).map(e=>{const stages=[e.min,...e.evolutions],old=seen.get(e.id),stage=old===undefined?e.min:stages[stages.indexOf(old)+1];return {...e,stage,allowed:stage!==undefined&&stage<=slot&&slot<=power.system.level,reason:stage===undefined?'Todas as evoluções selecionadas.':'Exige nível '+stage};});}
 export function learnedEffects(power){return power.system.power.choices.filter(c=>c.slot<=power.system.level).map(c=>({...c,definition:effectDefinition(c.effectId)})).filter(c=>c.definition);}
 export function jutsuVariants(power,effectId,usedLevel){
  const e=effectDefinition(effectId),stages=power?learnedEffects(power).filter(c=>c.effectId===effectId).map(c=>c.stage):[];
  return (e?.variants??[{id:'normal',name:'Normal'}]).filter(v=>(!v.min||usedLevel>=v.min)&&(!v.stage||stages.some(s=>s>=v.stage)));
 }
 export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
- const p=powerDefinition(power?.system.power?.definitionId),e=effectDefinition(jutsu.system.jutsu?.effectId),j=jutsu.system.jutsu??{},n=j.usedLevel;
+ const p=ownedPowerDefinition(power),e=effectDefinition(jutsu.system.jutsu?.effectId),j=jutsu.system.jutsu??{},n=j.usedLevel;
  if(!p||!e)return {valid:false,problems:['Registro manual ou definição indisponível.'],manual:true};
  if(e.execution==='sourceOnly')return {valid:false,manual:true,effect:e,power:p,problems:['Consulte a descrição deste efeito para resolver seu uso. A execução automática ainda não está disponível.']};
  const owned=actor.type==='npc'&&jutsu.id?actor.items?.get?.(jutsu.id):null,
@@ -53,18 +56,19 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
   choices=[...choices.filter(c=>c.effectId!==e.id),...accepted];
  }
  const learned=choices.find(c=>c.id===j.selectionId&&c.effectId===e.id)||(recorded?choices.find(c=>c.effectId===e.id):null);
- if(!e.powers.includes(p.id.split(':').at(-1)))problems.push('Este efeito não é permitido para o elemento deste poder.');
+ if(!allows(p,e))problems.push('Este efeito não é permitido para o elemento deste poder.');
  if(Number.isFinite(actor.system.nc)&&power.system.level>Math.floor(actor.system.nc/2))problems.push('Nível do poder excede o limite de metade do NC; revise a aquisição ou use o registro manual para uma exceção documentada.');
  problems.push(...summonItemProblems(actor,power));const summonProblem=summonUseProblem(actor);if(summonProblem)problems.push(summonProblem);
  if(!learned)problems.push('Este efeito não foi adquirido neste poder.');
  if(!Number.isInteger(n)||n<e.min||n>power.system.level)problems.push('Nível usado deve estar entre '+e.min+' e '+power.system.level+'.');
  const viewPower=recorded?{...power,system:{...power.system,power:{...power.system.power,choices}}}:power;
  if(!jutsuVariants(viewPower,e.id,n).some(v=>v.id===(j.variant||'normal')))problems.push('Forma de uso exige nível e evolução aprendida compatíveis.');
- const attribute=actor.system.attributes?.[p.attribute];if(!Number.isFinite(attribute))problems.push('Informe o atributo '+p.attribute.toUpperCase()+' do ator.');
+ const attribute=p.attribute.startsWith('skill:')?recordedSkillLevel(actor,p.attribute.slice(6)):actor.system.attributes?.[p.attribute];if(!Number.isFinite(attribute))problems.push('Informe '+(p.attributeLabel||p.attribute.toUpperCase())+' do personagem.');
+ if(p.allowedEffects){const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(!requirement.valid)problems.push(...requirement.problems);}
  if(e.execution==='environment'){
   const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(!requirement.valid)problems.push(...requirement.problems);
   if(j.overrides?.length)problems.push('Efeitos de ambiente tipados seguem o livro. Exceções exigem resolução manual.');
-  return environmentProjection({actor,power,effect:e,choices,usedLevel:n,problems});
+  return environmentProjection({actor,power,effect:e,choices,usedLevel:n,problems,parameterProfile:p.allowedEffects?{...p,attributeValue:attribute}:null});
  }
  if(e.execution==='support'){
   const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(!requirement.valid)problems.push(...requirement.problems);
@@ -86,11 +90,12 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
   data.defenses='Esquiva / Antecipar; Bloqueio somente com arma especial que bloqueie técnicas';
   if(j.variant==='concentrado'){data.action=ACTIONS.completa;data.damage=String(Number(data.damage)+2);}
  }
- const traits=[...e.traits.filter(t=>j.variant!=='sem-chakra'||t!=='custo:chakra'),...(j.variant==='sem-chakra'?['custo:sem-custo']:[]),...(p.id.endsWith(':ninpou')?[]:['elemento:'+p.id.split(':').at(-1)])];
+ const traits=[...e.traits.filter(t=>j.variant!=='sem-chakra'||t!=='custo:chakra'),...(j.variant==='sem-chakra'?['custo:sem-custo']:[]),...(p.id.endsWith(':ninpou')||p.allowedEffects?[]:['elemento:'+p.id.split(':').at(-1)])];
  const formulas={range:p.rangeBase+' + '+p.rangeFactor+' × ESP',damage:e.damage==='double'?'2 × nível usado + '+bonus:e.damage==='projectiles'?'Nível usado × projéteis de DB2':'Nível usado + ⌈ESP/2⌉ + '+bonus,difficulty:'9 + nível usado + ⌈ESP/2⌉'+(kuchiyoseLink(actor)?.mode==='calculated'&&kuchiyoseLink(actor).limit?.common?' − 3 (Kuchiyose comum)':''),size:e.fixedSize?'':'⌈'+p.sizeFactor+' × ESP⌉',chakraCost:j.variant==='sem-chakra'?'Variante sem chakra':orbe7?'⌈nível usado/2⌉':'Nível usado'};
  if(j.variant==='sem-chakra')formulas.damage='⌈('+formulas.damage+')/2⌉';
  if(e.id==='sns:effect:raio'&&j.variant==='concentrado')formulas.damage+=' + 2 (Raio8)';
  const provenance=Object.fromEntries(Object.keys(data).map(k=>[k,['damage','range','chakraCost','difficulty','size'].includes(k)?'calculado':'herdado']));
+ if(p.attributeLabel)for(const key of Object.keys(formulas))formulas[key]=formulas[key].replaceAll('ESP',p.attributeLabel);
  if(e.fixedSize)provenance.size='herdado';
  for(const o of j.overrides??[]){if(o.author&&o.reason&&Object.hasOwn(data,o.key)){data[o.key]=o.value;provenance[o.key]='personalizado';delete formulas[o.key];}}
  if(!Number.isInteger(Number(data.chakraCost))||Number(data.chakraCost)<0)problems.push('Custo de chakra deve ser um inteiro não negativo.');

@@ -1,3 +1,5 @@
+import {runCastStep} from './cast-undo-service.mjs';
+import {assertCastActive} from './cast-undo-core.mjs';
 import {weaponCheckComponents} from './weapon-checks.mjs';
 import {rollWithLegado} from './legado-fortune.mjs';
 import {checkComponents} from './roll-components.mjs';
@@ -80,7 +82,7 @@ export async function useNpcJutsu(actor,item){
   if(plan.mode==='save'&&!game.users.activeGM)throw Error('Um mestre ativo precisa acompanhar as resistências. Nenhum chakra gasto.');
   const projection=asProjection(plan,item),targets=Array.from(game.user.targets??[]),selectedTargets=damageTargets(targets);
   const original=jutsuProjection(item,{usedLevel:plan.level}),use=npcUseSnapshot(actor,item,original,targets);
-  const cast={version:1,actorUuid:actor.uuid,itemUuid:item.uuid,plan,status:'pending',targets:selectedTargets,saves:{},pendingUse:!plan.mode.startsWith('attack:')?use:null};
+  const cast={version:1,undoVersion:1,params:structuredClone(choice.custom),actorUuid:actor.uuid,itemUuid:item.uuid,plan,status:'pending',targets:selectedTargets,saves:{},pendingUse:!plan.mode.startsWith('attack:')?use:null};
   const packet=packetFor(actor,item,plan,projection,targets);
   const escape=s=>String(s??'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
   const message=await msgClass().create({speaker:msgClass().getSpeaker({actor}),content:techniqueCard(item,projection,use)+(plan.useNote?'<p>'+escape(plan.useNote)+'</p>':'')+(plan.visionCost?'<p>Visão '+plan.visionCost+'</p>':'')+(plan.legado?.mimicCost?'<p>Mímica '+plan.legado.mimicCost+' PM</p>':'')+(plan.clay?'<p class="sns-npc-material">Argila: '+plan.clay+' bomba(s).</p>':''),flags:{[ns]:{npcJutsuCast:cast,areaUse:plan.areas,...(packet&&plan.mode==='save'?{damageUse:packet}:{}),check:{actorImg:actor.img,key:'jutsu'}}}});
@@ -88,11 +90,19 @@ export async function useNpcJutsu(actor,item){
  }catch(error){ui.notifications.warn(error.message);}finally{busy.delete(lockKey);}
 }
 export async function completeNpcCast(message){
+ const cast=flag(message);if(cast?.undoVersion!==1)return completeNpcPayment(message);
+ if(!isProcessor())return;assertCastActive(message);const actor=await fromUuid(cast.actorUuid),targets=await Promise.all(cast.targets.map(t=>fromUuid(t.uuid)));
+ await runCastStep(message,[actor],'Custo do jutsu',()=>completeNpcPayment(message));
+ if(message.getFlag(ns,'jutsuUse'))await (await import('./jutsu-application.mjs')).afterJutsuMessage(message);
+ if(cast.plan.legado)await runCastStep(message,[actor,...targets],'Efeitos do Legado',()=>import('./legado-service.mjs').then(m=>m.finalizeLegadoCast(message)));
+}
+async function completeNpcPayment(message){
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),item=await fromUuid(cast?.itemUuid);
  if(!cast||!owns(actor)||item?.actor!==actor||cast.status!=='pending'||cast.plan.legado&&!isProcessor())return;
  await withEffectLock(actor,async()=>{
  if(flag(message).status!=='pending')return;
  const prior=actor.getFlag(ns,'npcCastLedger')?.[message.id];
+ if(cast.undoVersion===1){const library=await loadCanonicalLibrary(),verified=npcJutsuPlan(item,library.entries,cast.plan.level,cast.params??{});if(!actor.testUserPermission(message.author,'OWNER')||JSON.stringify(verified)!==JSON.stringify(cast.plan))throw Error('A técnica ou a permissão mudou. Abra um novo uso.');}
  if(!prior){
   if(cast.plan.legado){
    if(!actor.testUserPermission(message.author,'OWNER'))throw Error('Sem permissão para usar a técnica.');
@@ -107,10 +117,10 @@ export async function completeNpcCast(message){
  else if(prior.cost!==cast.plan.cost||prior.level!==cast.plan.level||prior.itemUuid!==item.uuid)throw Error('Este cartão já foi pago com outros parâmetros.');
  await message.update({['flags.'+ns+'.npcJutsuCast.status']:'paid',...(cast.pendingUse?{['flags.'+ns+'.jutsuUse']:cast.pendingUse}:{})});
  });
- if(message.getFlag(ns,'jutsuUse'))await (await import('./jutsu-application.mjs')).afterJutsuMessage(message);
- if(cast.plan.legado)await (await import('./legado-service.mjs')).finalizeLegadoCast(message);
+ if(cast.undoVersion!==1){if(message.getFlag(ns,'jutsuUse'))await (await import('./jutsu-application.mjs')).afterJutsuMessage(message);if(cast.plan.legado)await (await import('./legado-service.mjs')).finalizeLegadoCast(message);}
 }
 export async function reloadNpcDevice(message){
+ assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),id=cast?.plan?.deviceUse?.itemId,item=actor?.items.get(id),def=PUPPET_DEVICES[item?.flags?.[ns]?.puppetDevice?.slug];
  if(!game.user.isGM||!actor?.isOwner||!def?.uses||cast.status==='pending')throw Error('O mestre recarrega o dispositivo quando houver munição disponível.');
  return withEffectLock(actor,async()=>{if(actor.flags?.[ns]?.puppetReloads?.[message.id])return;await actor.update({['flags.'+ns+'.puppetUses.'+id]:def.uses,['flags.'+ns+'.puppetReloads.'+message.id]:{itemId:id,to:def.uses,user:game.user.id,at:new Date().toISOString()}});ui.notifications.info('Dispositivo recarregado · '+def.uses+' usos.');ui.chat?.updateMessage(message);});
@@ -132,12 +142,14 @@ async function promptRoll(actor,key,title,adjustment=0){
  return SnsCheckDialog.promptRecorded(actor,{key,name:title,precision,die:'2d8',techniqueAdjustment:adjustment,techniqueLabel:'Regra de '+title});
 }
 export async function rollNpcTechniqueCheck(message,index){
+ assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),check=cast?.plan.checks?.[index];
  if(!owns(actor)||cast.status!=='paid'||!check||!RESISTANCE_KEYS.some(r=>r.key===check.key)&&!(cast.plan.legado&&['cc','cd','lm'].includes(check.key)))return;
  const dialog=await promptRoll(actor,check.key,check.label,check.adjustment??0);if(!dialog)return;
  const roll=await rollWithLegado(actor,dialog.spec),outcome=Number.isFinite(check.dc)?versusDifficulty(rolledCheck(roll,dialog.spec),check.dc):null;return roll.toMessage({speaker:msgClass().getSpeaker({actor}),flavor:checkFlavor(dialog.spec),flags:{[ns]:{check:{actorImg:actor.img,key:check.key},...(outcome?{testOutcome:{dc:check.dc,result:outcome}}:{}),npcTechniqueCheck:{parentUuid:message.uuid,key:check.key}}}},{messageMode:dialog.messageMode});
 }
 export async function attackNpcCast(message){
+ assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),item=await fromUuid(cast?.itemUuid);
  if(!owns(actor)||item?.actor!==actor||cast.status!=='paid'||!cast.plan.mode.startsWith('attack:')||busy.has(message.uuid))return;
  busy.add(message.uuid);
@@ -149,7 +161,7 @@ export async function attackNpcCast(message){
   if(!await prepareProjectilePacket(packet))return;
   const {declareJutsuDefenses}=await import('./pre-defense.mjs');
   const defense=await declareJutsuDefenses(actor,item,packet?.profile,targets);if(defense===null)return;
-  if(flag(message).status!=='paid')return;
+  if(flag(message).status!=='paid')return;assertCastActive(message);
   const roll=await rollWithLegado(actor,dialog.spec,{kind:'attack'}),attack=rolledCheck(roll,dialog.spec);
   if(packet){packet.attack=attack;if(defense)packet.defenseRequestUuid=defense;}
   const original=jutsuProjection(item,{usedLevel:cast.plan.level}),use=npcUseSnapshot(actor,item,original,targets);if(use)use.attack=attack;
@@ -160,12 +172,14 @@ export async function attackNpcCast(message){
  }finally{busy.delete(message.uuid);}
 }
 export async function rollNpcSave(message,target,key){
+ assertCastActive(message);
  const cast=flag(message),busyKey=message.uuid+'|'+target.uuid;
  if(!cast||cast.status!=='paid'||!owns(target)||!cast.targets.some(t=>t.uuid===target.uuid)||!cast.plan.saveKeys.includes(key)||cast.saves[target.uuid.replaceAll('.','~')]&&!legadoMayReroll(cast,target)||saveBusy.has(busyKey))return;
  saveBusy.add(busyKey);
  try{const dialog=await promptRoll(target,key,'Resistência · '+cast.plan.name);if(!dialog)return;const roll=await rollWithLegado(target,dialog.spec),result=rolledCheck(roll,dialog.spec),dc=npcSaveDifficulty(cast,target),outcome=versusDifficulty(result,dc);return roll.toMessage({speaker:msgClass().getSpeaker({actor:target}),flavor:checkFlavor(dialog.spec),flags:{[ns]:{npcJutsuSave:{parentUuid:message.uuid,targetUuid:target.uuid,key,roll:result,...(legadoMayReroll(cast,target)?{reroll:true}:{})},testOutcome:{dc,result:outcome},check:{actorImg:target.img,key}}}},{messageMode:dialog.messageMode});}finally{saveBusy.delete(busyKey);}
 }
 export async function rollFreeNpcSave(message,key){
+ assertCastActive(message);
  const cast=flag(message);if(!cast||cast.status!=='paid'||cast.plan.mode!=='save'||cast.targets.length||!cast.plan.saveKeys.includes(key))return;
  const controlled=Array.from(canvas?.tokens?.controlled??[]).map(t=>t.actor).filter(a=>a?.isOwner&&['shinobi','npc','companion'].includes(a.type));
  let actor=controlled.length===1?controlled[0]:game.user.character?.isOwner?game.user.character:null;
@@ -182,6 +196,7 @@ export async function rollFreeNpcSave(message,key){
  return roll.toMessage({speaker:msgClass().getSpeaker({actor}),flavor:checkFlavor(dialog.spec),flags:{[ns]:{npcFreeSave:{parentUuid:message.uuid,key},testOutcome:{dc,result:outcome},check:{actorImg:actor.img,key}}}},{messageMode:dialog.messageMode});
 }
 export async function updateNpcTargets(message){
+ assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),item=await fromUuid(cast?.itemUuid);
  if(!owns(actor)||cast.status!=='paid'||Object.keys(cast.saves).length)throw Error('Os alvos só podem mudar antes das rolagens.');
  const targets=Array.from(game.user.targets??[]),selected=damageTargets(targets),projection=jutsuProjection(item,{usedLevel:cast.plan.level}),use=npcUseSnapshot(actor,item,projection,targets);
@@ -194,16 +209,18 @@ export async function acceptNpcSave(reply){
  if(!isProcessor())return;
  const proof=reply.getFlag(ns,'npcJutsuSave');if(!proof)return;
  const parent=await fromUuid(proof.parentUuid),cast=parent&&flag(parent),target=await fromUuid(proof.targetUuid),safe=proof.targetUuid.replaceAll('.','~');
+ assertCastActive(parent);
  if(!cast||cast.status!=='paid'||!target?.testUserPermission(reply.author,'OWNER')||!cast.targets.some(t=>t.uuid===target.uuid)||!cast.plan.saveKeys.includes(proof.key)||cast.saves[safe]&&!(proof.reroll&&legadoMayReroll(cast,target))||!validRoll(proof.roll))return;
  const native=rolledCheck(reply.rolls?.[0],{precision:proof.roll.precision,adjustment:0,...minionTestPolicy(target,proof.key)});if(!native||native.total!==proof.roll.total||native.natural!==proof.roll.natural)return;
  const outcome=versusDifficulty(native,npcSaveDifficulty(cast,target));
- const accepted=await withEffectLock(parent,async()=>{if(flag(parent).saves[safe]&&!(proof.reroll&&legadoMayReroll(flag(parent),target)))return false;await parent.update({['flags.'+ns+'.npcJutsuCast.saves.'+safe]:{outcome,replyUuid:reply.uuid,key:proof.key,...(proof.reroll?{rerolled:true}:{})},['flags.'+ns+'.defenseResults.'+safe]:{hit:outcome==='passed'?'miss':'hit',choice:outcome==='passed'?'Resistiu':'Falhou na resistência',defense:native}});return true;});
+ const accepted=await withEffectLock(parent,async()=>{assertCastActive(parent);if(flag(parent).saves[safe]&&!(proof.reroll&&legadoMayReroll(flag(parent),target)))return false;await parent.update({['flags.'+ns+'.npcJutsuCast.saves.'+safe]:{outcome,replyUuid:reply.uuid,key:proof.key,...(proof.reroll?{rerolled:true}:{})},['flags.'+ns+'.defenseResults.'+safe]:{hit:outcome==='passed'?'miss':'hit',choice:outcome==='passed'?'Resistiu':'Falhou na resistência',defense:native}});return true;});
  if(!accepted)return;
  if(cast.plan.legado)await resolveLegadoSave(parent,target,outcome,reply.uuid);
  const use=parent.getFlag(ns,'jutsuUse');
  if(use){const {effectRows,resolveJutsuEffects}=await import('./jutsu-application.mjs');const decisions={};for(const row of effectRows(use))if(row.target.uuid===target.uuid&&row.binding.trigger==='failedResistance'&&row.binding.resistance===proof.key)decisions[row.key]={resistance:outcome,resistanceRoll:native};if(Object.keys(decisions).length)await resolveJutsuEffects(parent,decisions);}
 }
 export async function placeNpcTemplate(message){
+ assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid);if(!owns(actor)||cast.status==='pending'||!canvas?.ready)throw Error('Abra uma cena e conclua o uso antes de posicionar a área.');
  const spec=templateSpec(cast.plan,{units:canvas.scene.grid.units,user:game.user.id,color:game.user.color?.css??game.user.color}),doc=new CONFIG.MeasuredTemplate.documentClass({...spec,x:0,y:0,flags:{[ns]:{npcJutsuCast:message.uuid}}},{parent:canvas.scene}),preview=new CONFIG.MeasuredTemplate.objectClass(doc),prior=canvas.activeLayer;
  await preview.draw();canvas.templates.activate();canvas.templates.preview.addChild(preview);
@@ -211,7 +228,7 @@ export async function placeNpcTemplate(message){
   const cleanup=()=>{canvas.stage.off('pointermove',move);canvas.stage.off('pointerdown',down);window.removeEventListener('keydown',cancel);preview.destroy({children:true});prior?.activate();};
   const move=e=>{const p=e.getLocalPosition(canvas.stage);doc.updateSource({x:p.x,y:p.y});preview.refresh();};
   const cancel=e=>{if(e.key==='Escape'){cleanup();resolve(null);}else if(e.key==='r'||e.key==='R'){doc.updateSource({direction:(doc.direction+15)%360});preview.refresh();}};
-  const down=async e=>{e.stopPropagation();if(e.button===2){cleanup();return resolve(null);}if(e.button!==0)return;const data=doc.toObject();cleanup();try{resolve(await canvas.scene.createEmbeddedDocuments('MeasuredTemplate',[data]));}catch(error){reject(error);}};
+  const down=async e=>{e.stopPropagation();if(e.button===2){cleanup();return resolve(null);}if(e.button!==0)return;const data=doc.toObject();cleanup();try{assertCastActive(message);resolve(await canvas.scene.createEmbeddedDocuments('MeasuredTemplate',[data]));}catch(error){reject(error);}};
   canvas.stage.on('pointermove',move);canvas.stage.on('pointerdown',down);window.addEventListener('keydown',cancel);ui.notifications.info('Clique para posicionar a área. R gira; Esc cancela.');
  });
 }

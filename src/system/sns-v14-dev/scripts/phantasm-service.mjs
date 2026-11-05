@@ -7,17 +7,19 @@ import {actorCombat,durationRule,durationClock} from './effect-duration.mjs';
 import {jutsuProjection} from './item-view.mjs';
 import {techniqueCard} from './technique-card.mjs';
 import {escapeHtml as esc} from './kernel.mjs';
+import {runCastStep} from './cast-undo-service.mjs';
 const ns='sns-v14-dev',working=new Set();
 function awaitDocument(message,test){return new Promise(resolve=>{const check=()=>{if(test()){Hooks.off('updateChatMessage',hook);resolve(message);}};const hook=Hooks.on('updateChatMessage',m=>{if(m.uuid===message.uuid)check();});check();});}
 const supported=actor=>actor&&['shinobi','npc','companion'].includes(actor.type);
 function liveProjection(root){const meta=phantasmData(root),item=root?.actor?.items.get(meta?.sourceId),projection=item&&jutsuProjection(item,{usedLevel:meta.usedLevel});return root?.system.appliedCondition.active&&projection?.valid&&projection.phantasm?.effectId===meta.effectId&&projection.phantasm.stage>=meta.stage?projection:null;}
 export async function activatePhantasm(actor,item,projection){
  if(!game.users.activeGM)throw Error('Um mestre ativo precisa acompanhar a ilusão.');
- const message=await foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),content:techniqueCard(item,projection),flags:{[ns]:{check:{actorImg:actor.img,key:'jutsu'},phantasmActivation:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:projection.usedLevel,status:'pending'}}}});
+ const message=await foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),content:techniqueCard(item,projection),flags:{[ns]:{undoVersion:1,check:{actorImg:actor.img,key:'jutsu'},phantasmActivation:{actorUuid:actor.uuid,itemUuid:item.uuid,usedLevel:projection.usedLevel,status:'pending'}}}});
  await awaitDocument(message,()=>message.getFlag(ns,'phantasmActivation').status!=='pending');
  const result=message.getFlag(ns,'phantasmActivation');if(result.status==='blocked')ui.notifications.warn(result.reason);return message;
 }
-async function resolveActivation(message){
+async function resolveActivation(message){const actor=await fromUuid(message.getFlag(ns,'phantasmActivation')?.actorUuid);return runCastStep(message,[actor],'Ilusão',()=>applyActivation(message));}
+async function applyActivation(message){
  const req=message.getFlag(ns,'phantasmActivation');if(!req||req.status!=='pending')return;
  const actor=await fromUuid(req.actorUuid),item=await fromUuid(req.itemUuid);
  if(!supported(actor)||item?.actor!==actor||!actor.testUserPermission(message.author,'OWNER'))throw Error('Origem da ilusão inválida.');

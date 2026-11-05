@@ -9,6 +9,8 @@ export const plainRule=html=>String(html??'').replace(/<\/(?:p|h\d|li|tr)>/gi,'\
 export function techniqueCard(item,projection,use=null){
  const rule=jutsuRuleText(item),data={...projection.data},mental=projection.magen,definition=projection.effect??{},text=readableRuleHtml(definition.text||item.system?.description||definition.notes||'',rule.fields),plain=plainRule(text),paragraphs=plain.split('\n').filter(Boolean),summary=projection.summary??(techniqueSummary(text)||plainRule(definition.notes??''));
  for(const key of ['action','range','duration','target'])if(!data[key]||genericRule(data[key]))data[key]=rule.fields[key]??'';
+ // Inferred prose belongs in the full description, never in the facts strip.
+ for(const [key,max]of [['action',80],['chakraCost',48],['range',80],['duration',80],['target',100]])if(String(data[key]??'').length>max)data[key]=key==='chakraCost'?'Variável':'Ver descrição';
  const traits=[...new Set([...(projection.traits??[]).map(id=>traitMap.get(id)?.label).filter(Boolean),...(mental?[mental.category==='compulsao'?'Compulsão':'Aflição']:[])])].filter(t=>!['Chakra','Selos de Mão'].includes(t));
  const conditions=[...new Set((projection.autoBindings??[]).map(b=>effectLabel(b.conditionId)))],rank=item.system?.details?.rank,level=projection.legado?'Legado do Ódio':rank?'Rank '+rank:(mental||projection.phantasm)?'Magen '+(item.actor?.items?.get?.(item.system?.details?.powerId)?.system.level??projection.usedLevel):'Nível '+projection.usedLevel;
  const targetCount=use?.targets.length??0,difficulty=use?.difficulty??data.difficulty,targetLabel=targetCount?(targetCount===1?'1 criatura':targetCount+' criaturas'):data.target;
@@ -19,8 +21,9 @@ export function techniqueCard(item,projection,use=null){
 
 // Old cards also receive readable rule text. Never change their rolls/costs.
 export async function decorateTechniqueText(message,element){
- const cast=message.getFlag('sns-v14-dev','npcJutsuCast');if(!cast)return;
+ const cast=message.getFlag('sns-v14-dev','npcJutsuCast')??message.getFlag('sns-v14-dev','standaloneTechnique');if(!cast)return;
  const item=await fromUuid(cast.itemUuid);if(!item)return;const rule=jutsuRuleText(item),labels={'Ação':'action','Alcance':'range','Duração':'duration','Alvos':'target'};
- for(const field of element.querySelectorAll('.sns-technique-facts span')){const label=field.querySelector('b')?.textContent,key=labels[label],old=field.textContent?.slice(label?.length??0).trim();if(key&&genericRule(old)&&rule.fields[key]){field.replaceChildren();const b=document.createElement('b');b.textContent=label;field.append(b,document.createTextNode(' '+rule.fields[key]));}}
+ labels.Chakra='chakraCost';
+ for(const field of element.querySelectorAll('.sns-technique-facts span')){const label=field.querySelector('b')?.textContent,key=labels[label],old=field.textContent?.slice(label?.length??0).trim();let text=key&&genericRule(old)?rule.fields[key]:old;if(!key)continue;const max=key==='chakraCost'?48:80;if(String(text??'').length>max)text=key==='chakraCost'?'Variável':'Ver descrição';if(text!==old){field.replaceChildren();const b=document.createElement('b');b.textContent=label;field.append(b,document.createTextNode(' '+text));}}
  for(const p of element.querySelectorAll('.sns-technique-summary'))if(/^[❖•▪]|^(?:Ação|Custo|Dano|Duração|Alcance):/i.test(p.textContent))p.textContent=techniqueSummary(item.system.description);
 }

@@ -27,7 +27,7 @@ export function applyEntryTypeFilter(filters={},value=''){
 }
 export function entryFilterChoices({tabId='',rows=[],type='',category=''}={}){
   const tab=CATALOG_TABS.find(t=>t.id===tabId);
-  const typeIds=[...new Set([...(tab?.types??[]),...(type?[type]:[])])];
+  const typeIds=[...new Set([...(tab?.types??rows.map(r=>r.type)),...(type?[type]:[])])];
   const categoryIds=[...new Set([...(tab?.categories??[]),...(category?[category]:[])])];
   const types=typeIds
     .filter(id=>id!=='reference'||type===id||rows.some(r=>r.type===id))

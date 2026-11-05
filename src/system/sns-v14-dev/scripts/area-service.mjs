@@ -1,8 +1,10 @@
+import {assertCastActive} from './cast-undo-core.mjs';
 import {regionShape} from './area-core.mjs';
 import {escapeHtml as esc} from './kernel.mjs';
 const ns='sns-v14-dev';let placing=false;
 export function areaAvailable(message){const npc=message.getFlag(ns,'npcJutsuCast'),env=message.getFlag(ns,'environmentUse'),support=message.getFlag(ns,'supportUse');return (!npc||npc.status!=='pending')&&(!env||env.status==='active')&&(!support||support.status==='active');}
 export async function placeArea(message,choiceId='0',index=0){
+ assertCastActive(message);
  if(placing)throw Error('Conclua ou cancele a área que está sendo posicionada.');
  const area=message.getFlag(ns,'areaUse'),actor=await fromUuid(area?.actorUuid),source=area?.choices?.find(c=>c.id===choiceId);
  if(!actor||!(actor.isOwner||game.user.isGM)||!areaAvailable(message)||!source)throw Error('Área indisponível para este uso.');
@@ -29,7 +31,7 @@ export async function placeArea(message,choiceId='0',index=0){
   const move=e=>{const p=e.getLocalPosition(canvas.stage);x=p.x;y=p.y;refresh();};
   const key=e=>{if(['Escape','r','R'].includes(e.key)){e.preventDefault?.();e.stopImmediatePropagation?.();}if(e.key==='Escape'){cleanup();resolve(null);}else if(e.key==='r'||e.key==='R'){direction=(direction+(e.shiftKey?-15:15)+360)%360;refresh();}};
   const down=async e=>{if(finished)return;e.stopPropagation();if(e.button===2){cleanup();return resolve(null);}if(e.button!==0)return;if(e.getLocalPosition){const p=e.getLocalPosition(canvas.stage);x=p.x;y=p.y;refresh();}const data=doc.toObject();cleanup();try{
-   const old=Array.from(canvas.scene.regions??[]).find(r=>{const f=r.getFlag(ns,'areaTemplate');return f?.messageUuid===message.uuid&&f.choiceId===choiceId&&f.index===index;});
+   assertCastActive(message);const old=Array.from(canvas.scene.regions??[]).find(r=>{const f=r.getFlag(ns,'areaTemplate');return f?.messageUuid===message.uuid&&f.choiceId===choiceId&&f.index===index;});
    if(old){if(!old.isOwner&&!game.user.isGM)throw Error('Você não controla a área já posicionada.');resolve(await old.update({shapes:data.shapes}));}
    else resolve((await canvas.scene.createEmbeddedDocuments('Region',[data]))[0]);
   }catch(error){reject(error);}};

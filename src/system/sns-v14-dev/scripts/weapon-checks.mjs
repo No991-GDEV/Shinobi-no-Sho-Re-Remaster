@@ -8,6 +8,9 @@ import {itemRuleId,requirementsFor} from './item-requirements.mjs';
 import {equipmentUse,equipmentAcuity,weaponTraining} from './equipment-use.mjs';
 import {effectiveRuleItem} from './jutsu-rule-text.mjs';
 export const ATTACK_MODES={'Corpo a corpo':['cc'],'À distância':['cd'],'Corpo a corpo e à distância':['cc','cd']};
+export function acuityAvailable(system,items=[]){const source=Array.from(items).find(i=>itemRuleId(i)==='sns:apt:acuidade');return !!source&&requirementsFor(source,{system,items}).valid;}
+export function acuityRows(system,rows,effects=[]){const dex=calculate(system,effects).attributes.des;return rows.map(row=>row.id==='attribute'?{...row,label:'Destreza · Acuidade (Básico p.61)',value:dex}:row);}
+export async function toggleWeaponAcuity(item){if(!item?.isOwner||item.type!=='weapon'||!item.actor||equipmentAcuity(item)===false||!acuityAvailable(item.actor.system,item.actor.items))throw Error('Acuidade exige Destreza 3, a aptidão e uma arma permitida.');await item.update({'system.details.ccAttribute':item.system.details.ccAttribute==='Acuidade (Destreza)'?'Padrão (Força)':'Acuidade (Destreza)'});}
 export function weaponCheckComponents(system,key,item,ownedItems=null){
  item=effectiveRuleItem(item);
  const use=equipmentUse(item,system,ownedItems);if(!use.valid)throw Error(use.problems.join(' '));

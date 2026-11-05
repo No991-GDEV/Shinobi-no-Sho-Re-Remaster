@@ -34,6 +34,7 @@ export async function reconcileLegadoGrants(actor){
 }
 export async function processLegadoCast(message){
  if(!isProcessor())return;const cast=message.getFlag(ns,'npcJutsuCast');if(!cast?.plan.legado)return;
+ if(cast.undoVersion===1){await (await import('./npc-jutsu-service.mjs')).completeNpcCast(message);return;}
  const actor=await fromUuid(cast.actorUuid),item=await fromUuid(cast.itemUuid);
  if(!actor?.testUserPermission(message.author,'OWNER')||item?.actor!==actor||!isLegado(item))return;
  if(cast.status==='pending')await (await import('./npc-jutsu-service.mjs')).completeNpcCast(message);

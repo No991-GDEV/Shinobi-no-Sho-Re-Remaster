@@ -7,6 +7,12 @@ export function inlineInteger(value){
  if(!Number.isSafeInteger(number)||number<0)throw Error('Informe um número inteiro não negativo.');
  return number;
 }
+export function creationCombatBases(source,values,{isGM=false}={}){
+ if(source.phase!=='creation'&&!isGM)throw Error('As bases são escolhidas na criação.');
+ const keys=['cc','cd','esq','lm'],bases=Object.fromEntries(keys.map(k=>[k,inlineInteger(values[k])]));
+ if(Object.values(bases).reduce((a,b)=>a+b,0)!==12||Object.values(bases).reduce((n,b)=>n+Math.max(0,b-3),0)>2)throw Error('Conserve 12 pontos e transfira no máximo 2 entre as bases.');
+ return Object.fromEntries(keys.map(k=>['system.bases.'+k,bases[k]]));
+}
 
 export function checkInlineBaseline(current,expected){
  if(expected!==undefined&&current!==inlineInteger(expected))throw Error('Este valor mudou na ficha. Confira o valor atualizado e tente novamente.');
