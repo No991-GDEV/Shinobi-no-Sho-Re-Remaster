@@ -1,4 +1,4 @@
-Beta **0.4.0-beta.7** para Foundry VTT **14.367** — automações híbridas estilo PF2e, revisão completa de UI/UX e novo layout para fichas de itens.
+Beta **0.5.0-beta.1** para Foundry VTT **14.367** — automações híbridas estilo PF2e, revisão completa de UI/UX e novo layout para fichas de itens.
 
 - **Automações híbridas estilo PF2e nos itens:** suporte a regras passivas (`passiveRules`), modos/toggles com estágios (ex.: Hachimon Tonkou), ações rápidas e reservas de cargas (`Kikaichuu`, `Rinkaichuu`, `Kidaichuu`, `Reserva de Água`, `Bombas de Argila`), além do desbloqueio de Kekkei Genkai e Hijutsus baseados em efeito para PJs e sincronização direta de receitas na aba Jutsus.
 - **Fontes homebrew opcionais (D115):** adicionadas as expansões opcionais *Kibaku Nendo Revisado* e *Pergaminho Canônico* (desativadas por padrão nas configurações do sistema).
@@ -9,7 +9,7 @@ Beta **0.4.0-beta.7** para Foundry VTT **14.367** — automações híbridas est
 
 Mantém os 14 compêndios e as 1.422 entradas canônicas. Nenhuma alteração nas fichas já salvas ou nos textos dos livros.
 
-**Atualização:** sistema e módulo de compêndios passam juntos para **0.4.0-beta.7**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
+**Atualização:** sistema e módulo de compêndios passam juntos para **0.5.0-beta.1**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
 
 - Sistema: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 - Compêndios: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json
