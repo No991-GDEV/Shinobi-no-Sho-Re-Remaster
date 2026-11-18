@@ -15,11 +15,10 @@ import {damageSnapshot,jutsuDamageProfile} from './damage-source.mjs';
 import {prepareProjectilePacket} from './projectile-allocation.mjs';
 import {illusionActionBlock} from './magen-core.mjs';
 import {techniqueCard} from './technique-card.mjs';
-import {isStandaloneTechnique,postStandaloneTechnique} from './standalone-technique.mjs';
+import {isDirectCastTechnique} from './standalone-technique.mjs';
 const pending=new WeakSet();
 export async function useJutsu(actor,item){
- if(!isLegado(item)&&isStandaloneTechnique(item))return postStandaloneTechnique(actor,item);
- if(isLegado(item)||actor.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe)return (await import('./npc-jutsu-service.mjs')).useNpcJutsu(actor,item);
+ if(isLegado(item)||actor.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe||isDirectCastTechnique(item))return (await import('./npc-jutsu-service.mjs')).useNpcJutsu(actor,item);
  if(!actor.isOwner||item?.actor!==actor||pending.has(actor))return;
  const actionBlock=illusionActionBlock(actor);if(actionBlock)return ui.notifications.warn(actionBlock);
  const restricted=techniqueRestriction(actor,item);if(restricted)return ui.notifications.warn(restricted);

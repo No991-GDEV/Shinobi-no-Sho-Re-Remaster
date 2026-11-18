@@ -1,4 +1,5 @@
 import {effectItemModifiers} from './effect-item-rules.mjs';
+import {itemPassiveModifiers} from './item-automation.mjs';
 import {legadoModifiers,legadoEyeSource} from './legado-core.mjs';
 import {perceptiveDodgeEffects} from './perceptive-dodge.mjs';
 import {advancedEffects} from './advanced-core.mjs';
@@ -24,7 +25,7 @@ export function characteristicEffects(actor){
  const chemical=Array.from(actor?.items??[]).find(i=>(i.system.ruleId||i.system.contentId)==='sns:apt:quimico');
  const reflexes=actor?.type==='shinobi'&&Array.from(actor.items??[]).find(i=>i.type==='aptitude'&&(i.system.ruleId||i.system.contentId)==='sns:apt:reflexos');
  // Duplicate copies do not multiply the same permanent penalty.
- const effects=[...effectItemModifiers(actor),...legadoModifiers(actor),...(reflexes?[{kind:'flatModifier',target:'esq',value:1,sourceId:reflexes.id,sourceName:'Reflexos'}]:[]),...(chemical?[{kind:'skillAccess',target:'veneficio',sourceId:chemical.id,sourceName:chemical.name}]:[]),...advancedEffects(actor),...environmentMovementEffects(actor),...conditionEffects(actor),...transformationProjection(actor).effects,...(sources.length?[{kind:'resourceMaximumRatio',target:'chakra',numerator:9,denominator:10,sourceId:sources[0].id,sourceName:sources[0].name,rule:TRANSPLANT_RULE,permanent:true}]:[])];
+ const effects=[...effectItemModifiers(actor),...itemPassiveModifiers(actor),...legadoModifiers(actor),...(reflexes?[{kind:'flatModifier',target:'esq',value:1,sourceId:reflexes.id,sourceName:'Reflexos'}]:[]),...(chemical?[{kind:'skillAccess',target:'veneficio',sourceId:chemical.id,sourceName:chemical.name}]:[]),...advancedEffects(actor),...environmentMovementEffects(actor),...conditionEffects(actor),...transformationProjection(actor).effects,...(sources.length?[{kind:'resourceMaximumRatio',target:'chakra',numerator:9,denominator:10,sourceId:sources[0].id,sourceName:sources[0].name,rule:TRANSPLANT_RULE,permanent:true}]:[])];
  return [...effects,...(legadoEyeSource(actor)?[]:perceptiveDodgeEffects(actor,effects))];
 }
 export function applyResourceMaximum(base,effects,target='chakra'){

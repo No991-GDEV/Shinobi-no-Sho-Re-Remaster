@@ -1,6 +1,7 @@
 // One book definition; actor-specific investment, choices and links remain on the owned copy.
 import {aptitudeChoiceStatus} from './aptitude-choices.mjs';
 import {OPTIONAL_SOURCES,sourceEnabled,sourceAvailable,optionalSourceId} from '../data/optional-sources.mjs';
+import {D115_OPTIONAL_LIBRARIES} from '../data/homebrew-d115-sources.mjs';
 export const BASIC_PACK='sns-conteudo-dev.basico';
 export const LEGACY_BASIC_PACK='world.sns-basico-canonico';
 export const HISTORICAL_PACK='world.time7-referencias-d108';
@@ -25,6 +26,7 @@ export async function loadCanonicalLibrary(){
  const active=OPTIONAL_SOURCES.filter(s=>sourceEnabled(s.id));if(!active.length)return base;
  const libraries=[],errors=[];
  for(const source of active){
+  if(source.inMemory&&D115_OPTIONAL_LIBRARIES[source.id]){libraries.push(D115_OPTIONAL_LIBRARIES[source.id]);continue;}
   if(!optionalPromises.has(source.id)){const task=fetch(source.file).then(r=>{if(!r.ok)throw Error(source.label);return r.json();}).then(l=>{if(!Array.isArray(l?.entries)||l.entries.some(e=>!e.id?.startsWith('sns:legado:')))throw Error(source.label);return l;}).catch(()=>{optionalPromises.delete(source.id);return null;});optionalPromises.set(source.id,task);}
   const library=await optionalPromises.get(source.id);if(library)libraries.push(library);else errors.push(source.label);
  }

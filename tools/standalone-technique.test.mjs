@@ -1,12 +1,77 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import {isStandaloneTechnique,compactTechniqueDetails,postStandaloneTechnique} from '../src/system/sns-v14-dev/scripts/standalone-technique.mjs';
-import {itemPresentation} from '../src/system/sns-v14-dev/scripts/item-view.mjs';
-import {techniqueCard} from '../src/system/sns-v14-dev/scripts/technique-card.mjs';
+globalThis.foundry={applications:{api:{ApplicationV2:class{},HandlebarsApplicationMixin:B=>B}},documents:{ChatMessage:{getSpeaker:()=>({actor:'fixture'})}}};
+const {isStandaloneTechnique,isDirectCastTechnique,compactTechniqueDetails,postStandaloneTechnique,shareTechniqueToChat}=await import('../src/system/sns-v14-dev/scripts/standalone-technique.mjs');
+const {itemPresentation}=await import('../src/system/sns-v14-dev/scripts/item-view.mjs');
+const {techniqueCard}=await import('../src/system/sns-v14-dev/scripts/technique-card.mjs');
+const {npcJutsuPlan}=await import('../src/system/sns-v14-dev/scripts/npc-jutsu-core.mjs');
+const {buildDirectJutsuPayload,initialDirectDraft}=await import('../src/system/sns-v14-dev/scripts/jutsu-builder.mjs');
+const {basicTechniquesForWizard}=await import('../src/system/sns-v14-dev/scripts/creation-wizard.mjs');
 const library=JSON.parse(fs.readFileSync(new URL('../src/content/sns-conteudo-dev/content/basico-canonico-v1.json',import.meta.url),'utf8'));
-function fixture(id='sns:jutsu:bunshin-no-jutsu'){const item=structuredClone(library.entries.find(e=>e.id===id).document),actor={uuid:'Actor.fixture',type:'shinobi',isOwner:true,img:'icons/svg/mystery-man.svg'};item.id='technique';item.uuid=actor.uuid+'.Item.technique';item.actor=actor;return {actor,item};}
+function fixture(id='sns:jutsu:bunshin-no-jutsu'){const item=structuredClone(library.entries.find(e=>e.id===id).document),actor={uuid:'Actor.fixture',type:'shinobi',isOwner:true,img:'icons/svg/mystery-man.svg',items:[],system:{attributes:{esp:4,int:3},resources:{chakra:{value:10}}}};actor.items.get=k=>actor.items.find(i=>i.id===k);item.id='technique';item.uuid=actor.uuid+'.Item.technique';item.actor=actor;return {actor,item};}
 test('all seven loose basic techniques expose use without a learned elemental effect',()=>{for(const id of ['bunshin-no-jutsu','henge-no-jutsu','kawarimi-no-jutsu','kinobori','shunshin-no-jutsu','tadayou','kai']){const {item}=fixture('sns:jutsu:'+id);assert(isStandaloneTechnique(item));assert(itemPresentation(item).canUse,id);}});
 test('legacy Bunshin fields become short labels on every actor, preserving the full description and source data',()=>{const {item}=fixture(),before=structuredClone(item.system),row=itemPresentation(item);assert.equal(row.details.action,'Movimento ou Padrão (ver texto)');assert.equal(row.details.chakraCost,'1 ou 4 (ver texto)');assert.deepEqual(item.system,before);assert(item.system.description.includes('Prestidigitação'));const custom=compactTechniqueDetails(item,{action:'A'.repeat(140),chakraCost:'B'.repeat(140)});assert(custom.action.length<65);assert(custom.chakraCost.length<45);});
 test('using a loose technique shares its description without changing chakra or claiming automatic damage',async()=>{const {actor,item}=fixture(),before=structuredClone(item.system);let created;globalThis.foundry={documents:{ChatMessage:{getSpeaker:()=>({actor:'fixture'}),create:async data=>(created=data)}}};await postStandaloneTechnique(actor,item);assert(created.content.includes('Prestidigitação'));assert(created.content.includes('Custo e efeitos: controle manual.'));assert(!created.flags['sns-v14-dev'].damageUse);assert(!created.flags['sns-v14-dev'].jutsuPayment);assert.deepEqual(item.system,before);});
 test('standalone sharing never bypasses ownership or a configured effect, parent power or grant',async()=>{const {actor,item}=fixture();actor.isOwner=false;assert.equal(await postStandaloneTechnique(actor,item),undefined);actor.isOwner=true;for(const path of ['effectId','grantSourceId']){item.system.jutsu={[path]:'configured'};assert(!isStandaloneTechnique(item));}item.system.jutsu={};item.system.details.powerId='power';assert(!isStandaloneTechnique(item));});
 test('NPC loose techniques share the same manual card while dedicated recipe executors retain their path',async()=>{const {actor,item}=fixture('sns:jutsu:henge-no-jutsu');actor.type='npc';let created;globalThis.foundry={documents:{ChatMessage:{getSpeaker:()=>({actor:'fixture'}),create:async data=>(created=data)}}};await postStandaloneTechnique(actor,item);assert(created.content.includes('Henge'));assert(created.content.includes('Custo e efeitos: controle manual.'));item.flags={'sns-v14-dev':{npcSourceRecipe:{variant:'specific'}}};assert(!isStandaloneTechnique(item));const kai=fixture('sns:jutsu:kai').item;assert.equal(compactTechniqueDetails(kai,kai.system.details).chakraCost,'Variável');});
 test('chat fact strips never re-expand long inferred action or chakra prose',()=>{const {item}=fixture(),text=techniqueCard(item,{data:{action:'a'.repeat(180),chakraCost:'b'.repeat(160)},usedLevel:1,effect:{text:item.system.description}}),facts=text.split('sns-technique-facts')[1].split('</div>')[0];assert(!facts.includes('a'.repeat(100)));assert(!facts.includes('b'.repeat(100)));assert(text.includes('Prestidigitação'));});
+test('Kai and power-linked techniques without learned effects can be used and rolled by PCs',()=>{
+ const {actor,item}=fixture('sns:jutsu:kai');
+ item.system.details.powerId='power-ninpou';
+ assert(isDirectCastTechnique(item));
+ assert(itemPresentation(item).canUse);
+ const missing=npcJutsuPlan(item,library.entries,1);
+ assert(missing.missing.includes('context'));
+ const plan=npcJutsuPlan(item,library.entries,1,{contextChoice:'cancel',contextValue:3});
+ assert.equal(plan.cost,3);
+ assert.deepEqual(plan.missing,[]);
+ assert.deepEqual(plan.checks.map(c=>c.key),['attribute:esp','attribute:int']);
+});
+test('shareTechniqueToChat sends the technique description to chat without charging chakra',async()=>{
+ const {actor,item}=fixture('sns:jutsu:kai');
+ item.system.details.powerId='power-ninpou';
+ let created;
+ globalThis.foundry={...globalThis.foundry,documents:{ChatMessage:{getSpeaker:()=>({actor:'fixture'}),create:async data=>(created=data)}}};
+ await shareTechniqueToChat(actor,item);
+ assert(created.content.includes('Kai'));
+ assert(!created.flags['sns-v14-dev'].jutsuPayment);
+ assert(!created.flags['sns-v14-dev'].npcJutsuCast);
+ assert(created.flags['sns-v14-dev'].sharedTechniqueCard);
+});
+test('direct mode in JutsuBuilder builds a playable technique without an effectId',()=>{
+ const payload=buildDirectJutsuPayload({name:'Técnica de Selamento Direta',powerId:'fuuin',direct:{action:'Completa',range:'Toque',duration:'Cena',cost:'2',mode:'check',checkKey:'skill:prestidigitacao',descriptionText:'Sela um pergaminho.'}});
+ assert.equal(payload.jutsu.effectId,'');
+ assert.equal(payload.config.mode,'check');
+ assert.equal(payload.config.cost,2);
+ assert.equal(payload.config.checkKey,'skill:prestidigitacao');
+ const {actor,item}=fixture('sns:jutsu:kai');
+ item.name=payload.name;
+ item.system.contentId='';
+ item.system.description=payload.description;
+ item.system.details={...item.system.details,...payload.details};
+ item.system.jutsu=payload.jutsu;
+ item.flags={'sns-v14-dev':{directJutsuConfig:payload.config}};
+ const draft=initialDirectDraft(item);
+ assert.equal(draft.mode,'check');
+ assert.equal(draft.checkKey,'skill:prestidigitacao');
+ const plan=npcJutsuPlan(item,library.entries,1);
+ assert.equal(plan.mode,'check');
+ assert.equal(plan.cost,2);
+ assert.deepEqual(plan.missing,[]);
+ assert.equal(plan.checks[0].key,'skill:prestidigitacao');
+});
+test('creation wizard lists the seven basic techniques and tracks owned ones',()=>{
+ const {actor,item}=fixture('sns:jutsu:kai');
+ actor.items=[item];
+ const list=basicTechniquesForWizard(actor,library);
+ assert.equal(list.length,7);
+ assert.equal(list.find(t=>t.id==='sns:jutsu:kai')?.owned,true);
+ assert.equal(list.find(t=>t.id==='sns:jutsu:henge-no-jutsu')?.owned,false);
+});
+test('sheet templates expose the PF2e-style chat share icon alongside useJutsu',()=>{
+ const jutsus=fs.readFileSync(new URL('../src/system/sns-v14-dev/templates/tabs/jutsus.hbs',import.meta.url),'utf8');
+ const actions=fs.readFileSync(new URL('../src/system/sns-v14-dev/templates/tabs/actions.hbs',import.meta.url),'utf8');
+ assert(jutsus.includes('data-action="shareJutsu"'));
+ assert(jutsus.includes('data-action="useJutsu"'));
+ assert(actions.includes('data-action="shareJutsu"'));
+ assert(actions.includes('data-action="useJutsu"'));
+});

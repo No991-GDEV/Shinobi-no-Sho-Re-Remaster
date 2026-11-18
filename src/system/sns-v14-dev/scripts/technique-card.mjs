@@ -1,4 +1,4 @@
-import {itemArt,assignedItemArt,isPlaceholderArt} from './item-art.mjs';
+import {displayItemArt} from './item-art.mjs';
 import {escapeHtml as esc} from './kernel.mjs';
 import {traitMap} from './traits.mjs';
 import {CONDITION_STATUSES} from '../data/condition-statuses.mjs';
@@ -16,7 +16,7 @@ export function techniqueCard(item,projection,use=null){
  const targetCount=use?.targets.length??0,difficulty=use?.difficulty??data.difficulty,targetLabel=targetCount?(targetCount===1?'1 criatura':targetCount+' criaturas'):data.target;
  const fact=(label,value)=>value?'<span><b>'+esc(label)+'</b> '+esc(value)+'</span>':'';
  const outcomes=mental?'<div class="sns-technique-outcomes">'+(!mental.unresistable?'<p><b>Sucesso</b> O alvo resiste à ilusão.</p>':'')+'<p><b>'+(!mental.unresistable?'Falha':'Efeito')+'</b> '+conditions.map(name=>'<span class="sns-condition-chip">'+esc(name)+'</span>').join(' ')+'</p></div>':'';
- return '<section class="sns-technique-card"><header class="sns-technique-title"><img src="'+esc(itemArt(item))+'" alt=""><strong>'+esc(item.name)+'</strong><span>'+esc(level)+'</span></header><div class="sns-chat-tags">'+traits.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="sns-technique-facts">'+fact('Ação',data.action)+fact('Chakra',data.chakraCost)+fact('Alcance',data.range)+fact('Alvos',targetLabel)+fact('Duração',data.duration)+(data.damage&&data.damage!=='Nenhum'?fact(data.damageType==='fixed'?'Dano fixo':'DB',data.damage):'')+(mental&&!mental.unresistable?fact('Resistência','INT · Dif '+difficulty):'')+'</div>'+(summary?'<p class="sns-technique-summary">'+esc(summary)+'</p>':'')+outcomes+(paragraphs.length?'<details class="sns-technique-description"><summary>Descrição completa</summary>'+paragraphs.map(p=>'<p>'+esc(p)+'</p>').join('')+'</details>':'')+'</section>';
+ return '<section class="sns-technique-card"><header class="sns-technique-title"><img src="'+esc(displayItemArt(item))+'" alt=""><strong>'+esc(item.name)+'</strong><span>'+esc(level)+'</span></header><div class="sns-chat-tags">'+traits.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="sns-technique-facts">'+fact('Ação',data.action)+fact('Chakra',data.chakraCost)+fact('Alcance',data.range)+fact('Alvos',targetLabel)+fact('Duração',data.duration)+(data.damage&&data.damage!=='Nenhum'?fact(data.damageType==='fixed'?'Dano fixo':'DB',data.damage):'')+(mental&&!mental.unresistable?fact('Resistência','INT · Dif '+difficulty):'')+'</div>'+(summary?'<p class="sns-technique-summary">'+esc(summary)+'</p>':'')+outcomes+(paragraphs.length?'<details class="sns-technique-description"><summary>Descrição completa</summary>'+paragraphs.map(p=>'<p>'+esc(p)+'</p>').join('')+'</details>':'')+'</section>';
 }
 
 // Old cards also receive readable rule text. Never change their rolls/costs.

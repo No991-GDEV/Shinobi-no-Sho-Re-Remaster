@@ -1,24 +1,120 @@
+{{#if compact}}
+{{#*inline "compactTogglesBar"}}
+<section class="active-aptitudes sns-action-toggles">
+ <header class="pf-section sns-action-toggles-head">
+  <h2>Ativações rápidas</h2>
+  <div class="controls">
+   {{#if editable}}{{#if isGM}}<button type="button" data-action="configureActiveAptitude"><i class="fa-solid fa-plus" aria-hidden="true"></i> Configurar</button>{{/if}}{{/if}}
+   <button type="button" data-action="openActiveAptitudes" title="Ver todas em Jutsus → Aptidões ativas">Gerenciar em Jutsus <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button>
+  </div>
+ </header>
+ <div class="sns-quick-toggles-bar">
+  {{#each activeAptitudes}}
+  <button type="button" class="sns-quick-toggle {{#if active}}is-active{{/if}} {{#if needsCollapse}}is-warning{{/if}}" data-action="toggleActiveAptitude" data-activation-id="{{id}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" title="{{#if needsCollapse}}Chakra 0 · resolva Colapso do Olho.{{else}}{{#if eyeControl}}{{eyeLabel}}{{else}}{{action}} · Chakra {{costLabel}} · {{duration}}{{/if}}{{/if}}" {{#unless @root.editable}}disabled{{else}}{{#unless canToggle}}disabled{{/unless}}{{/unless}}>{{#if eyeControl}}<i class="fa-solid {{#if active}}fa-eye{{else}}fa-eye-slash{{/if}}" aria-hidden="true"></i>{{else}}<span class="sns-quick-dot" aria-hidden="true"></span>{{/if}} <span>{{sourceName}}</span> <small class="sns-quick-status">{{status}}</small></button>
+  {{#if active}}{{#if transplanted}}{{#unless automaticUpkeep}}<button type="button" class="sns-quick-upkeep" data-action="payAptitudeUpkeep" data-activation-id="{{id}}" {{#unless valid}}disabled{{/unless}} {{#unless @root.editable}}disabled{{/unless}} title="Pagar manutenção ({{upkeep}} chakra)">Pagar 1 turno</button>{{/unless}}{{/if}}{{/if}}
+  {{/each}}
+  {{#each itemActivations}}
+   {{#if (snsIsTab kind "charge")}}
+   <div class="sns-quick-charge" title="{{label}}: {{charge.value}}/{{charge.max}} {{charge.unit}}">
+    <span class="sns-quick-charge-label">{{label}}</span>
+    <button type="button" data-action="adjustItemCharge" data-item-id="{{itemId}}" data-charge-delta="-1" aria-label="Gastar 1 {{charge.unit}}" {{#unless @root.editable}}disabled{{/unless}}>−</button>
+    <strong>{{charge.value}}/{{charge.max}}</strong>
+    <button type="button" data-action="adjustItemCharge" data-item-id="{{itemId}}" data-charge-delta="1" aria-label="Adicionar 1 {{charge.unit}}" {{#unless @root.editable}}disabled{{/unless}}>+</button>
+   </div>
+   {{else}}{{#if (snsIsTab kind "action")}}
+   <button type="button" class="sns-quick-toggle" data-action="runItemQuickAction" data-item-id="{{itemId}}" title="{{action}} · Chakra {{costLabel}}" {{#unless @root.editable}}disabled{{/unless}}><i class="fa-solid fa-dice-d8" aria-hidden="true"></i> <span>{{label}}</span></button>
+   {{else}}
+   <button type="button" class="sns-quick-toggle {{#if active}}is-active{{/if}}" data-action="toggleItemActivation" data-item-id="{{itemId}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" title="{{action}} · Chakra {{costLabel}} · {{duration}}" {{#unless @root.editable}}disabled{{/unless}}><span class="sns-quick-dot" aria-hidden="true"></span> <span>{{label}}</span> <small class="sns-quick-status">{{#if active}}{{#if selectedStageLabel}}{{selectedStageLabel}}{{else}}Ativa{{/if}}{{else}}Inativa{{/if}}</small></button>
+   {{/if}}{{/if}}
+  {{/each}}
+  {{#unless activeAptitudes.length}}{{#unless itemActivations.length}}<span class="sns-quick-empty">Nenhuma ativação configurada.</span>{{/unless}}{{/unless}}
+ </div>
+</section>
+{{/inline}}
+{{#if activeAptitudes.length}}{{> compactTogglesBar}}{{else}}{{#if itemActivations.length}}{{> compactTogglesBar}}{{else}}{{#if isGM}}{{> compactTogglesBar}}{{/if}}{{/if}}{{/if}}
+{{else}}
+{{#*inline "group1Modes"}}
+<div class="sns-aptitudes-group">
+ <h3 class="sns-aptitudes-group-head">Doujutsu &amp; Modos</h3>
+ {{#each activeAptitudes}}
+ <article class="active-aptitude-row {{#if active}}is-active{{/if}}">
+  {{#if eyeControl}}{{#if @root.editable}}
+  <button type="button" class="activation-eye {{#if active}}is-open{{/if}}" data-action="toggleActiveAptitude" data-activation-id="{{id}}" aria-label="{{eyeLabel}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" data-tooltip="{{eyeLabel}}" {{#unless canToggle}}disabled{{/unless}}><i class="fa-solid {{#if active}}fa-eye{{else}}fa-eye-slash{{/if}}" aria-hidden="true"></i></button>
+  {{else}}{{#if hasSource}}<button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{sourceName}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>{{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}{{/if}}{{else}}{{#if hasSource}}<button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{sourceName}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>{{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}{{/if}}
+  <div class="activation-body">
+   <div class="activation-title">{{#if eyeControl}}{{#if @root.editable}}{{#if hasSource}}<button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{sourceName}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>{{/if}}{{/if}}{{/if}}{{#if hasSource}}<button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{sourceName}}</button>{{else}}<strong>{{sourceName}}</strong>{{/if}}<span class="activation-status {{#if active}}is-active{{else}}{{#if transplanted}}is-covered{{/if}}{{/if}}">{{status}}</span></div>
+   <div class="activation-facts">{{#if transplanted}}<span>{{stage}}</span><span>{{upkeep}} chakra/turno</span>{{else}}<span>{{action}}</span><span>Chakra {{costLabel}}</span><span>{{duration}}</span>{{/if}}</div>
+   {{#if maintenance}}<small class="activation-maintenance">{{maintenance}}</small>{{/if}}{{#if note}}<small>{{note}}</small>{{/if}}
+   {{#each problems}}<small class="resource-issue">{{this}}</small>{{/each}}{{#if needsCollapse}}<small class="resource-issue">Chakra 0 · resolva Colapso do Olho.</small>{{/if}}
+  </div>
+  {{#if @root.editable}}<div class="activation-controls">
+   {{#if eyeControl}}
+    {{#if active}}{{#if transplanted}}<button type="button" data-action="payAptitudeUpkeep" data-activation-id="{{id}}" {{#if automaticUpkeep}}disabled{{/if}} {{#unless valid}}disabled{{/unless}}>{{#if automaticUpkeep}}No início do turno{{else}}Pagar 1 turno{{/if}}</button>{{/if}}{{/if}}
+   {{else}}
+    <button type="button" data-action="toggleActiveAptitude" data-activation-id="{{id}}" {{#unless active}}{{#unless valid}}disabled{{/unless}}{{/unless}}>{{#if active}}Desativar{{else}}Ativar{{/if}}</button>
+    {{#unless active}}<button type="button" data-action="configureActiveAptitude" data-activation-id="{{id}}" aria-label="Configurar ativação de {{sourceName}}"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button>{{/unless}}
+   {{/if}}
+  </div>{{/if}}
+ </article>
+ {{/each}}
+ {{#each itemActivations}}{{#if (snsIsTab kind "toggle")}}
+ <article class="active-aptitude-row {{#if active}}is-active{{/if}}">
+  <button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{label}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>
+  <div class="activation-body">
+   <div class="activation-title"><button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{label}}</button><span class="activation-status {{#if active}}is-active{{/if}}">{{#if active}}Ativa{{else}}Inativa{{/if}}</span></div>
+   <div class="activation-facts"><span>{{action}}</span><span>Chakra {{costLabel}}</span><span>{{duration}}</span></div>
+   {{#if summary}}<small>{{summary}}</small>{{/if}}{{#if note}}<small class="activation-maintenance">{{note}}</small>{{/if}}
+  </div>
+  {{#if @root.editable}}<div class="activation-controls">
+   {{#if stages}}<select data-activation-stage aria-label="Estágio de {{label}}">{{#each stages}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{label}} ({{cost}} CH)</option>{{/each}}</select>{{/if}}
+   <button type="button" data-action="toggleItemActivation" data-item-id="{{itemId}}">{{#if active}}{{#if stages}}Mudar estágio{{else}}Desativar{{/if}}{{else}}Ativar{{/if}}</button>
+   {{#if active}}{{#if stages}}<button type="button" data-action="toggleItemActivation" data-item-id="{{itemId}}" data-deactivate="1">Desativar</button>{{/if}}{{/if}}
+  </div>{{/if}}
+ </article>
+ {{/if}}{{/each}}
+</div>
+{{/inline}}
 <section class="active-aptitudes">
 <header class="pf-section"><h2>Aptidões ativas</h2><div class="controls">{{#if editable}}{{#if isGM}}<button type="button" data-action="configureActiveAptitude"><i class="fa-solid fa-plus" aria-hidden="true"></i> Configurar</button>{{/if}}{{/if}}</div></header>
-{{#each activeAptitudes}}
-<article class="active-aptitude-row {{#if active}}is-active{{/if}}">
- {{#if eyeControl}}{{#if @root.editable}}
- <button type="button" class="activation-eye {{#if active}}is-open{{/if}}" data-action="toggleActiveAptitude" data-activation-id="{{id}}" aria-label="{{eyeLabel}}" aria-pressed="{{#if active}}true{{else}}false{{/if}}" data-tooltip="{{eyeLabel}}" {{#unless canToggle}}disabled{{/unless}}><i class="fa-solid {{#if active}}fa-eye{{else}}fa-eye-slash{{/if}}" aria-hidden="true"></i></button>
- {{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}{{else}}<img class="activation-icon" src="{{sourceImg}}" alt="">{{/if}}
- <div class="activation-body">
-  <div class="activation-title">{{#if hasSource}}<button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{sourceName}}</button>{{else}}<strong>{{sourceName}}</strong>{{/if}}<span class="activation-status">{{status}}</span></div>
-  <div class="activation-facts">{{#if transplanted}}<span>{{stage}}</span><span>{{upkeep}} chakra/turno</span>{{else}}<span>{{action}}</span><span>Chakra {{costLabel}}</span><span>{{duration}}</span>{{/if}}</div>
-  {{#if maintenance}}<small class="activation-maintenance">{{maintenance}}</small>{{/if}}{{#if note}}<small>{{note}}</small>{{/if}}
-  {{#each problems}}<small class="resource-issue">{{this}}</small>{{/each}}{{#if needsCollapse}}<small class="resource-issue">Chakra 0 · resolva Colapso do Olho.</small>{{/if}}
- </div>
- {{#if @root.editable}}<div class="activation-controls">
-  {{#if eyeControl}}
-   {{#if active}}{{#if transplanted}}<button type="button" data-action="payAptitudeUpkeep" data-activation-id="{{id}}" {{#if automaticUpkeep}}disabled{{/if}} {{#unless valid}}disabled{{/unless}}>{{#if automaticUpkeep}}No início do turno{{else}}Pagar 1 turno{{/if}}</button>{{/if}}{{/if}}
-  {{else}}
-   <button type="button" data-action="toggleActiveAptitude" data-activation-id="{{id}}" {{#unless active}}{{#unless valid}}disabled{{/unless}}{{/unless}}>{{#if active}}Desativar{{else}}Ativar{{/if}}</button>
-   {{#unless active}}<button type="button" data-action="configureActiveAptitude" data-activation-id="{{id}}" aria-label="Configurar ativação de {{sourceName}}"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button>{{/unless}}
-  {{/if}}
- </div>{{/if}}
-</article>
-{{else}}<p class="empty-power">Nenhuma aptidão ativa.</p>{{/each}}
+{{#unless activeAptitudes.length}}{{#unless itemActivations.length}}<p class="empty-power">Nenhuma aptidão ativa.</p>{{/unless}}{{/unless}}
+{{#if activeAptitudes.length}}{{> group1Modes}}{{else}}{{#if itemActivations.length}}{{> group1Modes}}{{/if}}{{/if}}
+{{#if itemActivations.length}}
+<div class="sns-aptitudes-group">
+ <h3 class="sns-aptitudes-group-head">Ativações &amp; Ações</h3>
+ {{#each itemActivations}}{{#if (snsIsTab kind "action")}}
+ <article class="active-aptitude-row">
+  <button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{label}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>
+  <div class="activation-body">
+   <div class="activation-title"><button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{label}}</button><span class="activation-status">Ação</span></div>
+   <div class="activation-facts"><span>{{action}}</span><span>Chakra {{costLabel}}</span><span>{{duration}}</span></div>
+   {{#if summary}}<small>{{summary}}</small>{{/if}}{{#if note}}<small class="activation-maintenance">{{note}}</small>{{/if}}
+  </div>
+  {{#if @root.editable}}<div class="activation-controls">
+   <button type="button" data-action="runItemQuickAction" data-item-id="{{itemId}}"><i class="fa-solid fa-dice-d8" aria-hidden="true"></i> Usar</button>
+  </div>{{/if}}
+ </article>
+ {{/if}}{{/each}}
+</div>
+<div class="sns-aptitudes-group">
+ <h3 class="sns-aptitudes-group-head">Reservas &amp; Cargas</h3>
+ {{#each itemActivations}}{{#if (snsIsTab kind "charge")}}
+ <article class="active-aptitude-row {{#if active}}is-active{{/if}}">
+  <button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{sourceId}}" title="Enviar descrição ao chat" aria-label="Enviar {{label}} ao chat"><img src="{{sourceImg}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>
+  <div class="activation-body">
+   <div class="activation-title"><button type="button" class="entry-name" data-action="editEntry" data-item-id="{{sourceId}}">{{label}}</button><span class="activation-status is-charge">{{charge.value}} / {{charge.max}} {{charge.unit}}</span></div>
+   <div class="activation-facts"><span>{{action}}</span><span>{{duration}}</span></div>
+   {{#if summary}}<small>{{summary}}</small>{{/if}}{{#if note}}<small class="activation-maintenance">{{note}}</small>{{/if}}
+  </div>
+  {{#if @root.editable}}<div class="activation-controls">
+   <div class="sns-charge-step">
+    <button type="button" data-action="adjustItemCharge" data-item-id="{{itemId}}" data-charge-delta="-1" aria-label="Gastar 1 {{charge.unit}}">−1</button>
+    <button type="button" data-action="adjustItemCharge" data-item-id="{{itemId}}" data-charge-delta="1" aria-label="Adicionar 1 {{charge.unit}}">+1</button>
+   </div>
+   <button type="button" data-action="adjustItemCharge" data-item-id="{{itemId}}" data-charge-delta="recharge">{{charge.rechargeLabel}}</button>
+  </div>{{/if}}
+ </article>
+ {{/if}}{{/each}}
+</div>
+{{/if}}
 </section>
+{{/if}}

@@ -12,10 +12,13 @@
     <ol class="feature-list">
       {{#each entries}}
       <li class="feature-row">
+        <button type="button" class="item-image framed jutsu-chat-icon" data-action="shareItem" data-item-id="{{id}}" title="Enviar descrição ao chat" aria-label="Enviar {{displayName}} ao chat"><img src="{{img}}" alt=""><i class="fa-solid fa-message" aria-hidden="true"></i></button>
         <button type="button" class="feature-name" data-action="editEntry" data-item-id="{{id}}" aria-label="Consultar {{displayName}}">
-          <span class="feature-icon" aria-hidden="true"><i class="fa-solid {{../icon}}"></i></span>
           <span>{{name}}{{#if selectionLabel}}<small class="aptitude-choice-label">{{selectionLabel}}</small>{{/if}}</span>
         </button>
+        {{#if automation.hasToggle}}{{#if @root.editable}}<button type="button" class="sns-inline-activation {{#if automation.active}}is-active{{/if}}" data-action="toggleItemActivation" data-item-id="{{id}}">{{#if automation.active}}Desativar{{else}}Ativar{{/if}}</button>{{/if}}{{/if}}
+        {{#if automation.hasQuickAction}}{{#if @root.editable}}<button type="button" class="sns-inline-activation" data-action="runItemQuickAction" data-item-id="{{id}}"><i class="fa-solid fa-dice-d8" aria-hidden="true"></i> Usar</button>{{/if}}{{/if}}
+        {{#if automation.hasChargePool}}<span class="sns-inline-charge">{{#if @root.editable}}<button type="button" class="sns-inline-activation" data-action="adjustItemCharge" data-item-id="{{id}}" data-charge-delta="-1" aria-label="Gastar 1 {{automation.charge.unit}}">−</button>{{/if}}<span>{{automation.charge.value}}/{{automation.charge.max}}</span>{{#if @root.editable}}<button type="button" class="sns-inline-activation" data-action="adjustItemCharge" data-item-id="{{id}}" data-charge-delta="1" aria-label="Adicionar 1 {{automation.charge.unit}}">+</button>{{/if}}</span>{{/if}}
         {{#if (snsIsTab type "aptitude")}}{{#if @root.editable}}<button type="button" class="sns-acquisition-button" data-action="acquisition" data-item-id="{{id}}" data-tooltip="Conferir aquisição e custo em PP">Aquisição</button>{{/if}}{{/if}}
         {{#if @root.editable}}<button type="button" class="feature-remove" data-action="removeEntry" data-item-id="{{id}}" aria-label="Remover {{displayName}}" data-tooltip="Remover {{displayName}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}
       </li>

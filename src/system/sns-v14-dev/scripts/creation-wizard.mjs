@@ -18,10 +18,38 @@ import { SnsPowerProgression } from "./power-progression.mjs";
 import { SnsJutsuBuilder } from "./jutsu-builder.mjs";
 import { canControlTransformation } from "./transformation-core.mjs";
 import { configureAcquisition } from "./acquisition-ui.mjs";
+import { loadCanonicalLibrary, canonicalCopy } from "./canonical-content.mjs";
+import { compactTechniqueDetails } from "./standalone-technique.mjs";
+import { displayItemArt } from "./item-art.mjs";
 
 const { ApplicationV2 } = foundry.applications.api;
 
 const SKILL_SEARCH_SELECTOR = "[data-creation-skill-search]";
+export const BASIC_TECHNIQUE_IDS = [
+  "sns:jutsu:kai",
+  "sns:jutsu:bunshin-no-jutsu",
+  "sns:jutsu:kawarimi-no-jutsu",
+  "sns:jutsu:henge-no-jutsu",
+  "sns:jutsu:kinobori",
+  "sns:jutsu:shunshin-no-jutsu",
+  "sns:jutsu:tadayou"
+];
+export function basicTechniquesForWizard(actor, library) {
+  const owned = new Set(Array.from(actor?.items ?? []).filter(i => i.type === "jutsu").map(i => i.system?.contentId || i.name));
+  return BASIC_TECHNIQUE_IDS.map(id => {
+    const entry = library?.entries?.find(e => e.id === id);
+    if (!entry) return null;
+    const d = compactTechniqueDetails(entry.document, entry.document.system?.details ?? {});
+    return {
+      id,
+      name: entry.document.name,
+      img: displayItemArt(entry.document),
+      action: d.action || "—",
+      cost: d.chakraCost || "—",
+      owned: owned.has(id) || owned.has(entry.document.name)
+    };
+  }).filter(Boolean);
+}
 
 export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -40,6 +68,8 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
       editAcquisition: SnsCreationWizard.editAcquisition,removeChoice:SnsCreationWizard.removeChoice,
       openProgression: SnsCreationWizard.openProgression,
       openJutsuBuilder: SnsCreationWizard.openJutsuBuilder,
+      addBasicTechnique: SnsCreationWizard.addBasicTechnique,
+      removeTechnique: SnsCreationWizard.removeTechnique,
       conclude: SnsCreationWizard.conclude
     }
   };
@@ -113,9 +143,11 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
         state.data.skills = state.data.skills.filter(s =>
           s.name.toLowerCase().includes(query) || String(s.key ?? "").toLowerCase().includes(query));
     }
+    const basicTechniques = state.stepId === "jutsus" ? basicTechniquesForWizard(this.actor, await loadCanonicalLibrary()) : [];
     return {
       actor: { name: this.actor.name, img: this.actor.img },
       state,
+      basicTechniques,
       isGM: game.user.isGM,
       editable,
       canProgress:!pointError&&this._owned()&&(evolution?view.source.phase==='evolution':this._inCreation()),evolution,
@@ -347,8 +379,31 @@ export class SnsCreationWizard extends SnsHandlebarsApplicationMixin(Application
   static async openJutsuBuilder(event, target) {
     if (!this._owned()) return;
     const item = target.dataset.itemId ? this.actor.items.get?.(target.dataset.itemId) : null;
-    if (item&&item.type!=='power') return;
-    new SnsJutsuBuilder(this.actor, item).render({ force: true });
+    if (item && !["power", "jutsu"].includes(item.type)) return;
+    new SnsJutsuBuilder(this.actor, item?.type === "power" ? item : null, item?.type === "jutsu" ? item : null).render({ force: true });
+  }
+  static async addBasicTechnique(event, target) {
+    if (!this._owned() || !this._canAllocate()) return;
+    const id = target.dataset.contentId;
+    if (!BASIC_TECHNIQUE_IDS.includes(id)) return;
+    const library = await loadCanonicalLibrary();
+    const entry = library?.entries?.find(e => e.id === id);
+    if (!entry) return ui.notifications.warn("Técnica não encontrada no catálogo.");
+    if (Array.from(this.actor.items).some(i => i.type === "jutsu" && (i.system?.contentId === id || i.name === entry.document.name))) return;
+    const data = canonicalCopy(entry);
+    delete data._id;
+    await this.actor.createEmbeddedDocuments("Item", [data]);
+    await this.render({ force: true });
+  }
+  static async removeTechnique(event, target) {
+    await this._inlineQueue;
+    if (!this._owned() || !this._canAllocate() || this._removing) return;
+    const item = this.actor.items.get(target.dataset.itemId);
+    if (!item || item.type !== "jutsu") return;
+    this._removing = true;
+    try { await item.delete(); await this.render({ force: true }); }
+    catch (e) { ui.notifications.warn(e.message); }
+    finally { this._removing = false; }
   }
 
   // Snapshot de confirmação: source INTEIRO (NC/fase/orçamentos/recursos/

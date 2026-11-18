@@ -14,6 +14,25 @@ export function powerRecipes(actor,power,library){
   return {key:i.flags[ns].sharedRecipe.key,name:i.name,data:i,owned:owned.has(i.flags[ns].sharedRecipe.key)||!!i.system.jutsu?.effectId&&owned.has(i.system.jutsu.effectId)};
  });
 }
+export async function addPowerRecipeDirect(actor,power,key){
+ if(!actor?.isOwner||power?.actor!==actor||power?.type!=='power')throw Error('Sem permissão para adicionar técnicas neste poder.');
+ const library=await loadCanonicalLibrary();if(!library)throw Error('Biblioteca indisponível. Tente novamente.');
+ if(!requirementsFor(power,actor).valid||power.system.level<1||actor.type==='shinobi'&&power.system.level>Math.floor(actor.system.nc/2))throw Error('Confira o nível e os requisitos do poder antes de adicionar técnicas.');
+ const recipe=powerRecipes(actor,power,library).find(row=>row.key===key);if(!recipe)throw Error('Técnica indisponível neste nível ou nesta progressão.');
+ if(recipe.owned)return null;
+ const data=structuredClone(recipe.data);delete data._id;
+ const [created]=await actor.createEmbeddedDocuments('Item',[data]);
+ return created??null;
+}
+export async function syncAllPowerRecipes(actor,power){
+ if(!actor?.isOwner||power?.actor!==actor||power?.type!=='power')throw Error('Sem permissão para adicionar técnicas neste poder.');
+ const library=await loadCanonicalLibrary();if(!library)throw Error('Biblioteca indisponível. Tente novamente.');
+ if(!requirementsFor(power,actor).valid||power.system.level<1||actor.type==='shinobi'&&power.system.level>Math.floor(actor.system.nc/2))throw Error('Confira o nível e os requisitos do poder antes de adicionar técnicas.');
+ const pending=powerRecipes(actor,power,library).filter(r=>!r.owned);
+ if(!pending.length)return [];
+ const payload=pending.map(r=>{const d=structuredClone(r.data);delete d._id;return d;});
+ return actor.createEmbeddedDocuments('Item',payload);
+}
 export async function requestPowerRecipe(actor,power,key){
  if(!actor.isOwner||power.actor!==actor||!game.users.activeGM)throw Error('Conecte um mestre para adicionar esta técnica.');
  const message=await ChatMessage.create({speaker:ChatMessage.getSpeaker({actor}),whisper:[...new Set([game.user.id,game.users.activeGM.id])],content:'Adicionando técnica…',flags:{[ns]:{recipeRequest:{actorUuid:actor.uuid,powerId:power.id,key}}}});

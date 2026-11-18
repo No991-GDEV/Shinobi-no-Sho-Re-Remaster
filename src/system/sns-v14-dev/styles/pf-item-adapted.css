@@ -139,17 +139,11 @@
 }
 .sns-item-sheet .document-shell.editable .rollable:hover {
   color: var(--text-dark);
-  text-shadow: 0 0 10px #00005a;
+  text-shadow: 0 0 10px #680500;
   cursor: pointer;
 }
 .sns-item-sheet .document-shell .tab {
   flex: 1;
-}
-.sns-item-sheet .document-shell:has(.tab.active.rules) .sidebar-summary {
-  visibility: hidden;
-}
-.sns-item-sheet .document-shell:has(.tab.active.rules) section.sidebar {
-  display: none;
 }
 .sns-item-sheet .document-shell .tag-legacy {
   border: 1px solid var(--color-border-light-2);
@@ -250,7 +244,7 @@
   flex-flow: column nowrap;
 }
 .sns-item-sheet .document-shell .sheet-content section.sidebar > * {
-  flex: 1;
+  flex: 0 0 auto;
 }
 .sns-item-sheet .document-shell .sheet-content section.sidebar .item-summary,
 .sns-item-sheet .document-shell .sheet-content section.sidebar .tags-title {

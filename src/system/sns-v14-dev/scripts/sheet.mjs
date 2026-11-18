@@ -25,6 +25,9 @@ import {weaponChecks,weaponCheckComponents} from './weapon-checks.mjs';
 import {SnsCatalog} from './catalog.mjs';
 import {mountTraitPicker} from './trait-picker.mjs';
 import {useJutsu} from './jutsu-use.mjs';
+import {shareTechniqueToChat} from './standalone-technique.mjs';
+import {shareItemToChat} from './item-chat.mjs';
+import {toggleItemActivation,runItemQuickAction,adjustItemCharge} from './item-automation.mjs';
 import {SnsStatEditor} from './stat-editor.mjs';
 import {SnsPowerDialog} from './power-dialog.mjs';
 import {SnsJutsuManager} from './jutsu-manager.mjs';
@@ -66,8 +69,9 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
       sheetDamage:ShinobiSheet.sheetDamage,conditionDuration:ShinobiSheet.conditionDuration,endActorScene:ShinobiSheet.endActorScene,damageHistory:ShinobiSheet.damageHistory,createTemporaryEffect:ShinobiSheet.createTemporaryEffect,applyCondition:ShinobiSheet.applyCondition,sustainSupport:ShinobiSheet.sustainSupport,endCondition:ShinobiSheet.endCondition,
       payAptitudeUpkeep:ShinobiSheet.payAptitudeUpkeep,
       configureActiveAptitude:ShinobiSheet.configureActiveAptitude,toggleActiveAptitude:ShinobiSheet.toggleActiveAptitude,
+      toggleItemActivation:ShinobiSheet.toggleItemActivation,runItemQuickAction:ShinobiSheet.runItemQuickAction,adjustItemCharge:ShinobiSheet.adjustItemCharge,
       editSpecialResource:ShinobiSheet.editSpecialResource,
-      createGrantedJutsu:ShinobiSheet.createGrantedJutsu,chooseTab: ShinobiSheet.chooseTab,editIdentityText:ShinobiSheet.editIdentityText,configurePower:ShinobiSheet.configurePower,manageJutsus:ShinobiSheet.manageJutsus,learnEffects:ShinobiSheet.learnEffects,buildJutsu:ShinobiSheet.buildJutsu,useJutsu:ShinobiSheet.useJutsu,
+      createGrantedJutsu:ShinobiSheet.createGrantedJutsu,chooseTab: ShinobiSheet.chooseTab,openActiveAptitudes:ShinobiSheet.openActiveAptitudes,editIdentityText:ShinobiSheet.editIdentityText,configurePower:ShinobiSheet.configurePower,manageJutsus:ShinobiSheet.manageJutsus,learnEffects:ShinobiSheet.learnEffects,buildJutsu:ShinobiSheet.buildJutsu,useJutsu:ShinobiSheet.useJutsu,shareJutsu:ShinobiSheet.shareJutsu,shareItem:ShinobiSheet.shareItem,
       editAttributes: ShinobiSheet.editAttributes,
       portrait: ShinobiSheet.portrait,
       rollTest: ShinobiSheet.rollTest,
@@ -98,6 +102,9 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
   static async editSpecialResource(event,target){if(!this.isEditable)return;await this.submit();new SnsSpecialResourceEditor(this.actor,target.dataset.resourceId??'').render({force:true});}
   static async configureActiveAptitude(event,target){if(!this.isEditable)return;await this.submit();await configureActiveAptitude(this.actor,target.dataset.activationId??'');}
   static async toggleActiveAptitude(event,target){if(!this.isEditable)return;await this.submit();await toggleActiveAptitude(this.actor,target.dataset.activationId);}
+  static async toggleItemActivation(event,target){if(!this.isEditable)return;await this.submit();const deactivate=target.dataset.deactivate==='1';if(deactivate){const item=this.actor.items.get(target.dataset.itemId);const {itemAutomationFor,deactivateItemMode}=await import('./item-automation.mjs');const key=itemAutomationFor(item)?.toggle?.key;if(key)await deactivateItemMode(this.actor,key);return;}const stageId=target.closest('.active-aptitude-row')?.querySelector('[data-activation-stage]')?.value??'';await toggleItemActivation(this.actor,target.dataset.itemId,stageId);}
+  static async runItemQuickAction(event,target){if(!this.isEditable)return;await this.submit();await runItemQuickAction(this.actor,target.dataset.itemId);}
+  static async adjustItemCharge(event,target){if(!this.isEditable)return;await this.submit();const delta=target.dataset.chargeDelta==='recharge'?'recharge':Number(target.dataset.chargeDelta??-1);await adjustItemCharge(this.actor,target.dataset.itemId,delta);}
   static async payAptitudeUpkeep(event,target){if(!this.isEditable)return;await this.submit();await payAptitudeUpkeep(this.actor,target.dataset.activationId);}
   async _onRender(context,options) {
     await super._onRender(context,options);
@@ -117,7 +124,8 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
     if(!this.isEditable)header.querySelector('.sns-token-control')?.remove();
     // Foundry locks form buttons for observers; navigation and reading remain available.
     if(!this.isEditable) {
-      this.element.querySelectorAll('[data-action="chooseTab"],[data-action="chooseContext"],[data-action="browseEntries"],[data-action="editEntry"],[data-action="showEvolution"],[data-action="manageJutsus"],[data-action="craftEntry"]').forEach(el=>el.disabled=false);
+      this.element.querySelectorAll('[data-action="chooseTab"],[data-action="chooseContext"],[data-action="openActiveAptitudes"],[data-action="browseEntries"],[data-action="editEntry"],[data-action="showEvolution"],[data-action="manageJutsus"],[data-action="craftEntry"]').forEach(el=>el.disabled=false);
+      if(this.actor.isOwner||game.user.isGM)this.element.querySelectorAll('[data-action="shareItem"],[data-action="shareJutsu"]').forEach(el=>el.disabled=false);
       const readSearch=this.element.querySelector('.inventory-search input');
       if(readSearch)readSearch.disabled=false;
     }
@@ -159,11 +167,16 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
       callback: async path => { if (this.isEditable) await this.actor.update({ img: path }); }
     }).render({ force: true });
   }
+  static async openActiveAptitudes(){
+    this.activeTab='jutsus';
+    this.jutsuTab='aptitudes';
+    if(this.isEditable)await this.submit();
+    await this.render({force:true});
+  }
   static async chooseContext(event,target){
     const group=target.dataset.group,key=target.dataset.context;
     if(group==="actions"&&["encounter","exploration","downtime"].includes(key))this.actionTab=key;
-    if(group==="jutsus"&&key==='effects')return ShinobiSheet.chooseTab.call(this,event,{dataset:{tabid:'effects'}});
-    else if(group==="jutsus"&&["powers","techniques"].includes(key))this.jutsuTab=key;
+    else if(group==="jutsus"&&["powers","techniques","aptitudes"].includes(key))this.jutsuTab=key;
     if(this.isEditable)await this.submit();
     await this.render({force:true});
   }
@@ -178,6 +191,8 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
   static async configurePower(event,target){if(!this.isEditable)return;const item=target.dataset.itemId?this.actor.items.get(target.dataset.itemId):null;if(item&&itemCategory(item)!=='powers')return;await new SnsPowerDialog(this.actor,item).render({force:true});}
   static async manageJutsus(event,target){const item=this.actor.items.get(target.dataset.itemId);if(item&&itemCategory(item)==='powers')await new SnsJutsuManager(this.actor,item).render({force:true});}
   static async useJutsu(event,target){if(this.actor.type==='npc'&&(this.actor.isOwner||game.user.isGM)){if(this.isEditable)await this.submit();return useJutsu(this.actor,this.actor.items.get(target.dataset.itemId));}if(!this.isEditable)return;await this.submit();await useJutsu(this.actor,this.actor.items.get(target.dataset.itemId));}
+  static async shareJutsu(event,target){const item=this.actor.items.get(target.dataset.itemId);if(item&&(this.actor.isOwner||game.user.isGM))await shareTechniqueToChat(this.actor,item);}
+  static async shareItem(event,target){const item=this.actor.items.get(target.dataset.itemId);if(item&&(this.actor.isOwner||game.user.isGM))await shareItemToChat(this.actor,item);}
   static async learnEffects(event,target){const item=this.actor.items.get(target.dataset.itemId);if(item&&itemCategory(item)==='powers')await new SnsPowerProgression(item).render({force:true});}
   static async buildJutsu(event,target){if(!this.isEditable)return;const item=this.actor.items.get(target.dataset.itemId),power=this.actor.items.get(target.dataset.powerId??item?.system.details.powerId);await new SnsJutsuBuilder(this.actor,power,item?.type==='jutsu'?item:null).render({force:true});}
   static async createEntry(event,target){

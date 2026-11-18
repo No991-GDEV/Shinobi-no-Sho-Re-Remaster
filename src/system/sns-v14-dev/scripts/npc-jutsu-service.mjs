@@ -52,7 +52,7 @@ export async function writableNpc(actor,item){
 }
 function asProjection(plan,item){
  const original=jutsuProjection(item,{usedLevel:plan.level});
- return {...(original??{}),legado:plan.legado,summary:plan.legado?plan.name:original?.summary,valid:true,usedLevel:plan.level,cost:plan.cost,noRoll:plan.mode==='none',combatProfile:{...original?.combatProfile,...plan.legado?.effectProjection?.combatProfile,...(plan.hardnessPolicy?{hardnessPolicy:plan.hardnessPolicy}:{}),...(plan.ignoreHardness?{ignoreHardness:plan.ignoreHardness}:{}),...(plan.projectiles?{projectiles:plan.projectiles}:{}),...(plan.noDamage?{noDamage:true}:{}),...(plan.ignoreAllHardness?{ignoreAllHardness:true}:{}),...(plan.allowedDefenses?{allowedDefenses:plan.allowedDefenses}:{}),...(plan.gradeMinimum?{minimumGrade:plan.gradeMinimum}:{}),...(plan.ignoreArmor?{ignoreArmor:true}:{})},data:{...(original?.data??{}),action:plan.action,chakraCost:String(plan.cost),damage:plan.noDamage?'Nenhum':plan.fixed?String(plan.fixed):plan.base===null?'Nenhum':String(plan.base),damageType:plan.fixed?'fixed':'base',range:plan.range,duration:plan.duration,difficulty:plan.dc,area:plan.shape,size:plan.size,target:'Alvos marcados'},effect:{...(original?.effect??{}),text:plan.description,id:item.system.jutsu?.effectId||item.system.contentId},traits:original?.traits??item.system.traits};
+ return {...(original??{}),legado:plan.legado,summary:plan.legado?plan.name:original?.summary,valid:true,usedLevel:plan.level,cost:plan.cost,noRoll:plan.mode==='none'||plan.mode==='check',combatProfile:{...original?.combatProfile,...plan.legado?.effectProjection?.combatProfile,...(plan.hardnessPolicy?{hardnessPolicy:plan.hardnessPolicy}:{}),...(plan.ignoreHardness?{ignoreHardness:plan.ignoreHardness}:{}),...(plan.projectiles?{projectiles:plan.projectiles}:{}),...(plan.noDamage?{noDamage:true}:{}),...(plan.ignoreAllHardness?{ignoreAllHardness:true}:{}),...(plan.allowedDefenses?{allowedDefenses:plan.allowedDefenses}:{}),...(plan.gradeMinimum?{minimumGrade:plan.gradeMinimum}:{}),...(plan.ignoreArmor?{ignoreArmor:true}:{})},data:{...(original?.data??{}),action:plan.action,chakraCost:String(plan.cost),damage:plan.noDamage?'Nenhum':plan.fixed?String(plan.fixed):plan.base===null?'Nenhum':String(plan.base),damageType:plan.fixed?'fixed':'base',range:plan.range,duration:plan.duration,difficulty:plan.dc,area:plan.shape,size:plan.size,target:'Alvos marcados'},effect:{...(original?.effect??{}),text:plan.description,id:item.system.jutsu?.effectId||item.system.contentId},traits:original?.traits??item.system.traits};
 }
 function packetFor(actor,item,plan,projection,targets){
  if(plan.base===null||plan.mode==='none')return null;
@@ -69,7 +69,7 @@ export async function useNpcJutsu(actor,item){
   const library=await loadCanonicalLibrary();if(!library)throw Error('Catálogo de regras indisponível.');
   const choice=await chooseNpcCast(actor,item,library.entries);
   if(!choice)return;
-  let plan=npcJutsuPlan(item,library.entries,choice.level,choice.custom);if(plan.missing.length)throw Error('Complete os parâmetros: '+plan.missing.map(k=>({power:'Fuuinjutsu 7',cost:'chakra',base:'dano base',mode:'modo de uso',nature:'natureza do poder',save:'resistência/dificuldade',size:'tamanho da área',context:'modalidade e quantidade deste uso'}[k])).join(', ')+'. Nenhum recurso gasto.');
+  let plan=npcJutsuPlan(item,library.entries,choice.level,choice.custom);if(plan.missing.length)throw Error('Complete os parâmetros: '+plan.missing.map(k=>({power:'Fuuinjutsu 7',cost:'chakra',base:'dano base',mode:'modo de uso',check:'teste a rolar',nature:'natureza do poder',save:'resistência/dificuldade',size:'tamanho da área',context:'modalidade e quantidade deste uso'}[k])).join(', ')+'. Nenhum recurso gasto.');
   ({actor,item}=await writableNpc(actor,item));if(!owns(actor))return;
   const remembered=Object.fromEntries(Object.entries(choice.custom).filter(([k])=>!['contextChoice','contextValue'].includes(k)));if(!isLegado(item)&&Object.keys(remembered).length)await item.update({['flags.'+ns+'.npcCastParameters.'+choice.level]:remembered});
   plan=npcJutsuPlan(item,library.entries,choice.level,choice.custom);
@@ -144,7 +144,7 @@ async function promptRoll(actor,key,title,adjustment=0){
 export async function rollNpcTechniqueCheck(message,index){
  assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),check=cast?.plan.checks?.[index];
- if(!owns(actor)||cast.status!=='paid'||!check||!RESISTANCE_KEYS.some(r=>r.key===check.key)&&!(cast.plan.legado&&['cc','cd','lm'].includes(check.key)))return;
+ if(!owns(actor)||cast.status!=='paid'||!check||!RESISTANCE_KEYS.some(r=>r.key===check.key)&&!['cc','cd','lm'].includes(check.key))return;
  const dialog=await promptRoll(actor,check.key,check.label,check.adjustment??0);if(!dialog)return;
  const roll=await rollWithLegado(actor,dialog.spec),outcome=Number.isFinite(check.dc)?versusDifficulty(rolledCheck(roll,dialog.spec),check.dc):null;return roll.toMessage({speaker:msgClass().getSpeaker({actor}),flavor:checkFlavor(dialog.spec),flags:{[ns]:{check:{actorImg:actor.img,key:check.key},...(outcome?{testOutcome:{dc:check.dc,result:outcome}}:{}),npcTechniqueCheck:{parentUuid:message.uuid,key:check.key}}}},{messageMode:dialog.messageMode});
 }

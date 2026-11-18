@@ -1,4 +1,5 @@
 import {effectItemModifiers,effectItemHardness} from './effect-item-rules.mjs';
+import {itemPassiveHardness} from './item-automation.mjs';
 import {legadoSusanoo,legadoState,hasLegado} from './legado-core.mjs';
 import {supportHardness} from './support-core.mjs';
 import {SKILLS} from './rules.mjs';
@@ -55,7 +56,7 @@ export const flatEffect=(effects,key)=>effects.filter(e=>e.kind==='flatModifier'
 export function effectiveAttribute(actor,key,scope='all'){
  const base=key==='for'&&legadoState(actor).active?.hachiman&&hasLegado(actor,'hachiman-hidari')?actor.system.attributes?.esp:actor.system.attributes?.[key];return Number.isInteger(base)?base+attributeEffect([...transformationProjection(actor).effects,...effectItemModifiers(actor)],key,scope):base;
 }
-export const effectiveHardness=actor=>Math.max(effectItemHardness(actor),legadoSusanoo(actor)?.hardness??0,actor.system.damageState?.hardness??0,transformationProjection(actor).hardness,hasVaporArmor(actor,TRANSFORMATION_PROFILES.gobi)?2:0,supportHardness(actor));
+export const effectiveHardness=actor=>Math.max(effectItemHardness(actor),itemPassiveHardness(actor),legadoSusanoo(actor)?.hardness??0,actor.system.damageState?.hardness??0,transformationProjection(actor).hardness,hasVaporArmor(actor,TRANSFORMATION_PROFILES.gobi)?2:0,supportHardness(actor));
 export function recordedAttributeView(value,effects,key){const effectiveValue=Number.isFinite(value)?value+attributeEffect(effects,key,'size'):value;return {value,effectiveValue,adjusted:effectiveValue!==value};}
 export function recordedTransformationRows(rows,effects,key,system={},attributeOverride=''){
  let value=0;const attr=attributeOverride||(key.startsWith('skill:')?SKILLS.find(s=>s.key===key.slice(6))?.attribute:'')||({cc:'for',cd:'des',lm:'per',esq:'agi',initiative:'agi'}[key]);

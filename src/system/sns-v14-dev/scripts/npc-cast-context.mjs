@@ -5,7 +5,7 @@ const parameter=(label,min=0,max=null)=>({label,min,max});
 export function npcContextSchema(item){
  const id=ruleIdentity(item),section=item.flags?.['sns-v14-dev']?.canonicalTextSource?.section??'',p=item.actor?.items.get(item.system.details?.powerId),level=p?.system.level??1;
  if(id==='sns:jutsu:bunshin-no-jutsu')return {options:[option('images','Criar 1 ou 2 imagens ilusórias',1,{action:'Movimento'}),option('feint','Fintar com os clones',4,{action:'Padrão',checks:[{key:'skill:prestidigitacao',label:'Fintar · Prestidigitação'}],note:'Prestidigitação contra Prontidão do alvo. Os clones não causam dano e desaparecem após o próximo ataque.'})]};
- if(id==='sns:jutsu:kai')return {options:[option('cancel','Cancelar genjutsu','value',{parameter:parameter('Custo de chakra do genjutsu cancelado')})]};
+ if(id==='sns:jutsu:kai')return {options:[option('cancel','Cancelar genjutsu','value',{parameter:parameter('Custo de chakra do genjutsu cancelado',0),checks:[{key:'attribute:esp',label:'Kai · Espírito'},{key:'attribute:int',label:'Kai · Inteligência'}],note:'Gaste chakra igual ao custo do genjutsu cancelado e role Espírito ou Inteligência contra a Dificuldade do genjutsu.'})]};
  if(id==='sns:jutsu:chakra-no-souin')return {options:[option('activate','Ativar o selo','souin',{parameter:parameter('Chakra dividido entre Kage Bunshins (0 se não houver)'),action:'Completa',duration:'Permanente',note:'O selo deixa seu chakra em 1. Exige pelo menos 15, contando o chakra dividido em clones. Área imóvel: drena 2 chakra por turno, até o mínimo de 1, exceto da mesma assinatura de chakra. Confira o contato com a área e a drenagem na ficha.'})]};
  if(id==='sns:apt:rinkaichuu'){
   const skill=recordedSkillLevel(item.actor,'lidar_com_animais');

@@ -7,10 +7,199 @@ import {environmentProjection} from './environment-core.mjs';
 import {magenProjection} from './magen-core.mjs';
 import {requirementsFor} from './item-requirements.mjs';
 import {POWER_DEFINITIONS,EFFECT_DEFINITIONS,ACTIONS,DURATIONS} from '../data/power-definitions.mjs';
+import {NPC_REPERTOIRES} from '../data/npc-repertoires.mjs';
+import {D115_REPERTOIRES} from '../data/homebrew-d115-sources.mjs';
+import {HIBON_BONUSES,hibonBonuses} from '../data/hibon-bonuses.mjs';
+const PHASE4_REPERTOIRES={
+ 'sns:power:yoton':{
+  id:'sns:power:yoton',mode:'effects',base:null,
+  profile:{attribute:'esp',rangeBase:15,rangeFactor:3,sizeFactor:2,damageBonus:1,difficultyBonus:0},
+  source:{id:'F02',pages:[40,42]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:dano-continuo',name:'Dano Contínuo',min:2,evolutions:[7]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:restringente',name:'Restringente',min:2,evolutions:[5,8]},
+   {id:'sns:effect:raio',name:'Raio',min:2,evolutions:[5,8]},
+   {id:'sns:effect:tremor',name:'Tremor',min:2,evolutions:[4]},
+   {id:'sns:effect:carga-de-lava',name:'Carga de Lava',min:2,evolutions:[]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:barreira',name:'Barreira',min:3,evolutions:[6,9]},
+   {id:'sns:effect:lanca',name:'Lança',min:3,evolutions:[6,9]},
+   {id:'sns:effect:ricochete',name:'Ricochete',min:3,evolutions:[9]},
+   {id:'sns:effect:onda-queimante',name:'Onda Queimante',min:3,evolutions:[]},
+   {id:'sns:effect:coluna',name:'Coluna',min:4,evolutions:[7,10]},
+   {id:'sns:effect:energizar',name:'Energizar',min:4,evolutions:[6,8]},
+   {id:'sns:effect:sopro-destrutivo',name:'Sopro Destrutivo',min:4,evolutions:[]},
+   {id:'sns:effect:correnteza',name:'Correnteza',min:5,evolutions:[]},
+   {id:'sns:effect:onda-explosiva',name:'Onda Explosiva',min:5,evolutions:[8]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:petrificacao',name:'Petrificação',min:6,evolutions:[]},
+   {id:'sns:effect:desastre',name:'Desastre',min:9,evolutions:[]}
+  ]
+ },
+ 'sns:power:kami-ninpou':{
+  id:'sns:power:kami-ninpou',mode:'effects',base:null,
+  profile:{attribute:'esp',rangeBase:10,rangeFactor:2,sizeFactor:1,damageBonus:0,difficultyBonus:0},
+  source:{id:'F02',pages:[28,30]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:criar-arma',name:'Criar Arma',min:1,evolutions:[3,5]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:raio',name:'Raio',min:2,evolutions:[5,8]},
+   {id:'sns:effect:barreira',name:'Barreira',min:3,evolutions:[6,9]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:lanca',name:'Lança',min:3,evolutions:[6,9]},
+   {id:'sns:effect:ricochete',name:'Ricochete',min:3,evolutions:[9]},
+   {id:'sns:effect:coluna',name:'Coluna',min:4,evolutions:[7,10]},
+   {id:'sns:effect:prisao-de-agua',name:'Prisão de Água',min:4,evolutions:[7,9]},
+   {id:'sns:effect:sopro-destrutivo',name:'Sopro Destrutivo',min:4,evolutions:[]},
+   {id:'sns:effect:correnteza',name:'Correnteza',min:5,evolutions:[]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:anjo-de-papel',name:'Anjo de Papel',min:5,evolutions:[]},
+   {id:'sns:effect:algemar',name:'Algemar',min:6,evolutions:[8,10]},
+   {id:'sns:effect:julgamento',name:'Julgamento',min:6,evolutions:[]},
+   {id:'sns:effect:emissario-divino',name:'Emissário Divino',min:10,evolutions:[]}
+  ]
+ },
+ 'sns:power:kumo-ninpou':{
+  id:'sns:power:kumo-ninpou',mode:'effects',base:null,
+  profile:{attribute:'esp',rangeBase:15,rangeFactor:3,sizeFactor:1,damageBonus:0,difficultyBonus:1},
+  source:{id:'F02',pages:[18,19]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:raio',name:'Raio',min:2,evolutions:[5,8]},
+   {id:'sns:effect:restringente',name:'Restringente',min:2,evolutions:[5,8]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:ricochete',name:'Ricochete',min:3,evolutions:[9]},
+   {id:'sns:effect:sopro-destrutivo',name:'Sopro Destrutivo',min:4,evolutions:[]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:onda-explosiva',name:'Onda Explosiva',min:5,evolutions:[8]},
+   {id:'sns:effect:algemar',name:'Algemar',min:6,evolutions:[8,10]},
+   {id:'sns:effect:pele-de-pedra',name:'Pele de Pedra',min:6,evolutions:[8,10]}
+  ]
+ },
+ 'sns:power:hebi-ninpou':{
+  id:'sns:power:hebi-ninpou',mode:'effects',base:null,
+  profile:{attribute:'esp',rangeBase:5,rangeFactor:1,sizeFactor:1,damageBonus:0,difficultyBonus:1},
+  source:{id:'F02',pages:[22,24]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:raio',name:'Raio',min:2,evolutions:[5,8]},
+   {id:'sns:effect:restringente',name:'Restringente',min:2,evolutions:[5,8]},
+   {id:'sns:effect:imergir',name:'Imergir',min:2,evolutions:[5]},
+   {id:'sns:effect:infligir-medo',name:'Infligir Medo',min:2,evolutions:[5,7]},
+   {id:'sns:effect:barreira',name:'Barreira',min:3,evolutions:[6,9]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:lanca',name:'Lança',min:3,evolutions:[6,9]},
+   {id:'sns:effect:ricochete',name:'Ricochete',min:3,evolutions:[9]},
+   {id:'sns:effect:coluna',name:'Coluna',min:4,evolutions:[7,10]},
+   {id:'sns:effect:nuvem',name:'Nuvem',min:4,evolutions:[7,10]},
+   {id:'sns:effect:sopro-destrutivo',name:'Sopro Destrutivo',min:4,evolutions:[]},
+   {id:'sns:effect:bracos-de-serpente',name:'Braços de Serpente',min:4,evolutions:[]},
+   {id:'sns:effect:correnteza',name:'Correnteza',min:5,evolutions:[]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:onda-explosiva',name:'Onda Explosiva',min:5,evolutions:[8]},
+   {id:'sns:effect:venenoso',name:'Venenoso',min:5,evolutions:[]},
+   {id:'sns:effect:algemar',name:'Algemar',min:6,evolutions:[8,10]}
+  ]
+ },
+ 'sns:power:hb-f05-aoi-katon':{
+  id:'sns:power:hb-f05-aoi-katon',mode:'effects',base:'katon',hibonBonuses:true,
+  profile:{attribute:'esp',rangeBase:10,rangeFactor:3,sizeFactor:1,damageBonus:0,difficultyBonus:0},
+  source:{id:'F05',pages:[1,3]},
+  effects:[
+   {id:'sns:effect:hb-f05-chama-sombria',name:'Chama Sombria',min:5,evolutions:[]},
+   {id:'sns:effect:hb-f05-mini-bolas-de-fogo',name:'Mini Bolas de Fogo',min:6,evolutions:[]}
+  ]
+ },
+ 'sns:hijutsu:ranton':{
+  id:'sns:hijutsu:ranton',mode:'effects',base:null,
+  profile:{attribute:'esp',rangeBase:15,rangeFactor:3,sizeFactor:1,damageBonus:1,difficultyBonus:0},
+  source:{id:'F02',pages:[50,52]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:raio',name:'Raio',min:2,evolutions:[5,8]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:ricochete',name:'Ricochete',min:3,evolutions:[9]},
+   {id:'sns:effect:coluna',name:'Coluna',min:4,evolutions:[7,10]},
+   {id:'sns:effect:nuvem',name:'Nuvem',min:4,evolutions:[7,10]},
+   {id:'sns:effect:sopro-destrutivo',name:'Sopro Destrutivo',min:4,evolutions:[]},
+   {id:'sns:effect:energizar',name:'Energizar',min:4,evolutions:[6,8]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:onda-explosiva',name:'Onda Explosiva',min:5,evolutions:[8]},
+   {id:'sns:effect:feixe-de-luz',name:'Feixe de Luz',min:5,evolutions:[]},
+   {id:'sns:effect:descarga',name:'Descarga',min:6,evolutions:[]},
+   {id:'sns:effect:nuvem-tempestuosa',name:'Nuvem Tempestuosa',min:6,evolutions:[]},
+   {id:'sns:effect:circo-de-laser',name:'Circo de Laser',min:7,evolutions:[]},
+   {id:'sns:effect:meteoros',name:'Meteoros',min:9,evolutions:[]}
+  ]
+ },
+ 'sns:hijutsu:kibaku-nendo':{
+  id:'sns:hijutsu:kibaku-nendo',mode:'effects',base:null,
+  profile:{attribute:'skill:arte',rangeBase:15,rangeFactor:3,sizeFactor:2,damageBonus:2,difficultyBonus:0},
+  source:{id:'F02',pages:[77,79]},
+  effects:[
+   {id:'sns:effect:canhao',name:'Canhão',min:1,evolutions:[]},
+   {id:'sns:effect:orbe',name:'Orbe',min:2,evolutions:[7]},
+   {id:'sns:effect:imergir',name:'Imergir',min:2,evolutions:[5]},
+   {id:'sns:effect:montaria',name:'Montaria',min:2,evolutions:[5]},
+   {id:'sns:effect:flechas',name:'Flechas',min:3,evolutions:[6,9]},
+   {id:'sns:effect:mina-explosiva',name:'Mina Explosiva',min:3,evolutions:[]},
+   {id:'sns:effect:coluna',name:'Coluna',min:4,evolutions:[7,10]},
+   {id:'sns:effect:nuvem',name:'Nuvem',min:4,evolutions:[7,10]},
+   {id:'sns:effect:missil',name:'Míssil',min:5,evolutions:[8,10]},
+   {id:'sns:effect:onda-explosiva',name:'Onda Explosiva',min:5,evolutions:[8]},
+   {id:'sns:effect:inflamavel',name:'Inflamável',min:5,evolutions:[]},
+   {id:'sns:effect:algemar',name:'Algemar',min:6,evolutions:[8,10]},
+   {id:'sns:effect:meteoros',name:'Meteoros',min:9,evolutions:[]}
+  ]
+ }
+};
+PHASE4_REPERTOIRES['sns:power:ranton']={...PHASE4_REPERTOIRES['sns:hijutsu:ranton'],id:'sns:power:ranton'};
+PHASE4_REPERTOIRES['sns:power:kibaku-nendo']={...PHASE4_REPERTOIRES['sns:hijutsu:kibaku-nendo'],id:'sns:power:kibaku-nendo'};
+const ALL_REPERTOIRES={...NPC_REPERTOIRES,...D115_REPERTOIRES,...PHASE4_REPERTOIRES};
+const ALL_REPERTOIRE_EFFECTS=(()=>{
+ const byId=new Map(),baseIds=new Set(EFFECT_DEFINITIONS.map(e=>e.id));
+ for(const [pid,rep]of Object.entries(ALL_REPERTOIRES)){
+  if(rep.mode!=='effects')continue;
+  const slug=pid.split(':').at(-1);
+  for(const e of rep.effects??[]){
+   if(baseIds.has(e.id))continue;
+   const existing=byId.get(e.id);
+   if(existing){if(!existing.powers.includes(slug))existing.powers.push(slug);continue;}
+   byId.set(e.id,{id:e.id,name:e.name,min:e.min??1,evolutions:e.evolutions??[],powers:[slug],action:'padrao',duration:'instantanea',range:'common',target:'Conforme descrição',damage:'common',test:'cd',seals:true,cost:'level',source:{id:rep.source?.id??'F01',pages:Array.isArray(rep.source?.pages)?rep.source.pages.join('–'):String(rep.source?.pages??'')},traits:['arte:ninjutsu','custo:chakra'],notes:`Efeito de ${pid.replace(/^sns:(?:kibaku-rev:)?power:/,'').replace(/^hb-f05-/,'')}. Consulte a descrição da técnica no poder.`});
+  }
+ }
+ return [...byId.values()];
+})();
+const REPERTOIRE_EFFECT_MAP=new Map(ALL_REPERTOIRE_EFFECTS.map(e=>[e.id,e]));
+const ALL_EFFECTS=[...EFFECT_DEFINITIONS,...ALL_REPERTOIRE_EFFECTS];
 export const powerDefinition=id=>POWER_DEFINITIONS.find(x=>x.id===id);
-export const ownedPowerDefinition=power=>powerDefinition(power?.system?.power?.definitionId||power?.system?.contentId);
-const allows=(p,e)=>p.allowedEffects?p.allowedEffects.includes(e.id):e.powers.includes(p.id.split(':').at(-1));
-export const effectDefinition=id=>EFFECT_DEFINITIONS.find(x=>x.id===id);
+export function repertoirePowerDefinition(power){
+ const id=power?.system?.power?.definitionId||power?.system?.contentId,rep=ALL_REPERTOIRES[id];
+ if(!rep||rep.mode!=='effects'||!rep.profile)return undefined;
+ const baseEffects=rep.base?EFFECT_DEFINITIONS.filter(e=>e.powers.includes(rep.base)).map(e=>e.id):[];
+ const ownEffects=(rep.effects??[]).map(e=>e.id);
+ const extraEffects=id==='sns:power:kikai-ninpou'?['sns:effect:dano-continuo','sns:effect:purificar']:[];
+ const hibon=hibonBonuses(power)||(rep.hibonBonuses&&power?.system?.choice?.kind==='hibonBonuses'?HIBON_BONUSES.find(b=>b.id===power.system.choice.key)??null:null);
+ const attrLabel={ 'skill:lidar_com_animais':'Lidar com Animais', 'skill:arte':'Arte', 'skill:veneficio':'Venefício' }[rep.profile.attribute]||'';
+ return {
+  id,name:power.name||id,mode:'effects',attribute:rep.profile.attribute,attributeLabel:attrLabel,
+  rangeBase:rep.profile.rangeBase,rangeFactor:rep.profile.rangeFactor,sizeFactor:rep.profile.sizeFactor,
+  damageBonus:(rep.profile.damageBonus??0)+(hibon?.damageBonus??0),
+  difficultyBonus:(rep.profile.difficultyBonus??0)+(hibon?.difficultyBonus??0),
+  halfCost:!!rep.profile.halfCost,
+  allowedEffects:[...new Set([...baseEffects,...ownEffects,...extraEffects])],
+  source:{id:rep.source?.id??'F01',pages:Array.isArray(rep.source?.pages)?rep.source.pages.join('–'):String(rep.source?.pages??'')}
+ };
+}
+export const ownedPowerDefinition=power=>powerDefinition(power?.system?.power?.definitionId||power?.system?.contentId)||repertoirePowerDefinition(power);
+const allows=(p,e)=>(p.allowedEffects?p.allowedEffects.includes(e.id):e.powers.includes(p.id.split(':').at(-1)))||p.id==='sns:power:kikai-ninpou'&&['sns:effect:dano-continuo','sns:effect:purificar'].includes(e.id);
+export const effectDefinition=id=>EFFECT_DEFINITIONS.find(x=>x.id===id)??REPERTOIRE_EFFECT_MAP.get(id);
 export function choiceProblems(power,choices=power.system.power.choices){
  const p=ownedPowerDefinition(power),level=power.system.level,errors=[];
  if(!p)return ['Poder manual: selecione uma definição verificada para usar escolhas assistidas.'];
@@ -33,7 +222,7 @@ export function choiceProblems(power,choices=power.system.power.choices){
  if(choices.some(c=>c.slot>level))errors.push('Escolhas acima do nível comprado ficam inativas.');
  return errors;
 }
-export function availableChoices(power,slot){const p=ownedPowerDefinition(power);if(!p)return [];const prior=power.system.power.choices.filter(c=>c.slot<slot),seen=new Map(prior.map(c=>[c.effectId,c.stage]));return EFFECT_DEFINITIONS.filter(e=>allows(p,e)).map(e=>{const stages=[e.min,...e.evolutions],old=seen.get(e.id),stage=old===undefined?e.min:stages[stages.indexOf(old)+1];return {...e,stage,allowed:stage!==undefined&&stage<=slot&&slot<=power.system.level,reason:stage===undefined?'Todas as evoluções selecionadas.':'Exige nível '+stage};});}
+export function availableChoices(power,slot){const p=ownedPowerDefinition(power);if(!p)return [];const prior=power.system.power.choices.filter(c=>c.slot<slot),seen=new Map(prior.map(c=>[c.effectId,c.stage]));return ALL_EFFECTS.filter(e=>allows(p,e)).map(e=>{const stages=[e.min,...e.evolutions],old=seen.get(e.id),stage=old===undefined?e.min:stages[stages.indexOf(old)+1];return {...e,stage,allowed:stage!==undefined&&stage<=slot&&slot<=power.system.level,reason:stage===undefined?'Todas as evoluções selecionadas.':'Exige nível '+stage};});}
 export function learnedEffects(power){return power.system.power.choices.filter(c=>c.slot<=power.system.level).map(c=>({...c,definition:effectDefinition(c.effectId)})).filter(c=>c.definition);}
 export function jutsuVariants(power,effectId,usedLevel){
  const e=effectDefinition(effectId),stages=power?learnedEffects(power).filter(c=>c.effectId===effectId).map(c=>c.stage):[];
@@ -64,7 +253,7 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
  const viewPower=recorded?{...power,system:{...power.system,power:{...power.system.power,choices}}}:power;
  if(!jutsuVariants(viewPower,e.id,n).some(v=>v.id===(j.variant||'normal')))problems.push('Forma de uso exige nível e evolução aprendida compatíveis.');
  const attribute=p.attribute.startsWith('skill:')?recordedSkillLevel(actor,p.attribute.slice(6)):actor.system.attributes?.[p.attribute];if(!Number.isFinite(attribute))problems.push('Informe '+(p.attributeLabel||p.attribute.toUpperCase())+' do personagem.');
- if(p.allowedEffects){const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(!requirement.valid)problems.push(...requirement.problems);}
+ if(p.allowedEffects){const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(requirement.configured&&!requirement.valid)problems.push(...requirement.problems);}
  if(e.execution==='environment'){
   const requirement=requirementsFor({...power,system:{...power.system,ruleId:p.id}},actor);if(!requirement.valid)problems.push(...requirement.problems);
   if(j.overrides?.length)problems.push('Efeitos de ambiente tipados seguem o livro. Exceções exigem resolução manual.');
@@ -81,17 +270,16 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
   return (e.execution==='phantasm'?phantasmProjection:magenProjection)({actor,power,effect:e,choices,usedLevel:n,variant:j.variant||'normal',problems});
  }
  if(j.variant==='sem-chakra'&&(e.id!=='sns:effect:canhao'||n<2))problems.push('A variante sem chakra exige Canhão usado em nível2 ou maior.');
- const half=Math.ceil((attribute??0)/2),bonus=p.damageBonus,cost=j.variant==='sem-chakra'?0:e.id==='sns:effect:orbe'&&choices.some(c=>c.effectId===e.id&&c.stage>=7)&&n>=7?Math.ceil(n/2):n;
+ const half=Math.ceil((attribute??0)/2),bonus=p.damageBonus,orbe7=e.id==='sns:effect:orbe'&&choices.some(c=>c.effectId===e.id&&c.stage>=7)&&n>=7,cost=j.variant==='sem-chakra'?0:(orbe7||p.halfCost)?Math.ceil(n/2):n;
  let damage=e.damage==='double'?2*n+bonus:e.damage==='none'?'Nenhum':e.damage==='projectiles'?null:n+half+bonus;if(j.variant==='sem-chakra')damage=Math.ceil(damage/2);
- const orbe7=e.id==='sns:effect:orbe'&&choices.some(c=>c.effectId===e.id&&c.stage>=7)&&n>=7;
- const data={action:ACTIONS[e.action],duration:DURATIONS[e.duration],range:(p.rangeBase+p.rangeFactor*(attribute??0))+' m',target:e.target,area:e.area??'',chakraCost:String(cost),damage:damage===null?`${n} projéteis × DB2; +${bonus} uma vez por alvo`:String(damage),difficulty:9+n+half-(kuchiyoseLink(actor)?.mode==='calculated'&&kuchiyoseLink(actor).limit?.common?3:0),size:e.fixedSize??Math.ceil(p.sizeFactor*(attribute??0)),defenses:e.area||orbe7?'Esquiva / Antecipar; sem Bloqueio':'Conforme defesa e exceções da fonte',seals:e.seals?'Duas mãos livres':'Sem selos',test:e.test};
+ const data={action:ACTIONS[e.action],duration:DURATIONS[e.duration],range:(p.rangeBase+p.rangeFactor*(attribute??0))+' m',target:e.target,area:e.area??'',chakraCost:String(cost),damage:damage===null?`${n} projéteis × DB2; +${bonus} uma vez por alvo`:String(damage),difficulty:9+n+half+(p.difficultyBonus??0)-(kuchiyoseLink(actor)?.mode==='calculated'&&kuchiyoseLink(actor).limit?.common?3:0),size:e.fixedSize??Math.ceil(p.sizeFactor*(attribute??0)),defenses:e.area||orbe7?'Esquiva / Antecipar; sem Bloqueio':'Conforme defesa e exceções da fonte',seals:e.seals?'Duas mãos livres':'Sem selos',test:e.test};
  if(e.id==='sns:effect:raio'){
   data.target=j.variant==='multiplos'?`Até ${Math.floor(n/2)} criaturas distintas, a até 4 m entre si`:'Uma criatura';
   data.defenses='Esquiva / Antecipar; Bloqueio somente com arma especial que bloqueie técnicas';
   if(j.variant==='concentrado'){data.action=ACTIONS.completa;data.damage=String(Number(data.damage)+2);}
  }
  const traits=[...e.traits.filter(t=>j.variant!=='sem-chakra'||t!=='custo:chakra'),...(j.variant==='sem-chakra'?['custo:sem-custo']:[]),...(p.id.endsWith(':ninpou')||p.allowedEffects?[]:['elemento:'+p.id.split(':').at(-1)])];
- const formulas={range:p.rangeBase+' + '+p.rangeFactor+' × ESP',damage:e.damage==='double'?'2 × nível usado + '+bonus:e.damage==='projectiles'?'Nível usado × projéteis de DB2':'Nível usado + ⌈ESP/2⌉ + '+bonus,difficulty:'9 + nível usado + ⌈ESP/2⌉'+(kuchiyoseLink(actor)?.mode==='calculated'&&kuchiyoseLink(actor).limit?.common?' − 3 (Kuchiyose comum)':''),size:e.fixedSize?'':'⌈'+p.sizeFactor+' × ESP⌉',chakraCost:j.variant==='sem-chakra'?'Variante sem chakra':orbe7?'⌈nível usado/2⌉':'Nível usado'};
+ const formulas={range:p.rangeBase+' + '+p.rangeFactor+' × ESP',damage:e.damage==='double'?'2 × nível usado + '+bonus:e.damage==='projectiles'?'Nível usado × projéteis de DB2':'Nível usado + ⌈ESP/2⌉ + '+bonus,difficulty:'9 + nível usado + ⌈ESP/2⌉'+(p.difficultyBonus?' + '+p.difficultyBonus:'')+(kuchiyoseLink(actor)?.mode==='calculated'&&kuchiyoseLink(actor).limit?.common?' − 3 (Kuchiyose comum)':''),size:e.fixedSize?'':'⌈'+p.sizeFactor+' × ESP⌉',chakraCost:j.variant==='sem-chakra'?'Variante sem chakra':(orbe7||p.halfCost)?'⌈nível usado/2⌉':'Nível usado'};
  if(j.variant==='sem-chakra')formulas.damage='⌈('+formulas.damage+')/2⌉';
  if(e.id==='sns:effect:raio'&&j.variant==='concentrado')formulas.damage+=' + 2 (Raio8)';
  const provenance=Object.fromEntries(Object.keys(data).map(k=>[k,['damage','range','chakraCost','difficulty','size'].includes(k)?'calculado':'herdado']));

@@ -2,7 +2,7 @@ import {legadoRequirement} from './legado-core.mjs';
 // Canonical requirements are code, never editable thresholds stored on an owned item.
 import {TRANSPLANT_RULE,EYE_STAGES} from './characteristic-effects.mjs';
 import {LEGADO_REQUIREMENTS} from '../data/legado-requirements.mjs';
-import {sourceAvailable} from '../data/optional-sources.mjs';
+import {OPTIONAL_SOURCES,optionalSourceId,sourceAvailable} from '../data/optional-sources.mjs';
 import {aptitudeChoiceStatus,choiceFieldLabel,aptitudeChoiceOptions} from './aptitude-choices.mjs';
 import {SKILLS} from './rules.mjs';
 import {accessSources,eyeAccess,powerLevel,powerSources,ACCESS_ORIGINS,originGrant,summonPact} from './restricted-access.mjs';
@@ -59,7 +59,7 @@ export const ITEM_RULES=freeze(completeRequirements({...CATALOG_ACQUISITION_RULE
 export const RULE_GRANTS={'sns:legado:apt:elemento-natural-katon':'Elemento Natural: Katon','sns:apt:clone-kage':'Clone: Kage Bunshin','sns:apt:shunjutsu-1':'Shunjutsu · estágio 1','sns:apt:shunjutsu-2':'Shunjutsu · estágio 2','sns:apt:shunjutsu-3':'Shunjutsu · estágio 3','sns:apt:elemento-natural-katon':'Elemento Natural: Katon'};
 export function itemRuleId(item){return item?.system?.ruleId||(item?.system?.details?.featureRule===TRANSPLANT_RULE?'sns:feature:transplante':'')||Object.keys(RULE_GRANTS).find(id=>RULE_GRANTS[id]===item?.system?.details?.grantRule)||(ITEM_RULES[item?.system?.contentId]?item.system.contentId:'');}
 export function requirementsFor(item,actor=null,trail=[],allowPendingChoice=false,{scope='acquisition'}={}){
- if(scope==='acquisition'&&!sourceAvailable(item))return {configured:true,valid:false,id:item?.system?.ruleId??'',name:item.name,rows:[{label:'Legado do Ódio ativado pelo mestre',current:'Fonte desativada',met:false}],problems:['O mestre não ativou o Legado do Ódio nesta mesa.']};
+ if(scope==='acquisition'&&!sourceAvailable(item)){const label=OPTIONAL_SOURCES.find(s=>s.id===optionalSourceId(item))?.label??'Legado do Ódio';return {configured:true,valid:false,id:item?.system?.ruleId??'',name:item.name,rows:[{label:label+' ativado pelo mestre',current:'Fonte desativada',met:false}],problems:['O mestre não ativou '+(label==='Legado do Ódio'?'o ':'')+label+' nesta mesa.']};}
  item=sourceReviewedItem(item);
  if(Array.from(actor?.items??[]).some(i=>i.flags?.['sns-v14-dev']?.legadoCopy||i.flags?.['sns-v14-dev']?.legadoMemory))actor={type:actor.type,flags:actor.flags,id:actor.id,uuid:actor.uuid,isOwner:actor.isOwner,system:actor.system,items:Array.from(actor.items).filter(i=>!i.flags?.['sns-v14-dev']?.legadoCopy&&!i.flags?.['sns-v14-dev']?.legadoMemory)};
  if(actor?.type==='npc'&&actor.flags?.['sns-v14-dev']?.animeProfile)actor={type:actor.type,flags:actor.flags,id:actor.id,uuid:actor.uuid,isOwner:actor.isOwner,system:actor.system,items:Array.from(actor.items??[]).map(i=>sourceReviewedItem(i))};

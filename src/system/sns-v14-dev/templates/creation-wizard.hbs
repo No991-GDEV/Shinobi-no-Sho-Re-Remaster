@@ -160,7 +160,15 @@
     {{#if (snsIsTab state.stepId "jutsus")}}
     <header class="creation-panel-head"><h3>Primeiras técnicas</h3><button type="button" class="creation-mini" data-action="openJutsuBuilder">Criar técnica</button></header>
     <div class="creation-panel-body">
-      <p class="creation-note">Escolha efeitos para seus poderes e crie jutsus, ou adicione jutsus prontos do catálogo. Esta etapa é opcional.</p>
+      <p class="creation-note">Escolha efeitos para seus poderes e crie jutsus, adicione técnicas básicas ou busque no catálogo. Esta etapa é opcional.</p>
+      {{#if basicTechniques.length}}
+      <h4>Técnicas básicas</h4>
+      <ul class="creation-rows">
+        {{#each basicTechniques}}
+        <li><img src="{{img}}" alt=""> <span class="row-name">{{name}} <small class="row-detail">{{action}} · Chakra {{cost}}</small></span>{{#if owned}}<span class="row-detail">Na ficha</span>{{else}}{{#if @root.editable}}<button type="button" class="creation-mini" data-action="addBasicTechnique" data-content-id="{{id}}">+ Adicionar</button>{{/if}}{{/if}}</li>
+        {{/each}}
+      </ul>
+      {{/if}}
       {{#each state.data.powers}}
       <div class="creation-power-block">
         <h4>{{name}}</h4>
@@ -174,7 +182,7 @@
       {{/each}}
       <h4>Técnicas presentes</h4>
       <ul class="creation-rows">
-        {{#each state.data.techniques}}<li><img src="{{img}}" alt=""> <span class="row-name">{{name}}</span></li>
+        {{#each state.data.techniques}}<li><img src="{{img}}" alt=""> <span class="row-name">{{name}}</span>{{#if @root.editable}}<button type="button" class="creation-mini" data-action="openJutsuBuilder" data-item-id="{{id}}" aria-label="Configurar {{name}}" title="Configurar técnica"><i class="fa-solid fa-gear" aria-hidden="true"></i></button><button type="button" class="creation-mini" data-action="removeTechnique" data-item-id="{{id}}" aria-label="Remover {{name}}"><i class="fa-solid fa-trash" aria-hidden="true"></i></button>{{/if}}</li>
         {{else}}<li class="creation-empty">Nenhuma técnica ainda.</li>{{/each}}
       </ul>
       <button type="button" class="creation-action" data-action="openCatalog" data-category="techniques">Catálogo de jutsus</button>

@@ -4,6 +4,7 @@ import {selectedAptitudeName,aptitudeChoiceStatus} from './aptitude-choices.mjs'
 import {CATEGORIES,itemCategory,itemProfile} from './sheet-profiles.mjs';
 import {weaponChecks} from './weapon-checks.mjs';
 import {isAptitudePower} from './aptitude-jutsus.mjs';
+import {itemAutomationSummary} from './item-automation.mjs';
 const physical=['weapons','armor','equipment','consumables','ammunition','treasures','containers'];
 export function supportingNavigation(type){
  if(type==='hazard')return [];
@@ -13,7 +14,7 @@ export function supportingNavigation(type){
  return [['details','Detalhes'],['actions','Ações'],['inventory','Inventário'],['notes','Descrição'],['effects','Efeitos']];
 }
 export function supportingItems(items,tab,stats={},system=null){
- const rows=items.map(i=>({temporaryFists:!!(i.flags?.['sns-v14-dev']?.supportFists||i.flags?.['sns-v14-dev']?.bladeHand),id:i.id,name:i.name,displayName:selectedAptitudeName(i),selectionLabel:aptitudeChoiceStatus(i).label,img:i.img,tags:i.system.tags??[],category:itemCategory(i),type:i.type,label:itemProfile(i).label,quantity:i.system.quantity,compartments:i.system.compartments??'—',details:i.system.details,weapon:itemCategory(i)==='weapons',equipped:i.system.equipped,weaponChecks:weaponChecks(i,stats,system,items).map(c=>{const p=i.actor&&weaponDamageProfile(i.actor,i,c.key);return {...c,hasDamage:!!p,damageBase:p?.base,damageFormula:p?.formula};}),canRoll:Number.isInteger(i.system.details?.precision),signedPrecision:(i.system.details?.precision>=0?'+':'−')+Math.abs(i.system.details?.precision??0)}));
+ const rows=items.map(i=>({temporaryFists:!!(i.flags?.['sns-v14-dev']?.supportFists||i.flags?.['sns-v14-dev']?.bladeHand),id:i.id,name:i.name,displayName:selectedAptitudeName(i),selectionLabel:aptitudeChoiceStatus(i).label,img:i.img,tags:i.system.tags??[],category:itemCategory(i),type:i.type,label:itemProfile(i).label,quantity:i.system.quantity,compartments:i.system.compartments??'—',details:i.system.details,weapon:itemCategory(i)==='weapons',equipped:i.system.equipped,automation:i.actor?itemAutomationSummary(i.actor,i):null,weaponChecks:weaponChecks(i,stats,system,items).map(c=>{const p=i.actor&&weaponDamageProfile(i.actor,i,c.key);return {...c,hasDamage:!!p,damageBase:p?.base,damageFormula:p?.formula};}),canRoll:Number.isInteger(i.system.details?.precision),signedPrecision:(i.system.details?.precision>=0?'+':'−')+Math.abs(i.system.details?.precision??0)}));
  const group=(id,label,entries,createType='')=>({id,label,entries,createType});
  if(tab==='inventory')return physical.map(id=>group(id,CATEGORIES[id],rows.filter(i=>i.category===id&&!i.temporaryFists)));
  if(tab==='effects'){const visible=rows.filter(r=>!isManagedCondition(items.find(i=>i.id===r.id)));return [group('effects','Condições',visible.filter(i=>i.type==='condition'),'condition'),group('effects','Efeitos',visible.filter(i=>i.category==='effects'&&i.type!=='condition'))];}

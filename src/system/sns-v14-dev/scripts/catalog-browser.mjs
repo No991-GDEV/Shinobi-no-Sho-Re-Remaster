@@ -1,5 +1,6 @@
 import {carryRequirementProfile} from './requirement-policy.mjs';
-import {sourceAvailable} from '../data/optional-sources.mjs';
+import {sourceAvailable,sourceEnabled} from '../data/optional-sources.mjs';
+import {D115_OPTIONAL_LIBRARIES} from '../data/homebrew-d115-sources.mjs';
 import {itemArt,assignedItemArt,isPlaceholderArt} from './item-art.mjs';
 import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
 import {loadCanonicalLibrary,preferCanonicalRows,isAcquisitionPack,isCatalogWorldItem} from './canonical-content.mjs';
@@ -39,6 +40,13 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
   }
   for(const p of POWER_DEFINITIONS)this.rows.push({id:p.id,name:p.name,type:'powerDefinition',category:'powers',level:null,img:itemArt({img:'icons/svg/aura.svg',system:{contentId:p.id}}),traits:p.id.endsWith('ninpou')?['arte:ninjutsu']:['arte:ninjutsu','elemento:'+p.id.split(':').at(-1)],sourceId:p.source.id,source:p.source.id+' · '+p.source.pages,origin:'Definição de criação',canAdd:!!this.actor?.isOwner,builtin:true});
   for(const e of EFFECT_DEFINITIONS)this.rows.push({id:e.id,name:e.name,type:'effectDefinition',category:'effectDefinitions',level:e.min,img:itemArt({img:'icons/svg/fire.svg',system:{contentId:e.id}}),traits:e.traits,sourceId:e.source.id,source:e.source.id+' · '+e.source.pages+(e.revision?' / '+e.revision.id+' '+e.revision.pages:''),origin:'Componente de criação',canAdd:false,builtin:true});
+  for(const [sourceId,lib]of Object.entries(D115_OPTIONAL_LIBRARIES)){
+   if(!sourceEnabled(sourceId))continue;
+   for(const entry of lib.entries){
+    const d=entry.document;
+    this.rows.push({inMemoryEntry:entry,documentName:'Item',requirementFlags:{'sns-v14-dev':structuredClone(d.flags?.['sns-v14-dev']??{})},contentId:entry.id,id:entry.id,uuid:'sns-d115:'+entry.id,name:d.name,img:itemArt(d),type:d.type,category:itemCategory(d),level:d.system.level>0?d.system.level:null,tags:d.system.tags??[],traits:d.system.traits??[],sourceId:d.system.source?.id??'',source:[d.system.source?.id,d.system.source?.edition,d.system.source?.pages].filter(Boolean).join(' · '),origin:lib.source,canAdd:!!this.actor?.isOwner,ruleSystem:{contentId:d.system.contentId,ruleId:d.system.ruleId,details:d.system.details,choice:d.system.choice}});
+   }
+  }
   this.library=await loadCanonicalLibrary();this.rows=preferCanonicalRows(this.rows,this.library);
  }
  async _prepareContext(){
@@ -102,12 +110,14 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
  static async reverseSort(){this.filters.direction=this.filters.direction==='asc'?'desc':'asc';await this.render({force:true});}
  static async open(event,target){
   const row=this.rows.find(r=>r.id===target.dataset.id);if(!row||!sourceAvailable(row)||!mayBrowseCatalogRow(row,game.user.isGM))return;
+  if(row.inMemoryEntry){await DialogV2.wait({window:{title:row.name},content:'<p><small>'+escapeHtml(row.source)+'</small></p>'+(row.inMemoryEntry.document.system.description||''),buttons:[{action:'close',label:'Fechar',default:true}]});return;}
   if(row.uuid){const item=await fromUuid(row.uuid);if(item?.testUserPermission(game.user,'OBSERVER'))await item.sheet.render({force:true});return;}
   const def=POWER_DEFINITIONS.find(d=>d.id===row.id)??EFFECT_DEFINITIONS.find(d=>d.id===row.id);if(!def)return;
   await DialogV2.wait({window:{title:row.name},content:'<h2>'+escapeHtml(row.name)+'</h2><p>'+escapeHtml(row.source)+'</p><p>'+escapeHtml(def.notes??def.access??'Escolha este componente no poder do personagem.')+'</p><p>Componente para criar jutsus. As condições aplicadas aparecem em Efeitos.</p>',buttons:[{action:'close',label:'Fechar',default:true}]});
  }
  static async add(event,target){
   if(!this.actor?.isOwner)return;const row=this.rows.find(r=>r.id===target.dataset.id);if(!row?.canAdd||!sourceAvailable(row)||row.documentName==='Actor'||!mayBrowseCatalogRow(row,game.user.isGM))return;
+  if(row.inMemoryEntry){const {canonicalCopy}=await import('./canonical-content.mjs');const data=canonicalCopy(row.inMemoryEntry);if(data.type==='power'&&data.system.power)data.system.power.choices=[];if(data.type==='jutsu'&&this.actor.items.has(this.powerId))data.system.details.powerId=this.powerId;const created=await this.actor.createEmbeddedDocuments('Item',[data]);if(created.length){ui.notifications.info('Adicionado à ficha.');await this.render({force:true});}return;}
   const builtin=POWER_DEFINITIONS.find(d=>d.id===row.id);if(builtin){await this.actor.createEmbeddedDocuments('Item',[{name:builtin.name,type:'power',system:{level:0,category:'powers',power:{definitionId:builtin.id},details:{organization:'effects',powerOrigin:'common',keyAttribute:builtin.attribute},source:{id:builtin.source.id,edition:'Básico4.1b',pages:builtin.source.pages}}}]);return ui.notifications.info('Registro criado em nível0. Confira a aquisição na ficha.');}
   const item=await fromUuid(row.uuid);if(!item?.testUserPermission(game.user,'OBSERVER'))return;let data=carryRequirementProfile(item,item.toObject(),item.uuid);delete data._id;data=await chooseCanonicalCopy(data,this.library);if(!data)return;
   if(data.type==='power'&&data.system.power)data.system.power.choices=[];if(data.type==='jutsu'&&this.actor.items.has(this.powerId))data.system.details.powerId=this.powerId;

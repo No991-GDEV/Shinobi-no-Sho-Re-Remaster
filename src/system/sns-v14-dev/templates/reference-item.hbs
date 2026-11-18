@@ -1,12 +1,135 @@
 <div class="document-shell pf-item-form">
-<header class="sheet-header"><button type="button" data-action="documentPortrait" class="item-image" aria-label="Alterar imagem"><img src="{{displayImage}}" alt="{{item.name}}"></button><div class="details"><input name="name" type="text" value="{{item.name}}" aria-label="Nome"><span class="level"><span>{{levelLabel}}</span> {{#if showLevel}}<input name="system.level" type="number" value="{{source.level}}" min="0" step="1" aria-label="Nível">{{/if}}</span><div class="tags paizo-style"><span class="sns-tag kind-tag">{{profile.label}}</span><div data-trait-picker></div></div></div></header>
-<nav class="sheet-tabs" aria-label="Abas do item">{{#if profile.physical}}<div class="sidebar-summary">Resumo de {{profile.label}}</div>{{/if}}<div class="tabs">{{#each tabs}}<button type="button" data-action="documentTab" data-tab="{{id}}" class="{{#if active}}active{{/if}}">{{label}}</button>{{/each}}</div></nav>
+<header class="sheet-header">
+  <button type="button" data-action="documentPortrait" class="item-image framed" aria-label="Alterar imagem"><img src="{{displayImage}}" alt="{{item.name}}"></button>
+  <div class="details">
+    <input name="name" type="text" value="{{item.name}}" aria-label="Nome">
+    <span class="level"><span>{{levelLabel}}</span> {{#if showLevel}}<input name="system.level" type="number" value="{{source.level}}" min="0" step="1" aria-label="Nível">{{/if}}</span>
+    <div class="tags paizo-style">{{#if showKindTag}}<span class="sns-tag kind-tag">{{profile.label}}</span>{{/if}}<div data-trait-picker></div></div>
+  </div>
+</header>
+<nav class="sheet-tabs" aria-label="Abas do item">
+  {{#if showSidebar}}<div class="sidebar-summary">{{sidebarTitle}}</div>{{/if}}
+  <div class="tabs">{{#each tabs}}<button type="button" data-action="documentTab" data-tab="{{id}}" class="{{#if active}}active{{/if}}">{{label}}</button>{{/each}}</div>
+</nav>
 <div class="sheet-content">
-{{#if profile.physical}}<section class="sidebar"><div class="inventory-details"><label class="form-group quantity">Quantidade<input name="system.quantity" type="number" value="{{source.quantity}}" min="0" step="1"></label>{{#each sidebarFields}}<label class="form-group">{{label}}<input name="{{path}}" value="{{value}}" {{#if numeric}}type="number" step="1" data-nullable placeholder="—"{{/if}}></label>{{/each}}<label class="form-group">Compart.<input aria-label="Compartimentos" name="system.compartments" type="number" min="0" step="1" data-nullable value="{{source.compartments}}" placeholder="—"></label><label class="form-group">Em uso<input type="checkbox" name="system.equipped" {{checked source.equipped}}></label></div></section>{{/if}}
-<main class="sheet-body document-panel">{{#if isGM}}{{#if editable}}<div class="item-mechanics-toolbar">{{#if isFormula}}<button type="button" data-action="configureCraft"><i class="fa-solid fa-hammer"></i> Configurar preparo</button>{{/if}}<button type="button" data-action="configureRequirements"><i class="fa-solid fa-list-check"></i> Editar requisitos</button></div>{{/if}}{{/if}}{{#if canUpdateBook}}<div class="item-mechanics-toolbar"><button type="button" data-action="updateBookText"><i class="fa-solid fa-book-open"></i> Usar texto do livro</button></div>{{/if}}{{#if bookVariant}}<p class="book-variant"><strong>Opção:</strong> {{bookVariant}}</p>{{/if}}{{#if canCorrectChoice}}<button type="button" data-action="correctChoice" class="choice-correction">Corrigir escolha · mestre</button>{{/if}}{{#if choiceUsesRecordedPrecision}}<p class="choice-precision-note">Bônus incluído na precisão da ficha.</p>{{/if}}{{#if canChooseAcuity}}{{#if editable}}<button type="button" class="sns-cast-item" data-action="toggleAcuity">{{#if usesAcuity}}Usar Força{{else}}Usar Destreza · Acuidade{{/if}}</button>{{/if}}{{/if}}{{#if guidedPower}}<div class="item-mechanics-toolbar"><button type="button" data-action="learnEffects">Efeitos aprendidos / progressão</button></div>{{/if}}{{#if isJutsu}}{{#if canCastJutsu}}<button type="button" class="sns-cast-item" data-action="castJutsu"><i class="fa-solid fa-dice-d8"></i> Usar jutsu</button>{{/if}}{{#if isGM}}{{#if editable}}<button type="button" data-action="configureEffects">Efeitos nos alvos</button>{{/if}}{{/if}}{{#if hasActor}}{{#if editable}}<div class="item-mechanics-toolbar"><button type="button" data-action="buildJutsu">Configurar jutsu</button></div>{{/if}}{{/if}}{{#if mechanics.problems}}<p class="validation-notes">{{#each mechanics.problems}}{{this}} {{/each}}</p>{{/if}}{{/if}}
-{{#if description}}<section class="tab description active">{{#if optionalSourceLabel}}<p class="hint"><strong>{{optionalSourceLabel}}</strong> · Modalidades, custos e requisitos próprios desta expansão.</p>{{/if}}{{#if reading.hasValues}}<section class="sns-jutsu-facts" aria-label="Resumo do jutsu"><header><h3>Resumo do jutsu</h3>{{#if readingLevels}}<label>Nível para consulta<select name="readingLevel" data-reading-level>{{#each readingLevels}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{value}}</option>{{/each}}</select></label>{{/if}}</header><dl>{{#each reading.rows}}<div><dt>{{label}}</dt><dd>{{#if long}}<details><summary>Ver descrição</summary><p>{{value}}</p></details>{{else}}{{value}}{{/if}}{{#if formula}}<small>{{formula}}</small>{{/if}}</dd></div>{{/each}}</dl></section>{{/if}}{{#if canEditDescription}}<button type="button" class="sns-edit-description" data-action="editDescription"><i class="fa-solid fa-pen-to-square"></i> {{#if emptyDescription}}Escrever descrição{{else}}Editar descrição{{/if}}</button>{{/if}}<prose-mirror name="system.description" value="{{source.description}}" toggled {{#unless canEditDescription}}disabled{{/unless}}>{{{descriptionHTML}}}</prose-mirror>{{#each reading.related}}<section class="sns-related-rule"><h3>{{name}}</h3><div>{{{html}}}</div><small>{{source.id}} · {{source.pages}}</small></section>{{/each}}{{#if showPersonalNotes}}<section class="personal-item-notes"><label>{{#if isJutsu}}Orientações da técnica{{else}}Notas deste exemplar{{/if}}<textarea name="system.personalNotes" rows="3" placeholder="Aparência, onde está guardado ou outras anotações pessoais">{{source.personalNotes}}</textarea></label>{{#if bookName}}<small>Definição: {{bookName}}</small>{{/if}}</section>{{/if}}{{#each narrativeNotes}}<section class="narrative-note"><h4>{{label}}</h4><p>{{text}}</p></section>{{/each}}</section>{{/if}}
-{{#if equipmentUse.configured}}<section class="item-requirements" aria-label="Requisitos de uso"><h4>Para usar{{#if hasActor}} · {{#if equipmentUse.valid}}Atendidos{{else}}Não atendidos{{/if}}{{/if}}</h4>{{#each equipmentUse.rows}}<div class="requirement-row {{#if met}}met{{else}}unmet{{/if}}"><span>{{label}}</span>{{#if @root.hasActor}}<strong>{{current}} · {{#if met}}✓{{else}}✕{{/if}}</strong>{{/if}}</div>{{/each}}<small>{{equipmentUse.source}}</small></section>{{/if}}{{#if requirements.configured}}<section class="item-requirements" aria-label="Requisitos da regra">{{#if requirements.referenceException}}<p class="hint">Exceção da ficha de referência.</p>{{/if}}<h4>Requisitos{{#if hasActor}} · {{#if requirements.valid}}Atendidos{{else}}Não atendidos{{/if}}{{/if}}</h4>{{#each requirements.rows}}<div class="requirement-row {{#if met}}met{{else}}unmet{{/if}}"><span>{{label}}</span>{{#if @root.hasActor}}<strong>{{current}} · {{#if met}}✓{{else}}✕{{/if}}</strong>{{/if}}</div>{{else}}<p>Sem pré-requisitos de aquisição.</p>{{/each}}<small>{{requirements.source}}</small></section>{{/if}}
-{{#if isOrigin}}<section class="item-requirements"><h4>Acesso restrito</h4>{{#if isGM}}{{#if editable}}<label>Origem autorizada pelo mestre<select name="system.details.accessRule">{{#each originChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>{{else}}<p>{{#if originLabel}}{{originLabel}}{{else}}Nenhuma autorização{{/if}}</p>{{/if}}{{else}}<p>{{#if originLabel}}{{originLabel}}{{else}}Nenhuma autorização{{/if}}</p>{{/if}}<small>Origem exigida. Veja também os requisitos de atributos e aptidões.</small></section>{{/if}}
-{{#if canHaveRule}}{{#if isGM}}{{#if editable}}<details class="item-rule-binding"><summary>Regra mecânica · mestre</summary><label>Definição verificada<select name="system.ruleId">{{#each ruleChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label></details>{{/if}}{{/if}}{{/if}}
-{{#if details}}<section class="tab details active"><fieldset class="basics"><legend>{{profile.label}}</legend><label class="form-group">Grupo na ficha<select name="system.category">{{#each categories}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>{{#each fields}}<label class="form-group">{{label}}{{#if readonly}}<output title="Definido pela regra; editável pelo mestre.">{{value}}</output>{{else}}{{#if select}}<select name="{{path}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>{{else}}{{#if powerLink}}<select name="{{path}}" aria-label="Poder vinculado">{{#each powerOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>{{else}}<input name="{{path}}" value="{{value}}" {{#if numeric}}type="number" step="1" data-nullable placeholder="—"{{/if}}>{{/if}}{{/if}}{{/if}}</label>{{/each}}</fieldset><fieldset class="publication"><legend>Publicação</legend><label>Título<input name="system.source.id" value="{{source.source.id}}"></label><div class="publication-row"><label>Edição<input name="system.source.edition" value="{{source.source.edition}}"></label><label>Páginas<input name="system.source.pages" value="{{source.source.pages}}"></label></div></fieldset></section>{{/if}}
-</main></div></div>
+{{#if showSidebar}}
+<section class="sidebar">
+  {{#if profile.physical}}
+    <div class="inventory-details">
+      <label class="form-group quantity">Quantidade<input name="system.quantity" type="number" value="{{source.quantity}}" min="0" step="1"></label>
+      {{#each sidebarFields}}<label class="form-group">{{label}}<input name="{{path}}" value="{{value}}" {{#if numeric}}type="number" step="1" data-nullable placeholder="—"{{/if}}></label>{{/each}}
+      <label class="form-group">Compart.<input aria-label="Compartimentos" name="system.compartments" type="number" min="0" step="1" data-nullable value="{{source.compartments}}" placeholder="—"></label>
+      <label class="form-group">Em uso<input type="checkbox" name="system.equipped" {{checked source.equipped}}></label>
+    </div>
+  {{else}}
+    {{#if sidebarFacts.length}}
+      <dl class="sns-item-sidebar-facts">
+        {{#each sidebarFacts}}<div><dt>{{label}}</dt><dd>{{value}}</dd></div>{{/each}}
+      </dl>
+    {{/if}}
+  {{/if}}
+  {{#if showSidebarActions}}
+    <div class="sns-item-sidebar-actions">
+      {{#if canCastJutsu}}<button type="button" class="sns-cast-item" data-action="castJutsu"><i class="fa-solid fa-dice-d8" aria-hidden="true"></i> Usar jutsu</button>{{/if}}
+      {{#if canChooseAcuity}}{{#if editable}}<button type="button" class="sns-share-item" data-action="toggleAcuity"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i> {{#if usesAcuity}}Usar Força{{else}}Usar Destreza · Acuidade{{/if}}</button>{{/if}}{{/if}}
+      {{#if hasActor}}<button type="button" class="sns-share-item" data-action="shareItem"><i class="fa-solid fa-message" aria-hidden="true"></i> Enviar ao chat</button>{{/if}}
+    </div>
+  {{/if}}
+</section>
+{{/if}}
+<main class="sheet-body document-panel">
+{{#if description}}
+<section class="tab description active">
+  {{#if optionalSourceLabel}}<p class="hint"><strong>{{optionalSourceLabel}}</strong> · Modalidades, custos e requisitos próprios desta expansão.</p>{{/if}}
+  {{#if reading.hasValues}}
+    <section class="sns-jutsu-facts" aria-label="Resumo do jutsu">
+      <header>
+        <h3>Resumo do jutsu</h3>
+        {{#if readingLevels}}<label>Nível para consulta<select name="readingLevel" data-reading-level>{{#each readingLevels}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{value}}</option>{{/each}}</select></label>{{/if}}
+      </header>
+      <dl>{{#each reading.rows}}<div><dt>{{label}}</dt><dd>{{#if long}}<details><summary>Ver descrição</summary><p>{{value}}</p></details>{{else}}{{value}}{{/if}}{{#if formula}}<small>{{formula}}</small>{{/if}}</dd></div>{{/each}}</dl>
+    </section>
+  {{/if}}
+  {{#if bookVariant}}<p class="book-variant"><strong>Opção:</strong> {{bookVariant}}</p>{{/if}}
+  {{#if canEditDescription}}<button type="button" class="sns-edit-description" data-action="editDescription"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> {{#if emptyDescription}}Escrever descrição{{else}}Editar descrição{{/if}}</button>{{/if}}
+  <prose-mirror name="system.description" value="{{source.description}}" toggled {{#unless canEditDescription}}disabled{{/unless}}>{{{descriptionHTML}}}</prose-mirror>
+  {{#each reading.related}}<section class="sns-related-rule"><h3>{{name}}</h3><div>{{{html}}}</div><small>{{source.id}} · {{source.pages}}</small></section>{{/each}}
+  {{#if showPersonalNotes}}<section class="personal-item-notes"><label>{{#if isJutsu}}Orientações da técnica{{else}}Notas deste exemplar{{/if}}<textarea name="system.personalNotes" rows="3" placeholder="Aparência, onde está guardado ou outras anotações pessoais">{{source.personalNotes}}</textarea></label>{{#if bookName}}<small>Definição: {{bookName}}</small>{{/if}}</section>{{/if}}
+  {{#each narrativeNotes}}<section class="narrative-note"><h4>{{label}}</h4><p>{{text}}</p></section>{{/each}}
+</section>
+{{/if}}
+{{#if details}}
+<section class="tab details active">
+  <fieldset class="basics">
+    <legend>{{profile.label}}</legend>
+    <label class="form-group">Grupo na ficha<select name="system.category">{{#each categories}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select></label>
+    {{#each fields}}<label class="form-group">{{label}}{{#if readonly}}<output title="Definido pela regra; editável pelo mestre.">{{value}}</output>{{else}}{{#if select}}<select name="{{path}}">{{#each options}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>{{else}}{{#if powerLink}}<select name="{{path}}" aria-label="Poder vinculado">{{#each powerOptions}}<option value="{{value}}" {{#if selected}}selected{{/if}}>{{label}}</option>{{/each}}</select>{{else}}<input name="{{path}}" value="{{value}}" {{#if numeric}}type="number" step="1" data-nullable placeholder="—"{{/if}}>{{/if}}{{/if}}{{/if}}</label>{{/each}}
+  </fieldset>
+  {{#if choiceUsesRecordedPrecision}}<p class="choice-precision-note">Bônus incluído na precisão da ficha.</p>{{/if}}
+  <fieldset class="publication">
+    <legend>Publicação</legend>
+    <label>Título<input name="system.source.id" value="{{source.source.id}}"></label>
+    <div class="publication-row">
+      <label>Edição<input name="system.source.edition" value="{{source.source.edition}}"></label>
+      <label>Páginas<input name="system.source.pages" value="{{source.source.pages}}"></label>
+    </div>
+  </fieldset>
+</section>
+{{/if}}
+{{#if rulesTab}}
+<section class="tab rules active sns-rules-pane">
+  {{#if hasRulesToolbar}}
+    <div class="item-mechanics-toolbar">
+      {{#if canCastJutsu}}<button type="button" data-action="castJutsu"><i class="fa-solid fa-dice-d8" aria-hidden="true"></i> Usar jutsu</button>{{/if}}
+      {{#if isJutsu}}{{#if hasActor}}{{#if editable}}<button type="button" data-action="buildJutsu"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Configurar jutsu</button>{{/if}}{{/if}}{{#if isGM}}{{#if editable}}<button type="button" data-action="configureEffects"><i class="fa-solid fa-burst" aria-hidden="true"></i> Efeitos nos alvos</button>{{/if}}{{/if}}{{/if}}
+      {{#if guidedPower}}<button type="button" data-action="learnEffects"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> Efeitos aprendidos / progressão</button>{{/if}}
+      {{#if isGM}}{{#if editable}}{{#if isFormula}}<button type="button" data-action="configureCraft"><i class="fa-solid fa-hammer" aria-hidden="true"></i> Configurar preparo</button>{{/if}}<button type="button" data-action="configureRequirements"><i class="fa-solid fa-list-check" aria-hidden="true"></i> Editar requisitos</button>{{/if}}{{/if}}
+      {{#if canConfigureAutomation}}<button type="button" data-action="configureAutomation"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Regras e botões da ficha</button>{{/if}}
+      {{#if canUpdateBook}}<button type="button" data-action="updateBookText"><i class="fa-solid fa-book-open" aria-hidden="true"></i> Usar texto do livro</button>{{/if}}
+      {{#if canCorrectChoice}}<button type="button" data-action="correctChoice"><i class="fa-solid fa-scale-balanced" aria-hidden="true"></i> Corrigir escolha · mestre</button>{{/if}}
+      {{#if canChooseAcuity}}{{#if editable}}<button type="button" data-action="toggleAcuity"><i class="fa-solid fa-hand-fist" aria-hidden="true"></i> {{#if usesAcuity}}Usar Força{{else}}Usar Destreza · Acuidade{{/if}}</button>{{/if}}{{/if}}
+    </div>
+  {{/if}}
+  {{#if isJutsu}}{{#if mechanics.problems}}<p class="validation-notes">{{#each mechanics.problems}}{{this}} {{/each}}</p>{{/if}}{{/if}}
+  {{#if automationSummary}}
+    <div class="sns-item-automation-summary">
+      {{#if automationSummary.hasPassive}}<span><strong>Passivo:</strong> {{automationSummary.passiveText}}</span>{{/if}}
+      {{#if automationSummary.hasToggle}}<span><strong>Modo:</strong> {{automationSummary.label}} ({{automationSummary.toggleSummary}})</span>{{/if}}
+      {{#if automationSummary.hasQuickAction}}<span><strong>Ação:</strong> {{automationSummary.label}} · {{automationSummary.actionSummary}}</span>{{/if}}
+      {{#if automationSummary.hasChargePool}}<span><strong>Reserva:</strong> {{automationSummary.charge.label}} ({{automationSummary.charge.value}}/{{automationSummary.charge.max}} {{automationSummary.charge.unit}})</span>{{/if}}
+    </div>
+  {{/if}}
+  {{#if equipmentUse.configured}}
+    <section class="item-requirements" aria-label="Requisitos de uso">
+      <h4>Para usar{{#if hasActor}} · {{#if equipmentUse.valid}}Atendidos{{else}}Não atendidos{{/if}}{{/if}}</h4>
+      {{#each equipmentUse.rows}}<div class="requirement-row {{#if met}}met{{else}}unmet{{/if}}"><span>{{label}}</span>{{#if @root.hasActor}}<strong>{{current}} · {{#if met}}✓{{else}}✕{{/if}}</strong>{{/if}}</div>{{/each}}
+      <small>{{equipmentUse.source}}</small>
+    </section>
+  {{/if}}
+  {{#if requirements.configured}}
+    <section class="item-requirements" aria-label="Requisitos da regra">
+      {{#if requirements.referenceException}}<p class="hint">Exceção da ficha de referência.</p>{{/if}}
+      <h4>Requisitos{{#if hasActor}} · {{#if requirements.valid}}Atendidos{{else}}Não atendidos{{/if}}{{/if}}</h4>
+      {{#each requirements.rows}}<div class="requirement-row {{#if met}}met{{else}}unmet{{/if}}"><span>{{label}}</span>{{#if @root.hasActor}}<strong>{{current}} · {{#if met}}✓{{else}}✕{{/if}}</strong>{{/if}}</div>{{else}}<p>Sem pré-requisitos de aquisição.</p>{{/each}}
+      <small>{{requirements.source}}</small>
+    </section>
+  {{/if}}
+  {{#if isOrigin}}
+    <section class="item-requirements">
+      <h4>Acesso restrito</h4>
+      {{#if isGM}}{{#if editable}}<label>Origem autorizada pelo mestre<select name="system.details.accessRule">{{#each originChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>{{else}}<p>{{#if originLabel}}{{originLabel}}{{else}}Nenhuma autorização{{/if}}</p>{{/if}}{{else}}<p>{{#if originLabel}}{{originLabel}}{{else}}Nenhuma autorização{{/if}}</p>{{/if}}
+      <small>Origem exigida. Veja também os requisitos de atributos e aptidões.</small>
+    </section>
+  {{/if}}
+  {{#if canHaveRule}}{{#if isGM}}{{#if editable}}
+    <details class="item-rule-binding">
+      <summary>Regra mecânica · mestre</summary>
+      <label>Definição verificada<select name="system.ruleId">{{#each ruleChoices}}<option value="{{id}}" {{#if selected}}selected{{/if}}>{{name}}</option>{{/each}}</select></label>
+    </details>
+  {{/if}}{{/if}}{{/if}}
+  {{#unless hasRulesContent}}<p class="hint">Nenhuma regra ou ajuste mecânico adicional configurado para este item.</p>{{/unless}}
+</section>
+{{/if}}
+</main>
+</div>
+</div>

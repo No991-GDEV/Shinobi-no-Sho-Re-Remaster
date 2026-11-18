@@ -50,7 +50,7 @@
 .sns-support-sheet .party-summary{padding:10px;margin-bottom:12px}
 .sns-support-sheet .party-summary-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px}
 .sns-support-sheet .party-summary-tabs button{background:#d4cfca;color:#222;padding:5px 7px;font:700 12px SnsRoboto;border-radius:2px;box-shadow:0 1px 2px #0002}
-.sns-support-sheet .party-summary-tabs button.active{background:#1c246d;color:#fff;outline:1px solid #bc6f4c;outline-offset:1px}
+.sns-support-sheet .party-summary-tabs button.active{background:#680500;color:#fff6e5;outline:1px solid #bc8c4c;outline-offset:1px}
 .sns-support-sheet .summary-badges,.sns-support-sheet .member-skill-tags{display:flex;gap:3px;flex-wrap:wrap;min-height:20px;align-items:center}
 .sns-support-sheet .party-language{background:#77624e;color:#fff;font:700 10px/16px SnsRoboto;text-transform:uppercase;border:1px solid #9e8a75;padding:0 3px}
 .sns-support-sheet .party-skill-badge{font:700 10px/16px SnsRoboto;text-transform:uppercase;border:1px solid var(--badge-ink);color:var(--badge-ink);background:#fff3;padding:0 3px}
@@ -69,7 +69,7 @@
 .sns-support-sheet .party-main-stats{display:flex;align-items:stretch;gap:7px;margin-bottom:5px}
 .sns-support-sheet .party-main-stats small{font:10px SnsRoboto;display:block}
 .sns-support-sheet .member-dodge{flex:0 0 39px;text-align:center;border:1px solid #b8b0a0;border-radius:0 0 45% 45%;padding:2px}
-.sns-support-sheet .member-dodge strong{font:700 20px SnsRoboto;color:#20276c}
+.sns-support-sheet .member-dodge strong{font:700 20px SnsRoboto;color:#680500}
 .sns-support-sheet .member-combat{display:flex;gap:6px;border:1px solid #b8b0a0;padding:3px 6px;flex:none}
 .sns-support-sheet .member-combat>span{text-align:center;min-width:30px}
 .sns-support-sheet .member-combat strong{font:700 17px SnsRoboto}

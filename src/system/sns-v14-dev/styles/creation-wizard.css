@@ -90,6 +90,7 @@
 .sns-creation-wizard .creation-panel-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   padding: 8px 14px;
   background: rgba(74, 21, 24, 0.12);
@@ -103,7 +104,7 @@
 .sns-creation-wizard .creation-nav button { width:auto;min-width:105px; }
 .sns-creation-wizard .creation-rows .row-name { flex:1;min-width:0; }
 .sns-creation-wizard .creation-rows .creation-mini { flex:0 0 auto;width:auto; }
-.sns-creation-wizard .creation-row { display:flex;align-items:center;gap:8px; }
+.sns-creation-wizard .creation-row { display:flex;align-items:center;gap:8px;padding:4px;border-bottom:1px solid rgba(120, 80, 30, 0.2); }
 
 .sns-creation-wizard .creation-note {
   margin: 0 0 10px;
@@ -138,7 +139,7 @@
   border-bottom: 1px solid rgba(120, 80, 30, 0.2);
   font-size: 0.86rem;
 }
-.sns-creation-wizard .creation-rows img { width: 22px; height: 22px; flex: none; }
+.sns-creation-wizard .creation-rows img,.sns-creation-wizard .creation-row img { width: 26px; height: 26px; flex: none; padding: 2px; background: #2f2a24; border: 1px solid #9c7842; border-radius: 3px; box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5); object-fit: contain; }
 .sns-creation-wizard .creation-power-block { margin: 8px 0; padding: 6px 8px; background: rgba(120, 80, 30, 0.08); border-radius: 4px; }
 .sns-creation-wizard .creation-power-block h4 { margin: 0 0 6px; color: #5a161a; }
 .sns-creation-wizard .creation-panel-body h4 { margin: 10px 0 4px; color: #5a161a; font-size: 0.92rem; }
@@ -209,5 +210,5 @@
 .sns-creation-wizard .creation-skill-row .row-detail { width:52px;text-align:right;font-size:12px; }
 .sns-creation-wizard .creation-save-hint { color:#6b4a28;font-size:12px;line-height:1.4;margin:10px 0 6px; }
 .sns-creation-wizard .creation-derived { font-size:13px;margin:12px 0 4px; }
-.sns-creation-wizard .creation-budget-summary,.sns-creation-wizard .creation-budget-inline { position:sticky;top:-10px;z-index:1;background:#eedeBC;padding:9px 0;border-bottom:1px solid #b7a887; }
+.sns-creation-wizard .creation-budget-summary,.sns-creation-wizard .creation-budget-inline { position:sticky;top:-10px;z-index:1;background:#eedeBC;margin:-10px -14px 10px;padding:8px 14px;border-bottom:1px solid #b7a887; }
 @media (max-width:700px) { .sns-creation-wizard .creation-attribute-grid { grid-template-columns:1fr; } }

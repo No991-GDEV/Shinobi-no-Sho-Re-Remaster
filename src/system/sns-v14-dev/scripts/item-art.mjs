@@ -7,3 +7,33 @@ export function assignedItemArt(item){
  return ids.map(id=>ITEM_ART[id]).find(Boolean)??'';
 }
 export function itemArt(item){return isPlaceholderArt(item?.img)?assignedItemArt(item)||item?.img||'icons/svg/item-bag.svg':item.img;}
+export const EXTRA_DISPLAY_ART=Object.freeze({
+ 'sns:equipment:colete-ninja':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/stone-skin.webp',
+ 'sns:equipment:colete-ninja-resistente':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/stone-skin.webp',
+ 'sns:equipment:armadura-de-batalha':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/wall-of-force.webp',
+ 'sns:equipment:manopla':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/weapons/knuckle-duster.webp',
+ 'sns:equipment:bomba-fumaca':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/solid-fog.webp',
+ 'sns:equipment:tarja-explosiva':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/fireball.webp',
+ 'sns:equipment:tarja-especial-selos':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/held-items/summoning-handscroll.webp',
+ 'sns:equipment:bomba-luminosa':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/blindness.webp',
+ 'sns:equipment:bomba-de-marcacao':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/magic-missile.webp',
+ 'sns:equipment:bomba-som-de-trovao':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/shocking-grasp.webp',
+ 'sns:equipment:dispositivo-bombas':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/fireball.webp',
+ 'sns:jutsu:kawarimi-no-jutsu':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/mirror-image.webp',
+ 'sns:jutsu:kinobori':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/passwall.webp',
+ 'sns:jutsu:shunshin-no-jutsu':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/gust-of-wind.webp',
+ 'sns:jutsu:shunshin-combate':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/gust-of-wind.webp',
+ 'sns:jutsu:tadayou':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/hydraulic-push.webp',
+ 'sns:power:kuchiyose':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/held-items/summoning-handscroll.webp',
+ 'sns:power:versatilidade':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/consumables/other-consumables/spell-scroll.webp'
+});
+export function displayItemArt(item){
+ const base=itemArt(item);
+ if(isPlaceholderArt(base)){
+  const s=item?.system??{},ids=[s.contentId,s.ruleId,s.power?.definitionId,s.jutsu?.effectId];
+  const extra=ids.map(id=>EXTRA_DISPLAY_ART[id]).find(Boolean);
+  if(extra)return extra;
+  if(base==='icons/svg/shield.svg'||(/colete ninja/i.test(String(item?.name??''))&&base==='icons/svg/shield.svg'))return 'systems/sns-v14-dev/assets/library/pf2e/icons/spells/stone-skin.webp';
+ }
+ return base;
+}

@@ -13,6 +13,7 @@ import {specialResourceView} from './special-resources.mjs';
 import {activeAptitudeView} from './active-aptitudes.mjs';
 import {temporaryEffects} from './temporary-effects.mjs';
 import {characteristicEffects} from './characteristic-effects.mjs';
+import {actorItemActivations} from './item-automation.mjs';
 import { ATTRIBUTES, COMBAT, TABS, calculate, displayValue } from "./kernel.mjs";
 import { signed } from './roll-components.mjs';
 import {itemCategory} from './sheet-profiles.mjs';
@@ -28,14 +29,17 @@ export function sheetView(actor, { activeTab = "character", actionTab = "encount
   const inventoryCategories = [["weapons","Armas"],["armor","Armaduras"],["equipment","Equipamentos"],["consumables","Consumíveis"],["ammunition","Munição"],["treasures","Objetos especiais"],["containers","Recipientes"]];
   const inventoryGroups = inventoryCategories.map(([id,label])=>({id,label,entries:items.filter(x=>x.category===id&&!x.temporaryFists)}));
   const actionGroups=[["standard","Ações"],["reaction","Reações"],["free","Ações livres"]].map(([id,label])=>({id,label,entries:items.filter(x=>x.category===id)}));
+  const activeAptitudes=activeAptitudeView(actor),itemActivations=actorItemActivations(actor);
+  const activeAptitudeCount=activeAptitudes.length+itemActivations.length;
+  const activeAptitudeRunningCount=activeAptitudes.filter(a=>a.active).length+itemActivations.filter(a=>a.active).length;
   return {
     mechanicalOrigins:[...new Set(Array.from(actor.items??[]).map(originGrant).filter(Boolean))].map(id=>ACCESS_ORIGINS[id]).join(' · '),mechanicalNatures:Array.from(actor.items??[]).filter(i=>i.type==='power'&&i.system.level>0&&['katon','suiton','doton','raiton','fuuton'].some(e=>i.system.contentId==='sns:power:'+e)).map(i=>i.name.replace(/ \(.*$/, '')).join(' · '),
-    legado:legadoView(actor),actor, source, d, basePath, investment:d.investment,investmentRows:d.investment.rows.filter(r=>['power','aptitude'].includes(r.type)).map(r=>({...r,canChoose:r.type==='aptitude',costLabel:r.pending?'Definir aquisição':r.free?'Gratuita':r.cost+' PP'})),transformations:transformationView(actor), isGM, editable, activeTab,specialResources:specialResourceView(actor),activeAptitudes:activeAptitudeView(actor),temporaryEffects:temporaryEffects(actor),appliedEffectEntries:items.filter(i=>i.category==='effects'&&!isManagedCondition(actor.items.find(s=>s.id===i.id))),
+    legado:legadoView(actor),actor, source, d, basePath, investment:d.investment,investmentRows:d.investment.rows.filter(r=>['power','aptitude'].includes(r.type)).map(r=>({...r,canChoose:r.type==='aptitude',costLabel:r.pending?'Definir aquisição':r.free?'Gratuita':r.cost+' PP'})),transformations:transformationView(actor), isGM, editable, activeTab,specialResources:specialResourceView(actor),activeAptitudes,itemActivations,activeAptitudeCount,activeAptitudeRunningCount,temporaryEffects:temporaryEffects(actor),appliedEffectEntries:items.filter(i=>i.category==='effects'&&!isManagedCondition(actor.items.find(s=>s.id===i.id))),
     tabs: TABS.map(([id, label, icon]) => ({ id, label, icon, active: id === activeTab })),
     activeLabel: TABS.find(([id]) => id === activeTab)?.[1] ?? "Character",
     actionTab,jutsuTab,encounter:actionTab==="encounter",exploration:actionTab==="exploration",
     downtime:actionTab==="downtime",powers:jutsuTab==="powers",techniques:jutsuTab==="techniques",
-    effects:jutsuTab==="effects",inventoryGroups,actionGroups,...groupPowers(items),languages:source.identity?.languages??"",senses:source.identity?.senses??"",
+    aptitudesTab:jutsuTab==="aptitudes",effects:jutsuTab==="effects",inventoryGroups,actionGroups,...groupPowers(items),languages:source.identity?.languages??"",senses:source.identity?.senses??"",
     techniqueEntries:items.filter(i=>i.category==='techniques'),
     weaponEntries:items.filter(i=>i.category==='weapons').map(i=>({...i,img:i.img==='icons/svg/item-bag.svg'?'icons/svg/sword.svg':i.img,cc:signed(d.combat.cc.precision),cd:signed(d.combat.cd.precision),weaponChecks:weaponChecks(i,Object.fromEntries(Object.entries(d.combat).map(([key,value])=>[key,value.precision])),source,actor.items).map(c=>{const p=weaponDamageProfile(actor,actor.items.get(i.id),c.key);return {...c,hasDamage:!!p,damageBase:p?.base,damageFormula:p?.formula};})})),
     featureGroups:[['features','Clãs e características'],['aptitudes','Aptidões']].map(([id,label])=>({id,label,icon:id==='aptitudes'?'fa-medal':'fa-dna',entries:items.filter(i=>i.category===id&&!isAptitudePower(i))})),

@@ -29,10 +29,10 @@ export function ruleCost(text,level,actor){
  if(/^(?:1\/2|½|metade) (?:do )?espirito$/.test(s)&&Number.isFinite(actor?.system.attributes?.esp))return Math.ceil(actor.system.attributes.esp/2);
  return null;
 }
-export function npcJutsuPlan(item,library,level,custom={}){
+ export function npcJutsuPlan(item,library,level,custom={}){
  if(isLegado(item))return legadoPlan(item,custom,library);
  item=effectiveRuleItem(item);
- if(!(item.actor?.type==='npc'||item.flags?.['sns-v14-dev']?.sharedRecipe)&&item.type==='jutsu'||item.type!=='jutsu')throw Error('A origem precisa ser um jutsu de NPC.');
+ if(item?.type!=='jutsu'||!item.actor)throw Error('A origem precisa ser um jutsu válido.');
  const sourceId=item.system.jutsu?.effectId||item.system.contentId||(item.flags?.['sns-v14-dev']?.canonicalTextSource?.textOnly?'':item.flags?.['sns-v14-dev']?.canonicalTextSource?.id);
  const reading=jutsuReading(item,library,level),rows=reading?.rows??[],p=item.actor.items.get(item.system.details?.powerId),entry=library.find(e=>e.id===sourceId),headers=ruleHeaders(item.system.description),definition=effectDefinition(sourceId);
  const saved=item.flags?.['sns-v14-dev']?.npcCastParameters?.[level??item.system.jutsu?.usedLevel??p?.system.level]??{},powerProfile=npcPowerProfile(item,library,custom.nature??saved.nature);
@@ -60,6 +60,9 @@ export function npcJutsuPlan(item,library,level,custom={}){
   const esp=item.actor.system.attributes?.esp;
   if(Number.isInteger(esp)){cost=level;base=sourceId.endsWith('basico')?2+level+Math.ceil(esp/2):level+esp;mode='attack:cc';}
  }
+ if(sourceId==='sns:jutsu:rasengan-elemental'&&Number.isInteger(item.actor.system.attributes?.esp)){cost=2+level;base=2*level+item.actor.system.attributes.esp;mode='attack:cc';}
+ if(sourceId==='sns:jutsu:hb-f05-bijuu-rasengan'&&Number.isInteger(item.actor.system.attributes?.esp)){base=3*level+Math.ceil(item.actor.system.attributes.esp/4);cost=10+Math.ceil(base/2);mode='attack:cc';}
+ if(sourceId==='sns:jutsu:hb-f05-enton-rasenshuriken'&&Number.isInteger(item.actor.system.attributes?.esp)){base=2*level+item.actor.system.attributes.esp+2;cost=2+level;mode='attack:cd';}
  let projectiles=null;
  if(sourceId==='sns:effect:flechas'&&powerProfile.profile){projectiles={count:level,baseEach:2,bonus:powerProfile.profile.damageBonus};base=2*level+projectiles.bonus;mode='attack:cd';}
  if(sourceId==='sns:effect:lamina-de-vento'&&powerProfile.nature==='fuuton'){mode='attack:cd';base=3*level;cost=level;}
@@ -72,7 +75,16 @@ export function npcJutsuPlan(item,library,level,custom={}){
  if(sourceId==='sns:jutsu:chakra-no-mesu'&&p){cost=level;mode='attack:cc';base=2*level;}
  const section=item.flags?.['sns-v14-dev']?.canonicalTextSource?.section??'',recipe=item.flags?.['sns-v14-dev']?.npcSourceRecipe;
  let noDamage=false,damageNature='lethal';
- if(sourceId==='sns:power:kagejutsu'&&/^NÍVEL [13]:/.test(section)){mode='attack:cd';cost=level;base=0;noDamage=true;}
+ if(sourceId==='sns:jutsu:shousen-no-jutsu'){cost=level;mode='none';base=null;noDamage=true;}
+ if(sourceId==='sns:jutsu:hb-f05-chikatsu-saisei-no-jutsu'){cost=10;mode='none';base=null;noDamage=true;}
+ if(['sns:jutsu:selo-de-armazenamento','sns:jutsu:selo-de-armazenamento-maior'].includes(sourceId)){cost=1;mode='none';base=null;noDamage=true;}
+ if(sourceId==='sns:jutsu:hb-f06-hiraishin-cooperacao'){cost=6;mode='none';base=null;noDamage=true;}
+ if(sourceId==='sns:power:kagejutsu'&&/^NÍVEL [1348]:/.test(section)){mode='attack:cd';cost=level;base=0;noDamage=true;}
+ if(sourceId==='sns:power:kagejutsu'&&section.startsWith('NÍVEL 5:')){mode='attack:cc';cost=level;base=level+Math.ceil((effectiveAttribute(item.actor,'esp')??0)/2);}
+ if(sourceId==='sns:power:kagejutsu'&&section.startsWith('NÍVEL 6:')){if(/KAGE NUI/i.test(section)){mode='attack:cd';cost=level;base=2*level;}else{mode='none';cost=level;base=null;noDamage=true;}}
+ if(sourceId==='sns:power:shindenshin'&&section){const intAttr=effectiveAttribute(item.actor,'int')??0;if(section.startsWith('NÍVEL 1:')){mode='attack:cd';cost=level;base=0;noDamage=true;}else if(section.startsWith('NÍVEL 3:')){mode='none';cost=level;base=null;noDamage=true;}else if(section.startsWith('NÍVEL 5:')){mode='attack:cd';cost=4;base=0;noDamage=true;}else if(/^NÍVEL [67]:/.test(section)){mode='save';saveKeys=['attribute:int','attribute:esp'];cost=level;base=0;noDamage=true;}}
+ if(sourceId==='sns:power:bakuton'&&section){const espAttr=effectiveAttribute(item.actor,'esp')??0;if(section.startsWith('NÍVEL 1:')){mode='attack:cc';cost=level;base=level+Math.ceil(espAttr/2)+2;}else if(section.startsWith('NÍVEL 2:')||section.startsWith('NÍVEL 4:')){mode='none';cost=level;base=null;noDamage=true;}else if(/^NÍVEL [56]:/.test(section)){mode='save';saveKeys=['attribute:agi','skill:prontidao'];cost=level;base=level+Math.ceil(espAttr/2)+2;}}
+ if(sourceId==='sns:power:hb-f05-telecinese'&&section){const intAttr=effectiveAttribute(item.actor,'int')??0;if(/^NÍVEL [147]:/.test(section)){mode='none';cost=section.startsWith('NÍVEL 1:')?level:1;base=null;noDamage=true;}else if(section.startsWith('NÍVEL 2:')){mode='save';saveKeys=['attribute:for','attribute:vig'];cost=level;base=level+Math.ceil(intAttr/2);}else if(section.startsWith('NÍVEL 3:')){mode='save';saveKeys=['attribute:for'];cost=level;base=0;noDamage=true;}else if(section.startsWith('NÍVEL 5:')){mode='check';cost=level;base=null;noDamage=true;}}
  if(sourceId==='sns:power:shikakyu'&&section.startsWith('NÍVEL 3:')){const strength=effectiveAttribute(item.actor,'for','unarmed');if(Number.isFinite(strength)){base=Math.ceil(strength/2)+(level>=6?4:level>=5?3:level>=4?2:1);if(recipe?.variant==='gatsuga')base*=2;mode='attack:cc';cost=1;}}
  if(sourceId==='sns:power:baika-ninpou'&&section.startsWith('NÍVEL 2:')){const strength=effectiveAttribute(item.actor,'for','unarmed'),iron=Array.from(item.actor.items).some(i=>i.system.contentId==='sns:apt:punho-de-ferro'||i.system.ruleId==='sns:apt:punho-de-ferro'),original=item.actor.system.attributes?.for;if(Number.isFinite(strength)){base=Math.ceil(strength/2)+(iron?(original>=12?4:original>=10?3:original>=8?2:1):0);mode='attack:cc';cost=1;damageNature=iron?'lethal':'nonlethal';}}
  // A book describes a damage action but the mode/value is unresolved: ask the
@@ -84,9 +96,13 @@ export function npcJutsuPlan(item,library,level,custom={}){
  if(size===null){const m=String(first(rows,'Tamanho máximo')??'').match(/^(\d+)\s*m$/);if(m)size=Number(m[1]);}
  if(sourceId==='sns:effect:mina-explosiva')size=5;
  let dc=Number.isFinite(data.difficulty)?data.difficulty:number(first(rows,'Dificuldade remota','Dificuldade','Dificuldade comum'))??values?.dc??null;
+ if(sourceId==='sns:power:shindenshin'&&/^NÍVEL [67]:/.test(section)&&dc===null)dc=9+level+Math.ceil((effectiveAttribute(item.actor,'int')??0)/2);
+ if(sourceId==='sns:power:bakuton'&&/^NÍVEL [56]:/.test(section)&&dc===null)dc=9+level+Math.ceil((effectiveAttribute(item.actor,'esp')??0)/2);
+ if(sourceId==='sns:power:hb-f05-telecinese'&&/^NÍVEL [23]:/.test(section)&&dc===null)dc=9+level+Math.ceil((effectiveAttribute(item.actor,'int')??0)/2);
  if(sourceId==='sns:effect:nuvem'){if(dc!==null)dc-=2;if(projection?.environment)size=projection.environment.size;else if(size!==null)size*=2;}
  if(sourceId==='sns:effect:explosao-sonora'&&dc!==null)dc-=2;
- const overrides={...item.flags?.['sns-v14-dev']?.npcCastParameters?.[level],...custom};
+ const direct=item.flags?.['sns-v14-dev']?.directJutsuConfig??{};
+ const overrides={...direct,...item.flags?.['sns-v14-dev']?.npcCastParameters?.[level],...custom};
  const plan={version:1,name:item.name,level,min,max,mode,cost,base,fixed:sourceId==='sns:effect:nuvem'?level:0,gradeBonus:sourceId==='sns:jutsu:oodama-rasengan'?0.5:0,saveKeys,dc,shape:sourceId==='sns:effect:nuvem'?'circle':shape,size,action:sourceId==='sns:effect:mina-explosiva'?'Padrão · preparar até 2 minas; livre · detonar':data.action||headers.acao||'',range:data.range||first(rows,'Alcance comum','Alcance')||(values?values.range+' m':headers.alcance)||'',duration:data.duration||headers.duracao||'',description:item.system.description,source:item.system.source,clay:sourceId==='sns:effect:mina-explosiva'||/kibaku/i.test(p?.name??'')?level:null,projectionValid:!!projection?.valid,natures:powerProfile.natures,nature:powerProfile.nature??custom.nature??saved.nature??'',missing:[]};
  if(projectiles)plan.projectiles=projectiles;
  if(noDamage)plan.noDamage=true;if(damageNature!=='lethal')plan.damageNature=damageNature;
@@ -97,7 +113,10 @@ export function npcJutsuPlan(item,library,level,custom={}){
  plan.costRule=rule.fields.chakraCost??headers['custo de chakra']??'';plan.damageRule=rule.fields.damage??'';
  if(sourceId==='sns:jutsu:chakra-no-souin'){plan.range='Superfície imóvel';plan.costRule='Seu chakra é reduzido a 1; mínimo de 15 contando os Kage Bunshins.';}
  if(sourceId==='sns:apt:rinkaichuu')plan.range=custom.contextChoice==='spread'?'Pessoal':'Contato físico';
- for(const key of ['mode','cost','base','dc','shape','size','saveKeys'])if(Object.hasOwn(overrides,key))plan[key]=overrides[key];
+ if(sourceId==='sns:jutsu:henge-no-jutsu')plan.checks=[{key:'skill:enganacao',label:'Henge · Enganação'}];
+ if(sourceId==='sns:power:hb-f05-telecinese'&&section.startsWith('NÍVEL 5:'))plan.checks=[{key:'attribute:int',label:'Limpeza do Corpo · Inteligência'}];
+ for(const key of ['mode','cost','base','dc','shape','size','saveKeys','action','range','duration','checks','noDamage'])if(Object.hasOwn(overrides,key))plan[key]=overrides[key];
+ if(overrides.checkKey)plan.checks=[{key:overrides.checkKey,label:overrides.checkLabel||('Rolar · '+item.name)}];
  const grant=item.actor.items.get(item.flags?.['sns-v14-dev']?.generatorTechnique?.grantId);
  if(item.flags?.['sns-v14-dev']?.generatorTechnique&&!(grant?.type==='aptitude'&&grant.system.contentId===sourceId&&requirementsFor(grant,item.actor).valid))throw Error('A aptidão de origem está ausente ou seus requisitos não são cumpridos.');
  if(grant?.type==='aptitude'&&grant.system.contentId===sourceId){
@@ -112,9 +131,10 @@ export function npcJutsuPlan(item,library,level,custom={}){
  const context=resolveNpcContext(item,custom,level);if(context){plan.context=context;if(context.valid){plan.cost=context.cost;for(const key of ['action','duration','mode','base','dc','saveKeys','noDamage'])if(Object.hasOwn(context,key))plan[key]=context[key];if(context.payment)plan.payment=context.payment;if(context.adjustment!==undefined)plan.testAdjustment=context.adjustment;if(context.checks)plan.checks=context.checks;if(context.note)plan.useNote=context.note+(context.selected==='infected'?' Grupos: '+context.value+'. Dano fixo por turno: '+context.value+'.':'');}else plan.missing.push('context');}
  if(powerProfile.isMulti&&!powerProfile.profile)plan.missing.push('nature');
  if(sourceId==='sns:jutsu:chakra-no-souin'&&(p?.system.contentId!=='sns:power:fuuinjutsu'||p.system.level<7))plan.missing.push('power');
- if(!['none','attack:cc','attack:cd','attack:lm','save'].includes(plan.mode))plan.missing.push('mode');
+ if(!['none','check','attack:cc','attack:cd','attack:lm','save'].includes(plan.mode))plan.missing.push('mode');
+ if(plan.mode==='check'&&(!plan.checks?.length||plan.checks.some(c=>!RESISTANCE_KEYS.some(r=>r.key===c.key)&&!['cc','cd','lm'].includes(c.key))))plan.missing.push('check');
  if(!Number.isInteger(plan.cost)||plan.cost<0)plan.missing.push('cost');
- if(plan.mode.startsWith('attack')&&(!Number.isInteger(plan.base)||plan.base<0))plan.missing.push('base');
+ if(!plan.noDamage&&plan.mode.startsWith('attack')&&(!Number.isInteger(plan.base)||plan.base<0))plan.missing.push('base');
  if(plan.mode==='save'&&(!Number.isFinite(plan.dc)||plan.dc<1||!plan.saveKeys?.length||plan.saveKeys.some(k=>!RESISTANCE_KEYS.some(r=>r.key===k))))plan.missing.push('save');
  plan.areas=jutsuAreas(item,projection??{},{usedLevel:level,commonSize:values?.size,commonRange:values?.range});
  if(plan.areas){const first=plan.areas.choices[0];plan.shape=first.shape==='line'?'ray':first.shape;plan.size=first.diameter??first.length??plan.size;}

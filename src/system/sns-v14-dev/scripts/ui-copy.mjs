@@ -13,7 +13,7 @@ export function decorateLegacyUiCopy(message,element){
  const selector='.sns-chat-modifier,.sns-activation-card > p,.sns-activation-card details > p:first-of-type,.sns-craft-card > h3,.sns-craft-card > p,.sns-technique-summary';
  for(const node of element.querySelectorAll(selector)){
   if(node.children?.length)continue;
-  const text=cleanUiText(node.textContent);if(text!==node.textContent)node.textContent=text;
+  const text=cleanUiText(node.textContent).replace(/\b(Estágio|estágio|Vitalidade|Chakra)(\d+)\b/g,'$1 $2');if(text!==node.textContent)node.textContent=text;
  }
  for(const node of element.querySelectorAll('.sns-npc-material'))node.textContent=node.textContent.replace(/ · conferir estoque\.$/,'.');
 }
