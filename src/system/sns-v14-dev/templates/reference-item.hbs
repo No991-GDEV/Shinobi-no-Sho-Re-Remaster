@@ -1,6 +1,6 @@
 <div class="document-shell pf-item-form">
 <header class="sheet-header">
-  <button type="button" data-action="documentPortrait" class="item-image framed" aria-label="Alterar imagem"><img src="{{displayImage}}" alt="{{item.name}}"></button>
+  <button type="button" data-action="documentPortrait" class="item-image framed" aria-label="Alterar imagem"><img src="{{displayImage}}" data-edit="img" alt="{{item.name}}"></button>
   <div class="details">
     <input name="name" type="text" value="{{item.name}}" aria-label="Nome">
     <span class="level"><span>{{levelLabel}}</span> {{#if showLevel}}<input name="system.level" type="number" value="{{source.level}}" min="0" step="1" aria-label="Nível">{{/if}}</span>

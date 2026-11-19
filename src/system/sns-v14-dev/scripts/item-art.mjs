@@ -25,7 +25,10 @@ export const EXTRA_DISPLAY_ART=Object.freeze({
  'sns:jutsu:shunshin-combate':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/gust-of-wind.webp',
  'sns:jutsu:tadayou':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/hydraulic-push.webp',
  'sns:power:kuchiyose':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/held-items/summoning-handscroll.webp',
- 'sns:power:versatilidade':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/consumables/other-consumables/spell-scroll.webp'
+ 'sns:power:versatilidade':'systems/sns-v14-dev/assets/library/pf2e/icons/equipment/consumables/other-consumables/spell-scroll.webp',
+ 'sns:power:genjutsu':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/mirror-image.webp',
+ 'sns:effect:genjutsu-miragem':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/mirror-image.webp',
+ 'sns:effect:genjutsu-fascinar':'systems/sns-v14-dev/assets/library/pf2e/icons/spells/illusory-disguise.webp'
 });
 export function displayItemArt(item){
  const base=itemArt(item);
@@ -36,4 +39,23 @@ export function displayItemArt(item){
   if(base==='icons/svg/shield.svg'||(/colete ninja/i.test(String(item?.name??''))&&base==='icons/svg/shield.svg'))return 'systems/sns-v14-dev/assets/library/pf2e/icons/spells/stone-skin.webp';
  }
  return base;
+}
+export async function openDocumentImagePicker(sheet,doc){
+ if(!sheet?.isEditable||!doc)return;
+ const Base=foundry.applications?.apps?.FilePicker;
+ const Picker=Base?.implementation??globalThis.CONFIG?.ux?.FilePicker??globalThis.FilePicker??Base;
+ if(!Picker)return;
+ const current=doc.img||'';
+ const defaultImg=doc.constructor?.getDefaultArtwork?.(doc._source??doc)?.img??'';
+ const redirectToRoot=[...new Set([defaultImg,...(current.startsWith('icons/')||current.startsWith('systems/')||current.startsWith('modules/')?[current]:[])].filter(Boolean))];
+ const fp=new Picker({
+  type:'image',
+  current,
+  redirectToRoot,
+  document:doc,
+  position:sheet.position?{top:(sheet.position.top??0)+40,left:(sheet.position.left??0)+10}:undefined,
+  callback:async path=>{if(sheet.isEditable&&path)await doc.update({img:path});}
+ });
+ if(typeof fp.browse==='function')return fp.browse();
+ return fp.render({force:true});
 }

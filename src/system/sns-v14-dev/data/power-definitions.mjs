@@ -16,9 +16,34 @@ const executedEffects=[
  base('sopro-destrutivo','Sopro Destrutivo',4,101,{area:'cone',target:'Criaturas na área',evolutions:[7,10],traits:['arte:ninjutsu','finalidade:dano','aplicacao:ataque-area','area:cone','custo:chakra','execucao:selos-de-mao'],notes:'Bloqueio não se aplica à área. Melhorias7/10 exigem escolhas sequenciais; dano remanescente não é aplicado automaticamente.'})
 ];
 POWER_DEFINITIONS.push({id:'sns:power:magen',name:'Magen',mode:'effects',attribute:'int',source:{id:'F01',pages:'233–238'},access:'Origem Magen autorizada e requisitos do livro'});
+POWER_DEFINITIONS.push({id:'sns:power:genjutsu',name:'Genjutsu',mode:'effects',attribute:'int',source:{id:'F01',pages:'79–80'},access:'Comum · Miragem e Fascinar'});
 POWER_DEFINITIONS.push({id:'sns:power:kikai-ninpou',name:'Kikai Ninpou',mode:'effects',attribute:'skill:lidar_com_animais',attributeLabel:'Lidar com Animais',source:{id:'F01',pages:'147–148'},access:'Kikaichuu e origem Aburame',rangeBase:10,rangeFactor:2,sizeFactor:1,damageBonus:0,allowedEffects:['canhao','orbe','raio','barreira','flechas','ricochete','coluna','nuvem','sopro-destrutivo','missil','interferencia'].map(k=>'sns:effect:'+k)});
 const typed=[...BOOK_EFFECTS.filter(e=>ADVANCED_IDS.includes(e.id)).map(e=>({...e,execution:'environment',...(e.id==='sns:effect:flutuar'?{powers:['fuuton']}: {})})),...BOOK_EFFECTS.filter(e=>ENVIRONMENT_IDS.includes(e.id)).map(e=>({...e,execution:'environment'})),...elementalExecutionDefinitions(BOOK_EFFECTS),...magenExecutionDefinitions(BOOK_EFFECTS),...phantasmExecutionDefinitions(BOOK_EFFECTS),...BOOK_EFFECTS.filter(e=>SUPPORT_IDS.includes(e.id)).map(e=>({...e,execution:'support'}))];
 export const EFFECT_DEFINITIONS=[...executedEffects,...typed,...BOOK_EFFECTS.filter(e=>![...executedEffects,...typed].some(old=>old.id===e.id))];
 EFFECT_DEFINITIONS.push({id:'sns:effect:interferencia',name:'Interferência',min:3,evolutions:[],powers:['kikai-ninpou'],execution:'sourceOnly',source:{id:'F01',pages:'148'},notes:'Efeito exclusivo de Kikai Ninpou. Consulte a técnica do livro para a interferência em sensores.'});
+EFFECT_DEFINITIONS.push(
+ {
+  id:'sns:effect:genjutsu-miragem',name:'Miragem',min:1,evolutions:[],powers:['genjutsu'],execution:'genjutsu',
+  action:'padrao',duration:'continua',range:'5 m',target:'Ponto no ambiente a até 5 m',damage:'none',test:'',seals:true,cost:'level',
+  source:{id:'F01',pages:'79–80'},traits:['arte:genjutsu','custo:chakra'],
+  variants:[
+   {id:'normal',name:'Pequena · Imóvel (Contínua · 1 chakra)',cost:1,duration:'Contínua',sizeLabel:'Pequeno',minInt:0},
+   {id:'pequena-movel',name:'Pequena · Móvel (Sustentada · 1 chakra)',cost:1,duration:'Sustentada',sizeLabel:'Pequeno',minInt:0},
+   {id:'media-imovel',name:'Média · Imóvel (Contínua · 2 chakra · INT ≥ 8)',cost:2,duration:'Contínua',sizeLabel:'Médio',minInt:8},
+   {id:'media-movel',name:'Média · Móvel (Sustentada · 2 chakra · INT ≥ 8)',cost:2,duration:'Sustentada',sizeLabel:'Médio',minInt:8},
+   {id:'grande-imovel',name:'Grande · Imóvel (Contínua · 3 chakra · INT ≥ 12)',cost:3,duration:'Contínua',sizeLabel:'Grande',minInt:12},
+   {id:'grande-movel',name:'Grande · Móvel (Sustentada · 3 chakra · INT ≥ 12)',cost:3,duration:'Sustentada',sizeLabel:'Grande',minInt:12},
+   {id:'enorme-imovel',name:'Enorme · Imóvel (Contínua · 4 chakra · INT ≥ 16)',cost:4,duration:'Contínua',sizeLabel:'Enorme',minInt:16},
+   {id:'enorme-movel',name:'Enorme · Móvel (Sustentada · 4 chakra · INT ≥ 16)',cost:4,duration:'Sustentada',sizeLabel:'Enorme',minInt:16}
+  ],
+  notes:'Cria uma ilusão no ambiente a até 5 m (1 chakra por categoria de tamanho). Quem interagir tocando-a ou tiver visão de chakra percebe a ilusão; conhecida sua existência, Kai a remove sem teste.'
+ },
+ {
+  id:'sns:effect:genjutsu-fascinar',name:'Fascinar',min:1,evolutions:[],powers:['genjutsu'],execution:'genjutsu',
+  action:'padrao',duration:'continua',range:'5 m',target:'Uma criatura a até 5 m',damage:'none',test:'',seals:true,cost:'fixed',
+  source:{id:'F01',pages:'79'},traits:['arte:genjutsu','custo:chakra'],
+  notes:'Prende 1 alvo a até 5 m em uma ilusão mental (3 chakra). O alvo faz teste de Inteligência (Dif 6 + INT; +1 com Ilusão Profunda) ou fica Fascinado pelo resto da cena. A partir do 2º turno pode repetir o teste antes de agir (Dif −1 cumulativa). Qualquer dano quebra o fascínio.'
+ }
+);
 export const ACTIONS={padrao:'Padrão',parcial:'Parcial',movimento:'Movimento',livre:'Livre',reacao:'Reação',completa:'Completa',rodadas:'Rodadas'};
 export const DURATIONS={instantanea:'Instantânea',concentracao:'Concentração',sustentada:'Sustentada',continua:'Contínua',permanente:'Permanente'};

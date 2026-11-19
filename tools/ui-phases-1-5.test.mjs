@@ -599,3 +599,101 @@ test('stylesheets clean legacy Foundry blues and preserve required selectors and
   assert(combat.includes(cls),`combat-ux.css missing .${cls}`);
  }
 });
+
+test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and Kuchiyose Padrão vs Restrito',async()=>{
+ const {openDocumentImagePicker}=await import('../src/system/sns-v14-dev/scripts/item-art.mjs');
+ const {resolveJutsu,availableChoices,jutsuVariants}=await import('../src/system/sns-v14-dev/scripts/power-core.mjs');
+ const {techniqueCard}=await import('../src/system/sns-v14-dev/scripts/technique-card.mjs');
+ const {summonPower,summonLimit,summonProjection,suggestSummonAttributes}=await import('../src/system/sns-v14-dev/scripts/kuchiyose-core.mjs');
+ const {originGrant,summonPact}=await import('../src/system/sns-v14-dev/scripts/restricted-access.mjs');
+ const {kuchiyoseOriginChoices}=await import('../src/system/sns-v14-dev/scripts/kuchiyose-ui.mjs');
+
+ // 1. Sqyre FilePicker.implementation + redirectToRoot + browse()
+ let pickedOpts=null,browsed=0,updatedImg='';
+ class SqyrePicker {
+  constructor(opts){pickedOpts=opts;}
+  async browse(){browsed++;await this.optsCallback?.();}
+ }
+ globalThis.foundry.applications.apps??={};
+ globalThis.foundry.applications.apps.FilePicker=class BasePicker {};
+ globalThis.foundry.applications.apps.FilePicker.implementation=SqyrePicker;
+ const doc={img:'icons/svg/mystery-man.svg',async update(p){updatedImg=p.img;}};
+ await openDocumentImagePicker({isEditable:true,position:{top:100,left:200}},doc);
+ assert.equal(browsed,1);
+ assert.ok(pickedOpts.redirectToRoot.includes('icons/svg/mystery-man.svg'));
+ assert.equal(pickedOpts.document,doc);
+ await pickedOpts.callback('https://sqyre.cloud/bucket/avatar.webp');
+ assert.equal(updatedImg,'https://sqyre.cloud/bucket/avatar.webp');
+
+ // 2. Genjutsu power (Miragem & Fascinar) + custom illusion description
+ const actor=makeActorFixture();
+ actor.system.attributes.int=10;
+ const genPower=makeItem({
+  id:'p-gen',name:'Genjutsu',type:'power',
+  system:{level:2,category:'powers',power:{definitionId:'sns:power:genjutsu',choices:[
+   {id:'c1',slot:1,stage:1,effectId:'sns:effect:genjutsu-miragem'},
+   {id:'c2',slot:2,stage:1,effectId:'sns:effect:genjutsu-fascinar'}
+  ]},details:{powerOrigin:'common',organization:'effects',keyAttribute:'int'}}
+ },actor);
+ const slotChoices=availableChoices(genPower,1);
+ assert.deepEqual(slotChoices.map(c=>c.id).sort(),['sns:effect:genjutsu-fascinar','sns:effect:genjutsu-miragem']);
+
+ // Miragem variants respect INT (INT 10 unlocks Pequena and Média, not Grande INT 12)
+ const mirVariants=jutsuVariants(genPower,'sns:effect:genjutsu-miragem',1);
+ assert(mirVariants.some(v=>v.id==='media-movel'));
+ assert(!mirVariants.some(v=>v.id==='grande-imovel'));
+ const mirJutsu=makeItem({
+  id:'j-mir',name:'Chuva de Pétalas',type:'jutsu',
+  flags:{'sns-v14-dev':{customIllusionText:'Pétalas carmesim encobrem o corredor.'}},
+  system:{details:{powerId:'p-gen'},jutsu:{effectId:'sns:effect:genjutsu-miragem',selectionId:'c1',usedLevel:1,variant:'media-movel',overrides:[]}}
+ },actor);
+ const mirProj=resolveJutsu(actor,genPower,mirJutsu);
+ assert.equal(mirProj.valid,true);
+ assert.equal(mirProj.noRoll,true);
+ assert.equal(mirProj.cost,2);
+ assert.equal(mirProj.data.duration,'Sustentada');
+ const mirCard=techniqueCard(mirJutsu,mirProj);
+ assert.match(mirCard,/Pétalas carmesim encobrem o corredor\./);
+ assert.match(mirCard,/Genjutsu 1/);
+
+ // Fascinar calculates Dif 6 + INT (+1 with Ilusão Profunda) and binds sns:condition:fascinado
+ const fasJutsu=makeItem({
+  id:'j-fas',name:'Olhar Hipnótico',type:'jutsu',
+  flags:{'sns-v14-dev':{customIllusionText:'O alvo vê borboletas negras ao redor.'}},
+  system:{details:{powerId:'p-gen'},jutsu:{effectId:'sns:effect:genjutsu-fascinar',selectionId:'c2',usedLevel:2,variant:'normal',overrides:[]}}
+ },actor);
+ const fasProj1=resolveJutsu(actor,genPower,fasJutsu);
+ assert.equal(fasProj1.valid,true);
+ assert.equal(fasProj1.resistanceCast,true);
+ assert.equal(fasProj1.cost,3);
+ assert.equal(fasProj1.data.difficulty,16); // 6 + 10
+ assert.equal(fasProj1.autoBindings[0].conditionId,'sns:condition:fascinado');
+
+ actor.items.push(makeItem({id:'ap-deep',name:'Ilusão Profunda',type:'aptitude',system:{contentId:'sns:apt:ilusao-profunda',ruleId:'sns:apt:ilusao-profunda'}},actor));
+ const fasProj2=resolveJutsu(actor,genPower,fasJutsu);
+ assert.equal(fasProj2.data.difficulty,17); // 6 + 10 + 1
+ const fasCard=techniqueCard(fasJutsu,fasProj2);
+ assert.match(fasCard,/O alvo vê borboletas negras ao redor\./);
+ assert.match(fasCard,/INT · Dif 17/);
+ assert.match(fasCard,/Fascinado/);
+
+ // 3. Kuchiyose Padrão vs Restrito & extra contract fallback
+ const pactFeature={type:'feature',name:'Kuchiyose: Escorpião',system:{contentId:'sns:feature:hb-f05-kuchiyose-escorpiao',details:{}}};
+ assert.equal(originGrant(pactFeature),'hb-f05-kuchiyose-escorpiao');
+ const summoner={items:[
+  pactFeature,
+  {id:'pk',type:'power',system:{contentId:'sns:power:kuchiyose',level:4,choice:{kind:'summonSpecies',key:'escorpiao'},details:{powerOrigin:'restricted'}}}
+ ]};
+ assert.equal(summonPact(summoner,'escorpiao').met,true);
+ assert.equal(summonPower(summoner,'escorpiao').id,'pk');
+ const limRestr=summonLimit(summoner,'escorpiao',{usedLevel:4,count:1});
+ assert.equal(limRestr.common,false);
+ const limCommon=summonLimit(summoner,'escorpiao',{usedLevel:4,count:1,powerOrigin:'common'});
+ assert.equal(limCommon.common,true);
+ const attrs=suggestSummonAttributes(8,'escorpiao');
+ const projRestr=summonProjection(summoner,{species:'escorpiao',usedLevel:4,count:1,nc:8,size:'Médio',powerOrigin:'restricted',attributes:attrs,bases:{cc:3,cd:3,esq:3,lm:3}});
+ const projCommon=summonProjection(summoner,{species:'escorpiao',usedLevel:4,count:1,nc:8,size:'Médio',powerOrigin:'common',attributes:attrs,bases:{cc:3,cd:3,esq:3,lm:3}});
+ assert.equal(projCommon.stats.cc,projRestr.stats.cc-3);
+ assert.equal(kuchiyoseOriginChoices('restricted').find(c=>c.selected).value,'restricted');
+ assert.equal(kuchiyoseOriginChoices('common').find(c=>c.selected).value,'common');
+});

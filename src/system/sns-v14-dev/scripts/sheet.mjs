@@ -27,6 +27,7 @@ import {mountTraitPicker} from './trait-picker.mjs';
 import {useJutsu} from './jutsu-use.mjs';
 import {shareTechniqueToChat} from './standalone-technique.mjs';
 import {shareItemToChat} from './item-chat.mjs';
+import {openDocumentImagePicker} from './item-art.mjs';
 import {toggleItemActivation,runItemQuickAction,adjustItemCharge} from './item-automation.mjs';
 import {SnsStatEditor} from './stat-editor.mjs';
 import {SnsPowerDialog} from './power-dialog.mjs';
@@ -161,11 +162,7 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
     if(nextPanel)nextPanel.scrollTop=this.tabScroll[this.activeTab]??0;
   }
   static async portrait() {
-    if (!this.isEditable) return;
-    new foundry.applications.apps.FilePicker({
-      type: "image", current: this.actor.img,
-      callback: async path => { if (this.isEditable) await this.actor.update({ img: path }); }
-    }).render({ force: true });
+    return openDocumentImagePicker(this, this.actor);
   }
   static async openActiveAptitudes(){
     this.activeTab='jutsus';

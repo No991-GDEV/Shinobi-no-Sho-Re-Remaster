@@ -5,7 +5,7 @@ import {jutsuReading} from './jutsu-reading.mjs';
 import {effectiveRuleItem} from './jutsu-rule-text.mjs';
 import {SnsRequirementEditor} from './requirement-editor.mjs';
 import {isCraftFormula} from './poison-crafting.mjs';
-import {displayItemArt} from './item-art.mjs';
+import {displayItemArt,openDocumentImagePicker} from './item-art.mjs';
 import {shareItemToChat} from './item-chat.mjs';
 import {compactTechniqueDetails} from './standalone-technique.mjs';
 import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
@@ -235,5 +235,5 @@ export class ReferenceItemSheet extends SnsHandlebarsApplicationMixin(foundry.ap
  static async configureRequirements(){if(!game.user.isGM||!this.isEditable)return;await this.submit();await new SnsRequirementEditor(this.item).render({force:true});}
  static async configureEffects(){if(!game.user.isGM||!this.isEditable)return;await this.submit();await configureJutsuEffects(this.item);await this.render({force:true});}
  static async configureAutomation(){if(!this.isEditable&&!game.user.isGM)return;await this.submit();await configureItemAutomation(this.item);await this.render({force:true});}
- static async portrait(){if(!this.isEditable)return;new foundry.applications.apps.FilePicker({type:'image',current:this.item.img,callback:async img=>{if(this.isEditable)await this.item.update({img});}}).render({force:true});}
+ static async portrait(){return openDocumentImagePicker(this,this.item);}
 }

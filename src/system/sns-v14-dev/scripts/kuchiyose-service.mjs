@@ -1,5 +1,7 @@
 import {touches} from './message-index.mjs';
 import {kuchiyoseLink,speciesFor,KUCHIYOSE_SPECIES,summonPower,summonLimit,suggestSummonAttributes,summonProjection,generatedSummonMatches,generatedSummonEntries,sameSummonData,summonOwnership} from './kuchiyose-core.mjs';
+import {powerSources,summonPact,originGrant} from './restricted-access.mjs';
+import {PACKAGE_ORIGINS} from '../data/package-content.mjs';
 import {partySummoners} from './party-core.mjs';
 import {isTimekeeper,withEffectLock} from './effect-lifecycle.mjs';
 import {canControlTransformation} from './transformation-core.mjs';
@@ -40,6 +42,45 @@ async function writeBuild(actor,master,build,{author=game.user.id,automatic=fals
  await actor.update({...generated,'prototypeToken.actorLink':true,ownership:owners.update,...(actor.system.resources.vitality.value===null?{'system.resources.vitality.value':projection.vitalityMax}:{}),...(actor.system.resources.chakra.value===null?{'system.resources.chakra.value':projection.chakraMax}:{}),['flags.'+ns+'.kuchiyose']:link,['flags.'+ns+'.kuchiyoseHistory']:history});
  await generatedItems(actor,projection);return projection;
 }
+async function ensureMasterKuchiyose(master,species,grant,user){
+ if(!user?.isGM||!grant||species==='desenhos')return;
+ const originEntry=Object.entries(PACKAGE_ORIGINS).find(([,p])=>p.species===species);
+ if(originEntry){
+  const [originKey,originDef]=originEntry;
+  const existingPact=Array.from(master.items??[]).find(i=>originGrant(i)===originKey||i.system?.contentId===originDef.contentId);
+  if(existingPact){
+   if(!summonPact(master,species).met||existingPact.system?.details?.accessRule!==originKey){
+    await existingPact.update({'system.details.accessRule':originKey,['flags.'+ns+'.kuchiyoseExtraPact']:true});
+   }
+  }else if(!summonPact(master,species).met){
+   await master.createEmbeddedDocuments('Item',[{name:originDef.name,type:'feature',system:{contentId:originDef.contentId,category:'features',details:{accessRule:originKey}},flags:{[ns]:{kuchiyoseExtraPact:true,originAuthorization:{rule:originKey,user:user.id,at:new Date().toISOString()}}}}]);
+  }
+ }
+ const level=Math.max(1,Math.min(10,Number(grant.level)||1));
+ const powerOrigin=grant.powerOrigin==='common'?'common':'restricted';
+ const candidates=powerSources(master,'sns:power:kuchiyose');
+ const targetPower=candidates.find(p=>p.system.choice?.key===species)||candidates.find(p=>!p.system.choice?.key);
+ const acq={mode:'granted',reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:user.id,user:user.id,at:new Date().toISOString()};
+ if(targetPower){
+  await targetPower.update({'system.contentId':'sns:power:kuchiyose','system.level':Math.max(level,targetPower.system.level||0),'system.choice':{kind:'summonSpecies',key:species},'system.details.powerOrigin':powerOrigin,['flags.'+ns+'.acquisition']:targetPower.flags?.[ns]?.acquisition??acq});
+ }else{
+  const library=await loadCanonicalLibrary(),entry=library?.entries.find(e=>e.id==='sns:power:kuchiyose');
+  if(entry){
+   const data=canonicalCopy(entry,'',species);
+   data.system.level=level;data.system.details.powerOrigin=powerOrigin;data.flags[ns].acquisition=acq;
+   await master.createEmbeddedDocuments('Item',[data]);
+  }else{
+   await master.createEmbeddedDocuments('Item',[{name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',category:'powers',level,choice:{kind:'summonSpecies',key:species},details:{powerOrigin,organization:'summon'}},flags:{[ns]:{acquisition:acq}}}]);
+  }
+ }
+}
+async function syncMasterKuchiyoseOrigin(master,species,powerOrigin,user){
+ if(!user?.isGM||!['common','restricted'].includes(powerOrigin)||species==='desenhos')return;
+ const power=summonPower(master,species);
+ const current=power.system.details?.powerOrigin;
+ const desired=powerOrigin==='common'?'common':(['restricted','hijutsu','clan'].includes(current)&&current!=='common'?current:'restricted');
+ if(current!==desired)await power.update({'system.details.powerOrigin':desired});
+}
 export async function processCompanionRequest(message){
  const r=message.getFlag(ns,'companionRequest');if(!r||message.getFlag(ns,'companionResult')||!isTimekeeper())return;
  return withEffectLock(message,async()=>{if(message.getFlag(ns,'companionResult'))return;try{
@@ -53,11 +94,19 @@ export async function processCompanionRequest(message){
     if(!user.isGM&&old?.masterUuid!==master.uuid&&!partySummoners(game.actors,game.actors,user).some(a=>a.uuid===master.uuid))throw Error('Adicione o invocador à equipe antes de vincular esta ficha.');
     const species=speciesFor(actor)?.species||r.species;if(!KUCHIYOSE_SPECIES[species])throw Error('Escolha uma espécie publicada.');
     if(r.action==='bind'){
+     if(r.grantPower&&user.isGM)await ensureMasterKuchiyose(master,species,r.grantPower,user);
      const power=summonPower(master,species),empty=Object.values(actor.system.attributes).every(v=>v===null)&&['cc','cd','esq','lm'].every(k=>actor.system.stats[k]===null);
      if(!empty&&!old){const owners=ownershipPatch(actor,master,null);await actor.update({'system.details.master':master.uuid,ownership:owners.ownership,['flags.'+ns+'.kuchiyose']:{version:1,revision:1,mode:'legacy',masterUuid:master.uuid,species,ownership:owners.record,problem:'Ficha existente: aplique uma construção para calcular os atributos.'}});}
      else{const build=old?.build??{species,usedLevel:power.system.level,count:1,nc:Math.min(20,2*power.system.level),size:KUCHIYOSE_SPECIES[species].fixedSize||'Médio',attributes:suggestSummonAttributes(Math.min(20,2*power.system.level),species),bases:{cc:3,cd:3,esq:3,lm:3}};await writeBuild(actor,master,build,{author:user.id});}
+    }else if(r.action==='origin'){
+     if(!user.isGM||!['common','restricted'].includes(r.powerOrigin))throw Error('Somente o mestre pode alterar a fonte do Kuchiyose.');
+     await syncMasterKuchiyoseOrigin(master,species,r.powerOrigin,user);
+     const power=summonPower(master,species);
+     const build=old?.build??{species,usedLevel:power.system.level,count:1,nc:Math.min(20,2*power.system.level),size:KUCHIYOSE_SPECIES[species].fixedSize||'Médio',attributes:suggestSummonAttributes(Math.min(20,2*power.system.level),species),bases:{cc:3,cd:3,esq:3,lm:3}};
+     await writeBuild(actor,master,{...build,powerOrigin:r.powerOrigin},{author:user.id});
     }else if(r.action==='build'){
      if(r.confirmed!==true)throw Error('Revise a distribuição e aplique a construção.');
+     if(user.isGM&&['common','restricted'].includes(r.build?.powerOrigin))await syncMasterKuchiyoseOrigin(master,species,r.build.powerOrigin,user);
      const build={species,usedLevel:r.build?.usedLevel,count:r.build?.count,nc:r.build?.nc,size:r.build?.size,attributes:r.build?.attributes,bases:r.build?.bases};await writeBuild(actor,master,build,{author:user.id});
     }else throw Error('Ação de vínculo inválida.');
    }

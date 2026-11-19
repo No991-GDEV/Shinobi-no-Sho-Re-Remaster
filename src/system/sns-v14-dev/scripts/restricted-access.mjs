@@ -4,7 +4,12 @@ import {PACKAGE_ORIGINS} from '../data/package-content.mjs';
 export const ACCESS_ORIGINS=Object.freeze({...Object.fromEntries(Object.entries(PACKAGE_ORIGINS).map(([id,p])=>[id,p.name])),uchiha:'Clã Uchiha',hatake:'Clã Hatake',tensai:'Tensai (Hijutsu)',jinchuuriki:'Jinchuuriki','monges-templo-fogo':'Aprendizado com monges do Templo do Fogo'});
 export const ORIGIN_TYPES=Object.freeze(['clan','hijutsu','feature']);
 export function isOriginItem(item){return ORIGIN_TYPES.includes(item?.type)||item?.type==='power'&&item?.system?.contentId==='sns:power:jinchuuriki';}
-export function originGrant(item){const key=item?.system?.details?.accessRule;return isOriginItem(item)&&ACCESS_ORIGINS[key]&&(item.type!=='power'||key==='jinchuuriki')?key:'';}
+export function originGrant(item){
+ const key=item?.system?.details?.accessRule;
+ if(isOriginItem(item)&&ACCESS_ORIGINS[key]&&(item.type!=='power'||key==='jinchuuriki'))return key;
+ if(isOriginItem(item)&&item.type==='feature'&&item.system?.contentId){const found=Object.entries(PACKAGE_ORIGINS).find(([,p])=>p.species&&p.contentId===item.system.contentId);if(found)return found[0];}
+ return '';
+}
 export function accessSources(actor,key){return Array.from(actor?.items??[]).filter(i=>{const grant=originGrant(i);return grant===key||PACKAGE_ORIGINS[grant]?.aliases?.includes(key);});}
 export function packageAcquisitionProblems(item,actor){
  const key=originGrant(item),spec=PACKAGE_ORIGINS[key];if(!key||!actor)return [];
@@ -24,7 +29,8 @@ export function summonPact(actor,species){
  // Preserve the already-authorized Hatake/Cães path in historical owned copies.
  const legacy=species==='caes'&&accessSources(actor,'hatake').length>0;
  const exclusive={baku:'shimura',doki:'mateki',tubaroes:'hoshigaki'}[species];
- const met=(!exclusive||accessSources(actor,exclusive).length>0)&&(matching.length>0||legacy)&&pacts.every(i=>PACKAGE_ORIGINS[originGrant(i)].species===species);
+ const gmExtraPact=matching.some(i=>i.flags?.['sns-v14-dev']?.kuchiyoseExtraPact===true);
+ const met=(!exclusive||accessSources(actor,exclusive).length>0||gmExtraPact)&&(matching.length>0||legacy)&&(pacts.every(i=>PACKAGE_ORIGINS[originGrant(i)].species===species)||gmExtraPact);
  return {met,current:met?'Contrato':pacts.length?pacts.map(i=>i.name).join(', '):'Contrato ausente'};
 }
 export function eyeAccess(actor,stage='Sharingan'){

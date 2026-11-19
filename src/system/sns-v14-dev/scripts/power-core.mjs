@@ -225,8 +225,8 @@ export function choiceProblems(power,choices=power.system.power.choices){
 export function availableChoices(power,slot){const p=ownedPowerDefinition(power);if(!p)return [];const prior=power.system.power.choices.filter(c=>c.slot<slot),seen=new Map(prior.map(c=>[c.effectId,c.stage]));return ALL_EFFECTS.filter(e=>allows(p,e)).map(e=>{const stages=[e.min,...e.evolutions],old=seen.get(e.id),stage=old===undefined?e.min:stages[stages.indexOf(old)+1];return {...e,stage,allowed:stage!==undefined&&stage<=slot&&slot<=power.system.level,reason:stage===undefined?'Todas as evoluções selecionadas.':'Exige nível '+stage};});}
 export function learnedEffects(power){return power.system.power.choices.filter(c=>c.slot<=power.system.level).map(c=>({...c,definition:effectDefinition(c.effectId)})).filter(c=>c.definition);}
 export function jutsuVariants(power,effectId,usedLevel){
- const e=effectDefinition(effectId),stages=power?learnedEffects(power).filter(c=>c.effectId===effectId).map(c=>c.stage):[];
- return (e?.variants??[{id:'normal',name:'Normal'}]).filter(v=>(!v.min||usedLevel>=v.min)&&(!v.stage||stages.some(s=>s>=v.stage)));
+ const e=effectDefinition(effectId),stages=power?learnedEffects(power).filter(c=>c.effectId===effectId).map(c=>c.stage):[],int=power?.actor?.system?.attributes?.int;
+ return (e?.variants??[{id:'normal',name:'Normal'}]).filter(v=>(!v.min||usedLevel>=v.min)&&(!v.stage||stages.some(s=>s>=v.stage))&&(!v.minInt||!Number.isFinite(int)||int>=v.minInt));
 }
 export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
  const p=ownedPowerDefinition(power),e=effectDefinition(jutsu.system.jutsu?.effectId),j=jutsu.system.jutsu??{},n=j.usedLevel;
@@ -264,6 +264,23 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
   if(j.overrides?.length)problems.push('Armas e proteções tipadas seguem os custos e limites do livro; resolva exceções manualmente.');
   return supportProjection({actor,power,effect:e,choices,usedLevel:n,problems});
  }
+ if(e.execution==='genjutsu'){
+  if(j.overrides?.length)problems.push('Ilusões tipadas de Genjutsu seguem o livro; resolva exceções manualmente.');
+  if(e.id==='sns:effect:genjutsu-miragem'){
+   const variantSpec=(e.variants??[]).find(v=>v.id===(j.variant||'normal'))??e.variants?.[0];
+   if(Number.isFinite(attribute)&&variantSpec?.minInt&&attribute<variantSpec.minInt)problems.push('Esta categoria de tamanho de Miragem exige Inteligência '+variantSpec.minInt+'.');
+   const cost=variantSpec?.cost??1,sizeLabel=variantSpec?.sizeLabel??'Pequeno',duration=variantSpec?.duration??'Contínua';
+   const data={action:'Padrão',duration,range:'5 m',target:'Ponto no ambiente ('+sizeLabel+')',area:'',chakraCost:String(cost),damage:'Nenhum',difficulty:null,size:sizeLabel,defenses:'Interação física, Visão de Chakra ou Kai',seals:'Ilusão ambiental',test:''};
+   const formulas={chakraCost:'1 por categoria de tamanho',range:'5 m fixo',size:'Pequeno (INT 2), Médio (INT 8), Grande (INT 12), Enorme (INT 16)'};
+   return {valid:!problems.length,problems,noRoll:true,genjutsuPower:true,cost,usedLevel:n,data,formulas,provenance:Object.fromEntries(Object.keys(data).map(k=>[k,'regra do efeito'])),traits:e.traits,effect:e,power:p};
+  }
+  const deep=(attribute??0)>=5&&Array.from(actor.items?.values?.()??actor.items??[]).some(i=>(i?.system?.ruleId||i?.system?.contentId)==='sns:apt:ilusao-profunda')?1:0;
+  const cost=3,difficulty=6+(attribute??0)+deep;
+  const data={action:'Padrão',duration:'Cena',range:'5 m',target:'Uma criatura',area:'',chakraCost:'3',damage:'Nenhum',difficulty,size:'—',defenses:'Resistência de Inteligência',seals:'Ilusão mental',test:''};
+  const formulas={difficulty:'6 + INT'+(deep?' + 1 (Ilusão Profunda)':''),chakraCost:'3 fixo',range:'5 m fixo'};
+  const autoBindings=[{id:'book_genjutsu_fascinar_0',conditionId:'sns:condition:fascinado',degree:1,scope:'all',trigger:'failedResistance',recipient:'targets',resistance:'attribute:int',dcMode:'jutsu',dc:0,duration:'Cena',note:'Fascinar · Genjutsu',source:'Básico 4.1b · p. 79'}];
+  return {valid:!problems.length,problems,resistanceCast:true,genjutsuPower:true,cost,usedLevel:n,data,formulas,provenance:Object.fromEntries(Object.keys(data).map(k=>[k,k==='difficulty'?'calculado':'regra do efeito'])),traits:e.traits,effect:e,power:p,autoBindings,combatProfile:{base:0,fixed:0,nature:'lethal',criticalAt:15,noDamage:true,attackKind:'melee',weaponClass:'Leve',maxTargets:1},executionNotes:e.notes};
+ }
  if(['magen','phantasm'].includes(e.execution)){
   const requirement=requirementsFor({...power,system:{...power.system,ruleId:'sns:power:magen'}},actor);if(!requirement.valid)problems.push(...requirement.problems);
   if(j.overrides?.length)problems.push('Exceções de Magen exigem resolução manual; os custos e dificuldades tipados seguem o livro.');
@@ -291,5 +308,5 @@ export function resolveJutsu(actor,power,jutsu,{recordedNpc=false}={}){
  return {attackerSize:actor.system.identity?.size||actor.system.details?.size||'',valid:problems.length===0,problems,data,provenance,formulas,traits,effect:e,power:p,cost:Number(data.chakraCost),usedLevel:n,...(execution?{autoBindings:execution.bindings,combatProfile:execution.profile,executionNotes:execution.notes}: {}),...(e.damage==='projectiles'?{combatProfile:{projectiles:{count:n,baseEach:2,bonus}}}:{})};
 }
 
-const managedTraits=new Set([...EFFECT_DEFINITIONS.flatMap(e=>e.traits),...POWER_DEFINITIONS.filter(p=>!p.id.endsWith(':ninpou')).map(p=>'elemento:'+p.id.split(':').at(-1)),'custo:sem-custo']);
+const managedTraits=new Set([...EFFECT_DEFINITIONS.flatMap(e=>e.traits),...POWER_DEFINITIONS.filter(p=>!p.id.endsWith(':ninpou')&&!p.id.endsWith(':genjutsu')&&!p.id.endsWith(':magen')).map(p=>'elemento:'+p.id.split(':').at(-1)),'custo:sem-custo']);
 export function jutsuTraits(existing,projection){return projection?.traits?[...new Set([...(existing??[]).filter(id=>!managedTraits.has(id)),...projection.traits])]:existing??[];}

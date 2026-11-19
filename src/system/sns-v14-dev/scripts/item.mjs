@@ -48,8 +48,8 @@ export class SnsItem extends foundry.documents.Item {
   const {overrideProblems}=await import('./override-policy.mjs');const rows=this.system.jutsu?.overrides??[];
   if(rows.length&&(!user.isGM||overrideProblems(rows).length)){ui.notifications.warn('Somente o mestre pode registrar exceções mecânicas justificadas.');return false;}
   if(this.actor&&this.system.contentId==='sns:legado:apt:mangekyo-sharingan'&&(!this.actor.flags?.['sns-v14-dev']?.legado?.pair||!this.actor.flags?.['sns-v14-dev']?.legado?.events?.trauma))await (await import('./legado-ui.mjs')).configureLegadoActor(this.actor);
-  const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(this,this.actor);
-  if(this.actor&&r.configured&&!r.valid){ui.notifications.warn('Não foi possível adicionar '+this.name+': '+r.problems.join(' '));return false;}
+  const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(this,this.actor),isGmGrantedCreate=user.isGM&&this.flags?.['sns-v14-dev']?.acquisition?.mode==='granted';
+  if(this.actor&&r.configured&&!r.valid&&!isGmGrantedCreate){ui.notifications.warn('Não foi possível adicionar '+this.name+': '+r.problems.join(' '));return false;}
   if(this.actor&&!user.isGM&&['aptitude','feature'].includes(this.type)&&!r.configured)ui.notifications.warn('Requisitos: ver descrição.');
   if((this.actor?.type==='shinobi'||kuchiyoseLink(this.actor)?.mode==='calculated')&&['aptitude','power'].includes(this.type)){
    let a=acquisitionOf(this);
@@ -81,7 +81,8 @@ export class SnsItem extends foundry.documents.Item {
   if(craftProfile(after)){try{validateCraftProfile(craftProfile(after));}catch(error){ui.notifications.warn(error.message);return false;}}
   if(!mayEditRequirementProfile(this.toObject(),after,user.isGM)){ui.notifications.warn('Somente o mestre pode alterar os requisitos e seu histórico.');return false;}
   if(requirementProfile(after)){try{validateRequirementProfile(requirementProfile(after));}catch(error){ui.notifications.warn(error.message);return false;}}
-  if(this.actor&&expanded.system?.level!==undefined&&expanded.system.level>this.system.level){const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(after,this.actor);if(r.configured&&!r.valid){ui.notifications.warn(r.problems.join(' '));return false;}}
+  const isGmGrantedUpdate=user.isGM&&(this.flags?.['sns-v14-dev']?.acquisition?.mode==='granted'||after.flags?.['sns-v14-dev']?.acquisition?.mode==='granted');
+  if(this.actor&&expanded.system?.level!==undefined&&expanded.system.level>this.system.level&&!isGmGrantedUpdate){const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(after,this.actor);if(r.configured&&!r.valid){ui.notifications.warn(r.problems.join(' '));return false;}}
   if((this.actor?.type==='shinobi'||kuchiyoseLink(this.actor)?.mode==='calculated')&&['aptitude','power'].includes(this.type)){
    if(!mayEditAcquisition(this.toObject(),after,user.isGM)){ui.notifications.warn('O mestre controla concessões e exceções de aquisição.');return false;}
    const changed=JSON.stringify(acquisitionOf(this))!==JSON.stringify(acquisitionOf(after));
