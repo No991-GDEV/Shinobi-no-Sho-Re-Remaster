@@ -215,7 +215,14 @@ export class ReferenceItemSheet extends SnsHandlebarsApplicationMixin(foundry.ap
   for(const input of form.querySelectorAll('[data-nullable]'))if(input.value==='')foundry.utils.setProperty(data,input.name,null);
   return data;
  }
- static async editDescription(){if(!this.isEditable)return;this.element.querySelector('prose-mirror button.toggle')?.click();}
+ static async editDescription(){
+  if(!this.isEditable)return;
+  const pm=this.element.querySelector('prose-mirror');
+  if(!pm||pm.disabled)return;
+  if(pm.open){pm.save();return;}
+  pm.addEventListener('open',()=>pm.focus(),{once:true});
+  pm.open=true;
+ }
  static async tab(event,target){
   const next=target.dataset.tab;
   if(!['description','details','rules'].includes(next))return;

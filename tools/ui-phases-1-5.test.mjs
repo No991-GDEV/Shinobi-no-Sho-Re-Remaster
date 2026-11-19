@@ -766,3 +766,61 @@ test('DocumentSheetV2 native editImage & getDefaultArtwork (PF2e/Sqyre), Genjuts
  assert.equal(kuchiyoseOriginChoices('restricted').find(c=>c.selected).value,'restricted');
  assert.equal(kuchiyoseOriginChoices('common').find(c=>c.selected).value,'common');
 });
+
+test('ProseMirror editor stays flex when open, preserves source editing, passes document-uuid and opens/focuses/saves cleanly',async()=>{
+ const docs=readSystem('styles/documents.css');
+ const combat=readSystem('styles/combat-ux.css');
+
+ // 1. Never collapse ProseMirror with display:block and never break :not([open]) reading or .editing-source
+ assert.doesNotMatch(docs,/prose-mirror\s*\{\s*display\s*:\s*block/i);
+ assert.doesNotMatch(combat,/prose-mirror\s*\{\s*display\s*:\s*block/i);
+ assert.doesNotMatch(combat,/\.sns-effect-editor-body\s+prose-mirror:not\(\[open\]\)\s+\.editor-container\{[^}]*position\s*:\s*absolute/);
+ assert.doesNotMatch(docs,/prose-mirror\[open\]\s+\.editor-container\{[^}]*display\s*:\s*flex/);
+ assert.doesNotMatch(combat,/prose-mirror\[open\]\s+\.editor-container\{[^}]*display\s*:\s*flex/);
+ for(const css of [docs,combat]){
+  assert.match(css,/prose-mirror\{[^}]*display:flex;flex-direction:column/);
+  assert.match(css,/prose-mirror\[open\]\s+\.menu-container\{/);
+  assert.match(css,/prose-mirror\[open\]\s+menu\{[^}]*position:relative;inset:auto/);
+  assert.match(css,/prose-mirror\[open\]\s+\.editor-container\{[^}]*flex:1 1 auto/);
+  assert.match(css,/prose-mirror\[open\]\s+\.editor-content\{[^}]*position:static;inset:auto/);
+ }
+ assert.match(combat,/button\.sns-edit-description[^}]*\{display:none\}/);
+
+ // 2. All <prose-mirror> elements carry document-uuid
+ for(const rel of ['templates/reference-item.hbs','templates/effect-item.hbs','templates/supporting-actor.hbs','templates/tabs/bio.hbs']){
+  const tpl=readSystem(rel);
+  assert.match(tpl,/<prose-mirror[^>]*\bdocument-uuid="\{\{[^"]+\}\}"/,`${rel} missing document-uuid on <prose-mirror>`);
+ }
+
+ // 3. editDescription opens & focuses on open, or calls save() if already open
+ for(const SheetClass of [ReferenceItemSheet,EffectItemSheet]){
+  const listeners=new Map();
+  let saved=0,focused=0;
+  const pm={
+   disabled:false,
+   _open:false,
+   get open(){return this._open;},
+   set open(v){
+    this._open=v;
+    if(v){
+     for(const fn of listeners.get('open')??[])fn();
+     listeners.delete('open');
+    }
+   },
+   addEventListener(type,fn){
+    const arr=listeners.get(type)??[];
+    arr.push(fn);
+    listeners.set(type,arr);
+   },
+   focus(){focused++;},
+   save(){saved++;}
+  };
+  const mockSheet={isEditable:true,element:{querySelector:sel=>sel==='prose-mirror'?pm:null}};
+  await SheetClass.editDescription.call(mockSheet);
+  assert.equal(pm.open,true);
+  assert.equal(focused,1);
+  assert.equal(saved,0);
+  await SheetClass.editDescription.call(mockSheet);
+  assert.equal(saved,1);
+ }
+});

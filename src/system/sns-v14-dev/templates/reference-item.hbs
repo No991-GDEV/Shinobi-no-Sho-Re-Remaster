@@ -52,7 +52,7 @@
   {{/if}}
   {{#if bookVariant}}<p class="book-variant"><strong>Opção:</strong> {{bookVariant}}</p>{{/if}}
   {{#if canEditDescription}}<button type="button" class="sns-edit-description" data-action="editDescription"><i class="fa-solid fa-pen-to-square" aria-hidden="true"></i> {{#if emptyDescription}}Escrever descrição{{else}}Editar descrição{{/if}}</button>{{/if}}
-  <prose-mirror name="system.description" value="{{source.description}}" toggled {{#unless canEditDescription}}disabled{{/unless}}>{{{descriptionHTML}}}</prose-mirror>
+  <prose-mirror name="system.description" document-uuid="{{item.uuid}}" value="{{source.description}}" toggled {{#unless canEditDescription}}disabled{{/unless}}>{{{descriptionHTML}}}</prose-mirror>
   {{#each reading.related}}<section class="sns-related-rule"><h3>{{name}}</h3><div>{{{html}}}</div><small>{{source.id}} · {{source.pages}}</small></section>{{/each}}
   {{#if showPersonalNotes}}<section class="personal-item-notes"><label>{{#if isJutsu}}Orientações da técnica{{else}}Notas deste exemplar{{/if}}<textarea name="system.personalNotes" rows="3" placeholder="Aparência, onde está guardado ou outras anotações pessoais">{{source.personalNotes}}</textarea></label>{{#if bookName}}<small>Definição: {{bookName}}</small>{{/if}}</section>{{/if}}
   {{#each narrativeNotes}}<section class="narrative-note"><h4>{{label}}</h4><p>{{text}}</p></section>{{/each}}

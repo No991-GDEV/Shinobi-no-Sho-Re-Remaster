@@ -16,11 +16,21 @@
 .sns-document .publication legend{font-weight:bold;padding:0 4px}
 .sns-document .publication label{display:flex;flex-direction:column;gap:3px;margin:0 0 7px}
 .sns-document .publication input{width:100%}.sns-document .publication-row{display:flex;gap:10px}.sns-document .publication-row label:first-child{flex:2}.sns-document .publication-row label:last-child{flex:1}
-.sns-document prose-mirror{display:block;min-height:220px;position:relative;color:#302d29;background:transparent;--color-text-primary:#302d29;--color-text-secondary:#514a40;--color-text-emphatic:#302d29;--color-bg-option:#eee9e0}
-.sns-document prose-mirror .editor-content{font:14px/1.5 SnsRoboto,Arial;min-height:220px;padding:3px 4px;overflow-wrap:anywhere}
+.sns-document prose-mirror{display:flex;flex-direction:column;min-height:120px;position:relative;color:#29251e;background:transparent;color-scheme:light;--color-text-primary:#29251e;--color-text-secondary:#514a40;--color-text-emphatic:#29251e;--color-bg-option:#eee9e0;--menu-background:#e8e0cf;--dropdown-background:#f3ece0;--dropdown-border:#a89574;--dialog-background:#f3ece0;--dialog-border:#a89574;--color-control-hover:#d8ccb5;--button-text-color:#2c241b;--color-form-label-hover:#680500}
+.sns-document prose-mirror .editor-content{font:14px/1.5 SnsRoboto,Arial;min-height:80px;padding:3px 4px;overflow-wrap:anywhere;color:#29251e}
 .sns-document prose-mirror .editor-content p{margin:0 0 10px}
 .sns-document prose-mirror .toggle{position:absolute;right:2px;top:2px;width:24px;height:24px;background:#e6e1d2e0;color:#5f5545;z-index:1}
-.sns-document prose-mirror menu{background:#e5e0d2;color:#302d29}
+.sns-document prose-mirror menu{background:#e8e0cf;color:#2c241b}
+.sns-document prose-mirror:not([open]){height:auto;max-height:none;overflow:visible}
+.sns-document prose-mirror:not([open]) .editor-container{flex:none;height:auto;overflow:visible}
+.sns-document prose-mirror:not([open]) .editor-content{position:static;height:auto;max-height:none;overflow:visible}
+.sns-document prose-mirror[open]{min-height:260px;height:auto;gap:6px;overflow:visible}
+.sns-document prose-mirror[open] .menu-container{position:sticky;top:0;z-index:2;flex:0 0 auto;min-height:var(--menu-height,42px)}
+.sns-document prose-mirror[open] menu{position:relative;inset:auto;flex-wrap:wrap;height:auto;min-height:var(--menu-height,42px);padding:4px 6px;background:#e8e0cf;border:1px solid #b4a386;border-radius:3px;color:#2c241b}
+.sns-document prose-mirror[open] menu button,.sns-document prose-mirror[open] menu .pm-dropdown{color:#2c241b}
+.sns-document prose-mirror[open] .editor-container{flex:1 1 auto;position:relative;min-height:220px;overflow:visible}
+.sns-document prose-mirror[open] .editor-content{position:static;inset:auto;flex:1 1 auto;min-height:220px;max-height:none;overflow:visible;padding:8px 10px;background:#fffcf5;border:1px solid #b4a386;border-radius:3px;color:#29251e;caret-color:#29251e}
+.sns-document prose-mirror[open] code-mirror.source-editor{min-height:220px;background:#fffcf5;color:#29251e}
 /* Item: original PF2e heading, horizontal summary fields and details column. */
 .sns-item-sheet .document-shell{display:flex;flex-direction:column;height:100%;min-height:0;overflow:hidden}
 .sns-item-sheet .sheet-header{display:flex;gap:8px;align-items:center;flex:none;min-height:72px;padding:0 0 4px}

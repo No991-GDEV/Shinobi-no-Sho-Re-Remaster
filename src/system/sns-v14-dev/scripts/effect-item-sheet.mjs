@@ -12,7 +12,7 @@ export class EffectItemSheet extends SnsHandlebarsApplicationMixin(foundry.appli
   const row=item.actor?temporaryEffects(item.actor).find(r=>r.id===item.id):null;
   return {...await super._prepareContext(options),item,source,record:r,editable:this.isEditable,isGM:game.user.isGM,bound:!!b,controlled,canTime:game.user.isGM&&!controlled,canStatus:game.user.isGM&&!controlled&&!b,canEnd:!!item.actor&&r.active&&item.actor.isOwner,sourceName:row?.sourceName||r.origin,summary:row?.displaySummary||b?.snapshot?.summary||'',durationLabel:durationLabel(r),durationFields:durationFields(r.durationRule),rules:(source.effectRules??[]).map((r,index)=>({...r,index,targets:EFFECT_TARGETS.map(t=>({...t,selected:t.id===r.target}))})),descriptionHTML:await foundry.applications.ux.TextEditor.enrichHTML(source.description,{relativeTo:item,secrets:false})};
  }
- async _onRender(context,options){await super._onRender(context,options);mountDurationFields(this.element);for(const b of this.element.querySelectorAll('prose-mirror button.toggle')){b.title='Editar descrição';b.setAttribute('aria-label','Editar descrição');}}
+ async _onRender(context,options){await super._onRender(context,options);mountDurationFields(this.element);for(const b of this.element.querySelectorAll('prose-mirror button.toggle')){b.title='Editar descrição';b.setAttribute('aria-label','Editar descrição');}this.element.querySelector('prose-mirror')?.addEventListener('change',()=>{if(this.isEditable)void this.submit();});}
  _processFormData(event,form,formData){
   const data=super._processFormData(event,form,formData),r=this.item.system.appliedCondition;
   // Timing controls have no document paths; build only the explicit update below.
@@ -28,5 +28,12 @@ export class EffectItemSheet extends SnsHandlebarsApplicationMixin(foundry.appli
  static async removeRule(event,target){if(!game.user.isGM||!this.isEditable)return;await this.submit();await this.item.update({'system.effectRules':this.item.system.effectRules.filter((r,i)=>i!==Number(target.dataset.index))});}
  static async endEffect(){if(!this.item.actor?.isOwner)return;await this.submit();await endCondition(this.item.actor,this.item.id);await this.render({force:true});}
  static async openSource(){const uuid=this.item.system.appliedCondition.sourceUuid;if(!uuid)return;const source=await fromUuid(uuid);if(source?.testUserPermission(game.user,'OBSERVER'))await source.sheet.render({force:true});}
- static editDescription(){if(this.isEditable)this.element.querySelector('prose-mirror button.toggle')?.click();}
+ static editDescription(){
+  if(!this.isEditable)return;
+  const pm=this.element.querySelector('prose-mirror');
+  if(!pm||pm.disabled)return;
+  if(pm.open){pm.save();return;}
+  pm.addEventListener('open',()=>pm.focus(),{once:true});
+  pm.open=true;
+ }
 }

@@ -206,12 +206,19 @@
 .sns-sheet .formula-row .entry-controls{display:flex;align-items:center;gap:7px}
 .sns-sheet .formula-row .entry-controls button{width:auto;height:24px;min-height:24px;font:11px SnsCondensed,Arial;white-space:nowrap}
 .sns-sheet .biography-section{margin-bottom:16px}
-.sns-sheet .bio-pane prose-mirror{display:block;min-height:64px;position:relative;padding:6px 30px 6px 8px;border:1px solid #b6a89570;background:#fff3}
+.sns-sheet .bio-pane prose-mirror{display:flex;flex-direction:column;min-height:64px;position:relative;padding:6px 30px 6px 8px;border:1px solid #b6a89570;background:#fff3;color-scheme:light;--color-text-primary:#29251e;--color-text-secondary:#514a40;--color-text-emphatic:#29251e;--menu-background:#e8e0cf;--dropdown-background:#f3ece0;--dropdown-border:#a89574;--dialog-background:#f3ece0;--dialog-border:#a89574;--color-control-hover:#d8ccb5;--button-text-color:#2c241b;--color-form-label-hover:#680500}
 .sns-sheet .bio-pane .editor-content{min-height:48px;overflow-wrap:anywhere;font:14px/1.55 SnsGelasio,Georgia;color:var(--ink)}
 .sns-sheet .bio-pane .editor-content p{margin:0 0 7px}
 .sns-sheet .bio-pane .editor-content img{max-width:100%;height:auto}
-.sns-sheet .bio-pane prose-mirror[open]{padding:4px;min-height:200px}
-.sns-sheet .bio-pane prose-mirror[open] .editor-content{min-height:150px;padding:5px}
+.sns-sheet .bio-pane prose-mirror:not([open]){height:auto;max-height:none;overflow:visible}
+.sns-sheet .bio-pane prose-mirror:not([open]) .editor-container{flex:none;height:auto;overflow:visible}
+.sns-sheet .bio-pane prose-mirror:not([open]) .editor-content{position:static;height:auto;max-height:none;overflow:visible}
+.sns-sheet .bio-pane prose-mirror[open]{padding:6px;min-height:220px;height:auto;gap:6px;overflow:visible}
+.sns-sheet .bio-pane prose-mirror[open] .menu-container{position:sticky;top:0;z-index:2;flex:0 0 auto;min-height:var(--menu-height,42px)}
+.sns-sheet .bio-pane prose-mirror[open] menu{position:relative;inset:auto;flex-wrap:wrap;height:auto;min-height:var(--menu-height,42px);padding:4px 6px;background:#e8e0cf;border:1px solid #b4a386;border-radius:3px;color:#2c241b}
+.sns-sheet .bio-pane prose-mirror[open] menu button,.sns-sheet .bio-pane prose-mirror[open] menu .pm-dropdown{color:#2c241b}
+.sns-sheet .bio-pane prose-mirror[open] .editor-container{flex:1 1 auto;position:relative;min-height:160px;overflow:visible}
+.sns-sheet .bio-pane prose-mirror[open] .editor-content{position:static;inset:auto;flex:1 1 auto;min-height:160px;max-height:none;overflow:visible;padding:8px 10px;background:#fffcf5;border:1px solid #b4a386;border-radius:3px;color:#29251e;caret-color:#29251e}
 .sns-sheet .bio-pane .editor-menu{flex-wrap:wrap;background:#e3dac9;color:#35312e}
 .sns-sheet .bio-pane prose-mirror button.toggle{position:absolute;top:4px;right:4px;width:23px;height:23px;min-height:23px;background:#e9e0cf;color:#740800}
 .sns-sheet .bio-pane prose-mirror:not([disabled]):not([open]) button.toggle{display:inline-flex;align-items:center;justify-content:center}
@@ -333,11 +340,11 @@
 .sns-effect-rule{display:grid;grid-template-columns:minmax(150px,1fr) 70px 30px;gap:8px;align-items:center;margin:6px 0}
 .sns-effect-rule input{text-align:center}
 .sns-effect-editor-body .hint{font-size:12px;color:#665744}
-.sns-effect-editor-body prose-mirror{display:block;min-height:80px;color:#29251e}
+.sns-effect-editor-body prose-mirror{display:flex;flex-direction:column;min-height:80px;color:#29251e}
 .sns-effect-editor-body prose-mirror:not([open]){height:auto;max-height:none;overflow:visible}
-.sns-effect-editor-body prose-mirror:not([open]) .editor-container{position:absolute;flex:none;height:auto;overflow:visible}
+.sns-effect-editor-body prose-mirror:not([open]) .editor-container{position:static;flex:none;height:auto;overflow:visible}
 .sns-effect-editor-body prose-mirror:not([open]) .editor-content{position:static;height:auto;min-height:0;max-height:none;overflow:visible;color:#29251e}
-.sns-effect-editor-body prose-mirror[open]{min-height:200px}
+.sns-effect-editor-body prose-mirror[open]{min-height:220px}
 .sns-effect-editor footer{border-top:1px solid #b3a48b;padding-top:10px}
 .sns-document .sns-effect-editor footer button,.sns-effect-editor>footer>button{width:100%;min-height:31px;padding:5px 12px;background:linear-gradient(180deg,#7a1510,#580b07);color:#fff6e5;font:700 13px SnsRoboto,Arial;border:1px solid #b89555;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
 .sns-document .sns-effect-editor footer button:hover,.sns-effect-editor>footer>button:hover{background:linear-gradient(180deg,#8f1a14,#680e09);color:#fff;border-color:#d4b16a;text-shadow:none}
@@ -554,6 +561,7 @@
 .sns-item-sheet .document-shell .sheet-content>.sheet-body{flex:1;min-width:0;height:auto;max-height:100%;padding:4px 6px 14px 12px;overflow-y:auto;scrollbar-width:thin}
 .sns-item-sheet .document-shell .tab.description button.sns-edit-description{display:flex;width:fit-content;align-items:center;gap:5px;min-height:24px;height:24px;margin:0 0 6px auto;padding:2px 9px;border:1px solid #a88f64;border-radius:3px;background:#eee3cb;color:#541a14;font:700 11px/1.2 SnsCondensed,Arial;text-transform:uppercase}
 .sns-item-sheet .document-shell .tab.description button.sns-edit-description:hover{background:#e5d6b5;border-color:#680500;color:#680500;text-shadow:none}
+.sns-item-sheet .document-shell .tab.description:has(prose-mirror[open]) button.sns-edit-description,.sns-effect-description:has(prose-mirror[open]) button.sns-edit-description{display:none}
 .sns-item-sheet .document-shell .sns-jutsu-facts{border:1px solid #b6aa91;border-left:3px solid #9c7842;border-radius:3px;background:#eee6d6;padding:8px 10px;margin:0 0 12px}
 .sns-item-sheet .document-shell .sheet-body table{width:100%;border-collapse:collapse;margin:8px 0;font-size:12px;color:#29241e}
 .sns-item-sheet .document-shell .sheet-body table th{background:#655b4e;color:#fff5de;font-weight:700;padding:5px 6px;border:1px solid #a89c88;text-align:left}
