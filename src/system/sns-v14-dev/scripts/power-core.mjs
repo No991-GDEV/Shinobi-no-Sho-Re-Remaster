@@ -199,6 +199,7 @@ export function repertoirePowerDefinition(power){
 }
 export const ownedPowerDefinition=power=>powerDefinition(power?.system?.power?.definitionId||power?.system?.contentId)||repertoirePowerDefinition(power);
 const allows=(p,e)=>(p.allowedEffects?p.allowedEffects.includes(e.id):e.powers.includes(p.id.split(':').at(-1)))||p.id==='sns:power:kikai-ninpou'&&['sns:effect:dano-continuo','sns:effect:purificar'].includes(e.id);
+export const maxEffectSlots=p=>p?ALL_EFFECTS.filter(e=>allows(p,e)).reduce((n,e)=>n+1+(e.evolutions?.length??0),0):0;
 export const effectDefinition=id=>EFFECT_DEFINITIONS.find(x=>x.id===id)??REPERTOIRE_EFFECT_MAP.get(id);
 export function choiceProblems(power,choices=power.system.power.choices){
  const p=ownedPowerDefinition(power),level=power.system.level,errors=[];
@@ -210,8 +211,8 @@ export function choiceProblems(power,choices=power.system.power.choices){
   if(stages.length!==choices.length||stages[0]!==e.min||stages.some((n,k)=>n!==[e.min,...e.evolutions][k])||choices.some(c=>c.slot!==c.stage||c.slot>level))return ['A evolução copiada precisa seguir as etapas do efeito.'];
   return [];
  }
- const sorted=[...choices].sort((a,b)=>a.slot-b.slot),seen=new Map();
- for(let slot=1;slot<=level;slot++){
+ const sorted=[...choices].sort((a,b)=>a.slot-b.slot),seen=new Map(),maxSlots=Math.min(level,maxEffectSlots(p));
+ for(let slot=1;slot<=maxSlots;slot++){
   const rows=sorted.filter(c=>c.slot===slot);if(rows.length!==1){errors.push('Nível '+slot+': escolha '+(rows.length?'duplicada.':'pendente.'));continue;}
   const c=rows[0],e=effectDefinition(c.effectId),stage=c.stage??e?.min;
   if(!e){errors.push('Nível '+slot+': regra indisponível.');continue;}

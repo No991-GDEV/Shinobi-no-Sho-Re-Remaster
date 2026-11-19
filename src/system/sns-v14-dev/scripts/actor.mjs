@@ -16,6 +16,11 @@ import {mayEditBudgets,mayCreateBudgets} from './investment-budget.mjs';
 import {mayEditProgressionHistory} from './progression-policy.mjs';
 import {mayCreateNpcBuild,mayEditNpcBuild} from './npc-build-permissions.mjs';
 export class ShinobiActor extends foundry.documents.Actor {
+  static getDefaultArtwork(actorData){
+    const icon={npc:'npc',companion:'familiar',hazard:'hazard',loot:'loot',party:'party',vehicle:'vehicle',squad:'army'}[actorData?.type];
+    const img=icon?'systems/sns-v14-dev/assets/pf-actor-'+icon+'.svg':(this.DEFAULT_ICON??'icons/svg/mystery-man.svg');
+    return {img,texture:{src:img}};
+  }
   async toggleStatusEffect(statusId,options={}){if(!statusDefinition(statusId))return super.toggleStatusEffect(statusId,options);try{return await toggleConditionStatus(this,statusId,options);}catch(e){ui.notifications.warn(e.message);return false;}}
   async _preUpdate(changes,options,user){
     const allowed=await super._preUpdate(changes,options,user);if(allowed===false)return false;

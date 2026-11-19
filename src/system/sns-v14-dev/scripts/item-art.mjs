@@ -52,6 +52,7 @@ export async function openDocumentImagePicker(sheet,doc){
   type:'image',
   current,
   redirectToRoot,
+  allowUpload:true,
   document:doc,
   position:sheet.position?{top:(sheet.position.top??0)+40,left:(sheet.position.left??0)+10}:undefined,
   callback:async path=>{if(sheet.isEditable&&path)await doc.update({img:path});}

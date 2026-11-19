@@ -7,6 +7,7 @@
 .sns-support-sheet .actor-layout{display:flex;height:100%;min-height:0;gap:10px;overflow:hidden;padding:8px}
 .sns-support-sheet .profile-image{display:block;flex:none;width:100%;height:150px;padding:0}
 .sns-support-sheet .profile-image img{height:100%;width:100%;object-fit:contain;border:0}
+.sns-support-sheet .profile-image img[data-edit]{cursor:pointer}
 .sns-support-sheet .npc-sidebar{flex:0 0 156px;overflow:auto;overflow-x:hidden;min-height:0;scrollbar-width:thin}
 .sns-support-sheet .npc-sidebar>.profile-image{margin-bottom:8px}
 .sns-support-sheet .npc-body,.sns-support-sheet .auxiliary-body{display:flex;flex:1;flex-direction:column;min-width:0;height:100%;overflow:hidden}

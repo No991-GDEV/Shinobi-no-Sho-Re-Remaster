@@ -2,7 +2,7 @@
   {{#if creation}}{{#if editable}}<div class="sns-creation-entry"><span><i class="fa-solid fa-list-check" aria-hidden="true"></i> Criação do personagem</span><button type="button" data-action="creationGuide">{{#if creationGuideStarted}}Retomar criação{{else}}Começar criação{{/if}}</button></div>{{/if}}{{/if}}
   {{#unless creation}}{{#if editable}}<div class="sns-creation-entry"><span><i class="fa-solid fa-arrow-trend-up" aria-hidden="true"></i> Evolução do personagem</span><button type="button" data-action="creationGuide">{{#if evolutionGuideStarted}}Retomar evolução{{else}}Evoluir personagem{{/if}}</button></div>{{/if}}{{/unless}}
   <div class="details">
-    <button type="button" class="portrait" data-action="portrait" aria-label="Escolher retrato" {{#unless editable}}disabled{{/unless}}><img src="{{actor.img}}" data-edit="img" alt="Retrato de {{actor.name}}"></button>
+    <div class="portrait"><img src="{{actor.img}}" alt="Retrato de {{actor.name}}" {{#if editable}}data-edit="img" data-action="editImage" title="Escolher retrato"{{/if}}></div>
     <div class="details-grid"><p class="sns-mechanical-origin"><strong>Clã / Hijutsu</strong><span>{{#if mechanicalOrigins}}{{mechanicalOrigins}}{{else}}Nenhuma origem adquirida{{/if}}</span></p>
       {{#each identity}}
       <label class="field"><span class="field-label">{{label}}</span><input name="system.identity.{{key}}" value="{{value}}" {{#unless ../editable}}disabled{{/unless}}></label>

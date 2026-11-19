@@ -69,14 +69,16 @@ globalThis.foundry={
    DialogV2:{prompt:async()=>null,confirm:async()=>true}
   },
   sheets:{
-   ActorSheetV2:class{},
-   ItemSheetV2:class{}
+   ActorSheetV2:class{_processFormData(_e,_f,fd){return {...(fd?.object??{})};}},
+   ItemSheetV2:class{_processFormData(_e,_f,fd){return {...(fd?.object??{})};}}
   },
   ux:{
    TextEditor:{enrichHTML:async html=>String(html??'')}
   }
  },
  documents:{
+  Actor:class{},
+  Item:class{},
   ChatMessage:{
    getSpeaker:({actor})=>({actor:actor?.id??'fixture',alias:actor?.name??'Ninja'}),
    create:async data=>{createdMessages.push(data);return data;}
@@ -600,15 +602,45 @@ test('stylesheets clean legacy Foundry blues and preserve required selectors and
  }
 });
 
-test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and Kuchiyose Padrão vs Restrito',async()=>{
- const {openDocumentImagePicker}=await import('../src/system/sns-v14-dev/scripts/item-art.mjs');
- const {resolveJutsu,availableChoices,jutsuVariants}=await import('../src/system/sns-v14-dev/scripts/power-core.mjs');
+test('DocumentSheetV2 native editImage & getDefaultArtwork (PF2e/Sqyre), Genjutsu level 3+ and Kuchiyose extra binding + GM summoner list',async()=>{
+ const {openDocumentImagePicker,displayItemArt}=await import('../src/system/sns-v14-dev/scripts/item-art.mjs');
+ const {ShinobiActor}=await import('../src/system/sns-v14-dev/scripts/actor.mjs');
+ const {SnsItem}=await import('../src/system/sns-v14-dev/scripts/item.mjs');
+ const {resolveJutsu,availableChoices,jutsuVariants,choiceProblems,maxEffectSlots,ownedPowerDefinition}=await import('../src/system/sns-v14-dev/scripts/power-core.mjs');
  const {techniqueCard}=await import('../src/system/sns-v14-dev/scripts/technique-card.mjs');
  const {summonPower,summonLimit,summonProjection,suggestSummonAttributes}=await import('../src/system/sns-v14-dev/scripts/kuchiyose-core.mjs');
  const {originGrant,summonPact}=await import('../src/system/sns-v14-dev/scripts/restricted-access.mjs');
- const {kuchiyoseOriginChoices}=await import('../src/system/sns-v14-dev/scripts/kuchiyose-ui.mjs');
+ const {kuchiyoseOriginChoices,companionLinkView}=await import('../src/system/sns-v14-dev/scripts/kuchiyose-ui.mjs');
+ const {acquisitionProblems,investmentBudget}=await import('../src/system/sns-v14-dev/scripts/investment-budget.mjs');
 
- // 1. Sqyre FilePicker.implementation + redirectToRoot + browse()
+ // 1A. Templates use native DocumentSheetV2 <img data-edit="img" data-action="editImage"> (matching PF2e/Foundry v14)
+ for(const rel of ['templates/tabs/character.hbs','templates/supporting-actor.hbs','templates/reference-item.hbs','templates/effect-item.hbs']){
+  const tpl=readSystem(rel);
+  assert.match(tpl,/<img[^>]*data-edit="img"[^>]*data-action="editImage"/,`${rel} missing native img[data-edit][data-action="editImage"]`);
+  assert.doesNotMatch(tpl,/data-action="(portrait|documentPortrait)"/,`${rel} still uses custom portrait button`);
+ }
+ assert.equal(ShinobiSheet.DEFAULT_OPTIONS.actions.portrait,undefined);
+ assert.equal(SupportingActorSheet.DEFAULT_OPTIONS.actions.documentPortrait,undefined);
+ assert.equal(ReferenceItemSheet.DEFAULT_OPTIONS.actions.documentPortrait,undefined);
+
+ // 1B. ShinobiActor & SnsItem static getDefaultArtwork
+ assert.equal(ShinobiActor.getDefaultArtwork({type:'shinobi'}).img,'icons/svg/mystery-man.svg');
+ assert.equal(ShinobiActor.getDefaultArtwork({type:'npc'}).img,'systems/sns-v14-dev/assets/pf-actor-npc.svg');
+ assert.equal(ShinobiActor.getDefaultArtwork({type:'companion'}).img,'systems/sns-v14-dev/assets/pf-actor-familiar.svg');
+ assert.match(SnsItem.getDefaultArtwork({type:'weapon',system:{contentId:'sns:equipment:katana'}}).img,/katana\.webp/);
+
+ // 1C. ReferenceItemSheet._processFormData strips fallback displayImage unless user chose a real image
+ const mockItem=makeItem({id:'it1',name:'Genjutsu',type:'power',img:'icons/svg/aura.svg',system:{contentId:'sns:power:genjutsu',power:{definitionId:'sns:power:genjutsu',choices:[]},jutsu:{effectId:''}}});
+ mockItem._source={img:'icons/svg/aura.svg'};
+ const mockSheet=Object.create(ReferenceItemSheet.prototype);
+ mockSheet.item=mockItem;
+ const fakeForm={elements:{namedItem:()=>null},querySelectorAll:()=>[]};
+ const stripped=mockSheet._processFormData(null,fakeForm,{object:{img:displayItemArt(mockItem)}});
+ assert.equal(stripped.img,undefined);
+ const kept=mockSheet._processFormData(null,fakeForm,{object:{img:'https://sqyre.cloud/bucket/genjutsu-custom.webp'}});
+ assert.equal(kept.img,'https://sqyre.cloud/bucket/genjutsu-custom.webp');
+
+ // 1D. openDocumentImagePicker compatibility helper passes allowUpload: true + redirectToRoot + browse()
  let pickedOpts=null,browsed=0,updatedImg='';
  class SqyrePicker {
   constructor(opts){pickedOpts=opts;}
@@ -620,12 +652,13 @@ test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and K
  const doc={img:'icons/svg/mystery-man.svg',async update(p){updatedImg=p.img;}};
  await openDocumentImagePicker({isEditable:true,position:{top:100,left:200}},doc);
  assert.equal(browsed,1);
+ assert.equal(pickedOpts.allowUpload,true);
  assert.ok(pickedOpts.redirectToRoot.includes('icons/svg/mystery-man.svg'));
  assert.equal(pickedOpts.document,doc);
  await pickedOpts.callback('https://sqyre.cloud/bucket/avatar.webp');
  assert.equal(updatedImg,'https://sqyre.cloud/bucket/avatar.webp');
 
- // 2. Genjutsu power (Miragem & Fascinar) + custom illusion description
+ // 2. Genjutsu power (Miragem & Fascinar) + level 3+ slots + custom illusion description
  const actor=makeActorFixture();
  actor.system.attributes.int=10;
  const genPower=makeItem({
@@ -637,6 +670,15 @@ test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and K
  },actor);
  const slotChoices=availableChoices(genPower,1);
  assert.deepEqual(slotChoices.map(c=>c.id).sort(),['sns:effect:genjutsu-fascinar','sns:effect:genjutsu-miragem']);
+ assert.equal(maxEffectSlots(ownedPowerDefinition(genPower)),2);
+ const genPowerLvl4=makeItem({
+  id:'p-gen4',name:'Genjutsu',type:'power',
+  system:{level:4,category:'powers',power:{definitionId:'sns:power:genjutsu',choices:[
+   {id:'c1',slot:1,stage:1,effectId:'sns:effect:genjutsu-miragem'},
+   {id:'c2',slot:2,stage:1,effectId:'sns:effect:genjutsu-fascinar'}
+  ]},details:{powerOrigin:'common',organization:'effects',keyAttribute:'int'}}
+ },actor);
+ assert.deepEqual(choiceProblems(genPowerLvl4),[]);
 
  // Miragem variants respect INT (INT 10 unlocks Pequena and Média, not Grande INT 12)
  const mirVariants=jutsuVariants(genPower,'sns:effect:genjutsu-miragem',1);
@@ -649,6 +691,7 @@ test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and K
  },actor);
  const mirProj=resolveJutsu(actor,genPower,mirJutsu);
  assert.equal(mirProj.valid,true);
+ assert.equal(resolveJutsu({...actor,system:{...actor.system,nc:8}},genPowerLvl4,mirJutsu).valid,true);
  assert.equal(mirProj.noRoll,true);
  assert.equal(mirProj.cost,2);
  assert.equal(mirProj.data.duration,'Sustentada');
@@ -677,9 +720,35 @@ test('Sqyre FilePicker.implementation, Genjutsu power (Miragem & Fascinar) and K
  assert.match(fasCard,/INT · Dif 17/);
  assert.match(fasCard,/Fascinado/);
 
- // 3. Kuchiyose Padrão vs Restrito & extra contract fallback
- const pactFeature={type:'feature',name:'Kuchiyose: Escorpião',system:{contentId:'sns:feature:hb-f05-kuchiyose-escorpiao',details:{}}};
+ // 3. Kuchiyose Padrão vs Restrito & extra contract binding regression (sourceId + GM dropdown)
+ const pactFeature={id:'pact-esc',type:'feature',name:'Kuchiyose: Escorpião',system:{contentId:'sns:feature:hb-f05-kuchiyose-escorpiao',details:{}}};
  assert.equal(originGrant(pactFeature),'hb-f05-kuchiyose-escorpiao');
+
+ // Regression check: mode:'granted' without sourceId fails powerInvestment; with pactFeature.id it passes at 0 PP
+ const brokenPower={id:'pk-bad',name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',level:4},flags:{'sns-v14-dev':{acquisition:{mode:'granted',reason:'Sem sourceId'}}}};
+ assert(acquisitionProblems(brokenPower,[pactFeature]).some(p=>/concessão sem origem definida/i.test(p)));
+ const grantedPower={id:'pk-ok',name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',level:4,choice:{kind:'summonSpecies',key:'escorpiao'},details:{powerOrigin:'restricted'}},flags:{'sns-v14-dev':{acquisition:{mode:'granted',sourceId:pactFeature.id,reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:'gm1'}}}};
+ assert.deepEqual(acquisitionProblems(grantedPower,[pactFeature]),[]);
+ assert.equal(investmentBudget({},[pactFeature,grantedPower]).spent,0);
+ const manualZeroPower={id:'pk-m0',name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',level:4,choice:{kind:'summonSpecies',key:'escorpiao'},details:{powerOrigin:'restricted'}},flags:{'sns-v14-dev':{acquisition:{mode:'manual',cost:0,reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:'gm1'}}}};
+ assert.deepEqual(acquisitionProblems(manualZeroPower,[]),[]);
+ assert.equal(investmentBudget({},[manualZeroPower]).spent,0);
+
+ // GM companionLinkView lists shinobi actors outside party so GM can bind non-party summoners
+ const prevIsGM=globalThis.game.user.isGM;
+ const prevActors=globalThis.game.actors;
+ try{
+  const orphanMaster={id:'m-out',uuid:'Actor.m-out',name:'Sasori',type:'shinobi',pack:null,isToken:false,testUserPermission:()=>true,items:[pactFeature]};
+  const summon={id:'s-esc',uuid:'Actor.s-esc',name:'Escorpião Gigante',type:'companion',isOwner:true,system:{nc:8,contentId:'sns:kuchiyose:escorpiao',details:{kind:'Invocação',master:''}},flags:{'sns-v14-dev':{}},items:makeCollection([])};
+  globalThis.game.actors=makeCollection([orphanMaster,summon]);
+  globalThis.game.user.isGM=true;
+  const gmView=await companionLinkView(summon);
+  assert(gmView.choices.some(c=>c.value===orphanMaster.uuid&&/Sasori · fora da equipe/.test(c.label)));
+ }finally{
+  globalThis.game.user.isGM=prevIsGM;
+  globalThis.game.actors=prevActors;
+ }
+
  const summoner={items:[
   pactFeature,
   {id:'pk',type:'power',system:{contentId:'sns:power:kuchiyose',level:4,choice:{kind:'summonSpecies',key:'escorpiao'},details:{powerOrigin:'restricted'}}}

@@ -15,7 +15,12 @@ export const kuchiyoseOriginChoices=value=>[
 export async function companionLinkView(actor){
  if(actor.type!=='companion')return null;const link=kuchiyoseLink(actor),species=speciesFor(actor);if(!species&&!link&&actor.system.details.kind!=='Invocação')return null;
  const uuid=link?.masterUuid||actor.system.details.master||'',master=uuid?await fromUuid(uuid):null,candidates=partySummoners(game.actors,game.actors,game.user);
- const choices=[{value:'',label:'Selecionar invocador da equipe',selected:!uuid},...candidates.map(a=>({value:a.uuid,label:a.name,selected:a.uuid===uuid}))];
+ const extraCandidates=game.user?.isGM?Array.from(game.actors??[]).filter(a=>!a.pack&&!a.isToken&&['shinobi','npc'].includes(a.type)&&!candidates.some(c=>c.uuid===a.uuid)).sort((a,b)=>a.name.localeCompare(b.name,'pt-BR')):[];
+ const choices=[
+  {value:'',label:game.user?.isGM?'Selecionar invocador':'Selecionar invocador da equipe',selected:!uuid},
+  ...candidates.map(a=>({value:a.uuid,label:a.name,selected:a.uuid===uuid})),
+  ...extraCandidates.map(a=>({value:a.uuid,label:a.name+' · fora da equipe',selected:a.uuid===uuid}))
+ ];
  if(uuid&&!choices.some(c=>c.value===uuid))choices.push({value:uuid,label:master?.testUserPermission(game.user,'OBSERVER')?master.name+' · fora da equipe':'Invocador indisponível',selected:true});
  let problem=link?.problem??'',limit=null;try{if(master&&species){const power=summonPower(master,species.species);limit=summonLimit(master,species.species,link?.build??{usedLevel:power.system.level,count:1});}}catch(e){problem=e.message;}
  if(uuid&&!master)problem='Invocador indisponível. Selecione outro na ficha.';

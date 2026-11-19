@@ -1,9 +1,11 @@
-Beta **0.5.0-beta.2** para Foundry VTT **14.367** — Poder Genjutsu (`Miragem` e `Fascinar`), vínculo de Kuchiyose extra com seletor Padrão vs Restrito e compatibilidade do seletor de retrato com Sqyre.
+Beta **0.5.0-beta.3** para Foundry VTT **14.367** — Correções no seletor nativo de retrato/imagem (padrão PF2e / `DocumentSheetV2` `editImage` compatível com Sqyre), vínculo extra de Kuchiyose e casos de borda do poder Genjutsu.
+
+- **Retratos e imagens no padrão nativo do PF2e e Foundry V14 (`DocumentSheetV2` `editImage` + `getDefaultArtwork`):** substituídos os botões customizados (`portrait` / `documentPortrait`) por `<img data-edit="img" data-action="editImage">` diretamente nas fichas de personagem, atores de apoio, itens e efeitos, com `ShinobiActor.getDefaultArtwork` e `SnsItem.getDefaultArtwork` implementados e proteção em `ReferenceItemSheet` para que ícones de fallback (`displayImage`) não sobrescrevam a imagem escolhida pelo usuário em submissões parciais.
+- **Vínculo extra de Kuchiyose (`Kuchiyose: Escorpião` e invocadores fora da equipe):** corrigido `ensureMasterKuchiyose` para informar `sourceId` (ou custo manual `0` em fallback) ao conceder `Kuchiyose (Invocação)` sem PP — eliminando o bloqueio silencioso de `"concessão sem origem definida"` na criação do poder —, incluídos personagens/NPCs fora de equipes (`party`) no seletor do mestre e preservada a ficha `legacy` ao trocar apenas a fonte (`Padrão` vs `Restrito`).
+- **Poder guiado `Genjutsu` em nível 3+ e re-edição:** ajustados `choiceProblems` e `SnsPowerProgression` ao total real de efeitos disponíveis (2 slots: `Miragem` e `Fascinar`) para não bloquear níveis 3+ como escolha pendente, evitada duplicação da descrição personalizada ao re-editar um jutsu de Genjutsu no construtor, exibidas as artes no catálogo e generalizada a mensagem de erro de técnicas com resistência.
 
 - **Poder guiado `Genjutsu` (`Miragem` e `Fascinar`):** novo poder com os efeitos `Miragem` (variantes imóveis/móveis por categoria de tamanho liberadas pela Inteligência) e `Fascinar` (teste de resistência de Inteligência automatizado com Dif `6 + INT`, somando `+1` com *Ilusão Profunda* e aplicando a condição `Fascinado`), além de campo no construtor de jutsus para descrever o efeito visual/narrativo de cada ilusão no card do chat.
 - **Vínculo de Kuchiyose extra e seletor `Padrão` vs `Restrito` na ficha da invocação:** suporte a contratos e poderes concedidos pelo mestre (0 PP) ao vincular invocações, aceitação de `powerOrigin: 'restricted'` e novo seletor **Fonte do Kuchiyose** (**Kuchiyose Padrão / Comum · −3** vs **Kuchiyose Restrito / Invocação · sem −3**) diretamente na barra de vínculo e na Construção da invocação.
-- **Compatibilidade de imagens e retratos com Sqyre:** uso de `FilePicker.implementation` (`CONFIG.ux.FilePicker`) com `redirectToRoot` e `browse()` nos retratos de personagens, atores de apoio e itens.
-
 - **Automações híbridas estilo PF2e nos itens:** suporte a regras passivas (`passiveRules`), modos/toggles com estágios (ex.: Hachimon Tonkou), ações rápidas e reservas de cargas (`Kikaichuu`, `Rinkaichuu`, `Kidaichuu`, `Reserva de Água`, `Bombas de Argila`), além do desbloqueio de Kekkei Genkai e Hijutsus baseados em efeito para PJs e sincronização direta de receitas na aba Jutsus.
 - **Fontes homebrew opcionais (D115):** adicionadas as expansões opcionais *Kibaku Nendo Revisado* e *Pergaminho Canônico* (desativadas por padrão nas configurações do sistema).
 - **Envio universal de itens ao chat:** clique na miniatura de qualquer item na ficha (armas, equipamentos, clãs, aptidões, poderes, ações, fórmulas, aptidões ativas e técnicas) para publicar um card formatado no chat sem gastar recursos.
@@ -13,7 +15,7 @@ Beta **0.5.0-beta.2** para Foundry VTT **14.367** — Poder Genjutsu (`Miragem` 
 
 Mantém os 14 compêndios e as 1.422 entradas canônicas. Nenhuma alteração nas fichas já salvas ou nos textos dos livros.
 
-**Atualização:** sistema e módulo de compêndios passam juntos para **0.5.0-beta.2**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
+**Atualização:** sistema e módulo de compêndios passam juntos para **0.5.0-beta.3**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
 
 - Sistema: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 - Compêndios: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json

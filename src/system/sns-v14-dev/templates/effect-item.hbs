@@ -1,6 +1,6 @@
 <div class="sns-effect-editor">
  <header class="sns-effect-editor-header">
-  <div class="item-image framed"><img src="{{item.img}}" alt=""></div>
+  <div class="item-image framed"><img src="{{item.img}}" alt="{{item.name}}" {{#if editable}}data-edit="img" data-action="editImage" title="Alterar imagem"{{/if}}></div>
   <div class="sns-effect-header-fields">
    <div class="sns-effect-header-meta">
     <small class="sns-effect-badge {{#if record.active}}is-active{{/if}}">{{#if record.active}}Efeito ativo{{else}}Efeito{{/if}}</small>

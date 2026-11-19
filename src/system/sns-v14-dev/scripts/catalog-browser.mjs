@@ -1,7 +1,7 @@
 import {carryRequirementProfile} from './requirement-policy.mjs';
 import {sourceAvailable,sourceEnabled} from '../data/optional-sources.mjs';
 import {D115_OPTIONAL_LIBRARIES} from '../data/homebrew-d115-sources.mjs';
-import {itemArt,assignedItemArt,isPlaceholderArt} from './item-art.mjs';
+import {itemArt,displayItemArt,assignedItemArt,isPlaceholderArt} from './item-art.mjs';
 import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
 import {loadCanonicalLibrary,preferCanonicalRows,isAcquisitionPack,isCatalogWorldItem} from './canonical-content.mjs';
 import {chooseCanonicalCopy} from './canonical-dialog.mjs';
@@ -38,8 +38,8 @@ export class SnsCatalog extends SnsHandlebarsApplicationMixin(ApplicationV2){
     }
    }catch(error){console.warn('SNS · índice indisponível',pack.collection,error);}
   }
-  for(const p of POWER_DEFINITIONS)this.rows.push({id:p.id,name:p.name,type:'powerDefinition',category:'powers',level:null,img:itemArt({img:'icons/svg/aura.svg',system:{contentId:p.id}}),traits:['sns:power:magen','sns:power:genjutsu'].includes(p.id)?['arte:genjutsu']:p.id.endsWith('ninpou')?['arte:ninjutsu']:['arte:ninjutsu','elemento:'+p.id.split(':').at(-1)],sourceId:p.source.id,source:p.source.id+' · '+p.source.pages,origin:'Definição de criação',canAdd:!!this.actor?.isOwner,builtin:true});
-  for(const e of EFFECT_DEFINITIONS)this.rows.push({id:e.id,name:e.name,type:'effectDefinition',category:'effectDefinitions',level:e.min,img:itemArt({img:'icons/svg/fire.svg',system:{contentId:e.id}}),traits:e.traits,sourceId:e.source.id,source:e.source.id+' · '+e.source.pages+(e.revision?' / '+e.revision.id+' '+e.revision.pages:''),origin:'Componente de criação',canAdd:false,builtin:true});
+  for(const p of POWER_DEFINITIONS)this.rows.push({id:p.id,name:p.name,type:'powerDefinition',category:'powers',level:null,img:displayItemArt({img:'icons/svg/aura.svg',system:{contentId:p.id}}),traits:['sns:power:magen','sns:power:genjutsu'].includes(p.id)?['arte:genjutsu']:p.id.endsWith('ninpou')?['arte:ninjutsu']:['arte:ninjutsu','elemento:'+p.id.split(':').at(-1)],sourceId:p.source.id,source:p.source.id+' · '+p.source.pages,origin:'Definição de criação',canAdd:!!this.actor?.isOwner,builtin:true});
+  for(const e of EFFECT_DEFINITIONS)this.rows.push({id:e.id,name:e.name,type:'effectDefinition',category:'effectDefinitions',level:e.min,img:displayItemArt({img:'icons/svg/fire.svg',system:{contentId:e.id}}),traits:e.traits,sourceId:e.source.id,source:e.source.id+' · '+e.source.pages+(e.revision?' / '+e.revision.id+' '+e.revision.pages:''),origin:'Componente de criação',canAdd:false,builtin:true});
   for(const [sourceId,lib]of Object.entries(D115_OPTIONAL_LIBRARIES)){
    if(!sourceEnabled(sourceId))continue;
    for(const entry of lib.entries){

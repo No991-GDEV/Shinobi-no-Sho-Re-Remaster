@@ -27,7 +27,6 @@ import {mountTraitPicker} from './trait-picker.mjs';
 import {useJutsu} from './jutsu-use.mjs';
 import {shareTechniqueToChat} from './standalone-technique.mjs';
 import {shareItemToChat} from './item-chat.mjs';
-import {openDocumentImagePicker} from './item-art.mjs';
 import {toggleItemActivation,runItemQuickAction,adjustItemCharge} from './item-automation.mjs';
 import {SnsStatEditor} from './stat-editor.mjs';
 import {SnsPowerDialog} from './power-dialog.mjs';
@@ -74,7 +73,6 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
       editSpecialResource:ShinobiSheet.editSpecialResource,
       createGrantedJutsu:ShinobiSheet.createGrantedJutsu,chooseTab: ShinobiSheet.chooseTab,openActiveAptitudes:ShinobiSheet.openActiveAptitudes,editIdentityText:ShinobiSheet.editIdentityText,configurePower:ShinobiSheet.configurePower,manageJutsus:ShinobiSheet.manageJutsus,learnEffects:ShinobiSheet.learnEffects,buildJutsu:ShinobiSheet.buildJutsu,useJutsu:ShinobiSheet.useJutsu,shareJutsu:ShinobiSheet.shareJutsu,shareItem:ShinobiSheet.shareItem,
       editAttributes: ShinobiSheet.editAttributes,
-      portrait: ShinobiSheet.portrait,
       rollTest: ShinobiSheet.rollTest,
       grant: ShinobiSheet.grant,
       editCombat: ShinobiSheet.editCombat,
@@ -160,9 +158,6 @@ export class ShinobiSheet extends SnsHandlebarsApplicationMixin(ActorSheetV2) {
     await this.render({ force: true });
     const nextPanel=this.element?.querySelector('.panels');
     if(nextPanel)nextPanel.scrollTop=this.tabScroll[this.activeTab]??0;
-  }
-  static async portrait() {
-    return openDocumentImagePicker(this, this.actor);
   }
   static async openActiveAptitudes(){
     this.activeTab='jutsus';

@@ -108,6 +108,7 @@ box-shadow:0 0 0 2px #e1d8cf,0 0 0 3px #a98f39,0 0 7px #0007;
 background:var(--paper);aspect-ratio:1;width:120px}
 .sns-sheet .portrait img{width:100%;height:100%;
 object-fit:contain;display:block}
+.sns-sheet .portrait img[data-edit]{cursor:pointer}
 .sns-sheet .details-grid{display:grid;grid-template-columns:1fr 1fr;
 gap:11px 8px;min-width:0}
 .sns-sheet .field{display:flex;flex-direction:column;gap:2px;min-width:0}

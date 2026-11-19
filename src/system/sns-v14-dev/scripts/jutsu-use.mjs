@@ -42,7 +42,7 @@ export async function useJutsu(actor,item){
   if(projection.resistanceCast){
    const current=actor.system.resources.chakra.value,cost=projection.cost,verified=project();
    if(!game.users.activeGM)return ui.notifications.warn('Um mestre ativo precisa acompanhar as resistências.');
-   if(!verified?.valid||definition(verified)!==initialDefinition||!Number.isInteger(current)||current<cost)return ui.notifications.warn('Revise os requisitos e o chakra antes de usar Magen.');
+   if(!verified?.valid||definition(verified)!==initialDefinition||!Number.isInteger(current)||current<cost)return ui.notifications.warn('Revise os requisitos e o chakra antes de usar esta técnica.');
    paymentUuid=await payStructuredJutsu(actor,item,projection,current);
    const message=await foundry.documents.ChatMessage.create({speaker:foundry.documents.ChatMessage.getSpeaker({actor}),content:techniqueCard(item,projection,use),flags:{'sns-v14-dev':{jutsuPayment:paymentUuid,areaUse:jutsuAreas(item,projection),jutsuUse:use,check:{actorImg:actor.img,key:'jutsu'},jutsu:{itemId:item.id,usedLevel:projection.usedLevel,chakraCost:cost,noAttack:true}}}});
    await afterJutsuMessage(message);return message;

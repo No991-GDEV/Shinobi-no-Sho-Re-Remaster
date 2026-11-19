@@ -45,33 +45,50 @@ async function writeBuild(actor,master,build,{author=game.user.id,automatic=fals
 async function ensureMasterKuchiyose(master,species,grant,user){
  if(!user?.isGM||!grant||species==='desenhos')return;
  const originEntry=Object.entries(PACKAGE_ORIGINS).find(([,p])=>p.species===species);
+ let pactItem=null;
  if(originEntry){
   const [originKey,originDef]=originEntry;
   const existingPact=Array.from(master.items??[]).find(i=>originGrant(i)===originKey||i.system?.contentId===originDef.contentId);
   if(existingPact){
-   if(!summonPact(master,species).met||existingPact.system?.details?.accessRule!==originKey){
+   pactItem=existingPact;
+   if(!summonPact(master,species).met||existingPact.system?.details?.accessRule!==originKey||!existingPact.flags?.[ns]?.kuchiyoseExtraPact){
     await existingPact.update({'system.details.accessRule':originKey,['flags.'+ns+'.kuchiyoseExtraPact']:true});
    }
   }else if(!summonPact(master,species).met){
-   await master.createEmbeddedDocuments('Item',[{name:originDef.name,type:'feature',system:{contentId:originDef.contentId,category:'features',details:{accessRule:originKey}},flags:{[ns]:{kuchiyoseExtraPact:true,originAuthorization:{rule:originKey,user:user.id,at:new Date().toISOString()}}}}]);
+   const [createdPact]=await master.createEmbeddedDocuments('Item',[{name:originDef.name,type:'feature',system:{contentId:originDef.contentId,category:'features',details:{accessRule:originKey}},flags:{[ns]:{kuchiyoseExtraPact:true,originAuthorization:{rule:originKey,user:user.id,at:new Date().toISOString()}}}}]);
+   pactItem=createdPact??null;
+  }else{
+   pactItem=Array.from(master.items??[]).find(i=>originGrant(i)===originKey)||null;
   }
+ }
+ if(!pactItem&&species){
+  pactItem=Array.from(master.items??[]).find(i=>PACKAGE_ORIGINS[originGrant(i)]?.species===species)||null;
  }
  const level=Math.max(1,Math.min(10,Number(grant.level)||1));
  const powerOrigin=grant.powerOrigin==='common'?'common':'restricted';
  const candidates=powerSources(master,'sns:power:kuchiyose');
  const targetPower=candidates.find(p=>p.system.choice?.key===species)||candidates.find(p=>!p.system.choice?.key);
- const acq={mode:'granted',reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:user.id,user:user.id,at:new Date().toISOString()};
+ const now=new Date().toISOString();
+ const acq=pactItem?.id
+  ?{mode:'granted',sourceId:pactItem.id,reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:user.id,user:user.id,at:now}
+  :{mode:'manual',cost:0,reason:'Concessão extra do mestre no vínculo de invocação',authorizedBy:user.id,user:user.id,at:now};
+ const existingAcq=targetPower?.flags?.[ns]?.acquisition;
+ const keepExisting=existingAcq
+  ?(existingAcq.mode!=='granted'||(existingAcq.sourceId&&Array.from(master.items??[]).some(i=>i.id===existingAcq.sourceId)))
+  :(targetPower?.system?.level>0);
  if(targetPower){
-  await targetPower.update({'system.contentId':'sns:power:kuchiyose','system.level':Math.max(level,targetPower.system.level||0),'system.choice':{kind:'summonSpecies',key:species},'system.details.powerOrigin':powerOrigin,['flags.'+ns+'.acquisition']:targetPower.flags?.[ns]?.acquisition??acq});
+  await targetPower.update({'system.contentId':'sns:power:kuchiyose','system.level':Math.max(level,targetPower.system.level||0),'system.choice':{kind:'summonSpecies',key:species},'system.details.powerOrigin':powerOrigin,...(keepExisting?{}:{['flags.'+ns+'.acquisition']:acq})});
  }else{
   const library=await loadCanonicalLibrary(),entry=library?.entries.find(e=>e.id==='sns:power:kuchiyose');
+  let created;
   if(entry){
    const data=canonicalCopy(entry,'',species);
    data.system.level=level;data.system.details.powerOrigin=powerOrigin;data.flags[ns].acquisition=acq;
-   await master.createEmbeddedDocuments('Item',[data]);
+   created=await master.createEmbeddedDocuments('Item',[data]);
   }else{
-   await master.createEmbeddedDocuments('Item',[{name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',category:'powers',level,choice:{kind:'summonSpecies',key:species},details:{powerOrigin,organization:'summon'}},flags:{[ns]:{acquisition:acq}}}]);
+   created=await master.createEmbeddedDocuments('Item',[{name:'Kuchiyose (Invocação)',type:'power',system:{contentId:'sns:power:kuchiyose',category:'powers',level,choice:{kind:'summonSpecies',key:species},details:{powerOrigin,organization:'summon'}},flags:{[ns]:{acquisition:acq}}}]);
   }
+  if(!created?.length)throw Error('Não foi possível registrar Kuchiyose (Invocação) na ficha do invocador.');
  }
 }
 async function syncMasterKuchiyoseOrigin(master,species,powerOrigin,user){
@@ -102,8 +119,11 @@ export async function processCompanionRequest(message){
      if(!user.isGM||!['common','restricted'].includes(r.powerOrigin))throw Error('Somente o mestre pode alterar a fonte do Kuchiyose.');
      await syncMasterKuchiyoseOrigin(master,species,r.powerOrigin,user);
      const power=summonPower(master,species);
-     const build=old?.build??{species,usedLevel:power.system.level,count:1,nc:Math.min(20,2*power.system.level),size:KUCHIYOSE_SPECIES[species].fixedSize||'Médio',attributes:suggestSummonAttributes(Math.min(20,2*power.system.level),species),bases:{cc:3,cd:3,esq:3,lm:3}};
-     await writeBuild(actor,master,{...build,powerOrigin:r.powerOrigin},{author:user.id});
+     if(old?.mode==='calculated'&&old?.build){
+      await writeBuild(actor,master,{...old.build,powerOrigin:r.powerOrigin},{author:user.id});
+     }else{
+      await actor.update({['flags.'+ns+'.kuchiyose']:{...(old??{version:1,mode:'legacy'}),revision:(old?.revision??0)+1,masterUuid:master.uuid,species}});
+     }
     }else if(r.action==='build'){
      if(r.confirmed!==true)throw Error('Revise a distribuição e aplique a construção.');
      if(user.isGM&&['common','restricted'].includes(r.build?.powerOrigin))await syncMasterKuchiyoseOrigin(master,species,r.build.powerOrigin,user);

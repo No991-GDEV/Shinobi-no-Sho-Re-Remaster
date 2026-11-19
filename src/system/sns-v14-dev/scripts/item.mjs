@@ -13,8 +13,10 @@ import {mayEditIllusion,illusionData} from './magen-core.mjs';
 import {acquisitionOf,mayEditAcquisition,acquisitionProblems} from './investment-budget.mjs';
 import {requirementProfile,requirementSource,validateRequirementProfile,mayEditRequirementProfile,isTrustedRequirementCopy} from './requirement-policy.mjs';
 const generatedBookFields=['sharedRecipe','npcBuildTechnique','npcCastParameters','bookPowerGrant','bookCanhao','jionguHearts','jionguNature','falseBijuuTails','puppetConstruction','puppetDevice','puppetUse'];
+const isGmExtraAcquisition=acq=>acq?.mode==='granted'||(acq?.mode==='manual'&&acq?.cost===0);
 export function itemIcon(type){return 'icons/svg/'+(ICONS[type]??'item-bag')+'.svg';}
 export class SnsItem extends foundry.documents.Item {
+ static getDefaultArtwork(itemData){return {img:assignedItemArt(itemData)||itemIcon(itemData?.type)};}
  async _preCreate(data,options,user){
   const allowed=await super._preCreate(data,options,user);if(allowed===false)return false;
   try{validateEffectRules(this.system.effectRules);}catch(e){ui.notifications.warn(e.message);return false;}
@@ -48,7 +50,7 @@ export class SnsItem extends foundry.documents.Item {
   const {overrideProblems}=await import('./override-policy.mjs');const rows=this.system.jutsu?.overrides??[];
   if(rows.length&&(!user.isGM||overrideProblems(rows).length)){ui.notifications.warn('Somente o mestre pode registrar exceções mecânicas justificadas.');return false;}
   if(this.actor&&this.system.contentId==='sns:legado:apt:mangekyo-sharingan'&&(!this.actor.flags?.['sns-v14-dev']?.legado?.pair||!this.actor.flags?.['sns-v14-dev']?.legado?.events?.trauma))await (await import('./legado-ui.mjs')).configureLegadoActor(this.actor);
-  const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(this,this.actor),isGmGrantedCreate=user.isGM&&this.flags?.['sns-v14-dev']?.acquisition?.mode==='granted';
+  const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(this,this.actor),isGmGrantedCreate=user.isGM&&isGmExtraAcquisition(this.flags?.['sns-v14-dev']?.acquisition);
   if(this.actor&&r.configured&&!r.valid&&!isGmGrantedCreate){ui.notifications.warn('Não foi possível adicionar '+this.name+': '+r.problems.join(' '));return false;}
   if(this.actor&&!user.isGM&&['aptitude','feature'].includes(this.type)&&!r.configured)ui.notifications.warn('Requisitos: ver descrição.');
   if((this.actor?.type==='shinobi'||kuchiyoseLink(this.actor)?.mode==='calculated')&&['aptitude','power'].includes(this.type)){
@@ -81,7 +83,7 @@ export class SnsItem extends foundry.documents.Item {
   if(craftProfile(after)){try{validateCraftProfile(craftProfile(after));}catch(error){ui.notifications.warn(error.message);return false;}}
   if(!mayEditRequirementProfile(this.toObject(),after,user.isGM)){ui.notifications.warn('Somente o mestre pode alterar os requisitos e seu histórico.');return false;}
   if(requirementProfile(after)){try{validateRequirementProfile(requirementProfile(after));}catch(error){ui.notifications.warn(error.message);return false;}}
-  const isGmGrantedUpdate=user.isGM&&(this.flags?.['sns-v14-dev']?.acquisition?.mode==='granted'||after.flags?.['sns-v14-dev']?.acquisition?.mode==='granted');
+  const isGmGrantedUpdate=user.isGM&&(isGmExtraAcquisition(this.flags?.['sns-v14-dev']?.acquisition)||isGmExtraAcquisition(after.flags?.['sns-v14-dev']?.acquisition));
   if(this.actor&&expanded.system?.level!==undefined&&expanded.system.level>this.system.level&&!isGmGrantedUpdate){const {requirementsFor}=await import('./item-requirements.mjs'),r=requirementsFor(after,this.actor);if(r.configured&&!r.valid){ui.notifications.warn(r.problems.join(' '));return false;}}
   if((this.actor?.type==='shinobi'||kuchiyoseLink(this.actor)?.mode==='calculated')&&['aptitude','power'].includes(this.type)){
    if(!mayEditAcquisition(this.toObject(),after,user.isGM)){ui.notifications.warn('O mestre controla concessões e exceções de aquisição.');return false;}

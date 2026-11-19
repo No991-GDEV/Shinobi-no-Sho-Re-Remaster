@@ -5,7 +5,7 @@ import {jutsuReading} from './jutsu-reading.mjs';
 import {effectiveRuleItem} from './jutsu-rule-text.mjs';
 import {SnsRequirementEditor} from './requirement-editor.mjs';
 import {isCraftFormula} from './poison-crafting.mjs';
-import {displayItemArt,openDocumentImagePicker} from './item-art.mjs';
+import {displayItemArt} from './item-art.mjs';
 import {shareItemToChat} from './item-chat.mjs';
 import {compactTechniqueDetails} from './standalone-technique.mjs';
 import {SnsHandlebarsApplicationMixin} from './view-state.mjs';
@@ -48,7 +48,7 @@ function formatAutomationFact(summary){
 export class ReferenceItemSheet extends SnsHandlebarsApplicationMixin(foundry.applications.sheets.ItemSheetV2){
  activeTab='description';
  _hasRulesTab=false;
- static DEFAULT_OPTIONS={classes:['sns-document','sns-item-sheet'],position:{width:720,height:580},window:{resizable:true},form:{submitOnChange:true,closeOnSubmit:false},actions:{toggleAcuity:ReferenceItemSheet.toggleAcuity,editDescription:ReferenceItemSheet.editDescription,castJutsu:ReferenceItemSheet.castJutsu,shareItem:ReferenceItemSheet.shareItem,configureCraft:ReferenceItemSheet.configureCraft,configureRequirements:ReferenceItemSheet.configureRequirements,configureEffects:ReferenceItemSheet.configureEffects,configureAutomation:ReferenceItemSheet.configureAutomation,correctChoice:ReferenceItemSheet.correctChoice,updateBookText:ReferenceItemSheet.updateBookText,documentTab:ReferenceItemSheet.tab,documentPortrait:ReferenceItemSheet.portrait,editTags:ReferenceItemSheet.editTags,learnEffects:ReferenceItemSheet.learnEffects,buildJutsu:ReferenceItemSheet.buildJutsu}};
+ static DEFAULT_OPTIONS={classes:['sns-document','sns-item-sheet'],position:{width:720,height:580},window:{resizable:true},form:{submitOnChange:true,closeOnSubmit:false},actions:{toggleAcuity:ReferenceItemSheet.toggleAcuity,editDescription:ReferenceItemSheet.editDescription,castJutsu:ReferenceItemSheet.castJutsu,shareItem:ReferenceItemSheet.shareItem,configureCraft:ReferenceItemSheet.configureCraft,configureRequirements:ReferenceItemSheet.configureRequirements,configureEffects:ReferenceItemSheet.configureEffects,configureAutomation:ReferenceItemSheet.configureAutomation,correctChoice:ReferenceItemSheet.correctChoice,updateBookText:ReferenceItemSheet.updateBookText,documentTab:ReferenceItemSheet.tab,editTags:ReferenceItemSheet.editTags,learnEffects:ReferenceItemSheet.learnEffects,buildJutsu:ReferenceItemSheet.buildJutsu}};
  static PARTS={sheet:{scrollable:['', '.sidebar', '.sheet-body'],template:'systems/sns-v14-dev/templates/reference-item.hbs'}};
  async close(options={}){if(!options.force&&this.isEditable&&this.element?.isConnected)await this.submit();return super.close(options);}
  async _prepareContext(options){
@@ -209,6 +209,7 @@ export class ReferenceItemSheet extends SnsHandlebarsApplicationMixin(foundry.ap
  }
  _processFormData(event,form,formData){
   const data=super._processFormData(event,form,formData);delete data.readingLevel;
+  if(data.img&&data.img===displayItemArt(this.item)&&data.img!==(this.item._source?.img??this.item.img))delete data.img;
   if(this.item.system.jutsu?.effectId){for(const key of GUIDED_FIELDS){delete data['system.details.'+key];if(data.system?.details)delete data.system.details[key];}}
   const tags=form.elements.namedItem('system.tags');if(tags)foundry.utils.setProperty(data,'system.tags',normalizeTags(tags.value));
   for(const input of form.querySelectorAll('[data-nullable]'))if(input.value==='')foundry.utils.setProperty(data,input.name,null);
@@ -235,5 +236,4 @@ export class ReferenceItemSheet extends SnsHandlebarsApplicationMixin(foundry.ap
  static async configureRequirements(){if(!game.user.isGM||!this.isEditable)return;await this.submit();await new SnsRequirementEditor(this.item).render({force:true});}
  static async configureEffects(){if(!game.user.isGM||!this.isEditable)return;await this.submit();await configureJutsuEffects(this.item);await this.render({force:true});}
  static async configureAutomation(){if(!this.isEditable&&!game.user.isGM)return;await this.submit();await configureItemAutomation(this.item);await this.render({force:true});}
- static async portrait(){return openDocumentImagePicker(this,this.item);}
 }
