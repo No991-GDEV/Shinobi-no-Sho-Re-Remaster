@@ -11,7 +11,7 @@ export function originGrant(item){
  return '';
 }
 export function accessSources(actor,key){return Array.from(actor?.items??[]).filter(i=>{const grant=originGrant(i);return grant===key||PACKAGE_ORIGINS[grant]?.aliases?.includes(key);});}
-export function packageAcquisitionProblems(item,actor){
+export function packageAcquisitionProblems(item,actor,{isGM=false}={}){
  const key=originGrant(item),spec=PACKAGE_ORIGINS[key];if(!key||!actor)return [];
  const existing=Array.from(actor.items??[]).filter(i=>i!==item).map(originGrant).filter(Boolean);
  if(existing.includes(key))return ['A ficha já possui esta origem.'];
@@ -21,7 +21,7 @@ export function packageAcquisitionProblems(item,actor){
  const pairs=[['tensai','hatake'],['tensai','sarutobi'],['tensai','senju'],['tensai','shimura'],['tensai','hibon-ninpou']];
  const connected=new Set([primary[0]]);let changed=true;
  while(changed){changed=false;for(const [a,b] of pairs)if(primary.includes(a)&&primary.includes(b)&&(connected.has(a)||connected.has(b))){const n=connected.size;connected.add(a);connected.add(b);changed||=connected.size>n;}}
- return primary.some(k=>!connected.has(k))?['A ficha já possui outro clã ou hijutsu. Esta combinação não é permitida pelas regras.']:[];
+ return !isGM&&primary.some(k=>!connected.has(k))?['A ficha já possui outro clã ou hijutsu. Esta combinação não é permitida pelas regras.']:[];
 }
 export function summonPact(actor,species){
  const pacts=Array.from(actor?.items??[]).filter(i=>PACKAGE_ORIGINS[originGrant(i)]?.species);

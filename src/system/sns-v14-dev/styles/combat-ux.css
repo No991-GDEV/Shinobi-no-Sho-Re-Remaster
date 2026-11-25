@@ -580,3 +580,23 @@
 .sns-item-sheet .document-shell .tab.details .basics .form-group>input,.sns-item-sheet .document-shell .tab.details .basics .form-group>select{height:26px;padding:2px 6px;background:#fff8eb90;border:1px solid #b4a386;border-radius:2px;font-weight:400}
 .sns-item-sheet .document-shell .tab.details .publication{border:1px solid #b4a386;border-radius:3px;padding:10px;margin:14px 0 6px;background:#fff8eb40}
 .sns-item-sheet .document-shell .tab.details .publication legend{font:700 12px SnsCondensed,Arial;text-transform:uppercase;color:#680500;padding:0 6px}
+
+/* Equipes padrão PF2e: diretório nativo, HUD, depósito e exploração */
+.sns-parties{list-style:none;margin:0 0 8px;padding:0 0 6px;border-bottom:1px solid #897657}
+.sns-parties .directory-item.folder[data-party]>.folder-header{display:flex;align-items:center;gap:4px;background:#403445;color:#efe9da;border-radius:3px}
+.sns-parties .directory-item.folder[data-party]>.folder-header.active{background:#522a39;box-shadow:inset 0 0 0 1px #c69a55}
+.sns-parties .directory-item.folder>.folder-header .folder-name{flex:1;min-width:0}
+.sns-parties .directory-item.folder>.folder-header .inline-control{flex:none;width:auto;min-width:22px;height:22px;padding:0 4px;background:transparent;border:0;color:inherit;box-shadow:none}
+.sns-parties .directory-item.folder:not(.expanded)>.subdirectory{display:none}
+.sns-parties .directory-item.folder.other-parties>.folder-header{background:#342f38;color:#e6dfd0}
+.sns-parties .sns-party-create-row{list-style:none;margin:4px 0 0;padding:0 2px}
+.sns-parties .party-create{width:100%;min-height:26px}
+.sns-parties .party-empty{padding:4px 8px;font-size:12px;opacity:.8}
+#token-hud .control-icon.sns-party-clown-car{color:#f5e6c8}
+.sns-party-check-card .sns-party-check-roll{width:100%;margin-top:6px;min-height:28px;background:#680500;color:#fff6e5;border:1px solid #b89555;font-weight:700}
+.sns-support-sheet .party-visibility-toggle{display:inline-flex;align-items:center;gap:5px;flex:none;height:26px;padding:2px 8px;border:1px solid #b89555;border-radius:3px;background:#265b36;color:#fff6e5;font:700 11px SnsRoboto,Arial}
+.sns-support-sheet .party-visibility-toggle.restricted{background:#68241d}
+.sns-support-sheet .inventory-summary .party-distribute-ryo{margin-left:auto;width:auto;min-height:24px;padding:2px 8px;border:1px solid #a88f64;border-radius:3px;background:#eee3cb;color:#541a14;font:700 11px SnsRoboto,Arial}
+.sns-support-sheet .party-exploration-toolbar{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #b8af9e}
+.sns-support-sheet .party-exploration-toolbar button{display:inline-flex;align-items:center;gap:5px;width:auto;min-height:26px;padding:3px 9px;border:1px solid #a88f64;border-radius:3px;background:#eee3cb;color:#541a14;font:700 11px SnsRoboto,Arial}
+.sns-support-sheet .party-economy-card.is-drop-target{outline:2px dashed #680500;background:#fff8eb}

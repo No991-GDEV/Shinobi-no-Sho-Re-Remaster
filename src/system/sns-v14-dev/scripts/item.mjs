@@ -39,8 +39,8 @@ export class SnsItem extends foundry.documents.Item {
   if(this.actor&&user.isGM&&this.type==='condition'&&this.system.contentId?.startsWith('sns:condition:')&&!this.system.appliedCondition.managed)this.updateSource({'system.appliedCondition.managed':true,'system.appliedCondition.active':true,'system.appliedCondition.scope':'all','system.appliedCondition.origin':'Mestre'});
   const {mayAcquireOrigin,originGrant,packageAcquisitionProblems}=await import('./restricted-access.mjs');
   if(!mayAcquireOrigin(this,user.isGM,this.actor)){ui.notifications.warn('Adicione esta origem à ficha de um personagem que você controla.');return false;}
-  const packageProblems=packageAcquisitionProblems(this,this.actor);if(packageProblems.length){ui.notifications.warn(packageProblems.join(' '));return false;}
-  const origin=originGrant(this);if(origin)this.updateSource({'flags.sns-v14-dev.originAuthorization':{rule:origin,user:user.id,at:new Date().toISOString()}});
+  const strictPackageProblems=packageAcquisitionProblems(this,this.actor),packageProblems=packageAcquisitionProblems(this,this.actor,{isGM:user.isGM});if(packageProblems.length){ui.notifications.warn(packageProblems.join(' '));return false;}
+  const origin=originGrant(this);if(origin)this.updateSource({'flags.sns-v14-dev.originAuthorization':{rule:origin,user:user.id,at:new Date().toISOString(),...(user.isGM&&strictPackageProblems.length?{gmOverride:true}:{})}});
   const {validateTargetEffects}=await import('./jutsu-outcomes.mjs');
   try{validateTargetEffects(this.system.targetEffects??[]);}catch(e){ui.notifications.warn(e.message);return false;}
   if(!user.isGM&&this.system.targetEffects?.length){

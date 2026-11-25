@@ -1,5 +1,7 @@
-Beta **0.5.0-beta.4** para Foundry VTT **14.367** — Correção do editor de descrições `<prose-mirror>` em itens, efeitos, atores de apoio e biografia.
+Beta **0.5.0-beta.5** para Foundry VTT **14.367** — Sistema de Equipes no padrão PF2e e permissão do mestre para combinar origens incompatíveis.
 
+- **Sistema de Equipes (`party`) alinhado ao PF2e:** diretório nativo `SnsActorDirectory` com equipe ativa e pasta **Outras equipes**, arraste entre equipes/compêndios e menu de contexto do mestre; botão do Token HUD para depositar/recolher integrantes em cena; aba **Exploração** com ritmo de viagem (`m/min`, `km/h`, `km/dia`), limpar atividades, pedir teste ao grupo no chat e descanso em grupo; aba **Depósito** com **Distribuir Ryo** e transferência de itens físicos por arraste para os cards dos integrantes; aba **Visão geral** com barra de Chakra, perícias de NPC/companheiro, tooltips completos, rolagem rápida do mestre (clique secreto / `Shift+clique` público / `Alt+clique` diálogo) e controle de visibilidade restrita (`showPartyStats`).
+- **Permissão do mestre para origens primárias incompatíveis (ex.: `Samurai` + `Jinchuuriki`):** o mestre pode adicionar/combinar origens incompatíveis mantendo a cobrança normal de PP e validação de orçamento, enquanto jogadores continuam sujeitos à restrição padrão e duplicatas exatas permanecem bloqueadas.
 - **Editor de descrições `<prose-mirror>` corrigido:** corrigido o layout CSS que sobrescrevia `prose-mirror` com `display: block` (colapsando `.menu-container` e `.editor-container` para altura `0px` quando aberto `[open]` e escondendo o texto digitado até salvar). Restaurado `display: flex; flex-direction: column`, altura/cores claras legíveis em tema escuro, foco automático ao abrir em `ReferenceItemSheet` e `EffectItemSheet`, envio imediato ao salvar na ficha de efeito, ocultação do botão externo enquanto aberto e atributo `document-uuid` nos editores.
 
 - **Retratos e imagens no padrão nativo do PF2e e Foundry V14 (`DocumentSheetV2` `editImage` + `getDefaultArtwork`):** substituídos os botões customizados (`portrait` / `documentPortrait`) por `<img data-edit="img" data-action="editImage">` diretamente nas fichas de personagem, atores de apoio, itens e efeitos, com `ShinobiActor.getDefaultArtwork` e `SnsItem.getDefaultArtwork` implementados e proteção em `ReferenceItemSheet` para que ícones de fallback (`displayImage`) não sobrescrevam a imagem escolhida pelo usuário em submissões parciais.
@@ -17,7 +19,7 @@ Beta **0.5.0-beta.4** para Foundry VTT **14.367** — Correção do editor de de
 
 Mantém os 14 compêndios e as 1.422 entradas canônicas. Nenhuma alteração nas fichas já salvas ou nos textos dos livros.
 
-**Atualização:** sistema e módulo de compêndios passam juntos para **0.5.0-beta.4**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
+**Atualização:** sistema e módulo de compêndios passam juntos para **0.5.0-beta.5**. Os identificadores e os endereços de atualização permanecem os mesmos desde a beta.2; não é necessário trocar o manifesto a cada versão.
 
 - Sistema: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/system.json
 - Compêndios: https://raw.githubusercontent.com/No991-GDEV/Shinobi-no-Sho-Re-Remaster/main/module.json

@@ -46,7 +46,7 @@ export class ShinobiActor extends foundry.documents.Actor {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
     if(!mayCreateNpcBuild(data,user.isGM)){ui.notifications.warn('Somente o mestre gera NPCs e define suas condições de origem.');return false;}
-    if(!user.isGM&&isManagedParty(data)){ui.notifications.warn('O mestre cria as equipes do mundo.');return false;}
+    if(!user.isGM&&(data.type==='party'||isManagedParty(data))){ui.notifications.warn('O mestre cria as equipes do mundo.');return false;}
     if(!user.isGM&&kuchiyoseLink(data)){ui.notifications.warn('Vincule a nova invocação pelo seletor da ficha; o histórico não pode ser importado.');return false;}
     if(!user.isGM&&data.flags?.['sns-v14-dev']?.craftJobs){ui.notifications.warn('O histórico de fabricação não pode ser importado como uma nova produção.');return false;}
     if(!mayCreateBudgets(data,user.isGM)){ui.notifications.warn('Crie a ficha sem pontos concedidos e escolha o NC no assistente de criação.');return false;}
@@ -56,7 +56,7 @@ export class ShinobiActor extends foundry.documents.Actor {
     }
     const combat=['shinobi','npc','companion'].includes(this.type);
     this.updateSource({ prototypeToken: {
-      actorLink: this.type==='shinobi',
+      actorLink: this.type==='shinobi'||this.type==='party',
       bar1: { attribute: combat?"resources.vitality":null },
       bar2: { attribute: combat?"resources.chakra":null }
     } });

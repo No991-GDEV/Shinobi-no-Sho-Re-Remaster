@@ -26,6 +26,8 @@ import {decorateNpcJutsu} from './npc-jutsu-ui.mjs';
 import {acceptNpcSave} from './npc-jutsu-service.mjs';
 import {installCraftHooks} from './crafting-service.mjs';
 import {installPartyHooks} from './party-service.mjs';
+import {SnsActorDirectory} from './party-directory.mjs';
+import {resolveActiveParty} from './party-core.mjs';
 import {installKuchiyoseHooks} from './kuchiyose-service.mjs';
 import {decorateCraftMessage,refreshCraftMessages} from './crafting-ui.mjs';
 import {installRestHooks} from './rest-service.mjs';
@@ -80,8 +82,18 @@ Hooks.once("init", () => {
     types:Object.keys(ITEM_PROFILES),makeDefault:true,label:"SNS · Itens e habilidades"
   });
   foundry.applications.apps.DocumentSheetConfig.registerSheet(foundry.documents.Item,'sns-v14-dev',EffectItemSheet,{types:['effect','condition'],makeDefault:true,label:'SNS · Efeito'});
+  if(foundry?.applications?.sidebar?.tabs?.ActorDirectory)CONFIG.ui.actors=SnsActorDirectory;
   Handlebars.registerHelper("snsIsTab", (a, b) => a === b);
-  game.sns = { calculate, testSpec, ShinobiSheet, openCatalog:()=>new SnsCatalog().render({force:true}) };
+  game.sns = {
+    calculate,
+    testSpec,
+    ShinobiSheet,
+    openCatalog:()=>new SnsCatalog().render({force:true}),
+    get activeParty(){
+      const id=(()=>{try{return game.settings?.get?.('sns-v14-dev','primaryParty')??'';}catch{return '';}})();
+      return resolveActiveParty(game.actors??[],id);
+    }
+  };
 });
 Hooks.once("ready", () => {
   console.info("SNS MF1 · ready", { version: game.system.version, foundry: game.version });

@@ -21,7 +21,7 @@ function choiceEligible(candidate,actor){
   return requirementsFor(withChoice,actor,[],false).valid;
  });
 }
-export function requirementGate(row,actor){
+export function requirementGate(row,actor,{isGM=false}={}){
  // D146: o filtro segue a autonomia D145. Origem/conteúdo publicado não
  // exige aprovação individual; ownership continua no catálogo e na aquisição.
  // Estados: 'blocked' (combinação de origens inválida),
@@ -30,7 +30,7 @@ export function requirementGate(row,actor){
  // 'ok' (requisitos configurados e todos atendidos), 'missing' (não atendidos).
  if(!row||row.builtin||row.documentName==='Actor')return 'unknown';
  const candidate={type:row.type,flags:row.requirementFlags,system:row.ruleSystem};
- if(packageAcquisitionProblems(candidate,actor).length)return 'blocked';
+ if(packageAcquisitionProblems(candidate,actor,{isGM}).length)return 'blocked';
  // Uchiha/Hatake históricos têm identidade de origem e regra cadastrada,
  // mas não gravam ruleId. Consultar essa regra explícita, sem inferir por nome.
  if(originGrant(candidate)&&!itemRuleId(candidate)&&ITEM_RULES[candidate.system?.contentId])candidate.system={...candidate.system,ruleId:candidate.system.contentId};

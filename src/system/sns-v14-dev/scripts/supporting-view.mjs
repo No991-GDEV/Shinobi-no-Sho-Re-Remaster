@@ -6,9 +6,9 @@ import {weaponChecks} from './weapon-checks.mjs';
 import {isAptitudePower} from './aptitude-jutsus.mjs';
 import {itemAutomationSummary} from './item-automation.mjs';
 const physical=['weapons','armor','equipment','consumables','ammunition','treasures','containers'];
-export function supportingNavigation(type){
+export function supportingNavigation(type,{restricted=false}={}){
  if(type==='hazard')return [];
- if(type==='party')return [['details','Visão geral'],['exploration','Exploração'],['inventory','Depósito'],['notes','Notas']];
+ if(type==='party')return restricted?[['exploration','Exploração'],['inventory','Depósito'],['notes','Notas']]:[['details','Visão geral'],['exploration','Exploração'],['inventory','Depósito'],['notes','Notas']];
  if(type==='loot')return [['inventory','Inventário'],['details','Configuração'],['notes','Descrição']];
  if(['npc','companion'].includes(type))return [['details','Principal'],['inventory','Inventário'],['jutsus','Jutsus'],['effects','Efeitos'],['features','Características'],['notes','Notas']];
  return [['details','Detalhes'],['actions','Ações'],['inventory','Inventário'],['notes','Descrição'],['effects','Efeitos']];

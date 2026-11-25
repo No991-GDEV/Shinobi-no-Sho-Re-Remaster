@@ -5,13 +5,14 @@ const ns='sns-v14-dev';
 export class SnsSystemSettings extends SnsHandlebarsApplicationMixin(foundry.applications.api.ApplicationV2){
  static DEFAULT_OPTIONS={tag:'form',classes:['sns-editor-dialog','sns-system-settings'],position:{width:650,height:'auto'},window:{title:'Configurações do sistema',resizable:true},form:{handler:SnsSystemSettings.save,closeOnSubmit:false}};
  static PARTS={settings:{template:'systems/sns-v14-dev/templates/system-settings.hbs',scrollable:['']}};
- async _prepareContext(){return {customEyes:game.settings.get(ns,'legadoCustomEyes'),isGM:game.user.isGM,sources:OPTIONAL_SOURCES.map(s=>({...s,enabled:sourceEnabled(s.id)})),gobi:game.settings.get(ns,'gobiVaporRevision'),animation:game.settings.get(ns,'vitalityAnimation'),dialogs:game.user.getFlag(ns,'showCheckDialogs')!==false};}
+ async _prepareContext(){return {customEyes:game.settings.get(ns,'legadoCustomEyes'),isGM:game.user.isGM,sources:OPTIONAL_SOURCES.map(s=>({...s,enabled:sourceEnabled(s.id)})),gobi:game.settings.get(ns,'gobiVaporRevision'),showPartyStats:game.settings.get(ns,'showPartyStats')!==false,animation:game.settings.get(ns,'vitalityAnimation'),dialogs:game.user.getFlag(ns,'showCheckDialogs')!==false};}
  static async save(event,form){
   const value=name=>form.elements.namedItem(name)?.checked===true;
   let reload=false;
   if(game.user.isGM){for(const source of OPTIONAL_SOURCES){const next=value(source.key);if(next!==sourceEnabled(source.id)){await game.settings.set(ns,source.key,next);reload=true;}}
    if(value('legadoCustomEyes')!==game.settings.get(ns,'legadoCustomEyes')){await game.settings.set(ns,'legadoCustomEyes',value('legadoCustomEyes'));reload=true;}
-   if(value('gobiVaporRevision')!==game.settings.get(ns,'gobiVaporRevision')){await game.settings.set(ns,'gobiVaporRevision',value('gobiVaporRevision'));reload=true;}}
+   if(value('gobiVaporRevision')!==game.settings.get(ns,'gobiVaporRevision')){await game.settings.set(ns,'gobiVaporRevision',value('gobiVaporRevision'));reload=true;}
+   if(value('showPartyStats')!==(game.settings.get(ns,'showPartyStats')!==false))await game.settings.set(ns,'showPartyStats',value('showPartyStats'));}
   await game.settings.set(ns,'vitalityAnimation',value('vitalityAnimation'));
   if(value('showCheckDialogs')!==(game.user.getFlag(ns,'showCheckDialogs')!==false))await game.user.setFlag(ns,'showCheckDialogs',value('showCheckDialogs'));
   if(game.user.isGM)await reconcileOptionalPacks();
