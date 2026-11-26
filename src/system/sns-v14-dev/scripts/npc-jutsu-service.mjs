@@ -13,7 +13,7 @@ import {npcSaveDifficulty} from './npc-repertoire-core.mjs';
 import {minionTestPolicy} from './npc-minion-policy.mjs';
 import {withEffectLock} from './effect-lifecycle.mjs';
 import {illusionActionBlock} from './magen-core.mjs';
-import {techniqueRestriction} from './transformation-core.mjs';
+import {techniqueRestriction,transformationProjection} from './transformation-core.mjs';
 import {npcJutsuPlan,templateSpec} from './npc-jutsu-core.mjs';
 import {loadCanonicalLibrary} from './canonical-content.mjs';
 import {jutsuProjection} from './item-view.mjs';
@@ -54,10 +54,15 @@ function asProjection(plan,item){
  const original=jutsuProjection(item,{usedLevel:plan.level});
  return {...(original??{}),legado:plan.legado,summary:plan.legado?plan.name:original?.summary,valid:true,usedLevel:plan.level,cost:plan.cost,noRoll:plan.mode==='none'||plan.mode==='check',combatProfile:{...original?.combatProfile,...plan.legado?.effectProjection?.combatProfile,...(plan.hardnessPolicy?{hardnessPolicy:plan.hardnessPolicy}:{}),...(plan.ignoreHardness?{ignoreHardness:plan.ignoreHardness}:{}),...(plan.projectiles?{projectiles:plan.projectiles}:{}),...(plan.noDamage?{noDamage:true}:{}),...(plan.ignoreAllHardness?{ignoreAllHardness:true}:{}),...(plan.allowedDefenses?{allowedDefenses:plan.allowedDefenses}:{}),...(plan.gradeMinimum?{minimumGrade:plan.gradeMinimum}:{}),...(plan.ignoreArmor?{ignoreArmor:true}:{})},data:{...(original?.data??{}),action:plan.action,chakraCost:String(plan.cost),damage:plan.noDamage?'Nenhum':plan.fixed?String(plan.fixed):plan.base===null?'Nenhum':String(plan.base),damageType:plan.fixed?'fixed':'base',range:plan.range,duration:plan.duration,difficulty:plan.dc,area:plan.shape,size:plan.size,target:'Alvos marcados'},effect:{...(original?.effect??{}),text:plan.description,id:item.system.jutsu?.effectId||item.system.contentId},traits:original?.traits??item.system.traits};
 }
-function packetFor(actor,item,plan,projection,targets){
- if(plan.base===null||plan.mode==='none')return null;
- const profile=jutsuDamageProfile(projection)??{base:plan.base,fixed:0,nature:'lethal',criticalAt:plan.criticalAt??15,attackKind:plan.shape?'area':'techniqueProjectile',source:'Parâmetros do jutsu do NPC'};
- return damageSnapshot(actor,item,{...profile,base:plan.base,criticalAt:plan.criticalAt??profile.criticalAt,...(plan.attackKind?{attackKind:plan.attackKind}:{}),...(plan.allowedDefenses?{allowedDefenses:plan.allowedDefenses}:{}),...(plan.ignoreArmor?{ignoreArmor:true}:{}),fixed:plan.fixed??profile.fixed??0,nature:plan.damageNature??profile.nature,gradeBonus:plan.gradeBonus??profile.gradeBonus??0,...(plan.shape?{attackKind:'area',allowedDefenses:['dodge','anticipate']}:{})},targets);
+export function packetFor(actor,item,plan,projection,targets){
+ if(!plan.noDamage&&plan.base===null||plan.mode==='none'||plan.mode==='check')return null;
+ const defaultKind=plan.shape?'area':plan.mode==='attack:cc'?'melee':'techniqueProjectile';
+ const attackKind=plan.attackKind??defaultKind;
+ const attackerSize=transformationProjection(actor).size?.name||actor.system.identity?.size||actor.system.details?.size||'Médio';
+ const weaponClass=plan.weaponClass||(attackKind==='melee'?'Desarmado':'');
+ const profile=jutsuDamageProfile(projection)??{base:plan.base??0,fixed:0,nature:'lethal',criticalAt:plan.criticalAt??15,attackKind,source:'Parâmetros do jutsu do NPC'};
+ const allowedDefenses=plan.allowedDefenses??profile.allowedDefenses??(plan.shape?['dodge','anticipate']:undefined);
+ return damageSnapshot(actor,item,{...profile,base:plan.noDamage?0:(plan.base??0),...(plan.noDamage?{noDamage:true}:{}),criticalAt:plan.criticalAt??profile.criticalAt,attackKind,attackerSize,...(weaponClass?{weaponClass}:{}),...(allowedDefenses?{allowedDefenses}:{}),...(plan.ignoreArmor?{ignoreArmor:true}:{}),...(plan.ignoreHardness?{ignoreHardness:plan.ignoreHardness}:{}),...(plan.ignoreAllHardness?{ignoreAllHardness:true}:{}),...(plan.gradeMinimum?{minimumGrade:plan.gradeMinimum}:{}),fixed:plan.fixed??profile.fixed??0,nature:plan.damageNature??profile.nature,gradeBonus:plan.gradeBonus??profile.gradeBonus??0},targets);
 }
 export async function useNpcJutsu(actor,item){
  if(!owns(actor)||item.actor!==actor||busy.has(actor.uuid))return;
@@ -144,24 +149,25 @@ async function promptRoll(actor,key,title,adjustment=0){
 export async function rollNpcTechniqueCheck(message,index){
  assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),check=cast?.plan.checks?.[index];
- if(!owns(actor)||cast.status!=='paid'||!check||!RESISTANCE_KEYS.some(r=>r.key===check.key)&&!['cc','cd','lm'].includes(check.key))return;
+ if(!owns(actor)||!['paid','attacked'].includes(cast.status)||!check||!RESISTANCE_KEYS.some(r=>r.key===check.key)&&!['cc','cd','lm'].includes(check.key))return;
  const dialog=await promptRoll(actor,check.key,check.label,check.adjustment??0);if(!dialog)return;
  const roll=await rollWithLegado(actor,dialog.spec),outcome=Number.isFinite(check.dc)?versusDifficulty(rolledCheck(roll,dialog.spec),check.dc):null;return roll.toMessage({speaker:msgClass().getSpeaker({actor}),flavor:checkFlavor(dialog.spec),flags:{[ns]:{check:{actorImg:actor.img,key:check.key},...(outcome?{testOutcome:{dc:check.dc,result:outcome}}:{}),npcTechniqueCheck:{parentUuid:message.uuid,key:check.key}}}},{messageMode:dialog.messageMode});
 }
 export async function attackNpcCast(message){
  assertCastActive(message);
  const cast=flag(message),actor=await fromUuid(cast?.actorUuid),item=await fromUuid(cast?.itemUuid);
- if(!owns(actor)||item?.actor!==actor||cast.status!=='paid'||!cast.plan.mode.startsWith('attack:')||busy.has(message.uuid))return;
+ if(!owns(actor)||item?.actor!==actor||!(cast.status==='paid'||cast.status==='attacked'&&cast.plan.multiAttack)||!cast.plan.mode.startsWith('attack:')||busy.has(message.uuid))return;
  busy.add(message.uuid);
  try{
   const blocked=illusionActionBlock(actor,{attack:true})||techniqueRestriction(actor,item);if(blocked)throw Error(blocked);
-  const key=cast.plan.mode.slice(7),precision=cast.plan.legado?.attackPrecision==='perception'?Number.isInteger(actor.system.bases?.lm)?actor.system.bases.lm+actor.system.attributes.per:actor.system.statsOriginal?.lm??actor.system.stats?.lm:null,weapon=actor.items.get(cast.plan.legado?.weaponId),dialog=weapon?(actor.type==='shinobi'?await SnsCheckDialog.prompt(actor,key,item.name,weaponCheckComponents(actor.system.toObject(),key,weapon,actor.items)):await SnsCheckDialog.promptRecorded(actor,{key,name:item.name,precision:actor.system.stats[key],die:'2d8'},weaponCheckComponents(actor.system.toObject(),key,weapon,actor.items))):Number.isInteger(precision)?await SnsCheckDialog.promptRecorded(actor,{key,name:item.name,precision,die:'2d8'}):await promptRoll(actor,key,item.name,cast.plan.testAdjustment??0);if(!dialog)return;
-  const targets=Array.from(game.user.targets??[]);
+  const key=cast.plan.mode.slice(7),precision=cast.plan.legado?.attackPrecision==='perception'?Number.isInteger(actor.system.bases?.lm)?actor.system.bases.lm+actor.system.attributes.per:actor.system.statsOriginal?.lm??actor.system.stats?.lm:null,weapon=actor.items.get(cast.plan.weaponId??cast.plan.legado?.weaponId),dialog=weapon?(actor.type==='shinobi'?await SnsCheckDialog.prompt(actor,key,item.name,weaponCheckComponents(actor.system.toObject(),key,weapon,actor.items)):await SnsCheckDialog.promptRecorded(actor,{key,name:item.name,precision:actor.system.stats[key],die:'2d8'},weaponCheckComponents(actor.system.toObject(),key,weapon,actor.items))):Number.isInteger(precision)?await SnsCheckDialog.promptRecorded(actor,{key,name:item.name,precision,die:'2d8'}):await promptRoll(actor,key,item.name,cast.plan.testAdjustment??0);if(!dialog)return;
+  const userTargets=Array.from(game.user.targets??[]);
+  const targets=userTargets.length?userTargets:(await Promise.all((cast.targets??[]).map(async t=>({actor:await fromUuid(t.uuid),name:t.name})))).filter(t=>t.actor);
   const projection=asProjection(cast.plan,item),packet=packetFor(actor,item,cast.plan,projection,targets);
   if(!await prepareProjectilePacket(packet))return;
   const {declareJutsuDefenses}=await import('./pre-defense.mjs');
   const defense=await declareJutsuDefenses(actor,item,packet?.profile,targets);if(defense===null)return;
-  if(flag(message).status!=='paid')return;assertCastActive(message);
+  if(!['paid','attacked'].includes(flag(message).status))return;assertCastActive(message);
   const roll=await rollWithLegado(actor,dialog.spec,{kind:'attack'}),attack=rolledCheck(roll,dialog.spec);
   if(packet){packet.attack=attack;if(defense)packet.defenseRequestUuid=defense;}
   const original=jutsuProjection(item,{usedLevel:cast.plan.level}),use=npcUseSnapshot(actor,item,original,targets);if(use)use.attack=attack;

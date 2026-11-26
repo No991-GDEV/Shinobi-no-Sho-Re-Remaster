@@ -6,6 +6,7 @@ import {resolveBookCanhao} from './book-power-grants.mjs';
 import {requirementsFor} from './item-requirements.mjs';
 import {jutsuAreas} from './area-core.mjs';
 import {npcPowerProfile,profileValues} from './npc-power-profile.mjs';
+import {canonicalJutsuCombatPlan} from './canonical-jutsu-profiles.mjs';
 // Recorded NPC techniques are usable without completing an unrelated PC builder.
 // Known arithmetic comes from the same projection/reading code as the item sheet.
 import {jutsuProjection} from './item-view.mjs';
@@ -106,6 +107,8 @@ export function ruleCost(text,level,actor){
  const plan={version:1,name:item.name,level,min,max,mode,cost,base,fixed:sourceId==='sns:effect:nuvem'?level:0,gradeBonus:sourceId==='sns:jutsu:oodama-rasengan'?0.5:0,saveKeys,dc,shape:sourceId==='sns:effect:nuvem'?'circle':shape,size,action:sourceId==='sns:effect:mina-explosiva'?'Padrão · preparar até 2 minas; livre · detonar':data.action||headers.acao||'',range:data.range||first(rows,'Alcance comum','Alcance')||(values?values.range+' m':headers.alcance)||'',duration:data.duration||headers.duracao||'',description:item.system.description,source:item.system.source,clay:sourceId==='sns:effect:mina-explosiva'||/kibaku/i.test(p?.name??'')?level:null,projectionValid:!!projection?.valid,natures:powerProfile.natures,nature:powerProfile.nature??custom.nature??saved.nature??'',missing:[]};
  if(projectiles)plan.projectiles=projectiles;
  if(noDamage)plan.noDamage=true;if(damageNature!=='lethal')plan.damageNature=damageNature;
+ const canonical=canonicalJutsuCombatPlan(item,sourceId,level,item.actor,library);
+ if(canonical)Object.assign(plan,canonical);
  if(sourceId==='sns:jutsu:amaterasu'&&Number.isInteger(katon?.system.level)){plan.fixed=2*katon.system.level;plan.range='10 m';plan.ignoreAllHardness=true;plan.visionCost=2;}
  for(const key of ['action','range','duration'])if(!plan[key]||genericRule(plan[key]))plan[key]=rule.fields[key]??'';
  if(values&&/comum|padr[aã]o/i.test(plan.range))plan.range=values.range+' m';
@@ -128,7 +131,7 @@ export function ruleCost(text,level,actor){
  const repertoire=sourceRepertoirePlan(item,level,values);if(repertoire)Object.assign(plan,repertoire);
  const puppet=puppetUsePlan(item);if(puppet){Object.assign(plan,puppet);plan.description=item.system.description.split(/<h3>ESTRANGULAR/i)[0];}
  if(p?.system.contentId==='sns:power:kujaku-myoho')plan.healthCost=1;
- const context=resolveNpcContext(item,custom,level);if(context){plan.context=context;if(context.valid){plan.cost=context.cost;for(const key of ['action','duration','mode','base','dc','saveKeys','noDamage'])if(Object.hasOwn(context,key))plan[key]=context[key];if(context.payment)plan.payment=context.payment;if(context.adjustment!==undefined)plan.testAdjustment=context.adjustment;if(context.checks)plan.checks=context.checks;if(context.note)plan.useNote=context.note+(context.selected==='infected'?' Grupos: '+context.value+'. Dano fixo por turno: '+context.value+'.':'');}else plan.missing.push('context');}
+ const context=resolveNpcContext(item,custom,level);if(context){plan.context=context;if(context.valid){if(context.cost!==null&&!Object.hasOwn(overrides,'cost'))plan.cost=context.cost;for(const key of ['action','duration','mode','base','fixed','dc','saveKeys','noDamage','shape','size','attackKind','allowedDefenses','weaponClass','damageNature','visionCost','gradeMinimum'])if(Object.hasOwn(context,key)&&context[key]!==null&&!Object.hasOwn(overrides,key))plan[key]=context[key];if(context.payment)plan.payment=context.payment;if(context.adjustment!==undefined)plan.testAdjustment=context.adjustment;if(context.checks)plan.checks=context.checks;if(context.note)plan.useNote=context.note+(context.selected==='infected'?' Grupos: '+context.value+'. Dano fixo por turno: '+context.value+'.':'');}else plan.missing.push('context');}
  if(powerProfile.isMulti&&!powerProfile.profile)plan.missing.push('nature');
  if(sourceId==='sns:jutsu:chakra-no-souin'&&(p?.system.contentId!=='sns:power:fuuinjutsu'||p.system.level<7))plan.missing.push('power');
  if(!['none','check','attack:cc','attack:cd','attack:lm','save'].includes(plan.mode))plan.missing.push('mode');
@@ -137,7 +140,7 @@ export function ruleCost(text,level,actor){
  if(!plan.noDamage&&plan.mode.startsWith('attack')&&(!Number.isInteger(plan.base)||plan.base<0))plan.missing.push('base');
  if(plan.mode==='save'&&(!Number.isFinite(plan.dc)||plan.dc<1||!plan.saveKeys?.length||plan.saveKeys.some(k=>!RESISTANCE_KEYS.some(r=>r.key===k))))plan.missing.push('save');
  plan.areas=jutsuAreas(item,projection??{},{usedLevel:level,commonSize:values?.size,commonRange:values?.range});
- if(plan.areas){const first=plan.areas.choices[0];plan.shape=first.shape==='line'?'ray':first.shape;plan.size=first.diameter??first.length??plan.size;}
+ if(plan.areas){const first=plan.areas.choices[0];if(canonical?.size||context?.size){if(first.shape==='circle')first.diameter=plan.size;else first.length=plan.size;}else{plan.shape=first.shape==='line'?'ray':first.shape;plan.size=first.diameter??first.length??plan.size;}}
  if(!plan.areas&&!['','circle','cone','ray'].includes(plan.shape))plan.missing.push('size');
  if(!plan.areas&&plan.shape&&(!Number.isFinite(plan.size)||plan.size<=0))plan.missing.push('size');
  return plan;

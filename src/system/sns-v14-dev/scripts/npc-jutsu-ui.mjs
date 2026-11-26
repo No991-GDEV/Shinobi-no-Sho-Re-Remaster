@@ -14,9 +14,9 @@ export async function decorateNpcJutsu(message,element){
   if(canUse)controls.append(button('Concluir uso · '+cast.plan.cost+' chakra',()=>completeNpcCast(message)));
  }else{
   if(cast.plan.deviceUse){const remaining=document.createElement('small');remaining.textContent='Usos restantes: '+(actor.flags?.[ns]?.puppetUses?.[cast.plan.deviceUse.itemId]??'—');controls.append(remaining);if(game.user.isGM)controls.append(button('Recarregar dispositivo',()=>reloadNpcDevice(message)));}
-  if(canUse&&cast.status==='paid'&&cast.plan.mode.startsWith('attack:'))controls.append(button(cast.plan.mode==='attack:cc'?'Ataque corpo a corpo':cast.plan.mode==='attack:lm'?'Ataque · Ler Movimento':'Ataque à distância',()=>attackNpcCast(message)));
+  if(canUse&&(cast.status==='paid'||cast.status==='attacked'&&cast.plan.multiAttack)&&cast.plan.mode.startsWith('attack:'))controls.append(button(cast.status==='attacked'?(cast.plan.mode==='attack:cc'?'Novo ataque corpo a corpo':cast.plan.mode==='attack:lm'?'Novo ataque · Ler Movimento':'Novo ataque à distância'):(cast.plan.mode==='attack:cc'?'Ataque corpo a corpo':cast.plan.mode==='attack:lm'?'Ataque · Ler Movimento':'Ataque à distância'),()=>attackNpcCast(message)));
   if(canUse&&cast.plan.shape&&!message.getFlag(ns,'areaUse'))controls.append(button('Posicionar área',()=>placeNpcTemplate(message)));
-  if(canUse&&cast.status==='paid')for(const [index,check]of (cast.plan.checks??[]).entries())controls.append(button(check.label,()=>rollNpcTechniqueCheck(message,index)));
+  if(canUse&&['paid','attacked'].includes(cast.status))for(const [index,check]of (cast.plan.checks??[]).entries())controls.append(button(check.label,()=>rollNpcTechniqueCheck(message,index)));
   if(cast.status==='attacked'){const p=document.createElement('p');p.textContent='Ataque realizado · dano e defesas no cartão da rolagem.';controls.append(p);}
   if(cast.plan.mode==='save'){
    if(!cast.targets.length)for(const key of cast.plan.saveKeys)controls.append(button((labels[key]??key)+' · Dif '+cast.plan.dc,()=>rollFreeNpcSave(message,key)));
