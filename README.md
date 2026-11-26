@@ -1,6 +1,6 @@
 # Shinobi no Sho Re-Remaster
 
-Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.5.0-beta.5**.
+Sistema comunitário não oficial de **Naruto: Shinobi no Sho** para **Foundry VTT 14**. Versão **0.5.0-beta.6**.
 
 ## Instalação no Foundry
 
@@ -49,6 +49,6 @@ Shinobi no Sho: Projeto D8 e autores identificados em cada fonte. Regras oficiai
 
 ## Compilar
 
-Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.5.0-beta.5`.
+Requer Node.js 22+ e Python 3. Instale as dependências com `npm ci`, depois execute `npm test`, `npm run build` e `npm run check`. Os arquivos instaláveis são gerados em `dist/github/`; somente esses arquivos e os manifestos devem ser anexados à release `v0.5.0-beta.6`.
 
 O build compila novos bancos de compêndio a partir dos JSONs de autoria. Não lê bancos de mundos ou packs abertos. Não distribua uma instalação do Foundry, dados de campanha, licenças de ativação, senhas, chaves de API ou backups.

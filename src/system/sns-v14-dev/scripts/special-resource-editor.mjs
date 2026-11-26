@@ -19,7 +19,8 @@ export class SnsSpecialResourceEditor extends SnsHandlebarsApplicationMixin(Appl
    if(!this.existing&&!row.history.length)row={...row,history:[{from:null,to:null,note:this.note.trim()||'Registro da origem; valor atual desconhecido.',user:game.user.id,at:new Date().toISOString()}]};
    // Source deletion, level changes and permissions are checked again after the popup.
    if(!this.actor.isOwner)return;
-   const updated=this.actor.system.specialResources.map(r=>r.id===row.id?row:r);if(!this.existing)updated.push(row);
+   const activeGrants=grantedResources(this.actor);
+   const updated=this.actor.system.specialResources.filter(r=>!(r.kind===row.kind&&r.id!==row.id&&!activeGrants.some(g=>g.sourceId===r.sourceId&&g.kind===r.kind))).map(r=>r.id===row.id?row:r);if(!this.existing)updated.push(row);
    await this.actor.update({'system.specialResources':updated});await this.close();
   }catch(error){ui.notifications.warn(error.message);}
  }

@@ -41,7 +41,8 @@ export function specialResourceChange(actor,row,value,note,{user='',at=''}={}){
  return {...row,value,history:[...(row.history??[]),{from:row.value??null,to:value,note:note.trim(),user,at}]};
 }
 export function validateSpecialResourceRegistration(actor,row){
- if(rows(actor).some(r=>r.kind===row.kind))throw Error('Esta ficha já possui uma reserva desse tipo. Confira o registro existente.');
+ const activeGrants=grantedResources(actor);
+ if(rows(actor).some(r=>r.kind===row.kind&&r.id!==row.id&&r.sourceId!==row.sourceId&&activeGrants.some(g=>g.sourceId===r.sourceId&&g.kind===r.kind)))throw Error('Esta ficha já possui uma reserva desse tipo. Confira o registro existente.');
  const result=resolveSpecialResource(actor,row);if(!result.valid)throw Error(result.problems.join(' '));
  return row;
 }
